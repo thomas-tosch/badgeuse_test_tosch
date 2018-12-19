@@ -1,0 +1,28 @@
+{
+  "name": "Badgeuse-Intelligente",
+  "version": "0.1.0",
+  "description": "Projet de l'UHA 4.0. - Objectif: Réaliser une badgeuse intelligente. Les étudiants doivent pouvoir pointer leur présence au technopole et les administrateurs doivent pouvoir visualisé et gérer la base de données.",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "email-validator": "^2.0.4",
+    "express": "^4.16.4",
+    "express-list-endpoints": "^4.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "mysql": "^2.16.0",
+    "node": "^11.4.0",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^4.6.8",
+    "path": "^0.12.7",
+    "randomstring": "^1.1.5",
+    "read-file": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
+  "license": "UHA 4.0"
+}
