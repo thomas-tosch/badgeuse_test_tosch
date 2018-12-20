@@ -1,39 +1,40 @@
-# Client (Angular, frontend)
+# :sparkles: Projet Badgeuse intélligente  :sparkles: #
+ 
+## DÉSCRIPTION ##
+> Description de l'UHA 4.0
+   
+## PRÉ-REQUIS ##
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.7.
-Run `npm install @angular/cli` in Client folder for install the latest version of Angular CLI.
+* Node.js (v10.11.0)
+* Npm (v6.4.1)
+* Angular CLI (v7.0.7)
 
-#### Development server
-
-Run `ng serve` in Client folder for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-#### Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-#### Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-#### Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-#### Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-#### Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-
-
-# Server (Express, backend)
-
-The backend is generate with Node.js and running with Nodemon. Nodemon will automatically reload if you change any of the source files.
-Run `npm install -g nodemon` at the root of the project folder.
-
-#### Development server
-
-Run `nodemon` for start node server.
+## ÉTAPE 1 : INSTALLATION DES DEPENDANCES ##
+  
+  Pour installer les dépendances du projet il suffit de vous rendre dans deux dossiers.
+  Le premier est le dossier racine, en ligne de commande exécutez simplement :
+  
+  `npm install`
+  
+  Et pour le deuxième, faites de même en vous plaçant cette fois-ci dans le dossier client :
+  
+  `npm install`
+  
+## ÉTAPE 2 : INSTALLATION DE NODEMON ##
+  
+  Nodemon nous servira à lancer le serveur express, pour ce faire, exécutez la commande suivante :
+  
+  `npm install -g nodemon`
+  
+## ÉTAPE 3 : LANCEMENT DU PROJET ##
+  
+  Le lancement s'effectue en deux étapes, la première est de faire fonctionner le serveur epxress, pour ce faire, placez-vous dans le dossier racine du projet et exécutez cette commande :
+  
+  `nodemon`
+  
+  La seconde étape consiste à lancer le client Angular, exécutez simplement cette commande dans le dossier client:
+  
+  `ng serve`
+  
+  
+  Et voilà, vous pouvez commencer à coder  :sunglasses:
