@@ -8,7 +8,7 @@ import {Auth} from "./guards/auth";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'AnguExpress';
+
   responseExpress;
 
   constructor(private expressService: ExpressService) {
