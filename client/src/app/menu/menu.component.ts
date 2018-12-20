@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginService} from "../services/login.service";
 
 @Component({
   selector: 'app-menu',
@@ -9,13 +10,17 @@ export class MenuComponent implements OnInit {
 
   userState = false;
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
 
   onBadge() {
     this.userState = !this.userState;
+  }
+
+  onConnect() {
+    this.loginService.setConnectState();
   }
 
 }
