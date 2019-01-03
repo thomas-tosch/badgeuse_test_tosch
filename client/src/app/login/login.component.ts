@@ -30,7 +30,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO : transformer en fonction de service
+    this.notAuth();
+  }
+
+  // swal alert if redirectUrl
+  notAuth() {
     if (this.authGuard.redirectUrl) {
       swal('Authentification requise !', 'Vous devez vous connecter pour accéder à cette page.', 'error');
       this.previousUrl = this.authGuard.redirectUrl;
@@ -41,20 +45,20 @@ export class LoginComponent implements OnInit {
   // create the login form
   createForm() {
     this.formLogin = this.formBuilder.group({
-      username: ['', Validators.required],
+      userMail: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   // disable the form
   disableForm() {
-    this.formLogin.controls['username'].disable();
+    this.formLogin.controls['userMail'].disable();
     this.formLogin.controls['password'].disable();
   }
 
   // enable the form
   enableForm() {
-    this.formLogin.controls['username'].enable();
+    this.formLogin.controls['userMail'].enable();
     this.formLogin.controls['password'].enable();
   }
 
@@ -74,7 +78,7 @@ export class LoginComponent implements OnInit {
     // variable for express
     const content = {
       action: 'tryConnect',
-      username: this.formLogin.get('username').value,
+      userMail: this.formLogin.get('userMail').value,
       password: this.formLogin.get('password').value
     };
     // express request
@@ -101,6 +105,5 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
 
 }

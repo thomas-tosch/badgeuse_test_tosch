@@ -16,15 +16,15 @@ module.exports = function(router) {
             // CHECK THE CONNECTION OF USER
             case 'tryConnect':
                 const passForm = req.body.password.trim();
-                const usermailForm = req.body.username.trim();
+                const usermailForm = req.body.userMail.trim();
 
                 // Password and Usermail min/max length
                 const passLengthMin = 5,
                     passLengthMax = 255,
-                    usernameLengthMin = 5,
-                    usernameLengthMax = 255;
+                    userMailLengthMin = 5,
+                    userMailLengthMax = 255;
 
-                if (usermailForm.length >= usernameLengthMin && usermailForm.length <= usernameLengthMax) {
+                if (usermailForm.length >= userMailLengthMin && usermailForm.length <= userMailLengthMax) {
                     if (passForm.length >= passLengthMin && passForm.length <= passLengthMax) {
                         // Read the Sql table if the userMail exist
                         db.query('SELECT * FROM account WHERE userMail=?', [usermailForm], (err, result) => {
@@ -51,7 +51,7 @@ module.exports = function(router) {
                                             success: true,
                                             message: "Vous allez être redirigé dans quelques instants.",
                                             token: token,
-                                            user: {username: result[0].userFirstName, email: result[0].userMail}
+                                            user: {userMail: result[0].userFirstName, email: result[0].userMail}
                                         });
                                     }
                                 });

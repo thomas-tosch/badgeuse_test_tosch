@@ -14,7 +14,6 @@ export class AppComponent implements OnInit{
   ) {  }
 
   ngOnInit() {
-    console.log(this.getConnectStatus());
   }
 
   // If true, show the menu. if false, hide the menu
