@@ -19,8 +19,8 @@ export class MenuComponent implements OnInit {
     this.userState = !this.userState;
   }
 
-  onConnect() {
-    this.loginService.setConnectState();
+  onDisconnect() {
+    this.loginService.logout();
   }
 
 }

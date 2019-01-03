@@ -1,9 +1,9 @@
-let test = require('./controllers/test');
+let login = require('./controllers/login');
 
 
 module.exports = function(app)
 {
 
-    app.use('/test', test);
+    app.use('/login', login);
 
 };

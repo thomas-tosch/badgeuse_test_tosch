@@ -11,6 +11,7 @@ import { MenuComponent } from './menu/menu.component';
 import {LoginService} from "./services/login.service";
 import {ExpressService} from "./services/express.service";
 import {UserService} from "./services/user.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {UserService} from "./services/user.service";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+      ReactiveFormsModule
   ],
   providers: [
       AuthGuard,

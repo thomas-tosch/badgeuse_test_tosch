@@ -19,19 +19,12 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.test();
+    console.log(this.getConnectStatus());
   }
 
-  getConnectState() {
-    return this.userService.connectState;
+  // If true, show the dashboard. if false, show the direct router
+  getConnectStatus() {
+    return this.userService.getConnectStatus();
   }
 
-  test() {
-    let contentPost = {
-      action: 'test'
-    };
-    this.expressService.postExpress('test',contentPost).subscribe((resp: Auth) => {
-      this.responseExpress = resp.message;
-    });
-  }
 }

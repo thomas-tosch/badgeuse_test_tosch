@@ -1,29 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 import {LoginService} from "../services/login.service";
-import {UserService} from "../services/user.service";
+import {AuthGuard} from "../guards/auth.guard";
+import {ExpressService} from "../services/express.service";
+import {Auth} from "../guards/auth";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
+  processing = false;
+  formLogin: FormGroup;
+  previousUrl;
 
-  constructor(private loginService: LoginService,
-              private userService: UserService
-  ) { }
+  constructor(
+      private formBuilder: FormBuilder,
+      private loginService: LoginService,
+      private expressService: ExpressService,
+      private router: Router,
+      private authGuard: AuthGuard
+  ) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.formLogin = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  disableForm() {
+    this.formLogin.controls['username'].disable();
+    this.formLogin.controls['password'].disable();
+  }
+
+  enableForm() {
+    this.formLogin.controls['username'].enable();
+    this.formLogin.controls['password'].enable();
+  }
+
+  onLoginSubmit() {
+    const toast = swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: true,
+      timer: 3000
+    });
+
+    this.processing = true;
+    this.disableForm();
+    const content = {
+      action: 'tryConnect',
+      username: this.formLogin.get('username').value,
+      password: this.formLogin.get('password').value
+    };
+    this.expressService.postExpress('login', content).subscribe((resp: Auth ) => {
+      if (!resp.success) {
+        this.processing = false;
+        swal('Connexion échouée', resp.message, 'error');
+        this.enableForm();
+      } else {
+        this.loginService.storeUserData(resp.token, resp.user);
+
+        toast({
+          type: 'success',
+          title: 'Authentification réussi !'
+        })
+
+        if (this.previousUrl) {
+          this.router.navigate([this.previousUrl]);
+        } else {
+          this.router.navigate(['/userSpace']);
+        }
+      }
+    });
+  }
 
   ngOnInit() {
-    this.getConnectState();
+    if (this.authGuard.redirectUrl) {
+      swal('Authentification requise !', 'Vous devez vous connecter pour accéder à cette page.', 'error');
+      this.previousUrl = this.authGuard.redirectUrl;
+      this.authGuard.redirectUrl = undefined;
+    }
   }
-
-  getConnectState() {
-    return this.loginService.getConnectState();
-  }
-
-  onConnect() {
-    this.loginService.setConnectState();
-  }
-
 }
