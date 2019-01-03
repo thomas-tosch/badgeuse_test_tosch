@@ -15,10 +15,12 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
 
+  // for test, set the user state. true = 'présent', false = 'absent'
   onBadge() {
     this.userState = !this.userState;
   }
 
+  // logOut the user
   onDisconnect() {
     this.loginService.logout();
   }

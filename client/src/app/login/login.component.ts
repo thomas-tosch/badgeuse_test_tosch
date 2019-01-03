@@ -29,6 +29,16 @@ export class LoginComponent implements OnInit {
     this.createForm();
   }
 
+  ngOnInit() {
+    // TODO : transformer en fonction de service
+    if (this.authGuard.redirectUrl) {
+      swal('Authentification requise !', 'Vous devez vous connecter pour accéder à cette page.', 'error');
+      this.previousUrl = this.authGuard.redirectUrl;
+      this.authGuard.redirectUrl = undefined;
+    }
+  }
+
+  // create the login form
   createForm() {
     this.formLogin = this.formBuilder.group({
       username: ['', Validators.required],
@@ -36,17 +46,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // disable the form
   disableForm() {
     this.formLogin.controls['username'].disable();
     this.formLogin.controls['password'].disable();
   }
 
+  // enable the form
   enableForm() {
     this.formLogin.controls['username'].enable();
     this.formLogin.controls['password'].enable();
   }
 
+  // when we submit the form
   onLoginSubmit() {
+    // the modal swal parameter
     const toast = swal.mixin({
       toast: true,
       position: 'top',
@@ -56,11 +70,14 @@ export class LoginComponent implements OnInit {
 
     this.processing = true;
     this.disableForm();
+
+    // variable for express
     const content = {
       action: 'tryConnect',
       username: this.formLogin.get('username').value,
       password: this.formLogin.get('password').value
     };
+    // express request
     this.expressService.postExpress('login', content).subscribe((resp: Auth ) => {
       if (!resp.success) {
         this.processing = false;
@@ -69,11 +86,13 @@ export class LoginComponent implements OnInit {
       } else {
         this.loginService.storeUserData(resp.token, resp.user);
 
+        // the modal success
         toast({
           type: 'success',
           title: 'Authentification réussi !'
         })
 
+        // redirection
         if (this.previousUrl) {
           this.router.navigate([this.previousUrl]);
         } else {
@@ -83,11 +102,5 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    if (this.authGuard.redirectUrl) {
-      swal('Authentification requise !', 'Vous devez vous connecter pour accéder à cette page.', 'error');
-      this.previousUrl = this.authGuard.redirectUrl;
-      this.authGuard.redirectUrl = undefined;
-    }
-  }
+
 }

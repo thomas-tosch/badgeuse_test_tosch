@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ExpressService} from "./services/express.service";
-import {Auth} from "./guards/auth";
 import {UserService} from "./services/user.service";
 
 @Component({
@@ -10,19 +9,15 @@ import {UserService} from "./services/user.service";
 })
 export class AppComponent implements OnInit{
 
-  responseExpress;
-
   constructor(private expressService: ExpressService,
               private userService: UserService
-  ) {
-
-  }
+  ) {  }
 
   ngOnInit() {
     console.log(this.getConnectStatus());
   }
 
-  // If true, show the dashboard. if false, show the direct router
+  // If true, show the menu. if false, hide the menu
   getConnectStatus() {
     return this.userService.getConnectStatus();
   }

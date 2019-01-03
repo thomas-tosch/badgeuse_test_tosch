@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import {UserService} from "./user.service";
-// import 'rxjs/add/operator/map';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 const helper = new JwtHelperService();
@@ -22,7 +20,6 @@ export class LoginService {
     getToken(){
         return this.authToken;
     }
-
 
     // We use this method to record the information of the connected user.
      storeUserData (token, user) {

@@ -1,22 +1,25 @@
-
+<!-- TODO : mettre a jour username -> userMail -->
 <!-- FORM -->
 <form [formGroup]="formLogin" (submit)="onLoginSubmit()" class="form-signin text-center">
+  <!-- picture -->
   <img src="" alt="logo UHA 4.0">
+
+  <!-- USERMAIL -->
   <div class="form-group">
     <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-
     <label for="inputUsername" class="sr-only">Username</label>
     <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Nom d'utilisateur" formControlName="username" required autofocus>
-    <!-- ERROR MESSAGE -->
+    <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="formLogin.controls.username.errors?.required && formLogin.controls.username.dirty"><small>Le champ du nom d'utilisateur est requis.</small></li>
     </ul>
   </div>
 
+  <!-- USERPASS -->
   <div class="form-group">
     <label for="inputPassword" class="sr-only">Mot de passe</label>
     <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" name="password" formControlName="password" required>
-    <!-- ERROR MESSAGE -->
+    <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="formLogin.controls.password.errors?.required && formLogin.controls.password.dirty"><small>Le champ mot de passe est requis.</small></li>
       <li class="text-danger" *ngIf="formLogin.controls.password.errors?.minlength || formLogin.controls.password.errors?.maxlength || (formLogin.controls.password.errors?.validatePassword && formLogin.controls.password.dirty)">
@@ -24,7 +27,11 @@
       </li>
     </ul>
   </div>
+
+  <!-- SUBMIT -->
   <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!formLogin.valid || processing">Se connecter</button>
+
+  <!-- FORGOT PASSWORD -->
   <p class="mb-3 text-muted">
     <a routerLink="/forgot-password">Mot de passe oublié ?</a>
   </p>
