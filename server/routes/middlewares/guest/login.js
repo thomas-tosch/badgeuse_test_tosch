@@ -50,7 +50,8 @@ module.exports = function(router) {
                                         res.json({
                                             success: true,
                                             message: "Vous allez être redirigé dans quelques instants.",
-                                            token: token
+                                            token: token,
+                                            user: {prenom_user: result[0].prenom_user, mail_user: result[0].mail_user}
                                         });
                                     }
                                 });
