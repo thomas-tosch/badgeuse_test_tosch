@@ -1,0 +1,27 @@
+<div class="badge-panel d-flex justify-content-between">
+
+  <!-- status présence -->
+  <section class="badge-section" id="badge-status">
+    <div class="badge-temoin" [ngStyle]="{backgroundColor: getTemoinColor()}"></div>
+  </section>
+
+  <!-- badgeuse -->
+  <section class="badge-section">
+
+    <div class="btn-group dropdown">
+
+      <button class="btn btn-outline-secondary alert-secondary w-100" (click)="onBadge()">Pointer</button>
+
+      <button type="button" class="btn btn-outline-secondary alert-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <!-- dropdown -->
+      <div class="dropdown-menu dropdown-menu-right">
+        <!-- Disconnect button -->
+        <button class="btn btn-outline-secondary alert-secondary w-100" routerLink="login" (click)="onDisconnect()">Déconexion</button>
+      </div>
+
+    </div>
+
+  </section>
+</div>

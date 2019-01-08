@@ -8,21 +8,11 @@ import {LoginService} from "../services/login.service";
 })
 export class MenuComponent implements OnInit {
 
-  userState = false;
 
-  constructor(private loginService: LoginService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  // for test, set the user state. true = 'présent', false = 'absent'
-  onBadge() {
-    this.userState = !this.userState;
-  }
-
-  // logOut the user
-  onDisconnect() {
-    this.loginService.logout();
-  }
 
 }
