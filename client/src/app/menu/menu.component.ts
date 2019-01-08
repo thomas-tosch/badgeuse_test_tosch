@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faAddressCard, faChessQueen, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-menu',
@@ -12,10 +13,18 @@ export class MenuComponent implements OnInit {
   faUserAstronaut = faUserAstronaut;
   faAddressCard = faAddressCard
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.getDataUser();
   }
+
+  getDataUser(){
+    this.userService.getDataUser((res)=> {
+      console.log(res);
+    });
+  }
+
 
 
 }
