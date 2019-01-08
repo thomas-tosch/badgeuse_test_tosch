@@ -20,8 +20,10 @@
     padding: 5px;
 }
 .badge-temoin {
-    height: 100%;
-    width: 100%;
-    border-radius: 51%;
-    background-color: green;
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*border-radius: 51%;*/
+    /*color: grey;*/
+    font-size: 2rem;
+    transition: 1s ease;
 }

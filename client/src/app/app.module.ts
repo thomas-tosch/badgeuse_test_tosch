@@ -13,6 +13,7 @@ import {ExpressService} from "./services/express.service";
 import {UserService} from "./services/user.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import { BadgerComponent } from './menu/badger/badger.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BadgerComponent } from './menu/badger/badger.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [
       AuthGuard,
