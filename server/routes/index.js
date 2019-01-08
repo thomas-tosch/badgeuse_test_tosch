@@ -1,4 +1,4 @@
-let login = require('./controllers/login');
+let login = require('./controllers/guest/login');
 
 
 module.exports = function(app)

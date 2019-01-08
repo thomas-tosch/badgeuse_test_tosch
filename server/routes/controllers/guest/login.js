@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-require('./../middlewares/login')(router);
+require('../../middlewares/guest/login')(router);
 
 router.use(function timeLog(req, res, next) {
     next();
