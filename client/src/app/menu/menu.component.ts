@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from "../services/login.service";
+import {faAddressCard, faChessQueen, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-menu',
@@ -8,21 +8,14 @@ import {LoginService} from "../services/login.service";
 })
 export class MenuComponent implements OnInit {
 
-  userState = false;
+  faChessQueen = faChessQueen;
+  faUserAstronaut = faUserAstronaut;
+  faAddressCard = faAddressCard
 
-  constructor(private loginService: LoginService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  // for test, set the user state. true = 'présent', false = 'absent'
-  onBadge() {
-    this.userState = !this.userState;
-  }
-
-  // logOut the user
-  onDisconnect() {
-    this.loginService.logout();
-  }
 
 }

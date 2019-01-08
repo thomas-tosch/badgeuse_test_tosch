@@ -1,7 +1,7 @@
-require ('../../config/database');
+require ('../../../config/database');
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
-let config = require('../../config/config');
+let config = require('../../../config/config');
 
 module.exports = function(router) {
 
@@ -27,7 +27,7 @@ module.exports = function(router) {
                 if (usermailForm.length >= userMailLengthMin && usermailForm.length <= userMailLengthMax) {
                     if (passForm.length >= passLengthMin && passForm.length <= passLengthMax) {
                         // Read the Sql table if the userMail exist
-                        db.query('SELECT * FROM account WHERE userMail=?', [usermailForm], (err, result) => {
+                        db.query('SELECT * FROM users WHERE mail_user=?', [usermailForm], (err, result) => {
 
                             if (err) {
                                 res.json
@@ -40,18 +40,18 @@ module.exports = function(router) {
 
                             if (result.length !== 0) {
 
-                                let passDb = result[0].userPass;
+                                let passDb = result[0].mdp_user;
 
                                 bcrypt.compare(passForm, passDb, (error, isMatch) => {
                                     if (!isMatch) {
                                         res.json({success: false, message: "Le mot de passe est incorrect !"});
                                     } else {
-                                        const token = jwt.sign({userId: result[0].id}, config.auth.SECRET_KEY, {expiresIn: '1h'});
+                                        const token = jwt.sign({userId: result[0].id_user}, config.auth.SECRET_KEY, {expiresIn: '1h'});
                                         res.json({
                                             success: true,
                                             message: "Vous allez être redirigé dans quelques instants.",
                                             token: token,
-                                            user: {userMail: result[0].userFirstName, email: result[0].userMail}
+                                            user: {prenom_user: result[0].prenom_user, mail_user: result[0].mail_user}
                                         });
                                     }
                                 });
