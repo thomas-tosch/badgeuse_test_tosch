@@ -12,6 +12,7 @@ import {LoginService} from "./services/login.service";
 import {ExpressService} from "./services/express.service";
 import {UserService} from "./services/user.service";
 import {ReactiveFormsModule} from "@angular/forms";
+import { BadgerComponent } from './menu/badger/badger.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     LoginComponent,
     UserComponent,
     AdminComponent,
-    MenuComponent
+    MenuComponent,
+    BadgerComponent
   ],
   imports: [
     BrowserModule,
