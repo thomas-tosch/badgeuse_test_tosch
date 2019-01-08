@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import swal from 'sweetalert2';
-import {LoginService} from "../services/login.service";
-import {AuthGuard} from "../guards/auth.guard";
-import {ExpressService} from "../services/express.service";
-import {Auth} from "../guards/auth";
+import {LoginService} from "../../services/login.service";
+import {AuthGuard} from "../../guards/auth.guard";
+import {ExpressService} from "../../services/express.service";
+import {Auth} from "../../guards/auth";
 
 @Component({
   selector: 'app-login',
