@@ -59,8 +59,8 @@ Engine = INNODB;
 CREATE TABLE badger (
 	id_point INT NOT NULL AUTO_INCREMENT,
 	id_user SMALLINT NOT NULL,
-	date_point DATETIME(1) NOT NULL,
-	status_point VARCHAR(40),
+	date_point DATETIME(1) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	status_point TINYINT NOT NULL,
 	PRIMARY KEY (id_point),
 	CONSTRAINT fk_badger_id_user
 		FOREIGN KEY (id_user)

@@ -11,6 +11,7 @@ export class BadgerService {
   constructor(private expressService: ExpressService,
               private userService: UserService) { }
 
+  // update the presence to db. 0 = absent, 1 = présent
   setPresence (presence, callback) {
     let content = {
       action: 'setPresence',
@@ -20,5 +21,10 @@ export class BadgerService {
     this.expressService.postExpress('badger', content).subscribe((res:Auth) => {
       return callback(res.success);
     });
+  }
+
+  // add a point on DB badger
+  addPoint() {
+
   }
 }

@@ -21,6 +21,7 @@ export class UserService {
         return !helper.isTokenExpired(this.loginService.getToken());
     }
 
+    // get only the id of user
     getIdUser() {
         let token = helper.decodeToken(this.loginService.getToken());
         return token.id_user;

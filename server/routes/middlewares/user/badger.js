@@ -11,20 +11,32 @@ module.exports = function(router) {
 
         switch (action) {
 
-            // GET ALL DATA OF USER CONNECTED
+            // UPDATE THE PRESENCE OF USER ON DB.
             case 'setPresence':
                  let id_user = req.body.id_user;
                  let presence = !req.body.presence;
 
-                 let content = [
+                // update the presence
+                 let content_users = [
                    [presence],
                    [id_user]
                  ];
-                 db.query('UPDATE users SET presence = ? WHERE id_user = ?', content, (err, rows)=> {
+                 db.query('UPDATE users SET presence = ? WHERE id_user = ?', content_users, (err)=> {
                      if(err) throw err;
                     res.json({success: true});
-                 })
+                 });
+
+                 // add a point on db badger
+                let content_badger = [
+                    [id_user],
+                    [presence]
+                ];
+                db.query('INSERT INTO badger(id_user, status_point) VALUES (?,?)', content_badger, (err)=> {
+                    if(err) throw err;
+                    // TODO : renvoyer une reponse
+                });
             break
+
         }
     });
 }
