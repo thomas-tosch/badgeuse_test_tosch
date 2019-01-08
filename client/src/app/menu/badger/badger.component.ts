@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 import {faCheckCircle, faTimesCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import {BadgerService} from "../../services/badger.service";
 
 @Component({
   selector: 'app-badger',
@@ -9,12 +10,14 @@ import {faCheckCircle, faTimesCircle, faSpinner} from '@fortawesome/free-solid-s
 })
 export class BadgerComponent implements OnInit {
 
-  userState = false;
   tooltipState;
   temoinState;
   buttonActivate = false;
+  @Input() presence;
+  @Input() id_user;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private badgerService: BadgerService) { }
 
   ngOnInit() {
     this.getTolltipState();
@@ -23,14 +26,17 @@ export class BadgerComponent implements OnInit {
 
   // for test, set the user state. true = 'présent', false = 'absent'
   onBadge() {
-    this.buttonActivate = true;
-      this.userState = !this.userState;
-      this.getTolltipState();
-      this.getTemoinStatus();
-
-      setTimeout(()=> {
-        this.buttonActivate = false;
-      }, 5000);
+      this.buttonActivate = true;
+      this.badgerService.setPresence(this.presence,(res)=> {
+        if(res === true) {
+          this.presence = !this.presence;
+          this.getTolltipState();
+          this.getTemoinStatus();
+          setTimeout(()=>{
+            this.buttonActivate = false;
+          }, 5000); //after 5 secondes
+        }
+      });
   }
 
   // logOut the user
@@ -39,7 +45,7 @@ export class BadgerComponent implements OnInit {
   }
 
   getTemoinStatus() {
-    if(this.userState) {
+    if(this.presence) {
       this.temoinState = faCheckCircle;
       return 'green';
     } else {
@@ -49,7 +55,7 @@ export class BadgerComponent implements OnInit {
   }
 
   getTolltipState() {
-    if(this.userState) {
+    if(this.presence) {
       this.tooltipState = "Présent depuis 3h25";
     } else {
       this.tooltipState = "Absent";

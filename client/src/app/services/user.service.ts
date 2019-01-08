@@ -21,6 +21,11 @@ export class UserService {
         return !helper.isTokenExpired(this.loginService.getToken());
     }
 
+    getIdUser() {
+        let token = helper.decodeToken(this.loginService.getToken());
+        return token.id_user;
+    }
+
     // get all data of user conected
     getDataUser(callback) {
         let token = helper.decodeToken(this.loginService.getToken());

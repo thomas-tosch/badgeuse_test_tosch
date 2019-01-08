@@ -14,6 +14,7 @@ import {UserService} from "./services/user.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import { BadgerComponent } from './menu/badger/badger.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {BadgerService} from "./services/badger.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
       AuthGuard,
       LoginService,
       ExpressService,
-      UserService
+      UserService,
+      BadgerService
   ],
   bootstrap: [AppComponent]
 })

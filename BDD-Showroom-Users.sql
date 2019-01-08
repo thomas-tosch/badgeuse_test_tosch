@@ -21,6 +21,7 @@ CREATE TABLE users (
 	mail_user VARCHAR(255) NOT NULL,
 	mdp_user VARCHAR(255) DEFAULT "$2b$10$heLifc2slq0U8jAuSSu6reQfO6WzwXf/rxl3uGmiUldY2L/D0jbDm" NULL,
 	id_role SMALLINT NOT NULL,
+	presence BOOLEAN NOT NULL DEFAULT "0",
 	PRIMARY KEY (id_user),
 	CONSTRAINT fk_users_id_user
 		FOREIGN KEY (id_role)

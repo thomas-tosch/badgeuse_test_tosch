@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
   faChessQueen = faChessQueen;
   faUserAstronaut = faUserAstronaut;
   faAddressCard = faAddressCard;
-  userData;
+  userData = [];
 
   constructor(private userService: UserService) { }
 
@@ -22,7 +22,6 @@ export class MenuComponent implements OnInit {
 
   getDataUser(){
     this.userService.getDataUser((res)=> {
-      console.log(res);
       this.userData = res;
     });
   }
