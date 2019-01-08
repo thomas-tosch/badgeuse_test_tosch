@@ -56,6 +56,18 @@ CREATE TABLE users_apps (
 )
 Engine = INNODB;
 
+CREATE TABLE badger (
+	id_point INT NOT NULL AUTO_INCREMENT,
+	id_user SMALLINT NOT NULL,
+	date_point DATETIME(1) NOT NULL,
+	status_point VARCHAR(40),
+	PRIMARY KEY (id_point),
+	CONSTRAINT fk_badger_id_user
+		FOREIGN KEY (id_user)
+		REFERENCES users(id_user)
+)
+Engine = INNODB;
+
 INSERT IGNORE INTO `roles` (`id_role`, `nom_role`, `permission_role`) VALUES
 (1, 'Etudiant', 10384),
 (2, 'Intervenant', 10384),
