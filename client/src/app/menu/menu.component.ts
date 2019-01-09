@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {faAddressCard, faChessQueen, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../services/user.service";
+import {LoginService} from "../services/login.service";
 
 @Component({
   selector: 'app-menu',
@@ -13,8 +14,10 @@ export class MenuComponent implements OnInit {
   faUserAstronaut = faUserAstronaut;
   faAddressCard = faAddressCard;
   userData = [];
+  badgerActive = true;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private loginService: LoginService) { }
 
   ngOnInit() {
     this.getDataUser();
@@ -26,6 +29,9 @@ export class MenuComponent implements OnInit {
     });
   }
 
-
+    // logOut the user
+    onDisconnect() {
+        this.loginService.logout();
+    }
 
 }

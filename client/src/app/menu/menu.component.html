@@ -1,6 +1,7 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light border">
 
   <!-- Heading navbar -->
+  <img src="../../assets/img/logo_uha_40.png" alt="UHA 4.0" class="nav-img-logo d-none d-lg-block">
   <span class="navbar-brand mb-0 h1">{{ userData.nom_user | uppercase}} {{ userData.prenom_user }}</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -10,22 +11,34 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
   <!-- panel left -->
     <ul class="navbar-nav mr-auto">
+
       <li class="nav-item">
+        <!-- personal space access -->
         <a class="nav-link" routerLink="userSpace" routerLinkActive="active"><fa-icon [icon]="faUserAstronaut" class="mr-2"></fa-icon>Espace personnel</a>
       </li>
+
       <li class="nav-item">
+        <!-- profil access -->
         <a class="nav-link" routerLink="profil" routerLinkActive="active"><fa-icon [icon]="faAddressCard" class="mr-2"></fa-icon>Profil</a>
       </li>
+
     </ul>
 
     <!-- panel right -->
     <ul class="navbar-nav">
       <li class="nav-item">
+        <!-- Administration access -->
         <a class="nav-link mr-4" routerLink="admin" routerLinkActive="active"><fa-icon [icon]="faChessQueen" class="mr-2"></fa-icon>Administration</a>
       </li>
 
       <li class="nav-item">
-        <app-badger [presence]="userData.presence" [id_user]="userData.id_user"></app-badger>
+        <!-- Badger -->
+        <app-badger [presence]="userData.presence" [id_user]="userData.id_user" *ngIf="badgerActive"></app-badger>
+      </li>
+
+      <li class="nav-item">
+        <!-- Disconnect button -->
+        <button class="btn btn-outline-danger alert-danger ml-2" routerLink="login" (click)="onDisconnect()">Déconexion</button>
       </li>
     </ul>
 

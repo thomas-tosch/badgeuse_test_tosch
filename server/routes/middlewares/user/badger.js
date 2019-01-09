@@ -1,7 +1,5 @@
 require ('../../../config/database');
-let bcrypt = require('bcrypt');
-let jwt = require('jsonwebtoken');
-let config = require('../../../config/config');
+
 
 module.exports = function(router) {
 
@@ -15,6 +13,18 @@ module.exports = function(router) {
             case 'setPresence':
                  let id_user = req.body.id_user;
                  let presence = !req.body.presence;
+                 let message;
+                 let title;
+
+                 // set the response message
+                 if(presence) {
+                     title = 'Bonjour !';
+                     message = 'Vous avez pointé PRESENT.';
+                 }
+                 else {
+                     title = 'Au revoir !';
+                     message = 'Vous avez pointé ABSENT.';
+                 }
 
                 // update the presence
                  let content_users = [
@@ -23,7 +33,7 @@ module.exports = function(router) {
                  ];
                  db.query('UPDATE users SET presence = ? WHERE id_user = ?', content_users, (err)=> {
                      if(err) throw err;
-                    res.json({success: true});
+
                  });
 
                  // add a point on db badger
@@ -33,10 +43,18 @@ module.exports = function(router) {
                 ];
                 db.query('INSERT INTO badger(id_user, status_point) VALUES (?,?)', content_badger, (err)=> {
                     if(err) throw err;
-                    // TODO : renvoyer une reponse
+                    res.json({
+                        success: true,
+                        title: title,
+                        message: message
+                    });
                 });
             break
 
         }
     });
-}
+};
+
+// TODO : faire un système automatique permettant de dépointé les utilisateur à minuit tout les jours pour ceux qui ont oublié de dépointer
+// TODO : faire un système automatique d'archivage après deux mois par exemple. (vider la bdd pour tout poitage après 2 mois et le transformer en fichier texte par exemple.
+//        Prévoir un système permettant de lire un fichier texte sur demande.
