@@ -46,7 +46,7 @@ module.exports = function(router) {
                                     if (!isMatch) {
                                         res.json({success: false, message: "Le mot de passe est incorrect !"});
                                     } else {
-                                        const token = jwt.sign({userId: result[0].id_user}, config.auth.SECRET_KEY, {expiresIn: '1h'});
+                                        const token = jwt.sign({id_user: result[0].id_user}, config.auth.SECRET_KEY, {expiresIn: '1h'});
                                         res.json({
                                             success: true,
                                             message: "Vous allez être redirigé dans quelques instants.",
