@@ -13,7 +13,11 @@ export class MenuComponent implements OnInit {
   faChessQueen = faChessQueen;
   faUserAstronaut = faUserAstronaut;
   faAddressCard = faAddressCard;
-  userData = {};
+  userData;
+  nomUser;
+  prenomUser;
+  presenseUser;
+  idUser;
   badgerActive = true;
   adminActive = false;
 
@@ -28,6 +32,10 @@ export class MenuComponent implements OnInit {
     getDataUser(){
         this.userService.getDataUser((res)=> {
           this.userData = res;
+          this.nomUser = this.userData.nom_user;
+          this.prenomUser = this.userData.prenom_user;
+          this.presenseUser = this.userData.presence;
+          this.idUser = this.userData.id_user;
           // activate administrator access if role = 3
           if(res.id_role === 3){
               this.adminActive = true;

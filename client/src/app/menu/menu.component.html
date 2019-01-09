@@ -2,7 +2,7 @@
 
   <!-- Heading navbar -->
   <img src="../../assets/img/logo_uha_40.png" alt="UHA 4.0" class="nav-img-logo d-none d-lg-block">
-  <span class="navbar-brand mb-0 h1">{{ userData.nom_user | uppercase}} {{ userData.prenom_user }}</span>
+  <span class="navbar-brand mb-0 h1">{{ nomUser | uppercase}} {{ prenomUser }}</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -33,7 +33,7 @@
 
       <li class="nav-item">
         <!-- Badger -->
-        <app-badger [presence]="userData.presence" [id_user]="userData.id_user" *ngIf="badgerActive"></app-badger>
+        <app-badger [presence]="presenceUser" [id_user]="idUser" *ngIf="badgerActive"></app-badger>
       </li>
 
       <li class="nav-item">
