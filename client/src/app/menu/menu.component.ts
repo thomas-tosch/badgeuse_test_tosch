@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
   userData;
   nomUser;
   prenomUser;
-  presenseUser;
+  presenceUser;
   idUser;
   badgerActive = true;
   adminActive = false;
@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit {
           this.userData = res;
           this.nomUser = this.userData.nom_user;
           this.prenomUser = this.userData.prenom_user;
-          this.presenseUser = this.userData.presence;
+          this.presenceUser = this.userData.presence;
           this.idUser = this.userData.id_user;
           // activate administrator access if role = 3
           if(res.id_role === 3){
