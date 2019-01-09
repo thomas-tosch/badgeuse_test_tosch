@@ -13,6 +13,13 @@ CREATE TABLE roles (
 )
 Engine = INNODB;
 
+CREATE TABLE status (
+	id_status SMALLINT NOT NULL AUTO_INCREMENT,
+	nom_status VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id_status)
+)
+Engine = INNODB;
+
 CREATE TABLE users (
 	id_user SMALLINT NOT NULL AUTO_INCREMENT,
 	prenom_user VARCHAR(255) NOT NULL,
@@ -60,11 +67,15 @@ CREATE TABLE badger (
 	id_point INT NOT NULL AUTO_INCREMENT,
 	id_user SMALLINT NOT NULL,
 	date_point DATETIME(1) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	status_point TINYINT NOT NULL,
+	StartEnd_point BOOLEAN NOT NULL,
+	id_status SMALLINT NOT NULL DEFAULT 1,
 	PRIMARY KEY (id_point),
 	CONSTRAINT fk_badger_id_user
 		FOREIGN KEY (id_user)
-		REFERENCES users(id_user)
+		REFERENCES users(id_user),
+	CONSTRAINT fk_badger_id_status
+		FOREIGN KEY (id_status)
+		REFERENCES status(id_status)
 )
 Engine = INNODB;
 
@@ -72,6 +83,12 @@ INSERT IGNORE INTO `roles` (`id_role`, `nom_role`, `permission_role`) VALUES
 (1, 'Etudiant', 10384),
 (2, 'Intervenant', 10384),
 (3, 'Administrateur', 16369);
+
+INSERT IGNORE INTO `status` (`id_status`, `nom_status`) VALUES
+(1, 'actif'),
+(2, 'malade'),
+(3, 'stage'),
+(4, 'déplacement');
 
 
 INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES

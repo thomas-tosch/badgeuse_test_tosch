@@ -13,25 +13,33 @@ export class MenuComponent implements OnInit {
   faChessQueen = faChessQueen;
   faUserAstronaut = faUserAstronaut;
   faAddressCard = faAddressCard;
-  userData = [];
+  userData = {};
   badgerActive = true;
+  adminActive = false;
 
   constructor(private userService: UserService,
               private loginService: LoginService) { }
 
-  ngOnInit() {
-    this.getDataUser();
-  }
+    ngOnInit() {
+        this.getDataUser();
+    }
 
-  getDataUser(){
-    this.userService.getDataUser((res)=> {
-      this.userData = res;
-    });
-  }
+    // get all data of user
+    getDataUser(){
+        this.userService.getDataUser((res)=> {
+          this.userData = res;
+          // activate administrator access if role = 3
+          if(res.id_role === 3){
+              this.adminActive = true;
+          }
+        });
+    }
 
     // logOut the user
     onDisconnect() {
         this.loginService.logout();
     }
 
+
+//
 }
