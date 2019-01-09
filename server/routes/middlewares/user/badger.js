@@ -59,3 +59,4 @@ module.exports = function(router) {
 // TODO : faire un système automatique d'archivage après deux mois par exemple. (vider la bdd pour tout poitage après 2 mois et le transformer en fichier texte par exemple.
 //        Prévoir un système permettant de lire un fichier texte sur demande.
 // TODO : Si l'utilisateur à un status de pointage différent de start ou end, le'empecher de pointer.
+// TODO : Faire une procédure de vérification lors du pointage, que le dernier pointage à bien un status 'start/end' différent.
