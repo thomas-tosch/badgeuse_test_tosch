@@ -16,6 +16,9 @@
     height: 100%;
 }
 
+.img-logo {
+    width: 300px;
+}
 .form-signin {
     width: 100%;
     max-width: 330px;
