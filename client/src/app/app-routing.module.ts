@@ -21,7 +21,6 @@ const routes: Routes = [
       { path: 'liste', component: ListeComponent }
     ]
   },
-
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },

@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit {
     this.sidebarCollapse();
   }
 
+  // icon for the button collapse
   onBtnSideBar() {
     if(this.btnSideBar === this.faAngleDoubleLeft){
       this.btnSideBar = this.faAngleDoubleRight;
