@@ -16,6 +16,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {BadgerService} from "./services/badger.service";
 import { ProfilComponent } from './user/profil/profil.component';
 import { PersonalSpaceComponent } from './user/personal-space/personal-space.component';
+import { ForgotPassComponent } from './guest/forgot-pass/forgot-pass.component';
+import { NewPassComponent } from './guest/new-pass/new-pass.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PersonalSpaceComponent } from './user/personal-space/personal-space.com
     MenuComponent,
     BadgerComponent,
     ProfilComponent,
-    PersonalSpaceComponent
+    PersonalSpaceComponent,
+    ForgotPassComponent,
+    NewPassComponent
   ],
   imports: [
     BrowserModule,

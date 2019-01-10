@@ -1,0 +1,47 @@
+<!-- FORM -->
+<form [formGroup]="form" (submit)="onNewPassSubmit()" class="form-signin text-center" *ngIf="accesNewPass === true">
+    <!-- picture -->
+    <div class="form-group">
+        <img src="assets/img/logo_uha_40.png" alt="logo UHA 4.0" class="img-logo">
+        <p>Espace étudiant 4.0</p>
+    </div>
+  <h1 class="h3 mb-3 font-weight-normal">Nouveau mot de passe</h1>
+
+  <p class="mt-5 mb-3 text-muted">Saisissez le nouveau mot de passe</p>
+  <!-- NEW PASS -->
+  <div class="form-group">
+    <label for="inputNewPass" class="sr-only">Nouveau mot de passe</label>
+    <input type="password" id="inputNewPass" class="form-control" placeholder="Nouveau mot de passe" name="newPass" formControlName="newPass" required>
+    <!-- error message -->
+    <ul class="help-block">
+      <li class="text-danger" *ngIf="form.controls.newPass.errors?.required && form.controls.newPass.dirty"><small>Le champ nouveau mot de passe est requis.</small></li>
+      <ul class="text-danger" *ngIf="validPass()">
+        <small>
+          <b>Le mot de passe doit respecter toutes ces conditions:</b>
+          <li>avoir entre 5 et 255 caractères,</li>
+          <li>avoir au moins un chiffre,</li>
+          <li>avoir au moins une lettre en majuscule,</li>
+          <li>avoir au moins une lettre en miniscule,</li>
+          <li>avoir au moins un caractère spécial</li>
+        </small>
+      </ul>
+    </ul>
+  </div>
+
+  <span class="mt-5 mb-3 text-muted">Confirmez votre mot de passe</span>
+  <!-- CONFIRM THE NEW PASS -->
+  <div class="form-group">
+    <label for="inputConfPass" class="sr-only">Confirmation mot de passe</label>
+    <input type="password" id="inputConfPass" class="form-control" placeholder="Confirmation mot de passe" name="confPass" formControlName="confPass" required>
+    <!-- error message -->
+    <ul class="help-block">
+      <li class="text-danger" *ngIf="form.controls.confPass.errors?.required && form.controls.confPass.dirty"><small>Le champ confirmation mot de passe est requis.</small></li>
+      <li class="text-danger" *ngIf="form.controls.confPass.errors?.minlength || form.controls.confPass.errors?.maxlength || (form.controls.confPass.errors?.validatePassword && form.controls.confPass.dirty)">
+        <small>Le mot de passe est invalide.</small>
+      </li>
+      <li class="text-danger" *ngIf="comparePass()"><small>Les mots de passe doivent être identique.</small></li>
+    </ul>
+  </div>
+  <!-- BUTTON SUBMIT -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!form.valid || processing || comparePass()">Enregistrer</button>
+</form>
