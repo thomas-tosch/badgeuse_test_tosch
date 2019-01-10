@@ -37,11 +37,6 @@
 
     .img-logo {
         width: 400px;
-        /*height: 200px;*/
-    }
-
-    .slogan {
-        color: #7e7e7e;
     }
 
     /************ BODY ************/
@@ -79,21 +74,19 @@
         <td class="column-350">
             <img src="http://www.0.4.uha.fr/wp-content/uploads/2014/11/uha4.0-baselined.png" alt="logo" class="img-logo">
         </td>
-        <!--<td class="column-350">-->
-            <!--<h1>UHA 4.0</h1>-->
-            <!--<i class="slogan">L'école du numérique</i>-->
-        <!--</td>-->
     </tr>
     <tr>
         <td colspan="2" class="border-separator"></td>
     </tr>
     <tr>
         <td class="column" colspan="2">
-            <h3>Vous recevez un mail de test</h3>
+            <h3>Vous recevez cet e-mail car vous avez demandé à réinitialiser votre mot de passe.</h3>
             <br>
             <p class="contentMsg">
-                id_user: {id_user}
-                keyTemp: {keyTemp}
+                Suivez le lien ci-dessous pour réinitialiser votre mot de passe.
+            </p>
+            <p class="link">
+                <a href="{domain}/newPass/{id_user}/{keyTemp}" target="_blank">-> Réinitialiser le mot de passe.</a>
             </p>
         </td>
     </tr>
@@ -103,7 +96,7 @@
     <tr>
         <td colspan="2">
             <p class="message-auto" >
-                Ce message a été généré automatiquement. Merci de ne pas y répondre. Pour toute question ou problème veuillez contacter l'administrateur du site.
+                Ce message a été généré automatiquement. Merci de ne pas y répondre. Pour toute question ou problème veuillez contacter l'administrateur.
             </p>
         </td>
     </tr>

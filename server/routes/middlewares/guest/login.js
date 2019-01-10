@@ -120,7 +120,7 @@ module.exports = function(router) {
                                     db.query("UPDATE users SET keyTemp = NULL WHERE id_user = ?", [id_user], (err) => {
                                         if(err){console.log(err);}
                                     });
-                                }, 5000);
+                                }, 600000);
                             });
 
                         } else {

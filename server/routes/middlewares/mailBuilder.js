@@ -16,6 +16,7 @@ module.exports = function setMailContent(model, variable, callback) {
         html = words;
 
         if(model === 'forgotPass') {
+            html = html.replace('{domain}', 'http://localhost:4200');
             html = html.replace('{id_user}', variable.id_user);
             html = html.replace('{keyTemp}', variable.keyTemp);
         }

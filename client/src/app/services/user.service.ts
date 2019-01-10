@@ -45,4 +45,15 @@ export class UserService {
         return validate(mailContent);
     }
 
+    // Control if the password content is on a valid format
+    static validPass(password) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{5,255}$/;
+        return !(regex.test(password));
+    }
+
+    // Compare two password
+    static comparePass(newPass, confPass) {
+        return !(newPass === confPass);
+    }
+
 }
