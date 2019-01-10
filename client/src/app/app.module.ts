@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from "./guards/auth.guard";
 import {HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './guest/login/login.component';
-import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { MenuComponent } from './menu/menu.component';
 import {LoginService} from "./services/login.service";
@@ -14,15 +13,23 @@ import {UserService} from "./services/user.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import { BadgerComponent } from './menu/badger/badger.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {BadgerService} from "./services/badger.service";
+import { ProfilComponent } from './user/profil/profil.component';
+import { PersonalSpaceComponent } from './user/personal-space/personal-space.component';
+import { ForgotPassComponent } from './guest/forgot-pass/forgot-pass.component';
+import { NewPassComponent } from './guest/new-pass/new-pass.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserComponent,
     AdminComponent,
     MenuComponent,
-    BadgerComponent
+    BadgerComponent,
+    ProfilComponent,
+    PersonalSpaceComponent,
+    ForgotPassComponent,
+    NewPassComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +42,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
       AuthGuard,
       LoginService,
       ExpressService,
-      UserService
+      UserService,
+      BadgerService
   ],
   bootstrap: [AppComponent]
 })

@@ -10,7 +10,7 @@ import {Auth} from "../../guards/auth";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', '../../../assets/css/base.guest.css']
 })
 
 export class LoginComponent implements OnInit {

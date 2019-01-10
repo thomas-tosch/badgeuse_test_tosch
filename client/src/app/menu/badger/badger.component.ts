@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 import {faCheckCircle, faTimesCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import {BadgerService} from "../../services/badger.service";
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-badger',
@@ -9,51 +11,48 @@ import {faCheckCircle, faTimesCircle, faSpinner} from '@fortawesome/free-solid-s
 })
 export class BadgerComponent implements OnInit {
 
-  userState = false;
   tooltipState;
   temoinState;
   buttonActivate = false;
+  @Input() presence;
+  @Input() id_user;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private badgerService: BadgerService) { }
 
   ngOnInit() {
-    this.getTolltipState();
     this.getTemoinStatus();
   }
 
-  // for test, set the user state. true = 'présent', false = 'absent'
+  // Update the presence to users table (1 = 'présent', 0 = 'absent') and add a point to badger table
   onBadge() {
-    this.buttonActivate = true;
-      this.userState = !this.userState;
-      this.getTolltipState();
-      this.getTemoinStatus();
-
-      setTimeout(()=> {
-        this.buttonActivate = false;
-      }, 5000);
+      this.buttonActivate = true;
+      this.badgerService.setPresence(this.presence,(res)=> {
+        if(res.success === true) {
+          swal(res.title, res.message, 'success');
+          this.presence = !this.presence;
+          this.getTemoinStatus();
+          // disable the button during 5 secondes
+          setTimeout(()=>{
+            this.buttonActivate = false;
+          }, 5000); //after 5 secondes
+        }
+      });
   }
 
-  // logOut the user
-  onDisconnect() {
-    this.loginService.logout();
-  }
-
+  // change the icon temoin
   getTemoinStatus() {
-    if(this.userState) {
+    if(this.presence) {
       this.temoinState = faCheckCircle;
+      this.tooltipState = "Présent";
       return 'green';
     } else {
       this.temoinState = faTimesCircle;
+      this.tooltipState = "Absent";
       return 'red';
     }
   }
 
-  getTolltipState() {
-    if(this.userState) {
-      this.tooltipState = "Présent depuis 3h25";
-    } else {
-      this.tooltipState = "Absent";
-    }
-  }
+
 
 }
