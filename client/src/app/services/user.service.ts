@@ -3,6 +3,7 @@ import {LoginService} from "./login.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
+import {validate} from "email-validator";
 
 const helper = new JwtHelperService();
 
@@ -37,6 +38,11 @@ export class UserService {
         this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
             return callback(res.user);
         });
+    }
+
+    // Control if the e-mail content is on a valid format
+    static mailValidate(mailContent) {
+        return validate(mailContent);
     }
 
 }

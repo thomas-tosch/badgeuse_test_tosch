@@ -6,6 +6,7 @@ import {AuthGuard} from './guards/auth.guard';
 import {NotAuthGuard} from "./guards/no-auth.guard";
 import {ProfilComponent} from "./user/profil/profil.component";
 import {PersonalSpaceComponent} from "./user/personal-space/personal-space.component";
+import {ForgotPassComponent} from "./guest/forgot-pass/forgot-pass.component";
 
 // ROUTER
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
+  { path: 'forgotPass', component: ForgotPassComponent, canActivate: [NotAuthGuard] },
   { path: '', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: '**', redirectTo: 'login' }
 ];

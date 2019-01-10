@@ -31,11 +31,15 @@
   </div>
 
   <!-- SUBMIT -->
-  <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!formLogin.valid || processing">Se connecter</button>
+  <div class="form-group">
+    <button class="btn btn-lg btn-outline-secondary alert-secondary btn-block" type="submit" [disabled]="!formLogin.valid || processing">Se connecter</button>
+  </div>
 
   <!-- FORGOT PASSWORD -->
-  <p class="mb-3 text-muted">
-    <a routerLink="/forgot-password">Mot de passe oublié ?</a>
-  </p>
+  <div class="form-group">
+    <p class="mb-3">
+      <a routerLink="/forgotPass" class="text-muted">Mot de passe oublié ?</a>
+    </p>
+  </div>
 </form>
 
