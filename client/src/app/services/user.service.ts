@@ -13,7 +13,6 @@ const helper = new JwtHelperService();
 export class UserService {
 
 
-
     constructor(private loginService: LoginService,
                 private expressService: ExpressService) { }
 

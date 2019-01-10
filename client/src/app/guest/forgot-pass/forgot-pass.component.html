@@ -10,9 +10,10 @@
 
     <p class="mt-5 mb-3 text-muted">Saisissez l'adresse email du compte dont vous avez oublié le mot de passe.</p>
 
+    <!-- MAIL -->
     <label for="inputMail" class="sr-only">mail</label>
     <input type="text" id="inputMail" name="mail" class="form-control" placeholder="Adresse email" formControlName="mail" required autofocus>
-    <!-- ERROR MESSAGE -->
+    <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="form.controls.mail.errors?.required && form.controls.mail.dirty"><small>Le champ "Adresse email" est requis.</small></li>
       <li class="text-danger" *ngIf="!mailValids() && form.controls.mail.dirty"><small>Le champ "Adresse email" est invalide.</small></li>

@@ -8,10 +8,11 @@
   <h1 class="h3 mb-3 font-weight-normal">Nouveau mot de passe</h1>
 
   <p class="mt-5 mb-3 text-muted">Saisissez le nouveau mot de passe</p>
+  <!-- NEW PASS -->
   <div class="form-group">
     <label for="inputNewPass" class="sr-only">Nouveau mot de passe</label>
     <input type="password" id="inputNewPass" class="form-control" placeholder="Nouveau mot de passe" name="newPass" formControlName="newPass" required>
-    <!-- ERROR MESSAGE -->
+    <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="form.controls.newPass.errors?.required && form.controls.newPass.dirty"><small>Le champ nouveau mot de passe est requis.</small></li>
       <ul class="text-danger" *ngIf="validPass()">
@@ -28,11 +29,11 @@
   </div>
 
   <span class="mt-5 mb-3 text-muted">Confirmez votre mot de passe</span>
-
+  <!-- CONFIRM THE NEW PASS -->
   <div class="form-group">
     <label for="inputConfPass" class="sr-only">Confirmation mot de passe</label>
     <input type="password" id="inputConfPass" class="form-control" placeholder="Confirmation mot de passe" name="confPass" formControlName="confPass" required>
-    <!-- ERROR MESSAGE -->
+    <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="form.controls.confPass.errors?.required && form.controls.confPass.dirty"><small>Le champ confirmation mot de passe est requis.</small></li>
       <li class="text-danger" *ngIf="form.controls.confPass.errors?.minlength || form.controls.confPass.errors?.maxlength || (form.controls.confPass.errors?.validatePassword && form.controls.confPass.dirty)">
@@ -41,6 +42,6 @@
       <li class="text-danger" *ngIf="comparePass()"><small>Les mots de passe doivent être identique.</small></li>
     </ul>
   </div>
-
+  <!-- BUTTON SUBMIT -->
   <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!form.valid || processing || comparePass()">Enregistrer</button>
 </form>

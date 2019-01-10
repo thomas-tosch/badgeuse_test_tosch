@@ -9,6 +9,7 @@ module.exports = function(router)
         const idUser = req.body.idUser;
         const keyTempUrl = req.body.keyTemp;
 
+        // check if the gest is authorized
         if(!accesNewPass) {
 
             db.query("SELECT * FROM users WHERE id_user=?", [idUser], (err, result) => {
@@ -44,7 +45,9 @@ module.exports = function(router)
                     });
                 }
             });
-        } else {
+        }
+        // if the gest is authorized access, check the new password, script and update to users table.
+        else {
 
             const newPass = req.body.newPass.trim();
             const confPass = req.body.confPass.trim();
@@ -54,14 +57,13 @@ module.exports = function(router)
 
                 if(newPass === confPass) {
 
+                    // hash the password
                     bcrypt.hash(newPass, 10, function (err, hash) {
 
-                        if (err){
-                            console.log(err);
-                        }
+                        if (err){console.log(err);}
 
+                        // check if the id_user is on db
                         let param = [[hash], [idUser]];
-
                         db.query("UPDATE users SET mdp_user=?, keyTemp=NULL WHERE id_user=?", param, (err, result) => {
 
                             if (err) {

@@ -1,3 +1,10 @@
+/* ====================================================
+    This css page is for the global guest style.
+        - Login
+        - forgot password
+        - new password
+ ====================================================*/
+
 /* change the style of body only for this components with :host-context */
 :host-context(body)
 {

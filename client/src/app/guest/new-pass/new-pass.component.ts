@@ -43,6 +43,7 @@ export class NewPassComponent implements OnInit {
     });
   }
 
+  // check if the guest is authorized
   verifAcces(){
     let id_user  = this.route.snapshot.params['id_user'];
     let keyTemp = this.route.snapshot.params['key'];
@@ -85,6 +86,7 @@ export class NewPassComponent implements OnInit {
     return UserService.validPass(this.form.get('newPass').value.trim());
   }
 
+  // submit the new pass to backend
   onNewPassSubmit() {
     this.processing = true;
     this.disableForm();

@@ -9,8 +9,6 @@ let randomstring = require("randomstring");
 
 module.exports = function(router) {
 
-    //on reçoit les données envoyer par Angular dans 'req'.
-    //on renvoie les données vers angular dans 'res'.
     router.post('/', (req, res) => {
 
         const action = req.body.action;
@@ -46,10 +44,12 @@ module.exports = function(router) {
 
                                 let passDb = result[0].mdp_user;
 
+                                // compare the password
                                 bcrypt.compare(passForm, passDb, (error, isMatch) => {
                                     if (!isMatch) {
                                         res.json({success: false, message: "Le mot de passe est incorrect !"});
                                     } else {
+                                        // generate a token
                                         const token = jwt.sign({id_user: result[0].id_user}, config.auth.SECRET_KEY, {expiresIn: '1h'});
                                         res.json({
                                             success: true,
