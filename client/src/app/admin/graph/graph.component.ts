@@ -16,25 +16,25 @@ export class GraphComponent implements OnInit {
 
   // graph
   barChartOptions = {
-    scaleShowVerticalLines: false,
+    scaleShowVerticalLines: true,
     responsive: true,
-    // scales: {
-    //   yAxes: [{
-    //     type: 'time',
-    //     time: {
-    //       min: 0,
-    //       minUnit: 'minute',
-    //     }
-    //   }]
-    // },
+    scales: {
+      xAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    }
   };
   barChartLabels = [];
-  barChartType = 'bar';
+  barChartType = 'horizontalBar';
   barChartLegend = false;
   data = [];
-  barChartData = [
-    {data: this.data, label: 'Temps de présence'}
-  ];
+  barChartData = [{
+    data: [12, 32, 10, 25],
+    label: 'Temps de présence',
+    backgroundColor: 'rgba(0, 255, 0, 0.8)'
+  }];
 
   constructor(private expressService: ExpressService) { }
 
