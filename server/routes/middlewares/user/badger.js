@@ -36,19 +36,33 @@ module.exports = function(router) {
 
                  });
 
-                 // add a point on db badger
-                let content_badger = [
-                    [id_user],
-                    [presence]
-                ];
-                db.query('INSERT INTO badger(id_user, StartEnd_point) VALUES (?,?)', content_badger, (err)=> {
-                    if(err) throw err;
-                    res.json({
-                        success: true,
-                        title: title,
-                        message: message
+                 // add a point on db badger for START
+                if(presence) {
+                    let content_badger_start = [
+                        [id_user]
+                    ];
+                    db.query('INSERT INTO badger(id_user) VALUES (?)', content_badger_start, (err) => {
+                        if (err) throw err;
+                        res.json({
+                            success: true,
+                            title: title,
+                            message: message
+                        });
                     });
-                });
+                }
+                else {
+                    let content_badger_end = [
+                        [id_user]
+                    ];
+                    db.query('UPDATE badger SET end_point = CURRENT_TIMESTAMP WHERE id_user = ? AND end_point is NULL ', content_badger_end, (err)=> {
+                        if (err) throw err;
+                        res.json({
+                            success: true,
+                            title: title,
+                            message: message
+                        });
+                    })
+                }
             break
 
         }
