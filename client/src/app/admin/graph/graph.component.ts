@@ -25,7 +25,7 @@ export class GraphComponent implements OnInit {
     };
     this.expressService.postExpress('graph', content).subscribe((res: Auth) => {
       console.log(res.message);
-      // this.variableTest = res.message;
+      this.variableTest = res.message;
       // this.variableTest = this.orderPipe.transform(this.variableTest, 'order_point, id_user', false);
     });
   }

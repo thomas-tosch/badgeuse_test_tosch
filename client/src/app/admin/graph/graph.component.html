@@ -5,12 +5,18 @@
   <!--<li *ngFor="let value of variableTest">user{{ value.id_user }} date:<b>{{ value.date_point }}</b> S/E:{{ value.StartEnd_point }} status:{{ value.id_status }}</li>-->
 <!--</ul>-->
 <table>
+    <tr>
+        <th>id_user</th>
+        <th>date</th>
+        <th>start</th>
+        <th>end</th>
+    </tr>
   <tr *ngFor="let value of variableTest">
     <td>{{ value.id_user }}</td>
-    <td>{{ value.date_point | date: 'dd MMM yyyy'}}</td>
-    <td>{{ value.date_point | date: 'HH:mm'}}</td>
-    <td>{{ value.StartEnd_point }}</td>
-    <td>{{ value.id_status }}</td>
+    <td>{{ value.date_point}}</td>
+    <td>{{ value.startTime}}</td>
+    <td>{{ value.endTime }}</td>
+    <td>{{ value.diff }}</td>
   </tr>
 </table>
 
