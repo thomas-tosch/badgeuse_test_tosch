@@ -1,30 +1,12 @@
-<!--<p>-->
-  <!--graph works!-->
-<!--</p>-->
-<!--<ul>-->
-  <!--<li *ngFor="let value of variableTest">user{{ value.id_user }} date:<b>{{ value.date_point }}</b> S/E:{{ value.StartEnd_point }} status:{{ value.id_status }}</li>-->
-<!--</ul>-->
+
 <h2>Heure total de la semaine du {{ startDate | date:'dd MMM yyyy'}} au {{ endDate | date:'dd MMM yyyy'}}</h2>
 <table>
     <tr>
-        <th>id_user</th>
-        <!--<th>date</th>-->
-        <!--<th>start</th>-->
-        <!--<th>end</th>-->
-        <th>Total heure</th>
+        <th>userName</th>
+        <th>duration</th>
     </tr>
   <tr *ngFor="let value of variableTest">
-    <td>{{ value.id_user }}</td>
-    <!--<td>{{ value.date_point}}</td>-->
-    <!--<td>{{ value.startTime}}</td>-->
-    <!--<td>{{ value.endTime }}</td>-->
+    <td>{{ value.userName }}</td>
     <td>{{ value.duration }}</td>
   </tr>
 </table>
-
-<!-- TODO :
-            1 : Séparer par date
-            2 : Séparer par personne
-            3 : crée un array des entré/sorti par ordre croissant
-            4 : calculer le temps total par jour par personne
- -->
