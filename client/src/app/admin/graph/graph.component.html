@@ -10,3 +10,13 @@
     <td>{{ value.duration }}</td>
   </tr>
 </table>
+<br><br>
+<div *ngIf="activeGraph">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+</div>

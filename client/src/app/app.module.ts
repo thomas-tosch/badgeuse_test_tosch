@@ -21,6 +21,7 @@ import { NewPassComponent } from './guest/new-pass/new-pass.component';
 import { GraphComponent } from './admin/graph/graph.component';
 import { ListeComponent } from './admin/liste/liste.component';
 import {OrderModule} from "ngx-order-pipe";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {OrderModule} from "ngx-order-pipe";
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    OrderModule
+    OrderModule,
+    ChartsModule
   ],
   providers: [
       AuthGuard,
