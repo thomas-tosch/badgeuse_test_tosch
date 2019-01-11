@@ -1,11 +1,42 @@
+  <!-- SIDEBAR -->
+  <div class="wrapper">
 
-  <h3>idée de contenue pour admin</h3>
-  <ul>
-    <li>liste des etudiants + gestion de la fiche étudiant</li>
-    <li>ajouter un étudiant</li>
-    <li>liste et gestion des groupe d'étudiant</li>
-    <li>vue global des pointages sous forme de graphique paramétrable + vue en détail par édutiant lorsqu'on clique sur celui-ci</li>
-    <li>vue global des status: présence, malade, stage, etc...</li>
-    <li>gestion de message important qui s'afficherai sur l'espace personnel des étudiants en général</li>
-  </ul>
+    <div class="btn-group" role="group" aria-label="Basic example">
+    <nav id="sidebar">
+
+      <div class="sidebar-header border-blue">
+        <h3>Administration</h3>
+      </div>
+
+      <!-- NAVIGATION -->
+      <ul class="list-unstyled components">
+        <li>
+          <a routerLink="graph">
+            <fa-icon [icon]="faTachometerAlt"></fa-icon>
+            graph
+          </a>
+        </li>
+        <li>
+          <a routerLink="liste">
+            <fa-icon [icon]="faFilter"></fa-icon>
+            liste
+          </a>
+      </ul>
+    </nav>
+      <!-- BUTTON SIDEBAR COLLAPSE -->
+    <button type="button" id="sidebarCollapse" class="btn btn-info btn-slider" (click)="onBtnSideBar()">
+      <fa-icon [icon]="btnSideBar"></fa-icon>
+    </button>
+    </div>
+
+    <!-- ROUTER -->
+    <div class="content-page-child">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </div>
+
+
 

@@ -18,6 +18,8 @@ import { ProfilComponent } from './user/profil/profil.component';
 import { PersonalSpaceComponent } from './user/personal-space/personal-space.component';
 import { ForgotPassComponent } from './guest/forgot-pass/forgot-pass.component';
 import { NewPassComponent } from './guest/new-pass/new-pass.component';
+import { GraphComponent } from './admin/graph/graph.component';
+import { ListeComponent } from './admin/liste/liste.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { NewPassComponent } from './guest/new-pass/new-pass.component';
     ProfilComponent,
     PersonalSpaceComponent,
     ForgotPassComponent,
-    NewPassComponent
+    NewPassComponent,
+    GraphComponent,
+    ListeComponent
   ],
   imports: [
     BrowserModule,
