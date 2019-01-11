@@ -11,6 +11,8 @@ import {OrderPipe} from "ngx-order-pipe";
 export class GraphComponent implements OnInit {
 
   variableTest;
+  startDate = '2019-01-07T00:00:00';
+  endDate = '2019-01-11T23:59:59';
 
   constructor(private expressService: ExpressService,
               private orderPipe: OrderPipe) { }
@@ -21,7 +23,9 @@ export class GraphComponent implements OnInit {
 
   getdb() {
     let content = {
-      action: 'getDb'
+      action: 'getDb',
+      startDate: this.startDate,
+      endDate: this.endDate
     };
     this.expressService.postExpress('graph', content).subscribe((res: Auth) => {
       console.log(res.message);

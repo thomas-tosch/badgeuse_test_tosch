@@ -4,19 +4,21 @@
 <!--<ul>-->
   <!--<li *ngFor="let value of variableTest">user{{ value.id_user }} date:<b>{{ value.date_point }}</b> S/E:{{ value.StartEnd_point }} status:{{ value.id_status }}</li>-->
 <!--</ul>-->
+<h2>Heure total de la semaine du {{ startDate | date:'dd MMM yyyy'}} au {{ endDate | date:'dd MMM yyyy'}}</h2>
 <table>
     <tr>
         <th>id_user</th>
-        <th>date</th>
-        <th>start</th>
-        <th>end</th>
+        <!--<th>date</th>-->
+        <!--<th>start</th>-->
+        <!--<th>end</th>-->
+        <th>Total heure</th>
     </tr>
   <tr *ngFor="let value of variableTest">
     <td>{{ value.id_user }}</td>
-    <td>{{ value.date_point}}</td>
-    <td>{{ value.startTime}}</td>
-    <td>{{ value.endTime }}</td>
-    <td>{{ value.diff }}</td>
+    <!--<td>{{ value.date_point}}</td>-->
+    <!--<td>{{ value.startTime}}</td>-->
+    <!--<td>{{ value.endTime }}</td>-->
+    <td>{{ value.duration }}</td>
   </tr>
 </table>
 

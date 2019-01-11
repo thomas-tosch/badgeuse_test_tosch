@@ -10,9 +10,16 @@ module.exports = function(router) {
         switch (action) {
 
             //
-            case 'getDb': //DATE_FORMAT("2018-09-24", "%d/%m/%Y")
+            case 'getDb':
+                let startDate = req.body.startDate;
+                let endDate = req.body.endDate;
 
-                db.query('SELECT id_user, DATE_FORMAT(CAST(start_point AS DATE), "%d-%m-%Y") date_point, CAST(start_point as TIME) startTime, CAST(end_point as TIME) endTime, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF( end_point, start_point )))) AS diff FROM badger GROUP BY date_point, id_user ORDER BY date_point', (err, rows)=> {
+
+                let content = [
+                    [startDate],
+                    [endDate]
+                ];
+                db.query('SELECT CONCAT(users.nom_user, \' \', users.prenom_user) AS id_user, DATE_FORMAT(CAST(start_point AS DATE), "%d-%m-%Y") date_point, CAST(start_point as TIME) startTime, CAST(end_point as TIME) endTime, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF( end_point, start_point )))) AS duration FROM badger INNER JOIN users ON badger.id_user = users.id_user WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? GROUP BY id_user ORDER BY id_user ', content, (err, rows)=> {
                     if(err) throw err;
 
                     res.json({message: rows});
