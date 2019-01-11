@@ -13,6 +13,8 @@ export class GraphComponent implements OnInit {
   startDate = '2019-01-07T00:00:00';
   endDate = '2019-01-11T23:59:59';
   activeGraph = false;
+  data = [];
+  colorState = [];
 
   // graph
   barChartOptions = {
@@ -22,18 +24,33 @@ export class GraphComponent implements OnInit {
       xAxes: [{
         ticks: {
           beginAtZero:true
-        }
+        },
       }]
+    },
+    plugins: {
+      annotation: {
+        annotation: [{
+          type: 'line',
+          drawTime: 'afterDatasetsDraw',
+          id: 'strip-line-1',
+          mode: 'vertical',
+          scaleID: 'y-axis-0',
+          value: 30,
+          borderColor: 'red',
+          borderWidth: 3
+        }]
+      }
     }
   };
   barChartLabels = [];
   barChartType = 'horizontalBar';
   barChartLegend = false;
-  data = [];
   barChartData = [{
-    data: [12, 32, 10, 25],
-    label: 'Temps de présence',
-    backgroundColor: 'rgba(0, 255, 0, 0.8)'
+    data: this.data,
+    label: 'Temps de présence'
+  }];
+  colors = [{
+    backgroundColor: this.colorState
   }];
 
   constructor(private expressService: ExpressService) { }
@@ -55,7 +72,14 @@ export class GraphComponent implements OnInit {
       let i = 0;
       this.variableTest.forEach((user)=> {
         this.barChartLabels.push(user.userName);
-        this.data.push(user.duration.substr(0, 5).replace(':', '.'));
+        let duration = user.duration.substr(0, 5).replace(':', '.');
+        this.data.push(duration);
+
+        if(duration > 35) {
+          this.colorState.push('#71e597');
+        } else {
+          this.colorState.push('#df6e6e');
+        }
 
         i++;
         if(i === this.variableTest.length) {
