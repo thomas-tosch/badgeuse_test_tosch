@@ -54,7 +54,7 @@ module.exports = function(router) {
                     let content_badger_end = [
                         [id_user]
                     ];
-                    db.query('UPDATE badger SET end_point = CURRENT_TIMESTAMP WHERE id_user = ? AND end_point is NULL ', content_badger_end, (err)=> {
+                    db.query('UPDATE badger SET end_point = CURRENT_TIMESTAMP, duration = TIMEDIFF( end_point, start_point ) WHERE id_user = ? AND end_point is NULL ', content_badger_end, (err)=> {
                         if (err) throw err;
                         res.json({
                             success: true,
@@ -69,7 +69,7 @@ module.exports = function(router) {
     });
 };
 
-// TODO : faire un système automatique permettant de dépointé les utilisateur à minuit tout les jours pour ceux qui ont oublié de dépointer
+// TODO : faire un système automatique permettant de dépointé les utilisateur à minuit tout les jours pour ceux qui ont oublié de dépointer avec CRON
 // TODO : faire un système automatique d'archivage après deux mois par exemple. (vider la bdd pour tout poitage après 2 mois et le transformer en fichier texte par exemple.
 //        Prévoir un système permettant de lire un fichier texte sur demande.
 // TODO : Si l'utilisateur à un status de pointage différent de start ou end, le'empecher de pointer.

@@ -5,12 +5,16 @@
         <th>userName</th>
         <th>duration</th>
     </tr>
-  <tr *ngFor="let value of variableTest">
+  <tr *ngFor="let value of usersList">
     <td>{{ value.userName }}</td>
     <td>{{ value.duration }}</td>
   </tr>
 </table>
+
+
 <br><br>
+
+
 <div *ngIf="activeGraph">
     <canvas baseChart
             [datasets]="barChartData"

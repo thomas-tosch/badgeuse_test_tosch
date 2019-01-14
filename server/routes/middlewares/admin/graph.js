@@ -5,28 +5,43 @@ module.exports = function(router) {
 
     router.post('/', (req, res) => {
 
+
         const action = req.body.action;
 
         switch (action) {
 
-            //
-            case 'getDb':
+            case 'getTotalTime':
                 let startDate = req.body.startDate;
                 let endDate = req.body.endDate;
-
+                let userGroup = req.body.userGroup;
 
                 let content = [
                     [startDate],
-                    [endDate]
+                    [endDate],
+                    [userGroup]
                 ];
-                db.query('SELECT CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, DATE_FORMAT(CAST(start_point AS DATE), "%d-%m-%Y") date_point, CAST(start_point as TIME) startTime, CAST(end_point as TIME) endTime, SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF( end_point, start_point )))) AS duration FROM badger INNER JOIN users ON badger.id_user = users.id_user WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? GROUP BY userName ORDER BY userName ', content, (err, rows)=> {
+                db.query('SELECT ' +
+                            'users.id_user AS userId, ' +
+                            'badger.end_point, ' +
+                            'badger.start_point, ' +
+                            'badger.id_user AS badgerUserId, ' +
+                            'CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, ' +
+                            'users.id_group, ' +
+                            'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration ' +
+                        'FROM users ' +
+                        'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ' +
+                        'ON users.id_user = badger.id_user ' +
+                        'WHERE users.id_group = ? ' +
+                        'GROUP BY userId ' +
+                        'ORDER BY userName'
+                    , content, (err, rows) => {
                     if(err) throw err;
 
                     res.json({message: rows});
-
-
                 })
-                break
+            break
+
+
         }
     });
 }
