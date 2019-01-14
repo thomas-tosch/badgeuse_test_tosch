@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {BaseChartDirective} from "ng2-charts";
 
 @Component({
   selector: 'app-graph',
@@ -9,25 +11,27 @@ import {Auth} from "../../guards/auth";
 })
 export class GraphComponent implements OnInit {
 
-  variableTest;
   usersList;
   startDate = '2019-01-07T00:00:00';
   endDate = '2019-01-11T23:59:59';
   activeGraph = false;
   data = [];
   colorState = [];
+    formSelectGroup: FormGroup;
 
   // graph
-  barChartOptions = {
+    barChartOptions = {
     scaleShowVerticalLines: true,
     responsive: true,
     scales: {
       xAxes: [{
         ticks: {
-          beginAtZero:true
+            beginAtZero:true,
+            max: 60
         },
       }]
     },
+    onClick: this.onClickBar,
     annotation: {
       annotation: [{
         type: 'line',
@@ -46,27 +50,50 @@ export class GraphComponent implements OnInit {
   barChartLegend = false;
   barChartData = [{
     data: this.data,
-    label: 'Temps de présence'
+    label: 'Total en heure'
   }];
   colors = [{
     backgroundColor: this.colorState
   }];
+    @ViewChild(BaseChartDirective)
+    chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
 
-  constructor(private expressService: ExpressService) { }
+  constructor(private expressService: ExpressService,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.getTotalTime();
+    this.getTotalTime(1);
+    this.createForm();
   }
 
-  getTotalTime() {
+    onClickBar(table, bar) {
+      if(bar[0] !== undefined) {
+          console.log(bar[0]._model.label);
+      }
+  }
+
+  onSelectGroup() {
+      this.data = [];
+      this.barChartLabels = [];
+      this.getTotalTime(this.formSelectGroup.get('userGroup').value);
+  }
+
+    // create the login form
+    createForm() {
+        this.formSelectGroup = this.formBuilder.group({
+            userGroup: ['']
+        });
+    }
+
+  getTotalTime(userGroup) {
     let content = {
       action: 'getTotalTime',
       startDate: this.startDate,
       endDate: this.endDate,
-      userGroup: 1
+      userGroup: userGroup
     };
     this.expressService.postExpress('graph', content).subscribe((res: Auth) => {
-      console.log(res.message);
+      // console.log(res.message);
       this.usersList = res.message;
 
         let i = 0;
@@ -83,6 +110,7 @@ export class GraphComponent implements OnInit {
             i++;
             if(i === this.usersList.length) {
                 this.activeGraph = true;
+                this.chart.chart.update();
             }
 
         });
