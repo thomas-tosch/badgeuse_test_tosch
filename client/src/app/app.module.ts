@@ -20,6 +20,8 @@ import { ForgotPassComponent } from './guest/forgot-pass/forgot-pass.component';
 import { NewPassComponent } from './guest/new-pass/new-pass.component';
 import { GraphComponent } from './admin/graph/graph.component';
 import { ListeComponent } from './admin/liste/liste.component';
+import {OrderModule} from "ngx-order-pipe";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ListeComponent } from './admin/liste/liste.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    OrderModule,
+    ChartsModule
   ],
   providers: [
       AuthGuard,

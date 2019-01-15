@@ -13,10 +13,10 @@ CREATE TABLE roles (
 )
 Engine = INNODB;
 
-CREATE TABLE status (
-	id_status SMALLINT NOT NULL AUTO_INCREMENT,
-	nom_status VARCHAR(255) NOT NULL,
-	PRIMARY KEY (id_status)
+CREATE TABLE group_users (
+	id_group SMALLINT NOT NULL AUTO_INCREMENT,
+	nom_group VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id_group)
 )
 Engine = INNODB;
 
@@ -30,12 +30,17 @@ CREATE TABLE users (
 	id_role SMALLINT NOT NULL,
 	presence BOOLEAN NOT NULL DEFAULT "0",
 	keyTemp VARCHAR(255) NULL,
+	id_group SMALLINT NOT NULL,
 	PRIMARY KEY (id_user),
 	CONSTRAINT fk_users_id_user
 		FOREIGN KEY (id_role)
-		REFERENCES roles(id_role)
+		REFERENCES roles(id_role),
+	CONSTRAINT fk_users_id_group
+		FOREIGN KEY (id_group)
+		REFERENCES group_users(id_group)
 )
 Engine = INNODB;
+
 
 CREATE TABLE apps (
 	id_app INT NOT NULL AUTO_INCREMENT,
@@ -67,16 +72,13 @@ Engine = INNODB;
 CREATE TABLE badger (
 	id_point INT NOT NULL AUTO_INCREMENT,
 	id_user SMALLINT NOT NULL,
-	date_point DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	StartEnd_point BOOLEAN NOT NULL,
-	id_status SMALLINT NOT NULL DEFAULT 1,
+	start_point DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	end_point DATETIME NULL,
+	duration TIME NULL,
 	PRIMARY KEY (id_point),
 	CONSTRAINT fk_badger_id_user
 		FOREIGN KEY (id_user)
-		REFERENCES users(id_user),
-	CONSTRAINT fk_badger_id_status
-		FOREIGN KEY (id_status)
-		REFERENCES status(id_status)
+		REFERENCES users(id_user)
 )
 Engine = INNODB;
 
@@ -85,68 +87,68 @@ INSERT IGNORE INTO `roles` (`id_role`, `nom_role`, `permission_role`) VALUES
 (2, 'Intervenant', 10384),
 (3, 'Administrateur', 16369);
 
-INSERT IGNORE INTO `status` (`id_status`, `nom_status`) VALUES
-(1, 'actif'),
-(2, 'malade'),
-(3, 'stage'),
-(4, 'déplacement');
+INSERT IGNORE INTO `group_users` (`id_group`, `nom_group`) VALUES
+(1, '1ere année'),
+(2, '2e année'),
+(3, '3e année'),
+(4, 'résident');
 
 
-INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES
-('Florent', 'Bourgeois', 'florent.bourgeois@uha.fr', 3),
-('Daniel', 'Da Fonseca', 'daniel.da-fonseca@uha.fr', 3),
+INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`, `id_group`) VALUES
+('Florent', 'Bourgeois', 'florent.bourgeois@uha.fr', 3, 4),
+('Daniel', 'Da Fonseca', 'daniel.da-fonseca@uha.fr', 3, 4),
 
-('Oussama', 'Sadeg', 'oussama.sadeg@uha.fr', 1),
-('Jérôme', 'Andre', 'jerome.andre@uha.fr', 1),
-('Achraf', 'Haddouch', 'achraf.haddouch@uha.fr', 1),
-('Antoine', 'Carette', 'antoine.carette@uha.fr', 1),
-('Anthony', 'Schwartz', 'anthony.schwartz@uha.fr', 3),
-('Stephane', 'Brichler', 'stephane.brichler@uha.fr', 1),
-('Charly', 'Bihel', 'charly.bihel@uha.fr', 1),
-('Nicolas', 'Piszewski', 'nicolas.piszewski@uha.fr', 1),
-('Florian', 'Biller', 'florian.biller@uha.fr', 1),
-('Gauthier', 'Vuillemin', 'gauthier.vuillemin@uha.fr', 1),
-('Maxime', 'Rayot', 'maxime.rayot@uha.fr', 1),
-('David', 'Khyrmandy', 'david.khyrmandy@uha.fr', 1),
-('Quentin', 'Grebe', 'quentin.grebe@uha.fr', 1),
-('Florent', 'Haffner', 'florent.haffner@uha.fr', 1),
-('Orane', 'Mendes', 'orane.mendes@uha.fr', 1),
-('Valentin', 'Fritz', 'valentin.fritz@uha.fr', 1),
-('Vincent', 'Meneur', 'vincent.meneur@uha.fr', 1),
-('Pierre Louis', 'Braun', 'pierre-louis.braun@uha.fr', 1),
-('Ioannis', 'Karapostolis', 'ioannis.karapostolis@uha.fr', 1),
-('Florent', 'Keiflin', 'florent.keiflin@uha.fr', 1),
-('Chloe', 'Prudham', 'chloe.prudham@uha.fr', 1),
-('Franck', 'Hubschwerle', 'franck.hubschwerle@uha.fr', 1),
-('Adrien', 'Kolodziej', 'adrien.kolodziej@uha.fr', 1),
-('Aghiles', 'Nessah', 'aghiles.nessah@uha.fr', 1),
-('Alvin', 'Frey', 'alvin.frey@uha.fr', 1),
-('Valentin', 'Tahon', 'valentin.tahon@uha.fr', 1),
-('Victor', 'Damiano', 'victor.damiano@uha.fr', 1),
-('Luc', 'ratelli', 'luc.ratelli@uha.fr', 1),
-('Jimmy', 'Heitz', 'jimmy.heitz@uha.fr', 1),
-('Etrit', 'Halili', 'etrit.halili@uha.fr', 1),
-('Hélène', 'David', 'helene.david@uha.fr', 1),
-('Anthony', 'Spinali', 'anthony.spinali@uha.fr', 1),
-('Alexandre', 'Dias-Omonte', 'alexandre.dias-omonte@uha.fr', 1),
-('Elodie', 'Balaia', 'elodie.balaia@uha.fr', 1),
-('Thomas', 'Tosch', 'thomas.tosch@uha.fr', 1),
-('Aurelien', 'Diss', 'aurelien.diss@uha.fr', 1),
-('Natan', 'Fourie', 'natan.fourie@uha.fr', 1),
-('Alexis', 'Martinez', 'alexis.martinez@uha.fr', 1),
-('Christophe', 'Bourgeois', 'christophe.bourgeois@uha.fr', 1),
-('Gauthier', 'Staehler', 'gauthier.staehler@uha.fr', 1),
-('Kamel', 'Seddik', 'kamel.seddik@uha.fr', 1),
-('Mouloud', 'Hammoutène', 'mouloud.hammoutene@uha.fr', 1),
-('Rabie', 'Bougedrawi', 'rabie.bougedrawi@uha.fr', 1),
-('Valentin', 'Cartier', 'valentin.cartier@uha.fr', 1),
-('Thomas', 'Fritsch', 'thomas.fritsch@uha.fr', 1),
-('Quentin', 'Kollaros', 'quentin.kollaros@uha.fr', 1),
-('Alexandre', 'Royer', 'alexandre.royer@uha.fr', 1),
-('Lucas', 'Suhner', 'lucas.suhner@uha.fr', 1),
-('Corentin', 'Jacob', 'corentin.jacob@uha.fr', 1),
-('Loïc', 'Deverre', 'loic.deverre@uha.fr', 1),
+('Oussama', 'Sadeg', 'oussama.sadeg@uha.fr', 1, 3),
+('Jérôme', 'Andre', 'jerome.andre@uha.fr', 1, 2),
+('Achraf', 'Haddouch', 'achraf.haddouch@uha.fr', 1, 2),
+('Antoine', 'Carette', 'antoine.carette@uha.fr', 1, 3),
+('Anthony', 'Schwartz', 'anthony.schwartz@uha.fr', 3, 1),
+('Stephane', 'Brichler', 'stephane.brichler@uha.fr', 1, 3),
+('Charly', 'Bihel', 'charly.bihel@uha.fr', 1, 2),
+('Nicolas', 'Piszewski', 'nicolas.piszewski@uha.fr', 1, 2),
+('Florian', 'Biller', 'florian.biller@uha.fr', 1, 3),
+('Gauthier', 'Vuillemin', 'gauthier.vuillemin@uha.fr', 1, 2),
+('Maxime', 'Rayot', 'maxime.rayot@uha.fr', 1, 3),
+('David', 'Khyrmandy', 'david.khyrmandy@uha.fr', 1, 3),
+('Quentin', 'Grebe', 'quentin.grebe@uha.fr', 1, 2),
+('Florent', 'Haffner', 'florent.haffner@uha.fr', 1, 1),
+('Orane', 'Mendes', 'orane.mendes@uha.fr', 1, 2),
+('Valentin', 'Fritz', 'valentin.fritz@uha.fr', 1, 3),
+('Vincent', 'Meneur', 'vincent.meneur@uha.fr', 1, 1),
+('Pierre Louis', 'Braun', 'pierre-louis.braun@uha.fr', 1, 3),
+('Ioannis', 'Karapostolis', 'ioannis.karapostolis@uha.fr', 1, 2),
+('Florent', 'Keiflin', 'florent.keiflin@uha.fr', 1, 2),
+('Chloe', 'Prudham', 'chloe.prudham@uha.fr', 1, 2),
+('Franck', 'Hubschwerle', 'franck.hubschwerle@uha.fr', 1, 1),
+('Adrien', 'Kolodziej', 'adrien.kolodziej@uha.fr', 1, 2),
+('Aghiles', 'Nessah', 'aghiles.nessah@uha.fr', 1, 3),
+('Alvin', 'Frey', 'alvin.frey@uha.fr', 1, 2),
+('Valentin', 'Tahon', 'valentin.tahon@uha.fr', 1, 3),
+('Victor', 'Damiano', 'victor.damiano@uha.fr', 1, 3),
+('Luc', 'ratelli', 'luc.ratelli@uha.fr', 1, 1),
+('Jimmy', 'Heitz', 'jimmy.heitz@uha.fr', 1, 1),
+('Etrit', 'Halili', 'etrit.halili@uha.fr', 1, 2),
+('Hélène', 'David', 'helene.david@uha.fr', 1, 2),
+('Anthony', 'Spinali', 'anthony.spinali@uha.fr', 1, 2),
+('Alexandre', 'Dias-Omonte', 'alexandre.dias-omonte@uha.fr', 1, 3),
+('Elodie', 'Balaia', 'elodie.balaia@uha.fr', 1, 1),
+('Thomas', 'Tosch', 'thomas.tosch@uha.fr', 1, 1),
+('Aurelien', 'Diss', 'aurelien.diss@uha.fr', 1, 1),
+('Natan', 'Fourie', 'natan.fourie@uha.fr', 1, 3),
+('Alexis', 'Martinez', 'alexis.martinez@uha.fr', 1, 2),
+('Christophe', 'Bourgeois', 'christophe.bourgeois@uha.fr', 1, 2),
+('Gauthier', 'Staehler', 'gauthier.staehler@uha.fr', 1, 1),
+('Kamel', 'Seddik', 'kamel.seddik@uha.fr', 1, 3),
+('Mouloud', 'Hammoutène', 'mouloud.hammoutene@uha.fr', 1, 3),
+('Rabie', 'Bougedrawi', 'rabie.bougedrawi@uha.fr', 1, 2),
+('Valentin', 'Cartier', 'valentin.cartier@uha.fr', 1, 2),
+('Thomas', 'Fritsch', 'thomas.fritsch@uha.fr', 1, 1),
+('Quentin', 'Kollaros', 'quentin.kollaros@uha.fr', 1, 3),
+('Alexandre', 'Royer', 'alexandre.royer@uha.fr', 1, 2),
+('Lucas', 'Suhner', 'lucas.suhner@uha.fr', 1, 2),
+('Corentin', 'Jacob', 'corentin.jacob@uha.fr', 1, 3),
+('Loïc', 'Deverre', 'loic.deverre@uha.fr', 1, 3),
 
-('Etienne', 'Burger', 'etienne_burger@yahoo.fr', 2),
-('Jean Francois', 'Roth', 'jean-francois.roth@uha.fr', 2);
+('Etienne', 'Burger', 'etienne_burger@yahoo.fr', 2, 4),
+('Jean Francois', 'Roth', 'jean-francois.roth@uha.fr', 2, 4);
 
