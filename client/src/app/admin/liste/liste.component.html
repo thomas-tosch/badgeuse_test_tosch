@@ -4,13 +4,17 @@
 <h3 class="ml-3">Présent ({{ userOn.length }})</h3>
 <ul class="mb-3">
   <li *ngFor="let user of userOn">
-    <fa-icon [icon]="faCircle" class="iconOn ml-5"></fa-icon> {{ user.userName }}
+    <a routerLink="userDetail/{{ user.userId }}">
+      <fa-icon [icon]="faCircle" class="iconOn ml-5"></fa-icon> {{ user.userName }}
+    </a>
   </li>
 </ul>
 
 <h3 class="ml-3">Absent ({{ userOff.length }})</h3>
 <ul class="ulOff">
   <li *ngFor="let user of userOff">
-    <fa-icon [icon]="faCircle" class="iconOff ml-5"></fa-icon> {{ user.userName }}
+    <a routerLink="userDetail/{{ user.userId }}">
+      <fa-icon [icon]="faCircle" class="iconOff ml-5"></fa-icon> {{ user.userName }}
+    </a>
   </li>
 </ul>

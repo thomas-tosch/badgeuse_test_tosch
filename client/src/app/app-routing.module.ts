@@ -10,6 +10,7 @@ import {ForgotPassComponent} from "./guest/forgot-pass/forgot-pass.component";
 import {NewPassComponent} from "./guest/new-pass/new-pass.component";
 import {GraphComponent} from "./admin/graph/graph.component";
 import {ListeComponent} from "./admin/liste/liste.component";
+import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
 
 // ROUTER
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'graph', pathMatch: 'full' },
       { path: 'graph', component: GraphComponent },
-      { path: 'liste', component: ListeComponent }
+      { path: 'userDetail/:id_user', component: UserDetailComponent }
     ]
   },
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},

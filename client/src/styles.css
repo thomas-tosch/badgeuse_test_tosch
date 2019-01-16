@@ -12,3 +12,7 @@ body {
     padding: 80px 300px 0 20px;
     width: 100%;
 }
+a, a:hover {
+    color: black;
+    text-decoration: none;
+}

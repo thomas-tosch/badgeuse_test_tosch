@@ -29,6 +29,7 @@ export class ListeComponent implements OnInit {
     this.expressService.postExpress('liste', content).subscribe((res: Auth) => {
       this.userList = res.list;
       this.splitPresence();
+      console.log(this.userList);
     })
   }
 

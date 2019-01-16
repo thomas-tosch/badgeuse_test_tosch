@@ -1,7 +1,6 @@
 ul, li {
     list-style: none;
     padding-left: 0;
-
 }
 li:hover {
     background-color: rgba(200,200,200,0.6);
