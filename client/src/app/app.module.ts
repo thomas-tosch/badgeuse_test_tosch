@@ -22,6 +22,7 @@ import { GraphComponent } from './admin/graph/graph.component';
 import { ListeComponent } from './admin/liste/liste.component';
 import {OrderModule} from "ngx-order-pipe";
 import {ChartsModule} from "ng2-charts";
+import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {ChartsModule} from "ng2-charts";
     ForgotPassComponent,
     NewPassComponent,
     GraphComponent,
-    ListeComponent
+    ListeComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,

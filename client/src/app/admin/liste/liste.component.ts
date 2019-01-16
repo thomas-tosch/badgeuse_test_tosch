@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
+import {faCircle, faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-liste',
@@ -12,6 +13,8 @@ export class ListeComponent implements OnInit {
   userList;
   userOn = [];
   userOff = [];
+
+  faCircle = faCircle
 
   constructor(private expressService: ExpressService) { }
 

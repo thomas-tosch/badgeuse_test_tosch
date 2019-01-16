@@ -1,26 +1,22 @@
 
-  <div class="wrapper w-100">
+  <div class="wrapper">
 
     <!-- SIDEBAR -->
     <div class="btn-group" role="group" aria-label="Basic example">
       <nav id="sidebar">
-
-        <div class="sidebar-header border-blue">
-          <h3>Administration</h3>
-        </div>
 
         <!-- NAVIGATION -->
         <ul class="list-unstyled components">
           <li>
             <a routerLink="graph">
               <fa-icon [icon]="faTachometerAlt"></fa-icon>
-              Heure total
+                Rapport
             </a>
           </li>
           <li>
-            <a routerLink="liste">
+            <a routerLink="graph">
               <fa-icon [icon]="faFilter"></fa-icon>
-              liste
+              Requête
             </a>
         </ul>
       </nav>
@@ -35,6 +31,11 @@
 
       <router-outlet></router-outlet>
 
+    </div>
+
+    <!-- PANEL RIGHT PRESENCE -->
+    <div class="border right-panel">
+      <app-liste></app-liste>
     </div>
 
   </div>
