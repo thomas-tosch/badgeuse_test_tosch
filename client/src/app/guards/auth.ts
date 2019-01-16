@@ -5,4 +5,5 @@ export interface Auth {
   success: string;
   token: string;
   user: string;
+  list: string;
 }

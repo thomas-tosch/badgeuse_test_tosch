@@ -1,9 +1,15 @@
-<h3>idée de contenue pour admin</h3>
+<button class="btn btn-secondary" (click)="onRefresh()">Actualiser</button>
+
+<h3>Présent ({{ userOn.length }})</h3>
 <ul>
-  <li>liste des etudiants + gestion de la fiche étudiant</li>
-  <li>ajouter un étudiant</li>
-  <li>liste et gestion des groupe d'étudiant</li>
-  <li>vue global des pointages sous forme de graphique paramétrable + vue en détail par édutiant lorsqu'on clique sur celui-ci</li>
-  <li>vue global des status: présence, malade, stage, etc...</li>
-  <li>gestion de message important qui s'afficherai sur l'espace personnel des étudiants en général</li>
+  <li *ngFor="let user of userOn">
+    {{ user.userName }}
+  </li>
+</ul>
+
+<h3>Absent ({{ userOff.length }})</h3>
+<ul>
+  <li *ngFor="let user of userOff">
+    {{ user.userName }}
+  </li>
 </ul>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ExpressService} from "../../services/express.service";
+import {Auth} from "../../guards/auth";
 
 @Component({
   selector: 'app-liste',
@@ -7,9 +9,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListeComponent implements OnInit {
 
-  constructor() { }
+  userList;
+  userOn = [];
+  userOff = [];
+
+  constructor(private expressService: ExpressService) { }
 
   ngOnInit() {
+    this.getUserList();
   }
+
+  getUserList() {
+    let content = {
+      action: 'getUserList'
+    };
+    this.expressService.postExpress('liste', content).subscribe((res: Auth) => {
+      this.userList = res.list;
+      this.splitPresence();
+    })
+  }
+
+  splitPresence() {
+    this.userList.forEach((user) => {
+      if(user.presence === 1) {
+        this.userOn.push(user);
+      } else {
+        this.userOff.push(user);
+      }
+    })
+  }
+
+  onRefresh() {
+    this.userList = [];
+    this.userOn = [];
+    this.userOff = [];
+    this.getUserList();
+  }
+
 
 }
