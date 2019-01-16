@@ -18,8 +18,8 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'graph', pathMatch: 'full' },
-      { path: 'graph', component: GraphComponent },
-      { path: 'userDetail/:id_user', component: UserDetailComponent }
+      { path: 'graph', component: GraphComponent, canActivate: [AuthGuard] },
+      { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
