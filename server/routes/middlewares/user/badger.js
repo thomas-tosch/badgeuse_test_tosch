@@ -31,7 +31,7 @@ module.exports = function(router) {
                    [presence],
                    [id_user]
                  ];
-                 db.query('UPDATE users SET presence = ? WHERE id_user = ?', content_users, (err)=> {
+                 db.query('UPDATE users_badger SET presence = ? WHERE id_user = ?', content_users, (err)=> {
                      if(err) throw err;
 
                  });
