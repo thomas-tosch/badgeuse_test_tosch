@@ -6,9 +6,8 @@
 .wrapper {
     display: flex;
     align-items: stretch;
-    /*height: 100%;*/
     position: absolute;
-    top: 60px;
+    top: 0;
     left: 0;
 }
 
@@ -35,6 +34,7 @@ a:focus {
     background: #34495E;
     color: #fff;
     transition: all 0.3s;
+    padding-top: 60px;
 }
 
 #sidebar.active {

@@ -21,7 +21,6 @@ export class AdminComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.setPanelHeight();
     this.sidebarCollapse();
   }
 
@@ -32,12 +31,6 @@ export class AdminComponent implements OnInit {
     } else {
       this.btnSideBar = this.faAngleDoubleLeft;
     }
-  }
-
-  // set the height for panel sidebar
-  setPanelHeight() {
-    var haut = $( document ).height() - 63;
-    $('.wrapper').height(haut);
   }
 
   // collapse the sidebar
