@@ -18,6 +18,7 @@ CREATE TABLE users_badger (
 	presence BOOLEAN NOT NULL DEFAULT "0",
 	keyTemp VARCHAR(255) NULL,
 	id_group SMALLINT NOT NULL,
+	id_card TEXT DEFAULT NULL,
 	PRIMARY KEY (id_user),
 	CONSTRAINT fk_users_id_users
 		FOREIGN KEY (id_user)
