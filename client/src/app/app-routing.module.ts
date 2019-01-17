@@ -12,17 +12,17 @@ import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
 
 // ROUTER
 const routes: Routes = [
-  { path: 'newPass/:id_user/:key', component: NewPassComponent, canActivate: [NotAuthGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard],
-    children: [
-      { path: '', redirectTo: 'graph', pathMatch: 'full' },
-      { path: 'graph', component: GraphComponent, canActivate: [AuthGuard] },
-      { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] }
-    ]
-  },
+
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'graph', component: GraphComponent, canActivate: [AuthGuard] },
+  { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] },
+
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
+
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
+  { path: 'newPass/:id_user/:key', component: NewPassComponent, canActivate: [NotAuthGuard] },
   { path: 'forgotPass', component: ForgotPassComponent, canActivate: [NotAuthGuard] },
+
   { path: '', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: '**', redirectTo: 'login' }
 ];

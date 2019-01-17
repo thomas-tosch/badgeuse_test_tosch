@@ -2,9 +2,19 @@
 <app-menu *ngIf="getConnectStatus()"></app-menu>
 
 <!-- CONTENT PAGE -->
-<div class="content-page">
+<div class="content-page d-lg-flex">
 
-  <!-- ROUTER -->
-  <router-outlet></router-outlet>
+  <div class="content-page-child">
+    <!-- ROUTER -->
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="content-list" id="sidebar">
+    <!-- BUTTON SIDEBAR COLLAPSE -->
+    <button type="button" id="sidebarCollapse" class="btn btn-info btn-slider" (click)="onBtnSideBar()">
+      <fa-icon [icon]="btnSideBar"></fa-icon>
+    </button>
+    <app-liste class="list-overflow"></app-liste>
+  </div>
 
 </div>
