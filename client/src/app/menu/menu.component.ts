@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {faAddressCard, faChessQueen, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
+import {faAddressCard, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
 
@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit {
   faChessQueen = faChessQueen;
   faUserAstronaut = faUserAstronaut;
   faAddressCard = faAddressCard;
+  faTimesCircle = faTimesCircle;
   userData;
   nomUser;
   prenomUser;
