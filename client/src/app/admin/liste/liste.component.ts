@@ -17,27 +17,7 @@ export class ListeComponent implements OnInit {
   userOff = [];
 
   faCircle = faCircle
-  students: Student[] = [{
-    id: 1,
-    name: 'Krunal',
-    enrollmentnumber: 110470116021,
-    college: 'VVP Engineering College',
-    university: 'GTU'
-  },
-    {
-      id: 2,
-      name: 'Rushabh',
-      enrollmentnumber: 110470116023,
-      college: 'VVP Engineering College',
-      university: 'GTU'
-    },
-    {
-      id: 3,
-      name: 'Ankit',
-      enrollmentnumber: 110470116022,
-      college: 'VVP Engineering College',
-      university: 'GTU'
-    }];
+  students = 1;
 
   constructor(private expressService: ExpressService) { }
 
@@ -78,8 +58,17 @@ export class ListeComponent implements OnInit {
     const studentsObservable = new Observable(observer => {
       setTimeout(() => {
         observer.next(this.students);
-      }, 1000);
+      }, 2000);
     });
+
+    studentsObservable.subscribe((studentsData) => {
+      // this.students = studentsData;
+      console.log(studentsData);
+    });
+
+  }
+
+  onTest() {
 
   }
 

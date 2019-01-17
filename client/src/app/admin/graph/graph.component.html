@@ -36,17 +36,17 @@ Sélectionnez un groupe: <br>
 
 <h2>Heure total de la semaine du {{ startDate | date:'dd MMM yyyy'}} au {{ endDate | date:'dd MMM yyyy'}}</h2>
 
-<section class="mr-3">
-    <div *ngIf="activeGraph" class="shadow  bg-white p-3 mr-3">
-        <canvas baseChart
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [legend]="barChartLegend"
-                [chartType]="barChartType"
-                [colors]="colors"
-                class="graph"
-        >
-        </canvas>
-    </div>
-</section>
+<!--<section class="mr-3">-->
+    <!--<div *ngIf="activeGraph" class="shadow  bg-white p-3 mr-3">-->
+        <!--<canvas baseChart-->
+                <!--[datasets]="barChartData"-->
+                <!--[labels]="barChartLabels"-->
+                <!--[options]="barChartOptions"-->
+                <!--[legend]="barChartLegend"-->
+                <!--[chartType]="barChartType"-->
+                <!--[colors]="colors"-->
+                <!--class="graph"-->
+        <!--&gt;-->
+        <!--</canvas>-->
+    <!--</div>-->
+<!--</section>-->
