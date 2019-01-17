@@ -36,18 +36,24 @@ a:focus {
 }
 
 #sidebar {
-    min-width: 200px;
-    max-width: 200px;
-    background: #34495E;
-    color: #fff;
+    min-width: 300px;
+    max-width: 300px;
     transition: all 0.3s;
-    padding-top: 60px;
+    overflow: auto;
+    max-height: 100%;
+    padding: 58px 0px 10px 0px;
+    margin: 0 20px 0 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+
 }
 
 #sidebar.active {
-    min-width: 80px;
-    max-width: 80px;
-    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
 }
 
 #sidebar.active .sidebar-header h3 {

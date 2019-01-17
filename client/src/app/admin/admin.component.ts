@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   faFileAlt = faFileAlt;
   faUserCog = faUserCog;
   faChartLine = faChartLine;
-  btnSideBar = this.faAngleDoubleLeft;
+  btnSideBar = this.faAngleDoubleRight;
 
   constructor() { }
 
@@ -26,10 +26,10 @@ export class AdminComponent implements OnInit {
 
   // icon for the button collapse
   onBtnSideBar() {
-    if(this.btnSideBar === this.faAngleDoubleLeft){
-      this.btnSideBar = this.faAngleDoubleRight;
-    } else {
+    if(this.btnSideBar === this.faAngleDoubleRight){
       this.btnSideBar = this.faAngleDoubleLeft;
+    } else {
+      this.btnSideBar = this.faAngleDoubleRight;
     }
   }
 
