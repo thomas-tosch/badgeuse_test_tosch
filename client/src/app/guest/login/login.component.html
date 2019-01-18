@@ -10,7 +10,7 @@
   <div class="form-group">
     <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
     <label for="inputUserMail" class="sr-only">userMail</label>
-    <input type="text" id="inputUserMail" name="userMail" class="form-control" placeholder="Nom d'utilisateur" formControlName="userMail" required autofocus>
+    <input type="text" id="inputUserMail" name="userMail" class="form-control rounded" placeholder="Nom d'utilisateur" formControlName="userMail" required autofocus>
     <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="formLogin.controls.userMail.errors?.required && formLogin.controls.userMail.dirty"><small>Le champ du nom d'utilisateur est requis.</small></li>
@@ -20,7 +20,7 @@
   <!-- USERPASS -->
   <div class="form-group">
     <label for="inputPassword" class="sr-only">Mot de passe</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" name="password" formControlName="password" required>
+    <input type="password" id="inputPassword" class="form-control rounded" placeholder="Mot de passe" name="password" formControlName="password" required>
     <!-- error message -->
     <ul class="help-block">
       <li class="text-danger" *ngIf="formLogin.controls.password.errors?.required && formLogin.controls.password.dirty"><small>Le champ mot de passe est requis.</small></li>

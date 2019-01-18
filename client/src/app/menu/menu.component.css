@@ -1,8 +1,62 @@
+nav {
+    background-color: #205081;
+    font-size: 14px;
+    color: #fff;
+}
+nav a {
+    color: #fff;
+}
+.btn {
+    padding: 0 5px 0 5px;
+    margin: 6px 0 0 0;
+}
+.navbar {
+    height: 40px;
+}
 .h1 {
     border-bottom: 2px solid orange;
+    font-size: 18px;
 }
 
 .nav-img-logo {
     height: 40px;
+
     margin-right: 20px;
+}
+
+.h1:hover, li a:hover {
+    background-color: #3c94ee;
+    border-radius: 5px;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 991px) {
+    nav {
+        background-color: #205081;
+        font-size: 20px;
+        color: #fff;
+        padding: 0px;
+    }
+    li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .navbar {
+        height: 70px;
+    }
+    .h1:hover, li a:hover {
+        background-color: #3c94ee00;
+        border-radius: 0px;
+    }
+
+    @media (max-width: 550px) {
+        nav {
+            font-size: 1rem;
+        }
+    }
+
 }

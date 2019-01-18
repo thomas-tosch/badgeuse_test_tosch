@@ -28,11 +28,14 @@ export class UserService {
     }
 
     // get all data of user conected
-    getDataUser(callback) {
+    getDataUser(callback, id_user?) {
         let token = helper.decodeToken(this.loginService.getToken());
+
+        if(id_user === undefined){id_user = token.id_user;}
+
         let content = {
             action: 'getDataUser',
-            id_user: token.id_user
+            id_user: id_user
         };
         this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
             return callback(res.user);

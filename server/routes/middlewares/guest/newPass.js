@@ -12,7 +12,7 @@ module.exports = function(router)
         // check if the gest is authorized
         if(!accesNewPass) {
 
-            db.query("SELECT * FROM users WHERE id_user=?", [idUser], (err, result) => {
+            db.query("SELECT * FROM users_badger WHERE id_user=?", [idUser], (err, result) => {
 
                 if (err) {
                     res.json
@@ -64,7 +64,7 @@ module.exports = function(router)
 
                         // check if the id_user is on db
                         let param = [[hash], [idUser]];
-                        db.query("UPDATE users SET mdp_user=?, keyTemp=NULL WHERE id_user=?", param, (err, result) => {
+                        db.query("UPDATE users_badger SET mdp_user_badger=?, keyTemp=NULL WHERE id_user=?", param, (err, result) => {
 
                             if (err) {
                                 res.json

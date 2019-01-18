@@ -1,100 +1,6 @@
-DROP DATABASE IF EXISTS showroom;
-CREATE DATABASE IF NOT EXISTS showroom;
 USE showroom;
 
-CREATE USER IF NOT EXISTS 'uhaSQL'@'localhost' IDENTIFIED BY 'uha';
-GRANT ALL PRIVILEGES ON showroom . * TO 'uhaSQL'@'localhost';
-
-CREATE TABLE roles (
-	id_role SMALLINT NOT NULL AUTO_INCREMENT,
-	nom_role VARCHAR(255) NOT NULL,
-	permission_role INT NOT NULL,
-	PRIMARY KEY (id_role)
-)
-Engine = INNODB;
-
-CREATE TABLE status (
-	id_status SMALLINT NOT NULL AUTO_INCREMENT,
-	nom_status VARCHAR(255) NOT NULL,
-	PRIMARY KEY (id_status)
-)
-Engine = INNODB;
-
-CREATE TABLE users (
-	id_user SMALLINT NOT NULL AUTO_INCREMENT,
-	prenom_user VARCHAR(255) NOT NULL,
-	nom_user VARCHAR(255) NOT NULL,
-	pseudo_user VARCHAR(255) DEFAULT "pseudo de l'utilisateur" NOT NULL,
-	mail_user VARCHAR(255) NOT NULL,
-	mdp_user VARCHAR(255) DEFAULT "$2b$10$heLifc2slq0U8jAuSSu6reQfO6WzwXf/rxl3uGmiUldY2L/D0jbDm" NULL,
-	id_role SMALLINT NOT NULL,
-	presence BOOLEAN NOT NULL DEFAULT "0",
-	keyTemp VARCHAR(255) NULL,
-	PRIMARY KEY (id_user),
-	CONSTRAINT fk_users_id_user
-		FOREIGN KEY (id_role)
-		REFERENCES roles(id_role)
-)
-Engine = INNODB;
-
-CREATE TABLE apps (
-	id_app INT NOT NULL AUTO_INCREMENT,
-	nom_app VARCHAR(255) NOT NULL,
-	montrer_app SMALLINT DEFAULT 1 NOT NULL,
-	hash_app VARCHAR(255),
-	description_app VARCHAR(255) NOT NULL,
-	portPrincipal_app SMALLINT,
-	PRIMARY KEY (id_app)
-)
-Engine = INNODB;
-
-CREATE TABLE users_apps (
-	id_user SMALLINT NOT NULL,
-	id_app INT NOT NULL,
-	user_montrer_app SMALLINT DEFAULT 1 NOT NULL,
-	PRIMARY KEY (id_user, id_app),
-	CONSTRAINT fk_users_apps_id_user
-		FOREIGN KEY (id_user)
-		REFERENCES users(id_user)
-		ON DELETE CASCADE,
-	CONSTRAINT fk_users_apps_id_app
-		FOREIGN KEY (id_app)
-		REFERENCES apps(id_app)
-		ON DELETE CASCADE
-)
-Engine = INNODB;
-
-CREATE TABLE badger (
-	id_point INT NOT NULL AUTO_INCREMENT,
-	id_user SMALLINT NOT NULL,
-	date_point DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	StartEnd_point BOOLEAN NOT NULL,
-	id_status SMALLINT NOT NULL DEFAULT 1,
-	PRIMARY KEY (id_point),
-	CONSTRAINT fk_badger_id_user
-		FOREIGN KEY (id_user)
-		REFERENCES users(id_user),
-	CONSTRAINT fk_badger_id_status
-		FOREIGN KEY (id_status)
-		REFERENCES status(id_status)
-)
-Engine = INNODB;
-
-INSERT IGNORE INTO `roles` (`id_role`, `nom_role`, `permission_role`) VALUES
-(1, 'Etudiant', 10384),
-(2, 'Intervenant', 10384),
-(3, 'Administrateur', 16369);
-
-INSERT IGNORE INTO `status` (`id_status`, `nom_status`) VALUES
-(1, 'actif'),
-(2, 'malade'),
-(3, 'stage'),
-(4, 'déplacement');
-
-
 INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES
-('Florent', 'Bourgeois', 'florent.bourgeois@uha.fr', 3),
-('Daniel', 'Da Fonseca', 'daniel.da-fonseca@uha.fr', 3),
 
 ('Oussama', 'Sadeg', 'oussama.sadeg@uha.fr', 1),
 ('Jérôme', 'Andre', 'jerome.andre@uha.fr', 1),
@@ -149,4 +55,3 @@ INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) V
 
 ('Etienne', 'Burger', 'etienne_burger@yahoo.fr', 2),
 ('Jean Francois', 'Roth', 'jean-francois.roth@uha.fr', 2);
-

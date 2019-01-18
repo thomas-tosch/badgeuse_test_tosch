@@ -14,7 +14,7 @@ module.exports = function(router) {
             // GET ALL DATA OF USER CONNECTED
             case 'getDataUser':
                 let id_user = req.body.id_user;
-                db.query('SELECT * FROM users WHERE id_user = ?', [id_user], (err, rows)=> {
+                db.query('SELECT * FROM users INNER JOIN users_badger ON users.id_user = users_badger.id_user WHERE users.id_user = ?', [id_user], (err, rows)=> {
                     if(err) throw err;
                     res.json({user: rows[0]});
                 })

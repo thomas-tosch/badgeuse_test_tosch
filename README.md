@@ -1,6 +1,6 @@
-# :sparkles: Projet Badgeuse intélligente  :sparkles: #
+# :sparkles: Projet Badgeuse intelligente  :sparkles: #
  
-## DÉSCRIPTION ##
+## DESCRIPTION ##
 > Description de l'UHA 4.0
    
 ## PRÉ-REQUIS ##
