@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.defineIconList();
 
-    this.closeListOnInit();
+    // this.closeListOnInit();
   }
 
   // If true, show the menu. if false, hide the menu
@@ -47,9 +47,11 @@ export class AppComponent implements OnInit{
   // define the icon direction on function of the screen
   defineIconList() {
     if($(window).width() > 991) {
+      this.btnSideBar = this.faAngleDoubleRight;
       this.iconIn = this.faAngleDoubleRight;
       this.iconOut = this.faAngleDoubleLeft;
     } else {
+      this.btnSideBar = this.faAngleDoubleUp;
       this.iconIn = this.faAngleDoubleUp;
       this.iconOut = this.faAngleDoubleDown;
     }

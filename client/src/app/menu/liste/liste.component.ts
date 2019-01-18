@@ -17,13 +17,11 @@ export class ListeComponent implements OnInit {
   userOff = [];
 
   faCircle = faCircle
-  students = 1;
 
   constructor(private expressService: ExpressService) { }
 
   ngOnInit() {
     this.getUserList();
-    this.testObservable();
   }
 
   getUserList() {
@@ -53,24 +51,6 @@ export class ListeComponent implements OnInit {
     this.getUserList();
   }
 
-  testObservable() {
-
-    const studentsObservable = new Observable(observer => {
-      setTimeout(() => {
-        observer.next(this.students);
-      }, 2000);
-    });
-
-    studentsObservable.subscribe((studentsData) => {
-      // this.students = studentsData;
-      console.log(studentsData);
-    });
-
-  }
-
-  onTest() {
-
-  }
 
 
 }
