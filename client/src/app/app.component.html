@@ -9,13 +9,20 @@
     <router-outlet></router-outlet>
   </div>
 
-  <div class="content-list" id="sidebar" *ngIf="getConnectStatus()">
+  <div class="content-list">
+
     <!-- BUTTON SIDEBAR COLLAPSE -->
     <button type="button" id="sidebarCollapse" class="btn btn-info btn-slider" (click)="onBtnSideBar()">
       <fa-icon [icon]="btnSideBar"></fa-icon>
     </button>
-    <!-- SIDEBAR -->
-    <app-liste class="list-overflow"></app-liste>
+
+    <div id="sidebar" *ngIf="getConnectStatus()">
+
+      <!-- SIDEBAR -->
+      <div class="list-overflow ">
+      <app-liste></app-liste>
+      </div>
+    </div>
   </div>
 
 </div>

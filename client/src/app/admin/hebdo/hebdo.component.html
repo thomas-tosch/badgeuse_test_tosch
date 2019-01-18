@@ -1,10 +1,15 @@
-<h2>
-<button class="btn btn-secondary" (click)="onPrevWeek()"> < </button>
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-secondary" (click)="onPrevWeek()"> < </button>
+  </div>
+  <div>
+    <h2>Période du<b> {{ startDateTime | date:'dd MMM yyyy'}} </b>au<b> {{ endDateTime  | date:'dd MMM yyyy'}}</b></h2>
+  </div>
+  <div>
+    <button class="btn btn-secondary" (click)="onNextWeek()"> > </button>
+  </div>
+</div>
 
-
-Période du<b> {{ startDateTime | date:'dd MMM yyyy'}} </b>au<b> {{ endDateTime  | date:'dd MMM yyyy'}}</b>
-  <button class="btn btn-secondary" (click)="onNextWeek()"> > </button>
-</h2>
 <table>
   <tr *ngFor="let user of userList">
     <td class="border p-2">{{ user.userName }}</td>
