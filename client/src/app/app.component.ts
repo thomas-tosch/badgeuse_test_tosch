@@ -13,15 +13,16 @@ export class AppComponent implements OnInit{
 
   faAngleDoubleLeft = faAngleDoubleLeft;
   faAngleDoubleRight = faAngleDoubleRight;
-  btnSideBar = this.faAngleDoubleLeft;
+  btnSideBar = this.faAngleDoubleRight;
 
   constructor(private expressService: ExpressService,
               private userService: UserService
   ) {  }
 
   ngOnInit() {
-    this.sidebarCollapse();
-    $('#sidebar').toggleClass('active');
+    setTimeout(()=>{
+      this.onBtnSideBar();
+    },500);
   }
 
   // If true, show the menu. if false, hide the menu
@@ -31,6 +32,8 @@ export class AppComponent implements OnInit{
 
   // icon for the button collapse
   onBtnSideBar() {
+    $('#sidebar').toggleClass('active');
+
     if(this.btnSideBar === this.faAngleDoubleRight){
       this.btnSideBar = this.faAngleDoubleLeft;
     } else {
@@ -38,11 +41,5 @@ export class AppComponent implements OnInit{
     }
   }
 
-  // collapse the sidebar
-  sidebarCollapse() {
-    $('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active');
-    });
-  }
 
 }
