@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {faAddressCard, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -23,7 +24,8 @@ export class MenuComponent implements OnInit {
   adminActive = false;
 
   constructor(private userService: UserService,
-              private loginService: LoginService) { }
+              private loginService: LoginService,
+              private router: Router) { }
 
     ngOnInit() {
         this.getDataUser();
@@ -47,6 +49,7 @@ export class MenuComponent implements OnInit {
     // logOut the user
     onDisconnect() {
         this.loginService.logout();
+        this.router.navigate(['/']);
     }
 
 
