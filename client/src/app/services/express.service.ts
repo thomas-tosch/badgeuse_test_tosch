@@ -7,7 +7,7 @@ import {Auth} from "../guards/auth";
 })
 export class ExpressService {
 
-  private domain = 'http://127.0.0.1:8080';
+  private domain = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
