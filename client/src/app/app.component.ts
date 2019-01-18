@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.defineIconList();
 
-    // this.closeListOnInit();
+    this.closeListOnInit();
   }
 
   // If true, show the menu. if false, hide the menu
