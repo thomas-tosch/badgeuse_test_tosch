@@ -1,22 +1,45 @@
+<!-- navbar large screen -->
+<section class="d-none d-lg-block">
+    <div class="badge-panel d-flex justify-content-between">
 
-<div class="badge-panel d-flex justify-content-between">
+      <!-- status présence -->
+      <section class="badge-section" id="badge-status">
+        <fa-icon [icon]=" temoinState "
+                 [ngStyle]="{color: getTemoinStatus()}"
+                 class="badge-temoin"
+                 data-toggle="tooltip"
+                 data-placement="left"
+                 title="{{ tooltipState }}"
+        ></fa-icon>
+      </section>
 
-  <!-- status présence -->
-  <section class="badge-section" id="badge-status">
-    <fa-icon [icon]=" temoinState "
-             [ngStyle]="{color: getTemoinStatus()}"
-             class="badge-temoin"
-             data-toggle="tooltip"
-             data-placement="left"
-             title="{{ tooltipState }}"
-    ></fa-icon>
-  </section>
+      <!-- badgeuse -->
+      <section class="badge-section">
+          <button class="btn btn-outline-secondary btn-badger alert-secondary w-100"
+                  (click)="onBadge()"
+                  [disabled]="buttonActivate"
+          >Pointer</button>
+      </section>
+    </div>
+</section>
 
-  <!-- badgeuse -->
-  <section class="badge-section">
-      <button class="btn btn-outline-secondary alert-secondary w-100"
-              (click)="onBadge()"
-              [disabled]="buttonActivate"
-      >Pointer</button>
-  </section>
-</div>
+
+
+<!-- navbar small screen -->
+<section class="d-block d-lg-none">
+    <div class="badge-panel" (click)="onBadge()">
+
+        <!-- status présence -->
+        <section class="badge-section">
+            <fa-icon [icon]=" temoinState "
+                     [ngStyle]="{color: getTemoinStatus()}"
+                     class="badge-temoin"
+            ></fa-icon>
+        </section>
+
+        <!-- badgeuse -->
+        <section class="badge-section">
+            <span class=" btn-badger">Pointer</span>
+        </section>
+    </div>
+</section>
