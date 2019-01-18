@@ -10,7 +10,7 @@ import { MenuComponent } from './menu/menu.component';
 import {LoginService} from "./services/login.service";
 import {ExpressService} from "./services/express.service";
 import {UserService} from "./services/user.service";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BadgerComponent } from './menu/badger/badger.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {BadgerService} from "./services/badger.service";
@@ -46,7 +46,8 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
     ReactiveFormsModule,
     FontAwesomeModule,
     OrderModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule
   ],
   providers: [
       AuthGuard,

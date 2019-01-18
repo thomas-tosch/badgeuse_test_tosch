@@ -1,3 +1,13 @@
-<p>
-  hebdo works!
-</p>
+<h2>
+<button class="btn btn-secondary" (click)="onPrevWeek()"> < </button>
+
+
+Période du<b> {{ startDateTime | date:'dd MMM yyyy'}} </b>au<b> {{ endDateTime  | date:'dd MMM yyyy'}}</b>
+  <button class="btn btn-secondary" (click)="onNextWeek()"> > </button>
+</h2>
+<table>
+  <tr *ngFor="let user of userList">
+    <td class="border p-2">{{ user.userName }}</td>
+    <td class="border p-2">{{ user.duration }}</td>
+  </tr>
+</table>
