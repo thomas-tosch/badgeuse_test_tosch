@@ -13,10 +13,12 @@ module.exports = function(router) {
             case 'getUserListHebdo':
                 let startDate = req.body.startDate;
                 let endDate = req.body.endDate;
+                let filterGroup = req.body.filterGroup;
 
                 let content = [
                     [startDate],
-                    [endDate]
+                    [endDate],
+                    [filterGroup]
                 ];
                 db.query('SELECT ' +
                     'users.id_user AS userId, ' +
@@ -30,6 +32,8 @@ module.exports = function(router) {
                     '' +
                     'LEFT JOIN users_badger ON users.id_user = users_badger.id_user ' +
                     'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ON users.id_user = badger.id_user ' +
+                    '' +
+                    'WHERE FIND_IN_SET(users_badger.id_group, ?) ' +
                     '' +
                     'GROUP BY userId ' +
                     '' +

@@ -18,6 +18,11 @@ export class HebdoComponent implements OnInit {
   endDateTime;
   selectWeek = 1;
   form: FormGroup;
+  checkbox1 = '';
+  checkbox2 = '';
+  checkbox3 = '';
+  checkbox4 = '';
+  filterGroup = '1,2,3';
 
   constructor(private expressService: ExpressService,
               private formBuilder: FormBuilder)
@@ -27,6 +32,7 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
+    // this.onInitGroup();
   }
 
     // create the login form
@@ -63,20 +69,31 @@ export class HebdoComponent implements OnInit {
     let content = {
       action: 'getUserListHebdo',
       startDate: this.startDateTime,
-      endDate: this.endDateTime
+      endDate: this.endDateTime,
+      filterGroup: this.filterGroup
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
       this.userList = res.list;
     })
   }
 
-    onSubmit() {
-      let checkbox1 = this.form.get('checkbox1').value;
-      let checkbox2 = this.form.get('checkbox2').value;
-      let checkbox3 = this.form.get('checkbox3').value;
-      let checkbox4 = this.form.get('checkbox4').value;
-        console.log('checkbox1', checkbox1, 'checkbox2', checkbox2, 'checkbox3', checkbox3, 'checkbox4', checkbox4);
+    onInitGroup() {
+        // this.checkbox1 = this.form.get('checkbox1').value;
+        // this.checkbox2 = this.form.get('checkbox2').value;
+        // this.checkbox3 = this.form.get('checkbox3').value;
+        // this.checkbox4 = this.form.get('checkbox4').value;
+        // console.log('checkbox1', this.checkbox1, 'checkbox2', this.checkbox2, 'checkbox3', this.checkbox3, 'checkbox4', this.checkbox4);
 
+        if(this.form.get('checkbox1').value){this.checkbox1 = '1,';}else{this.checkbox1 = '';}
+        if(this.form.get('checkbox2').value){this.checkbox2 = '2,';}else{this.checkbox2 = '';}
+        if(this.form.get('checkbox3').value){this.checkbox3 = '3,';}else{this.checkbox3 = '';}
+        if(this.form.get('checkbox4').value){this.checkbox4 = '4,';}else{this.checkbox4 = '';}
+
+        this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4;
+        this.filterGroup = this.filterGroup.substring('',this.filterGroup.length-1);
+
+        console.log('filterGroup', this.filterGroup);
+        this.getUserListHebdo();
     }
 
 
