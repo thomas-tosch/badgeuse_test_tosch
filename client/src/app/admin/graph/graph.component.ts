@@ -55,8 +55,8 @@ export class GraphComponent implements OnInit {
   colors = [{
     backgroundColor: this.colorState
   }];
-    @ViewChild(BaseChartDirective)
-    chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
+    // @ViewChild(BaseChartDirective)
+    // public chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
 
   constructor(private expressService: ExpressService,
               private formBuilder: FormBuilder) { }
@@ -110,7 +110,7 @@ export class GraphComponent implements OnInit {
             i++;
             if(i === this.usersList.length) {
                 this.activeGraph = true;
-                this.chart.chart.update();
+                // this.chart.chart.update();
             }
 
         });

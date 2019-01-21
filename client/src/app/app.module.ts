@@ -14,14 +14,14 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { BadgerComponent } from './menu/badger/badger.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {BadgerService} from "./services/badger.service";
-import { ProfilComponent } from './user/profil/profil.component';
 import { PersonalSpaceComponent } from './user/personal-space/personal-space.component';
 import { ForgotPassComponent } from './guest/forgot-pass/forgot-pass.component';
 import { NewPassComponent } from './guest/new-pass/new-pass.component';
 import { GraphComponent } from './admin/graph/graph.component';
-import { ListeComponent } from './admin/liste/liste.component';
+import { ListeComponent } from './menu/liste/liste.component';
 import {OrderModule} from "ngx-order-pipe";
 import {ChartsModule} from "ng2-charts";
+import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +30,12 @@ import {ChartsModule} from "ng2-charts";
     AdminComponent,
     MenuComponent,
     BadgerComponent,
-    ProfilComponent,
     PersonalSpaceComponent,
     ForgotPassComponent,
     NewPassComponent,
     GraphComponent,
-    ListeComponent
+    ListeComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,

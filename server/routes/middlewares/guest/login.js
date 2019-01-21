@@ -29,7 +29,7 @@ module.exports = function(router) {
                 if (usermailForm.length >= userMailLengthMin && usermailForm.length <= userMailLengthMax) {
                     if (passForm.length >= passLengthMin && passForm.length <= passLengthMax) {
                         // Read the Sql table if the userMail exist
-                        db.query('SELECT * FROM users WHERE mail_user=?', [usermailForm], (err, result) => {
+                        db.query('SELECT * FROM users INNER JOIN users_badger ON users.id_user = users_badger.id_user WHERE mail_user=?', [usermailForm], (err, result) => {
 
                             if (err) {
                                 res.json
@@ -42,7 +42,7 @@ module.exports = function(router) {
 
                             if (result.length !== 0) {
 
-                                let passDb = result[0].mdp_user;
+                                let passDb = result[0].mdp_user_badger;
 
                                 // compare the password
                                 bcrypt.compare(passForm, passDb, (error, isMatch) => {
@@ -92,7 +92,7 @@ module.exports = function(router) {
 
                             // update the keyTemp
                             let param = [[key], [id_user]];
-                            db.query("UPDATE users SET keyTemp = ? WHERE id_user = ?", param, (err, result) => {
+                            db.query("UPDATE users_badger SET keyTemp = ? WHERE id_user = ?", param, (err, result) => {
                                 if (err) throw err;
 
                                 if (result.length !== 0) {
@@ -117,7 +117,7 @@ module.exports = function(router) {
 
                                 // on effectue une tache en backend au bout de 10 min, qui effacera la keyTemp dans la bdd
                                 setTimeout(function(){
-                                    db.query("UPDATE users SET keyTemp = NULL WHERE id_user = ?", [id_user], (err) => {
+                                    db.query("UPDATE users_badger SET keyTemp = NULL WHERE id_user = ?", [id_user], (err) => {
                                         if(err){console.log(err);}
                                     });
                                 }, 600000);
