@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
 import * as $ from 'jquery';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-hebdo',
@@ -16,17 +17,27 @@ export class HebdoComponent implements OnInit {
   startDateTime;
   endDateTime;
   selectWeek = 1;
-  checkbox1 = true;
-  checkbox2 = true;
-  checkbox3 = true;
-  checkbox4 = false;
+  form: FormGroup;
 
-  constructor(private expressService: ExpressService) { }
+  constructor(private expressService: ExpressService,
+              private formBuilder: FormBuilder)
+  {
+      this.createForm();
+  }
 
   ngOnInit() {
     this.initDate();
-
   }
+
+    // create the login form
+    createForm() {
+        this.form = this.formBuilder.group({
+            checkbox1: [true, ],
+            checkbox2: [true, ],
+            checkbox3: [true, ],
+            checkbox4: [false, ]
+        });
+    }
 
   onPrevWeek() {
     this.selectWeek += 1;
@@ -59,9 +70,14 @@ export class HebdoComponent implements OnInit {
     })
   }
 
-  onClick() {
-    console.log('test');
-  }
+    onSubmit() {
+      let checkbox1 = this.form.get('checkbox1').value;
+      let checkbox2 = this.form.get('checkbox2').value;
+      let checkbox3 = this.form.get('checkbox3').value;
+      let checkbox4 = this.form.get('checkbox4').value;
+        console.log('checkbox1', checkbox1, 'checkbox2', checkbox2, 'checkbox3', checkbox3, 'checkbox4', checkbox4);
+
+    }
 
 
 }
