@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   prenomUser;
   presenceUser;
   idUser;
-  badgerActive = true;
+  badgerActive;
   adminActive = false;
 
   constructor(private userService: UserService,
@@ -28,7 +28,9 @@ export class MenuComponent implements OnInit {
               private router: Router) { }
 
     ngOnInit() {
+        this.badgerActive = false;
         this.getDataUser();
+        this.getAccessBadger();
     }
 
     // get all data of user
@@ -52,6 +54,15 @@ export class MenuComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    getAccessBadger() {
+    let content = {
+      action: 'getAccessBadger'
+    }
+      this.expressService.postExpress('badger', content).subscribe((res: Auth)=> {
+        console.log(res.success);
+        this.badgerActive = res.success;
+      })
+    }
 
 //
 }
