@@ -32,18 +32,17 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
-    // this.onInitGroup();
   }
 
-    // create the login form
-    createForm() {
-        this.form = this.formBuilder.group({
-            checkbox1: [true, ],
-            checkbox2: [true, ],
-            checkbox3: [true, ],
-            checkbox4: [false, ]
-        });
-    }
+  // create the checkbox form
+  createForm() {
+    this.form = this.formBuilder.group({
+        checkbox1: [true, ],
+        checkbox2: [true, ],
+        checkbox3: [true, ],
+        checkbox4: [false, ]
+    });
+  }
 
   onPrevWeek() {
     this.selectWeek += 1;
@@ -54,6 +53,7 @@ export class HebdoComponent implements OnInit {
     this.initDate();
   }
 
+  // initializes the date
   initDate() {
     let curr = new Date; // get current date
     let first = curr.getDate() - curr.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
@@ -65,6 +65,7 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
+  // get the user  list to db
   getUserListHebdo() {
     let content = {
       action: 'getUserListHebdo',
@@ -77,24 +78,18 @@ export class HebdoComponent implements OnInit {
     })
   }
 
-    onInitGroup() {
-        // this.checkbox1 = this.form.get('checkbox1').value;
-        // this.checkbox2 = this.form.get('checkbox2').value;
-        // this.checkbox3 = this.form.get('checkbox3').value;
-        // this.checkbox4 = this.form.get('checkbox4').value;
-        // console.log('checkbox1', this.checkbox1, 'checkbox2', this.checkbox2, 'checkbox3', this.checkbox3, 'checkbox4', this.checkbox4);
+  // initializes the group selected
+  onInitGroup() {
+    if(this.form.get('checkbox1').value){this.checkbox1 = '1,';}else{this.checkbox1 = '';}
+    if(this.form.get('checkbox2').value){this.checkbox2 = '2,';}else{this.checkbox2 = '';}
+    if(this.form.get('checkbox3').value){this.checkbox3 = '3,';}else{this.checkbox3 = '';}
+    if(this.form.get('checkbox4').value){this.checkbox4 = '4,';}else{this.checkbox4 = '';}
 
-        if(this.form.get('checkbox1').value){this.checkbox1 = '1,';}else{this.checkbox1 = '';}
-        if(this.form.get('checkbox2').value){this.checkbox2 = '2,';}else{this.checkbox2 = '';}
-        if(this.form.get('checkbox3').value){this.checkbox3 = '3,';}else{this.checkbox3 = '';}
-        if(this.form.get('checkbox4').value){this.checkbox4 = '4,';}else{this.checkbox4 = '';}
+    this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4;
+    this.filterGroup = this.filterGroup.substring('',this.filterGroup.length-1);
 
-        this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4;
-        this.filterGroup = this.filterGroup.substring('',this.filterGroup.length-1);
-
-        console.log('filterGroup', this.filterGroup);
-        this.getUserListHebdo();
-    }
+    this.getUserListHebdo();
+  }
 
 
 }
