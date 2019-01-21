@@ -64,17 +64,12 @@ export class GraphComponent implements OnInit {
               private graph: HebdoComponent) { }
 
   ngOnInit() {
-      // setTimeout(()=>{
-      //     this.setGraphic();
-      // },500);
-
       this.listSubscription = this.graph.userListSubject.subscribe(
           (userList: any[]) => {
               this.usersList = userList;
               this.setGraphic();
           }
       );
-      // this.graph.emitUserListSubject();
   }
 
   onClickBar(table, bar) {
@@ -101,6 +96,7 @@ export class GraphComponent implements OnInit {
           i++;
           if(i === this.usersList.length) {
               this.activeGraph = true;
+              console.log(this.data);
               // this.chart.chart.update();
           }
 

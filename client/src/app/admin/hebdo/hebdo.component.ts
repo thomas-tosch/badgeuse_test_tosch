@@ -28,8 +28,6 @@ export class HebdoComponent implements OnInit {
   checkbox4 = '';
   filterGroup = '1,2,3';
 
-  secondes: number
-
   constructor(private expressService: ExpressService,
               private formBuilder: FormBuilder,
               private graphicService: GraphicService)
