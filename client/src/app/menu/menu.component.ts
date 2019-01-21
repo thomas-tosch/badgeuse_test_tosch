@@ -57,12 +57,12 @@ export class MenuComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    // check if the client is in UHA 4.0 area
     getAccessBadger() {
     let content = {
       action: 'getAccessBadger'
     }
       this.expressService.postExpress('badger', content).subscribe((res: Auth)=> {
-        console.log(res.success);
         this.badgerActive = res.success;
       })
     }

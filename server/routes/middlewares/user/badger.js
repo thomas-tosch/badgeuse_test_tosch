@@ -68,16 +68,22 @@ module.exports = function(router) {
 
             case 'getAccessBadger':
 
-                let localIp = ip.address();
-                if (ip.isV4Format('193.50.153.129') && /10[.]3[.]1[.]\d{1,3}/.test(localIp)) {
-                    res.json({
-                        success: true
-                    });
-                } else {
-                    res.json({
-                        success: false
-                    });
-                }
+                (async () => {
+                    let ipPublic = await publicIp.v4()
+
+                    let localIp = ip.address();
+                    if (ipPublic === '193.50.153.129' && /10[.]3[.]1[.]\d{1,3}/.test(localIp)) {
+                        res.json({
+                            success: true
+                        });
+                    } else {
+                        res.json({
+                            success: false
+                        });
+                    }
+
+                })();
+
             break
 
         }
@@ -85,7 +91,5 @@ module.exports = function(router) {
 };
 
 // TODO : faire un système automatique permettant de dépointé les utilisateur à minuit tout les jours pour ceux qui ont oublié de dépointer avec CRON
-// TODO : faire un système automatique d'archivage après deux mois par exemple. (vider la bdd pour tout poitage après 2 mois et le transformer en fichier texte par exemple.
-//        Prévoir un système permettant de lire un fichier texte sur demande.
 // TODO : Si l'utilisateur à un status de pointage différent de start ou end, le'empecher de pointer.
 // TODO : Faire une procédure de vérification lors du pointage, que le dernier pointage à bien un status 'start/end' différent.
