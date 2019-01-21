@@ -1,5 +1,6 @@
 require ('../../../config/database');
-
+const ip = require('ip');
+const publicIp = require('public-ip');
 
 module.exports = function(router) {
 
@@ -62,6 +63,16 @@ module.exports = function(router) {
                             message: message
                         });
                     })
+                }
+            break
+
+            case 'getAccessBadger':
+
+                let localIp = ip.address();
+                if (ip.isV4Format('193.50.153.129') === true && /10[.]3[.]1[.]\d{1,3}/.test(localIp) === true) {
+                    res.json({
+                        success: true
+                    });
                 }
             break
 
