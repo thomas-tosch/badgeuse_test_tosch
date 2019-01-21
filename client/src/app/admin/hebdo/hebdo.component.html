@@ -1,15 +1,50 @@
-<div class="d-flex justify-content-between">
-  <div>
-    <button class="btn btn-secondary" (click)="onPrevWeek()"> < </button>
+<div class="shadow p-3 mb-3">
+  <!-- NAVIGATION -->
+  <div class="d-flex justify-content-between">
+    <div>
+      <button class="btn btn-secondary" (click)="onPrevWeek()"> < </button>
+    </div>
+    <div>
+      <h2>Période du<b> {{ startDateTime | date:'dd MMM yyyy'}} </b>au<b> {{ endDateTime  | date:'dd MMM yyyy'}}</b></h2>
+    </div>
+    <div>
+      <button class="btn btn-secondary" (click)="onNextWeek()"> > </button>
+    </div>
   </div>
-  <div>
-    <h2>Période du<b> {{ startDateTime | date:'dd MMM yyyy'}} </b>au<b> {{ endDateTime  | date:'dd MMM yyyy'}}</b></h2>
-  </div>
-  <div>
-    <button class="btn btn-secondary" (click)="onNextWeek()"> > </button>
+
+  <!-- CHECKBOX -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input class="" type="checkbox" id="inlineCheckbox1" value="option1" [checked]="checkbox1" (click)="onClick()">
+      </div>
+    </div>
+    <label class="form-control" for="inlineCheckbox1">1er année</label>
+
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input class="" type="checkbox" id="inlineCheckbox2" value="option2" [checked]="checkbox2">
+      </div>
+    </div>
+    <label class="form-control" for="inlineCheckbox2">2e année</label>
+
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input class="" type="checkbox" id="inlineCheckbox3" value="option3" [checked]="checkbox3">
+      </div>
+    </div>
+    <label class="form-control" for="inlineCheckbox3">3e année</label>
+
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <input class="" type="checkbox" id="inlineCheckbox4" value="option4" [checked]="checkbox4">
+      </div>
+    </div>
+    <label class="form-control" for="inlineCheckbox4">Résident</label>
   </div>
 </div>
 
+<!-- TABLE -->
 <table>
   <tr *ngFor="let user of userList">
     <td class="border p-2">{{ user.userName }}</td>

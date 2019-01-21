@@ -16,6 +16,10 @@ export class HebdoComponent implements OnInit {
   startDateTime;
   endDateTime;
   selectWeek = 1;
+  checkbox1 = true;
+  checkbox2 = true;
+  checkbox3 = true;
+  checkbox4 = false;
 
   constructor(private expressService: ExpressService) { }
 
@@ -53,6 +57,10 @@ export class HebdoComponent implements OnInit {
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
       this.userList = res.list;
     })
+  }
+
+  onClick() {
+    console.log('test');
   }
 
 
