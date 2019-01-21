@@ -1,8 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BaseChartDirective} from "ng2-charts";
+import {Subscription} from "rxjs";
+import {HebdoComponent} from "../hebdo/hebdo.component";
 
 @Component({
   selector: 'app-graph',
@@ -12,12 +14,9 @@ import {BaseChartDirective} from "ng2-charts";
 export class GraphComponent implements OnInit {
 
   usersList;
-  startDate = '2019-01-07T00:00:00';
-  endDate = '2019-01-11T23:59:59';
   activeGraph = false;
   data = [];
   colorState = [];
-    formSelectGroup: FormGroup;
 
   // graph
     barChartOptions = {
@@ -55,66 +54,58 @@ export class GraphComponent implements OnInit {
   colors = [{
     backgroundColor: this.colorState
   }];
-    // @ViewChild(BaseChartDirective)
-    // public chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
+    @ViewChild(BaseChartDirective)
+    public chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
+
+    listSubscription: Subscription;
 
   constructor(private expressService: ExpressService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private graph: HebdoComponent) { }
 
   ngOnInit() {
-    this.getTotalTime(1);
-    this.createForm();
+      // setTimeout(()=>{
+      //     this.setGraphic();
+      // },500);
+
+      this.listSubscription = this.graph.userListSubject.subscribe(
+          (userList: any[]) => {
+              this.usersList = userList;
+              this.setGraphic();
+          }
+      );
+      // this.graph.emitUserListSubject();
   }
 
-    onClickBar(table, bar) {
+  onClickBar(table, bar) {
       if(bar[0] !== undefined) {
           console.log(bar[0]._model.label);
       }
   }
 
-  onSelectGroup() {
+  setGraphic() {
       this.data = [];
       this.barChartLabels = [];
-      this.getTotalTime(this.formSelectGroup.get('userGroup').value);
-  }
 
-    // create the login form
-    createForm() {
-        this.formSelectGroup = this.formBuilder.group({
-            userGroup: ['']
-        });
-    }
+      let i = 0;
+      this.usersList.forEach((user)=> {
+          this.barChartLabels.push(user.userName);
+          let duration = user.duration.substr(0, 5).replace(':', '.');
+          this.data.push(duration);
+          if(duration > 35) {
+              this.colorState.push('#71e597');
+          } else {
+              this.colorState.push('#df6e6e');
+          }
 
-  getTotalTime(userGroup) {
-    let content = {
-      action: 'getTotalTime',
-      startDate: this.startDate,
-      endDate: this.endDate,
-      userGroup: userGroup
-    };
-    this.expressService.postExpress('graph', content).subscribe((res: Auth) => {
-      // console.log(res.message);
-      this.usersList = res.message;
+          i++;
+          if(i === this.usersList.length) {
+              this.activeGraph = true;
+              // this.chart.chart.update();
+          }
 
-        let i = 0;
-        this.usersList.forEach((user)=> {
-            this.barChartLabels.push(user.userName);
-            let duration = user.duration.substr(0, 5).replace(':', '.');
-            this.data.push(duration);
-            if(duration > 35) {
-                this.colorState.push('#71e597');
-            } else {
-                this.colorState.push('#df6e6e');
-            }
+      });
 
-            i++;
-            if(i === this.usersList.length) {
-                this.activeGraph = true;
-                // this.chart.chart.update();
-            }
-
-        });
-    });
   }
 
 

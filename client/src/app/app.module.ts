@@ -23,6 +23,11 @@ import {OrderModule} from "ngx-order-pipe";
 import {ChartsModule} from "ng2-charts";
 import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 import { HebdoComponent } from './admin/hebdo/hebdo.component';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import FusionCharts from 'fusioncharts/core';
+import bar2d from 'fusioncharts/viz/bar2d';
+// Include Below Snippet
+FusionChartsModule.fcRoot(FusionCharts, bar2d);
 
 @NgModule({
   declarations: [
@@ -47,7 +52,8 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
     FontAwesomeModule,
     OrderModule,
     ChartsModule,
-    FormsModule
+    FormsModule,
+    FusionChartsModule
   ],
   providers: [
       AuthGuard,

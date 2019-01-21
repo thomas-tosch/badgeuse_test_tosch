@@ -3,6 +3,11 @@ import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
 import * as $ from 'jquery';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Observable} from "rxjs";
+import { interval } from 'rxjs';
+import { Subject } from "rxjs";
+import {GraphicService} from "../../services/graphic.service";
+
 
 @Component({
   selector: 'app-hebdo',
@@ -12,8 +17,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class HebdoComponent implements OnInit {
 
   userList;
-  startDate;
-  endDate;
+  userListSubject = new Subject<any[]>();
   startDateTime;
   endDateTime;
   selectWeek = 1;
@@ -24,14 +28,22 @@ export class HebdoComponent implements OnInit {
   checkbox4 = '';
   filterGroup = '1,2,3';
 
+  secondes: number
+
   constructor(private expressService: ExpressService,
-              private formBuilder: FormBuilder)
+              private formBuilder: FormBuilder,
+              private graphicService: GraphicService)
   {
       this.createForm();
   }
 
   ngOnInit() {
     this.initDate();
+    this.test();
+  }
+
+  emitUserListSubject() {
+    this.userListSubject.next(this.userList.slice());
   }
 
   // create the checkbox form
@@ -75,6 +87,7 @@ export class HebdoComponent implements OnInit {
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
       this.userList = res.list;
+      this.emitUserListSubject();
     })
   }
 
@@ -86,9 +99,13 @@ export class HebdoComponent implements OnInit {
     if(this.form.get('checkbox4').value){this.checkbox4 = '4,';}else{this.checkbox4 = '';}
 
     this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4;
-    this.filterGroup = this.filterGroup.substring('',this.filterGroup.length-1);
+    this.filterGroup = this.filterGroup.substring(null,this.filterGroup.length-1);
 
     this.getUserListHebdo();
+  }
+
+  test() {
+
   }
 
 

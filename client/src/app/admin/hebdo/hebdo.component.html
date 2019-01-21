@@ -46,18 +46,26 @@
   </form>
 </div>
 
-<!-- TABLE -->
-<table>
-  <tr>
-    <th class="text-center">Année</th>
-    <th class="text-center">Etudiant</th>
-    <th class="text-center">Total heure</th>
-  </tr>
-  <tr *ngFor="let user of userList">
-    <td class="border p-2 text-center">{{ user.id_group }}</td>
-    <td class="border p-2">{{ user.userName }}</td>
-    <td class="border p-2">{{ user.duration }}</td>
-  </tr>
-</table>
+<div class="shadow d-flex mb-5">
+  <div>
+    <!-- TABLE -->
+    <table>
+      <tr>
+        <th class="text-center">Année</th>
+        <th class="text-center">Etudiant</th>
+        <th class="text-center">Total heure</th>
+      </tr>
+      <tr *ngFor="let user of userList">
+        <td class="border p-2 text-center">{{ user.id_group }}</td>
+        <td class="border p-2">{{ user.userName }}</td>
+        <td class="border p-2">{{ user.duration }}</td>
+      </tr>
+    </table>
+  </div>
 
-<!-- TODO : Faire un trie, soit apr ordre alhabetique, soit par group -->
+  <div class="ml-3 border w-100">
+    <app-graph></app-graph>
+  </div>
+</div>
+
+<!-- TODO : Faire un trie, soit par ordre alhabetique, soit par group -->
