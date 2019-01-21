@@ -55,7 +55,7 @@ export class GraphComponent implements OnInit {
     backgroundColor: this.colorState
   }];
     @ViewChild(BaseChartDirective)
-    public chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
+    chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
 
     listSubscription: Subscription;
 
@@ -85,8 +85,10 @@ export class GraphComponent implements OnInit {
       let i = 0;
       this.usersList.forEach((user)=> {
           this.barChartLabels.push(user.userName);
+
           let duration = user.duration.substr(0, 5).replace(':', '.');
           this.data.push(duration);
+
           if(duration > 35) {
               this.colorState.push('#71e597');
           } else {
@@ -97,6 +99,7 @@ export class GraphComponent implements OnInit {
           if(i === this.usersList.length) {
               this.activeGraph = true;
               console.log(this.data);
+              console.log(this.barChartLabels);
               // this.chart.chart.update();
           }
 
