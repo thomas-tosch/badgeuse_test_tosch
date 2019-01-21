@@ -3,6 +3,8 @@ import {faAddressCard, faChessQueen, faTimesCircle, faUserAstronaut} from "@fort
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
 import {Router} from "@angular/router";
+import {ExpressService} from "../services/express.service";
+import {Auth} from "../guards/auth";
 
 @Component({
   selector: 'app-menu',
@@ -25,7 +27,8 @@ export class MenuComponent implements OnInit {
 
   constructor(private userService: UserService,
               private loginService: LoginService,
-              private router: Router) { }
+              private router: Router,
+              private expressService: ExpressService) { }
 
     ngOnInit() {
         this.badgerActive = false;

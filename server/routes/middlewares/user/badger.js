@@ -69,9 +69,13 @@ module.exports = function(router) {
             case 'getAccessBadger':
 
                 let localIp = ip.address();
-                if (ip.isV4Format('193.50.153.129') === true && /10[.]3[.]1[.]\d{1,3}/.test(localIp) === true) {
+                if (ip.isV4Format('193.50.153.129') && /10[.]3[.]1[.]\d{1,3}/.test(localIp)) {
                     res.json({
                         success: true
+                    });
+                } else {
+                    res.json({
+                        success: false
                     });
                 }
             break
