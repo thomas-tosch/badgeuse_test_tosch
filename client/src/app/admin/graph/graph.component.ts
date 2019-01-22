@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BaseChartDirective} from "ng2-charts";
 import {Subscription} from "rxjs";
 import {HebdoComponent} from "../hebdo/hebdo.component";
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-graph',
@@ -14,7 +15,7 @@ import {HebdoComponent} from "../hebdo/hebdo.component";
 export class GraphComponent implements OnInit {
 
   usersList;
-  activeGraph = false;
+  activeGraph = true;
   data = [];
   colorState = [];
 
@@ -54,8 +55,8 @@ export class GraphComponent implements OnInit {
   colors = [{
     backgroundColor: this.colorState
   }];
-    @ViewChild(BaseChartDirective)
-    chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
+    @ViewChild(BaseChartDirective) private _chart ;
+    // chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
 
     listSubscription: Subscription;
 
@@ -68,6 +69,7 @@ export class GraphComponent implements OnInit {
           (userList: any[]) => {
               this.usersList = userList;
               this.setGraphic();
+
           }
       );
   }
@@ -79,8 +81,10 @@ export class GraphComponent implements OnInit {
   }
 
   setGraphic() {
-      this.data = [];
+      // this.activeGraph = false;
+      this.data.length = 0;
       this.barChartLabels = [];
+      this.colorState.length = 0;
 
       let i = 0;
       this.usersList.forEach((user)=> {
@@ -98,9 +102,6 @@ export class GraphComponent implements OnInit {
           i++;
           if(i === this.usersList.length) {
               this.activeGraph = true;
-              console.log(this.data);
-              console.log(this.barChartLabels);
-              // this.chart.chart.update();
           }
 
       });
