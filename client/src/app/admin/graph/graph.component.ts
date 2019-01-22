@@ -4,6 +4,7 @@ import {FormBuilder} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {HebdoComponent} from "../hebdo/hebdo.component";
 import {Chart} from 'chart.js';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-graph',
@@ -12,21 +13,21 @@ import {Chart} from 'chart.js';
 })
 export class GraphComponent implements OnInit {
 
+  listSubscription: Subscription;
   usersList;
   activeGraph = true;
   data = [];
   colorState = [];
-  max = 60;
 
-  // graph
+  // graph option
     barChartOptions = {
     scaleShowVerticalLines: true,
+    maintainAspectRatio: false,
     responsive: true,
     scales: {
       xAxes: [{
         ticks: {
-            beginAtZero:true,
-            max: this.max
+            beginAtZero:true
         },
       }]
     },
@@ -55,7 +56,7 @@ export class GraphComponent implements OnInit {
     backgroundColor: this.colorState
   }];
 
-    listSubscription: Subscription;
+
 
 
   constructor(private expressService: ExpressService,
@@ -67,7 +68,6 @@ export class GraphComponent implements OnInit {
           (userList: any[]) => {
               this.usersList = userList;
               this.setGraphic();
-
           }
       );
   }
@@ -82,12 +82,10 @@ export class GraphComponent implements OnInit {
 
 
     setGraphic() {
-      // this.activeGraph = false;
       this.data.length = 0;
       this.barChartLabels = [];
       this.colorState.length = 0;
 
-      let i = 0;
       this.usersList.forEach((user)=> {
           this.barChartLabels.push(user.userName);
 
@@ -99,13 +97,9 @@ export class GraphComponent implements OnInit {
           } else {
               this.colorState.push('#df6e6e');
           }
-
-          i++;
-          if(i === this.usersList.length) {
-              this.activeGraph = true;
-          }
-
       });
+
+        $('#myChart').attr("height", this.usersList.length * 20);
 
   }
 

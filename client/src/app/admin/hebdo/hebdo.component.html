@@ -52,14 +52,14 @@
     <!-- TABLE -->
     <table>
       <tr>
-        <th class="text-center">Année</th>
-        <th class="text-center">Etudiant</th>
-        <th class="text-center">Total heure</th>
+        <th class="text-center pb-2">Année</th>
+        <th class="text-center pb-2">Etudiant</th>
+        <th class="text-center pb-2">Total heure</th>
       </tr>
       <tr *ngFor="let user of userList">
-        <td class="border p-2 text-center">{{ user.id_group }}</td>
-        <td class="border p-2">{{ user.userName }}</td>
-        <td class="border p-2">{{ user.duration }}</td>
+        <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
+        <td class="border p-2" id="userName">{{ user.userName }}</td>
+        <td class="border p-2" id="duration">{{ user.duration }}</td>
       </tr>
     </table>
   </div>

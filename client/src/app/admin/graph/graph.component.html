@@ -1,7 +1,8 @@
 
 <section class="mr-3">
-    <div *ngIf="activeGraph" class="bg-white p-3 mr-3">
+    <div *ngIf="activeGraph" class="bg-white p-3 mr-3 cadre-graph">
         <canvas baseChart
+                id="myChart"
                 [datasets]="barChartData"
                 [labels]="barChartLabels"
                 [options]="barChartOptions"

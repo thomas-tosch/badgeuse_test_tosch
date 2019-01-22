@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
-import * as $ from 'jquery';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Observable} from "rxjs";
-import { interval } from 'rxjs';
 import { Subject } from "rxjs";
-import {GraphicService} from "../../services/graphic.service";
 
 
 @Component({
