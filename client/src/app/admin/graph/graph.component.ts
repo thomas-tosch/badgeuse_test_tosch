@@ -99,7 +99,7 @@ export class GraphComponent implements OnInit {
           }
       });
 
-        $('#myChart').attr("height", this.usersList.length * 20);
+        $(".cadre-graph").height((this.usersList.length * 27.5));
 
   }
 

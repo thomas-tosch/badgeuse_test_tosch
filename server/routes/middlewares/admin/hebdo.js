@@ -24,7 +24,7 @@ module.exports = function(router) {
                     'users.id_user AS userId, ' +
                     'CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, ' +
                     '' +
-                    'users_badger.id_group, ' +
+                    'users_badger.id_group AS id_group, ' +
                     '' +
                     'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration ' +
                     '' +
@@ -33,7 +33,7 @@ module.exports = function(router) {
                     'LEFT JOIN users_badger ON users.id_user = users_badger.id_user ' +
                     'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ON users.id_user = badger.id_user ' +
                     '' +
-                    'WHERE FIND_IN_SET(users_badger.id_group, ?) ' +
+                    'WHERE FIND_IN_SET(id_group, ?) ' +
                     '' +
                     'GROUP BY userId ' +
                     '' +

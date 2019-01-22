@@ -1,26 +1,10 @@
-table {
-    border: 1px darkslategrey solid;
-    collapse: collapse;
-}
 
-tr, td {
-    border: 1px grey solid;
-    padding: 5px 10px;
-    text-align: center;
-}
-#userName {
-    width: 300px;
-}
-#duration {
-    width: 100px;
-}
 
 .graph {
     width: 100%;
-    /*height: 100%;*/
-
+    height: 100%;
 }
 
 .cadre-graph {
-
+    height: 600px;
 }
