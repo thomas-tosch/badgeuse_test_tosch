@@ -28,16 +28,16 @@ export class HebdoComponent implements OnInit {
   checkbox4 = '';
   filterGroup = '1,2,3';
 
+  test = 0;
+
   constructor(private expressService: ExpressService,
-              private formBuilder: FormBuilder,
-              private graphicService: GraphicService)
+              private formBuilder: FormBuilder)
   {
       this.createForm();
   }
 
   ngOnInit() {
     this.initDate();
-    this.test();
   }
 
   emitUserListSubject() {
@@ -102,9 +102,6 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
-  test() {
-
-  }
 
 
 }

@@ -1,11 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ExpressService} from "../../services/express.service";
-import {Auth} from "../../guards/auth";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BaseChartDirective} from "ng2-charts";
+import {FormBuilder} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {HebdoComponent} from "../hebdo/hebdo.component";
-import { Chart } from 'chart.js';
+import {Chart} from 'chart.js';
 
 @Component({
   selector: 'app-graph',
@@ -18,6 +16,7 @@ export class GraphComponent implements OnInit {
   activeGraph = true;
   data = [];
   colorState = [];
+  max = 60;
 
   // graph
     barChartOptions = {
@@ -27,7 +26,7 @@ export class GraphComponent implements OnInit {
       xAxes: [{
         ticks: {
             beginAtZero:true,
-            max: 60
+            max: this.max
         },
       }]
     },
@@ -55,10 +54,9 @@ export class GraphComponent implements OnInit {
   colors = [{
     backgroundColor: this.colorState
   }];
-    @ViewChild(BaseChartDirective) private _chart ;
-    // chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
 
     listSubscription: Subscription;
+
 
   constructor(private expressService: ExpressService,
               private formBuilder: FormBuilder,
@@ -74,13 +72,16 @@ export class GraphComponent implements OnInit {
       );
   }
 
+
   onClickBar(table, bar) {
       if(bar[0] !== undefined) {
           console.log(bar[0]._model.label);
       }
   }
 
-  setGraphic() {
+
+
+    setGraphic() {
       // this.activeGraph = false;
       this.data.length = 0;
       this.barChartLabels = [];
