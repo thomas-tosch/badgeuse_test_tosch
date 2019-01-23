@@ -5,6 +5,7 @@ import {Subscription} from "rxjs";
 import {HebdoComponent} from "../hebdo/hebdo.component";
 import {Chart} from 'chart.js';
 import * as $ from 'jquery';
+import 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-graph',
@@ -20,31 +21,35 @@ export class GraphComponent implements OnInit {
   colorState = [];
 
   // graph option
-    barChartOptions = {
+  barChartOptions = {
     scaleShowVerticalLines: true,
     maintainAspectRatio: false,
     responsive: true,
     scales: {
       xAxes: [{
         ticks: {
-            beginAtZero:true
+            beginAtZero:true,
+            max: 50
         },
       }]
     },
     onClick: this.onClickBar,
-    annotation: {
-      annotation: [{
-        type: 'line',
-        drawTime: 'afterDatasetsDraw',
-        id: 'strip-line-1',
-        mode: 'vertical',
-        scaleID: 'y-axis-0',
-        value: 30,
-        borderColor: 'red',
-        borderWidth: 3
-      }]
-    }
+      annotation: {
+          annotations: [{
+              type: 'line',
+              mode: 'vertical',
+              scaleID: 'x-axis-0',
+              value: 35,
+              borderColor: 'red',
+              borderWidth: 2,
+              label: {
+                  enabled: false,
+                  content: 'Test label'
+              }
+          }]
+      }
   };
+
   barChartLabels = [];
   barChartType = 'horizontalBar';
   barChartLegend = false;
