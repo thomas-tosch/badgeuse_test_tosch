@@ -6,6 +6,8 @@ import {HebdoComponent} from "../hebdo/hebdo.component";
 import {Chart} from 'chart.js';
 import * as $ from 'jquery';
 import 'chartjs-plugin-annotation';
+import {Router} from "@angular/router";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-graph',
@@ -33,7 +35,7 @@ export class GraphComponent implements OnInit {
         },
       }]
     },
-    onClick: this.onClickBar,
+    onClick: this.onClickBar.bind(this),
       annotation: {
           annotations: [{
               type: 'line',
@@ -65,8 +67,10 @@ export class GraphComponent implements OnInit {
 
 
   constructor(private expressService: ExpressService,
+              private userService: UserService,
               private formBuilder: FormBuilder,
-              private graph: HebdoComponent) { }
+              private graph: HebdoComponent,
+              private router: Router) { }
 
   ngOnInit() {
       this.listSubscription = this.graph.userListSubject.subscribe(
@@ -77,16 +81,25 @@ export class GraphComponent implements OnInit {
       );
   }
 
-
+  // on click on bar graphic
   onClickBar(table, bar) {
       if(bar[0] !== undefined) {
-          console.log(bar[0]._model.label);
+          let userName = bar[0]._model.label;
+          this.getIdUser((userId)=>{
+              this.router.navigate(['userDetail/'+userId]);
+          }, userName);
       }
   }
 
+  // get the id user select on click
+  getIdUser(callback, userName?) {
+      this.userService.getIdUser((res) => {
+          return callback(res);
+      }, userName);
+  }
 
-
-    setGraphic() {
+  // Build and update the graphic data
+  setGraphic() {
       this.data.length = 0;
       this.barChartLabels = [];
       this.colorState.length = 0;
@@ -103,9 +116,8 @@ export class GraphComponent implements OnInit {
               this.colorState.push('#df6e6e');
           }
       });
-
-        $(".cadre-graph").height((this.usersList.length * 27.5));
-
+      // Dynamic height of graphic
+      $(".cadre-graph").height((this.usersList.length * 27.5));
   }
 
 
