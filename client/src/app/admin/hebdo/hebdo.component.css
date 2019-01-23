@@ -13,3 +13,16 @@ tr{
 .redLine{
     background-color: #ff939399;
 }
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 991px) {
+    h2{
+        font-size: 1rem;
+    }
+    tr{
+        line-height: 20px;
+    }
+}

@@ -1,58 +1,69 @@
-
-
-
-
-<div class="shadow p-3 mb-3">
-  <!-- NAVIGATION -->
-  <div class="d-flex justify-content-between">
+<div class="shadow p-lg-3 mb-3">
+  <!-- NAVIGATION WEEK -->
+  <div class="d-flex justify-content-between mb-2">
     <div>
-      <button class="btn btn-secondary" (click)="onPrevWeek()"> < </button>
+      <button class="btn btn-secondary h-100" (click)="onPrevWeek()"> < </button>
     </div>
-    <div>
+    <div class="text-center">
       <h2>Période du<b> {{ startDateTime | date:'dd MMM yyyy'}} </b>au<b> {{ endDateTime  | date:'dd MMM yyyy'}}</b></h2>
     </div>
     <div>
-      <button class="btn btn-secondary" (click)="onNextWeek()"> > </button>
+      <button class="btn btn-secondary h-100" (click)="onNextWeek()"> > </button>
     </div>
   </div>
 
   <!-- FILTER / SELECT -->
   <form [formGroup]="form" (change)="onInitGroup()" class="form-signin text-center">
-    <div class="input-group mb-3">
+  <div class="border-blue d-flex flex-column flex-lg-row">
 
-      <div class="input-group-prepend">
-        <div class="input-group-text">
+    <div class="input-group">
+      <div class="input-group-prepend w-100">
+        <div class="input-group-text w-100">
           Trier par:
         </div>
       </div>
-      <select formControlName="orderBy" class="custom-select">
+    </div>
+    <div class="input-group w-100">
+      <select formControlName="orderBy" class="custom-select w-100">
         <option value="userName">ordre alpabétique</option>
         <option value="id_group">année</option>
       </select>
+    </div>
 
+    <div class="input-group">
+      <div class="input-group-append w-100">
+        <span class="input-group-text w-100">Selection: </span>
+      </div>
+    </div>
+
+    <div class="input-group ">
       <div class="input-group-append">
-        <span class="input-group-text">Selection: </span>
-
         <div class="input-group-text">
           <input class="" type="checkbox" id="inlineCheckbox1" value="option1" formControlName="checkbox1">
         </div>
       </div>
       <label class="form-control text-left" for="inlineCheckbox1">1er année</label>
+    </div>
 
+    <div class="input-group ">
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input class="" type="checkbox" id="inlineCheckbox2" value="option2" formControlName="checkbox2">
         </div>
       </div>
       <label class="form-control text-left" for="inlineCheckbox2">2e année</label>
+    </div>
 
+    <div class="input-group ">
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input class="" type="checkbox" id="inlineCheckbox3" value="option3" formControlName="checkbox3">
         </div>
       </div>
       <label class="form-control text-left" for="inlineCheckbox3">3e année</label>
+    </div>
 
+    <div class="input-group ">
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input class="" type="checkbox" id="inlineCheckbox4" value="option4" formControlName="checkbox4">
@@ -60,24 +71,27 @@
       </div>
       <label class="form-control text-left" for="inlineCheckbox4">Résident</label>
     </div>
+
+  </div>
   </form>
 </div>
 
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-graphic-tab" data-toggle="tab" href="#nav-graphic" role="tab" aria-controls="nav-graphic" aria-selected="true">Graphique</a>
-    <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tableau</a>
+<!-- NAV -->
+<nav class="">
+  <div class="nav nav-tabs to-border-blue" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link bg-blue active" id="nav-graphic-tab" data-toggle="tab" href="#nav-graphic" role="tab" aria-controls="nav-graphic" aria-selected="true">Graphique</a>
+    <a class="nav-item nav-link bg-blue" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tableau</a>
   </div>
 </nav>
 
+<!-- CONTENT NAV -->
 <div class="tab-content pt-3" id="nav-tabContent">
-
-  <div class="tab-pane fade  show active" id="nav-graphic" role="tabpanel" aria-labelledby="nav-graphic-tab">
+  <!-- graphic -->
+  <div class="tab-pane fade show active" id="nav-graphic" role="tabpanel" aria-labelledby="nav-graphic-tab">
     <app-graph></app-graph>
   </div>
-
-  <div class="tab-pane fade d-flex justify-content-center" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
-    <!-- TABLE -->
+  <!-- table -->
+  <div class="tab-pane fade d-flex justify-content-center mb-5" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
     <table>
       <tr>
         <th class="text-center pb-2">Année</th>
@@ -85,6 +99,7 @@
         <th class="text-center pb-2">Total heure</th>
       </tr>
       <tr *ngFor="let user of userList" [ngClass]="{'redLine' : user.duration < 35}">
+        <!-- TODO : ngClass redLine non fonctionnel -->
         <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
         <td class="border p-2" id="userName">{{ user.userName }}</td>
         <td class="border p-2" id="duration">{{ user.duration }}</td>

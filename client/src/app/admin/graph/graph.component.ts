@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 import {ExpressService} from "../../services/express.service";
+import {UserService} from "../../services/user.service";
 import {FormBuilder} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {HebdoComponent} from "../hebdo/hebdo.component";
 import {Chart} from 'chart.js';
 import * as $ from 'jquery';
 import 'chartjs-plugin-annotation';
-import {Router} from "@angular/router";
-import {UserService} from "../../services/user.service";
+
 
 @Component({
   selector: 'app-graph',
@@ -51,7 +52,6 @@ export class GraphComponent implements OnInit {
           }]
       }
   };
-
   barChartLabels = [];
   barChartType = 'horizontalBar';
   barChartLegend = false;
@@ -63,9 +63,6 @@ export class GraphComponent implements OnInit {
     backgroundColor: this.colorState
   }];
 
-
-
-
   constructor(private expressService: ExpressService,
               private userService: UserService,
               private formBuilder: FormBuilder,
@@ -73,6 +70,7 @@ export class GraphComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+      // subscription, update the data of graphic
       this.listSubscription = this.graph.userListSubject.subscribe(
           (userList: any[]) => {
               this.usersList = userList;
@@ -100,16 +98,20 @@ export class GraphComponent implements OnInit {
 
   // Build and update the graphic data
   setGraphic() {
+      // clear all array of graphic
       this.data.length = 0;
       this.barChartLabels = [];
       this.colorState.length = 0;
 
       this.usersList.forEach((user)=> {
+          // build userName array
           this.barChartLabels.push(user.userName);
 
+          // build data array
           let duration = user.duration.substr(0, 5).replace(':', '.');
           this.data.push(duration);
 
+          // build color array
           if(duration > 35) {
               this.colorState.push('#71e597');
           } else {
