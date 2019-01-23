@@ -10,3 +10,6 @@ tr{
 #duration{
     width: 150px;
 }
+.redLine{
+    background-color: #ff939399;
+}

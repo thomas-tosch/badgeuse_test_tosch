@@ -1,4 +1,7 @@
 
+
+
+
 <div class="shadow p-3 mb-3">
   <!-- NAVIGATION -->
   <div class="d-flex justify-content-between">
@@ -60,8 +63,20 @@
   </form>
 </div>
 
-<div class="shadow d-flex mb-5">
-  <div>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-graphic-tab" data-toggle="tab" href="#nav-graphic" role="tab" aria-controls="nav-graphic" aria-selected="true">Graphique</a>
+    <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tableau</a>
+  </div>
+</nav>
+
+<div class="tab-content pt-3" id="nav-tabContent">
+
+  <div class="tab-pane fade  show active" id="nav-graphic" role="tabpanel" aria-labelledby="nav-graphic-tab">
+    <app-graph></app-graph>
+  </div>
+
+  <div class="tab-pane fade d-flex justify-content-center" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
     <!-- TABLE -->
     <table>
       <tr>
@@ -69,7 +84,7 @@
         <th class="text-center pb-2">Etudiant</th>
         <th class="text-center pb-2">Total heure</th>
       </tr>
-      <tr *ngFor="let user of userList">
+      <tr *ngFor="let user of userList" [ngClass]="{'redLine' : user.duration < 35}">
         <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
         <td class="border p-2" id="userName">{{ user.userName }}</td>
         <td class="border p-2" id="duration">{{ user.duration }}</td>
@@ -77,11 +92,5 @@
     </table>
   </div>
 
-  <div class="ml-3 border w-100">
-    <app-graph  ></app-graph>
-
-  </div>
 </div>
-
-<!-- TODO : Faire un trie, soit par ordre alhabetique, soit par group -->
 
