@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <!-- FILTER -->
+  <!-- FILTER / SELECT -->
   <form [formGroup]="form" (change)="onInitGroup()" class="form-signin text-center">
     <div class="input-group mb-3">
 
@@ -22,9 +22,9 @@
           Trier par:
         </div>
       </div>
-      <select name="select" id="" class="custom-select">
-        <option value="1">ordre alpabétique</option>
-        <option value="2">année</option>
+      <select formControlName="orderBy" class="custom-select">
+        <option value="userName">ordre alpabétique</option>
+        <option value="id_group">année</option>
       </select>
 
       <div class="input-group-append">
@@ -58,11 +58,6 @@
       <label class="form-control text-left" for="inlineCheckbox4">Résident</label>
     </div>
   </form>
-</div>
-
-<!-- SELECT -->
-<div class="input-group mb-3">
-
 </div>
 
 <div class="shadow d-flex mb-5">

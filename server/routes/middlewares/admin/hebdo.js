@@ -14,11 +14,13 @@ module.exports = function(router) {
                 let startDate = req.body.startDate;
                 let endDate = req.body.endDate;
                 let filterGroup = req.body.filterGroup;
+                let orderBy = req.body.orderBy;
 
                 let content = [
                     [startDate],
                     [endDate],
-                    [filterGroup]
+                    [filterGroup],
+                    [orderBy]
                 ];
                 db.query('SELECT ' +
                     'users.id_user AS userId, ' +
@@ -37,7 +39,7 @@ module.exports = function(router) {
                     '' +
                     'GROUP BY userId ' +
                     '' +
-                    'ORDER BY userName'
+                    'ORDER BY ??, userName'
                     , content, (err, rows) => {
                         if(err) throw err;
 

@@ -43,10 +43,11 @@ export class HebdoComponent implements OnInit {
   // create the checkbox form
   createForm() {
     this.form = this.formBuilder.group({
-        checkbox1: [true, ],
-        checkbox2: [true, ],
-        checkbox3: [true, ],
-        checkbox4: [false, ]
+        orderBy: ['userName'],
+        checkbox1: [true],
+        checkbox2: [true],
+        checkbox3: [true],
+        checkbox4: [false]
     });
   }
 
@@ -77,7 +78,8 @@ export class HebdoComponent implements OnInit {
       action: 'getUserListHebdo',
       startDate: this.startDateTime,
       endDate: this.endDateTime,
-      filterGroup: this.filterGroup
+      filterGroup: this.filterGroup,
+      orderBy: this.form.get('orderBy').value
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
       this.userList = res.list;
