@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ExpressService} from "../../services/express.service";
-import {Auth} from "../../guards/auth";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { ExpressService } from "../../services/express.service";
+import { Auth } from "../../guards/auth";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
 
 
@@ -36,6 +36,7 @@ export class HebdoComponent implements OnInit {
     this.initDate();
   }
 
+  // emit to graphic the update list
   emitUserListSubject() {
     this.userListSubject.next(this.userList.slice());
   }
@@ -99,7 +100,5 @@ export class HebdoComponent implements OnInit {
 
     this.getUserListHebdo();
   }
-
-
 
 }

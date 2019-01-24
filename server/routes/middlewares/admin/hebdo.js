@@ -10,6 +10,7 @@ module.exports = function(router) {
 
         switch (action) {
 
+            // Get the user list for graphic week with filter and order by
             case 'getUserListHebdo':
                 let startDate = req.body.startDate;
                 let endDate = req.body.endDate;

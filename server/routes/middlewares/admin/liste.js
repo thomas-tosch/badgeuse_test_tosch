@@ -10,6 +10,7 @@ module.exports = function(router) {
 
         switch (action) {
 
+            // Get the user list for see the presence
             case 'getUserList':
 
                 let content = [
@@ -31,8 +32,6 @@ module.exports = function(router) {
                         res.json({list: rows});
                     })
                 break
-
-
         }
     });
 }
