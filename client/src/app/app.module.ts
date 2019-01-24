@@ -20,6 +20,7 @@ import { ListeComponent } from './menu/liste/liste.component';
 import { OrderModule } from "ngx-order-pipe";
 import { ChartsModule } from "ng2-charts";
 import { UserDetailComponent } from './admin/user-detail/user-detail.component';
+import { FormRequestComponent } from './user/form-request/form-request.component';
 import { HebdoComponent } from './admin/hebdo/hebdo.component';
 
 @NgModule({
@@ -33,7 +34,11 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
     GraphComponent,
     ListeComponent,
     UserDetailComponent,
+<<<<<<< client/src/app/app.module.ts
+    FormRequestComponent
+=======
     HebdoComponent
+>>>>>>> client/src/app/app.module.ts
   ],
   imports: [
     BrowserModule,
