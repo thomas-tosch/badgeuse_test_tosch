@@ -1,8 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 import {ExpressService} from "../../services/express.service";
-import {Auth} from "../../guards/auth";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BaseChartDirective} from "ng2-charts";
+import {UserService} from "../../services/user.service";
+import {FormBuilder} from "@angular/forms";
+import {Subscription} from "rxjs";
+import {HebdoComponent} from "../hebdo/hebdo.component";
+import {Chart} from 'chart.js';
+import * as $ from 'jquery';
+import 'chartjs-plugin-annotation';
+
 
 @Component({
   selector: 'app-graph',
@@ -11,39 +17,40 @@ import {BaseChartDirective} from "ng2-charts";
 })
 export class GraphComponent implements OnInit {
 
+  listSubscription: Subscription;
   usersList;
-  startDate = '2019-01-07T00:00:00';
-  endDate = '2019-01-11T23:59:59';
-  activeGraph = false;
+  activeGraph = true;
   data = [];
   colorState = [];
-    formSelectGroup: FormGroup;
 
-  // graph
-    barChartOptions = {
+  // graph option
+  barChartOptions = {
     scaleShowVerticalLines: true,
+    maintainAspectRatio: false,
     responsive: true,
     scales: {
       xAxes: [{
         ticks: {
             beginAtZero:true,
-            max: 60
+            max: 50
         },
       }]
     },
-    onClick: this.onClickBar,
-    annotation: {
-      annotation: [{
-        type: 'line',
-        drawTime: 'afterDatasetsDraw',
-        id: 'strip-line-1',
-        mode: 'vertical',
-        scaleID: 'y-axis-0',
-        value: 30,
-        borderColor: 'red',
-        borderWidth: 3
-      }]
-    }
+    onClick: this.onClickBar.bind(this),
+      annotation: {
+          annotations: [{
+              type: 'line',
+              mode: 'vertical',
+              scaleID: 'x-axis-0',
+              value: 35,
+              borderColor: 'red',
+              borderWidth: 2,
+              label: {
+                  enabled: false,
+                  content: 'Test label'
+              }
+          }]
+      }
   };
   barChartLabels = [];
   barChartType = 'horizontalBar';
@@ -55,66 +62,64 @@ export class GraphComponent implements OnInit {
   colors = [{
     backgroundColor: this.colorState
   }];
-    // @ViewChild(BaseChartDirective)
-    // public chart: BaseChartDirective; // Now you can reference your chart via `this.chart`
 
   constructor(private expressService: ExpressService,
-              private formBuilder: FormBuilder) { }
+              private userService: UserService,
+              private formBuilder: FormBuilder,
+              private graph: HebdoComponent,
+              private router: Router) { }
 
   ngOnInit() {
-    this.getTotalTime(1);
-    this.createForm();
+      // subscription, update the data of graphic
+      this.listSubscription = this.graph.userListSubject.subscribe(
+          (userList: any[]) => {
+              this.usersList = userList;
+              this.setGraphic();
+          }
+      );
   }
 
-    onClickBar(table, bar) {
+  // on click on bar graphic
+  onClickBar(table, bar) {
       if(bar[0] !== undefined) {
-          console.log(bar[0]._model.label);
+          let userName = bar[0]._model.label;
+          this.getIdUser((userId)=>{
+              this.router.navigate(['userDetail/'+userId]);
+          }, userName);
       }
   }
 
-  onSelectGroup() {
-      this.data = [];
-      this.barChartLabels = [];
-      this.getTotalTime(this.formSelectGroup.get('userGroup').value);
+  // get the id user select on click
+  getIdUser(callback, userName?) {
+      this.userService.getIdUser((res) => {
+          return callback(res);
+      }, userName);
   }
 
-    // create the login form
-    createForm() {
-        this.formSelectGroup = this.formBuilder.group({
-            userGroup: ['']
-        });
-    }
+  // Build and update the graphic data
+  setGraphic() {
+      // clear all array of graphic
+      this.data.length = 0;
+      this.barChartLabels = [];
+      this.colorState.length = 0;
 
-  getTotalTime(userGroup) {
-    let content = {
-      action: 'getTotalTime',
-      startDate: this.startDate,
-      endDate: this.endDate,
-      userGroup: userGroup
-    };
-    this.expressService.postExpress('graph', content).subscribe((res: Auth) => {
-      // console.log(res.message);
-      this.usersList = res.message;
+      this.usersList.forEach((user)=> {
+          // build userName array
+          this.barChartLabels.push(user.userName);
 
-        let i = 0;
-        this.usersList.forEach((user)=> {
-            this.barChartLabels.push(user.userName);
-            let duration = user.duration.substr(0, 5).replace(':', '.');
-            this.data.push(duration);
-            if(duration > 35) {
-                this.colorState.push('#71e597');
-            } else {
-                this.colorState.push('#df6e6e');
-            }
+          // build data array
+          let duration = user.duration.substr(0, 5).replace(':', '.');
+          this.data.push(duration);
 
-            i++;
-            if(i === this.usersList.length) {
-                this.activeGraph = true;
-                // this.chart.chart.update();
-            }
-
-        });
-    });
+          // build color array
+          if(duration > 35) {
+              this.colorState.push('#71e597');
+          } else {
+              this.colorState.push('#df6e6e');
+          }
+      });
+      // Dynamic height of graphic
+      $(".cadre-graph").height((this.usersList.length * 27.5));
   }
 
 
