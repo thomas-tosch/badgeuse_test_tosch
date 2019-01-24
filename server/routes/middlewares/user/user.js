@@ -25,7 +25,6 @@ module.exports = function(router) {
                         'WHERE users.id_user = ?'
                     , [id_user], (err, rows)=> {
                     if(err) throw err;
-                        console.log(rows[0]);
                     res.json({user: rows[0]});
                 })
             break
