@@ -66,8 +66,8 @@ module.exports = function(router) {
                 }
             break
 
+            // Check if the user is in the UHA 4.0 area
             case 'getAccessBadger':
-
                 (async () => {
                     let ipPublic = await publicIp.v4()
 
@@ -81,9 +81,7 @@ module.exports = function(router) {
                             success: false
                         });
                     }
-
                 })();
-
             break
 
         }
