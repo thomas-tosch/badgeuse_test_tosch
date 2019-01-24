@@ -22,9 +22,20 @@ export class UserService {
     }
 
     // get only the id of user
-    getIdUser() {
-        let token = helper.decodeToken(this.loginService.getToken());
-        return token.id_user;
+    getIdUser(callback, userName?) {
+        if(userName === undefined){
+            let token = helper.decodeToken(this.loginService.getToken());
+            return callback(token.id_user);
+        } else {
+            let content = {
+                action: 'getIdUser',
+                userName: userName
+            };
+            this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
+                return callback(res.user);
+            });
+        }
+
     }
 
     // get all data of user conected
