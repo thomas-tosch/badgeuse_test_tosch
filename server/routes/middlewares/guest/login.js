@@ -38,11 +38,13 @@ module.exports = function(router) {
 
                             if (result.length !== 0) {
 
-                                let passDb = result[0].mdp_temp_user;
-                                let passCript = sha1('uha'+passForm);
+                                let passFormCript = sha1('uha'+passForm);
+                                let passDb = result[0].mdp_user;
+
+                                if(passDb === null) {passDb = result[0].mdp_temp_user;}
 
                                 // compare the password
-                                if(passCript === passDb) {
+                                if(passFormCript === passDb) {
                                     // generate a token
                                     const token = jwt.sign({id_user: result[0].id_user}, config.auth.SECRET_KEY, {expiresIn: '3h'});
                                     res.json({
