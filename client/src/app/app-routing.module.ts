@@ -5,8 +5,6 @@ import {LoginComponent} from "./guest/login/login.component";
 import {AuthGuard} from './guards/auth.guard';
 import {NotAuthGuard} from "./guards/no-auth.guard";
 import {PersonalSpaceComponent} from "./user/personal-space/personal-space.component";
-import {ForgotPassComponent} from "./guest/forgot-pass/forgot-pass.component";
-import {NewPassComponent} from "./guest/new-pass/new-pass.component";
 import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
 import {HebdoComponent} from "./admin/hebdo/hebdo.component";
 
@@ -20,8 +18,6 @@ const routes: Routes = [
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   // guest
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
-  { path: 'newPass/:id_user/:key', component: NewPassComponent, canActivate: [NotAuthGuard] },
-  { path: 'forgotPass', component: ForgotPassComponent, canActivate: [NotAuthGuard] },
   // other
   { path: '', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: '**', redirectTo: 'login' }
