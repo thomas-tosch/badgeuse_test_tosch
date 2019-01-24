@@ -5,44 +5,82 @@ a, a:hover {
     color: black;
     text-decoration: none;
 }
+a:hover, a:focus, a:active {
+    outline: none;
+}
+
+.bg-blue{
+    background-color: #2e6fb1ff;
+    color: white;
+}
+.to-border-blue{
+    border-color: #2e6fb199;
+}
+.border-blue{
+    border: 1px solid #2e6fb199;
+}
+
+.input-group-text {
+    background-color: #2e6fb1ff;
+    color: white;
+    border-radius: 0px;
+}
+.input-group{
+    /*border: 1px solid #2e6fb1ff;*/
+    border-radius: 0px;
+}
 
 /* =================================== */
 /* CONTENT PAGE                        */
 /* =================================== */
 .content-page {
-    padding: 40px 0px 0 0px;
+    padding: 40px 0 0 0;
     justify-content: space-between;
     width: 100%;
+    max-height: 100%;
+    position: absolute;
 }
+
 .content-page-child {
-    padding: 20px 0px 10px 20px;
+    padding: 20px 20px 10px 20px;
     width: 100%;
+    transition: all 0.3s;
+    overflow: auto;
+
 }
+.content-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    max-height: 100%;
+
+}
+
 
 /* =================================== */
 /* LISTE                               */
 /* =================================== */
-.content-list {
-    min-width: 300px;
-    max-width: 300px;
+#sidebar {
+    width: 100%;
     max-height: 100%;
     height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 40px 0 0 0;
+    padding: 0;
     margin: 0;
     display: flex;
     transition: all 0.3s;
 }
 .list-overflow {
+    width: 300px;
+    max-height: 100%;
+    margin-right: 10px;
+    transition: all 0.3s;
     overflow: auto;
-    width: 100%;
 }
-#sidebar.active {
-    min-width: 20px;
-    max-width: 20px;
+#sidebar.active .list-overflow{
+    width: 0px;
+    margin-right: 0px;
 }
+
 .btn-slider {
     width: 30px;
     padding: 3px;
@@ -51,8 +89,13 @@ a, a:hover {
     border: none;
     border-radius: 0px;
 }
-.btn-slider:hover {
+.btn-slider:hover, .btn-slider:not(:disabled):not(.disabled):active:focus {
     background-color: #3c94ee;
+}
+
+.btn-slider:focus, .btn-slider:hover, .btn-slider:active {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
 }
 
 
@@ -62,42 +105,56 @@ a, a:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 991px) {
-    /* CONTENT PAGE */
+    /* =================================== */
+    /* CONTENT PAGE                        */
+    /* =================================== */
     .content-page {
-        padding: 10px 10px 80px 10px;
-        margin: 0 0 0px 0;
+        padding: 40px 0px 0 0px;
+        justify-content: space-between;
+        flex-direction: column-reverse;
+        width: 100%;
+        height: 100%;
     }
+
     .content-page-child {
-        padding: 30px 10px 80px 10px;
+        padding: 20px 30px 80px 20px;
+        width: 100%;
+        transition: all 0.3s;
+        overflow: auto;
+    }
+    .content-list {
+        padding: 0 0 0px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         width: 100%;
     }
 
-    /* LISTE */
-    .content-list {
-        min-width: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 0px 0 70px 0px;
+
+    /* =================================== */
+    /* LISTE                               */
+    /* =================================== */
+    #sidebar {
+        width: 100%;
         margin: 0;
-        display: flex;
-        flex-direction: column-reverse;
         transition: all 0.3s;
-        background-color: white;
+        position: fixed;
+        top: 30px;
     }
     .list-overflow {
-        overflow: auto;
         width: 100%;
+        height: 100%;
+        margin: 0 0px 0px 0;
+        transition: all 0.3s;
+        overflow: auto;
+        background-color: white;
     }
-    #sidebar.active {
-        min-width: 100%;
-        max-width: 100%;
-        height: 30px;
-        padding: 0px 0 0px 0px;
+    #sidebar.active .list-overflow, #sidebar.active{
+        height: 0%;
+        width: 100%;
+        padding: 0px 0px 0px 0;
     }
+
     .btn-slider {
         width: 100%;
         padding: 3px;
@@ -105,8 +162,15 @@ a, a:hover {
         background-color: #2e6fb1;
         border: none;
         border-radius: 0px;
+        position: fixed;
+        top: 0;
     }
-    .btn-slider:hover {
+    .btn-slider:hover, .btn-slider:not(:disabled):not(.disabled):active:focus {
         background-color: #3c94ee;
+    }
+
+    .btn-slider:focus, .btn-slider:hover, .btn-slider:active {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
     }
 }

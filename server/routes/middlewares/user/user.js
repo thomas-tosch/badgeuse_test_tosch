@@ -19,6 +19,15 @@ module.exports = function(router) {
                     res.json({user: rows[0]});
                 })
             break
+
+            // GET ID OF USER REQUESTED
+            case 'getIdUser':
+                let userName = req.body.userName;
+                db.query('SELECT * FROM users WHERE CONCAT(users.nom_user, \' \', users.prenom_user) = ?', [userName], (err, rows)=> {
+                    if(err) throw err;
+                    res.json({user: rows[0].id_user});
+                })
+                break
         }
     });
 }
