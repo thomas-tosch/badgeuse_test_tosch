@@ -15,8 +15,6 @@ import { BadgerComponent } from './menu/badger/badger.component';
 import { FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { BadgerService} from "./services/badger.service";
 import { PersonalSpaceComponent } from './user/personal-space/personal-space.component';
-import { ForgotPassComponent } from './guest/forgot-pass/forgot-pass.component';
-import { NewPassComponent } from './guest/new-pass/new-pass.component';
 import { GraphComponent } from './admin/graph/graph.component';
 import { ListeComponent } from './menu/liste/liste.component';
 import { OrderModule } from "ngx-order-pipe";
@@ -32,8 +30,6 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
     MenuComponent,
     BadgerComponent,
     PersonalSpaceComponent,
-    ForgotPassComponent,
-    NewPassComponent,
     GraphComponent,
     ListeComponent,
     UserDetailComponent,
