@@ -36,5 +36,3 @@ module.exports = function(router) {
         }
     });
 }
-
-// TODO : faire une fonction presence

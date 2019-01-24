@@ -17,8 +17,6 @@ module.exports = function(router) {
                  let message;
                  let title;
 
-                 // TODO : appeler la fonction présence
-
                  // set the response message
                  if(presence) {
                      title = 'Bonjour !';
