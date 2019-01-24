@@ -6,9 +6,7 @@ import {AuthGuard} from './guards/auth.guard';
 import {NotAuthGuard} from "./guards/no-auth.guard";
 import {PersonalSpaceComponent} from "./user/personal-space/personal-space.component";
 import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
-import {FormRequestComponent} from "./user/form-request/form-request.component";
 import {HebdoComponent} from "./admin/hebdo/hebdo.component";
-
 
 // ROUTER
 const routes: Routes = [
@@ -16,11 +14,8 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
   { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] },
-  
   // user
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
-  { path: 'userRequest', component: FormRequestComponent , canActivate: [AuthGuard]},
-
   // guest
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   // other
