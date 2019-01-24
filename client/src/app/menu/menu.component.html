@@ -21,7 +21,10 @@
           <!-- Administration access -->
           <a class="nav-link mr-4" routerLink="graph" routerLinkActive="active" *ngIf="adminActive"><fa-icon [icon]="faChessQueen" class="mr-2"></fa-icon>Administration</a>
         </li>
-
+        <li class="nav-item">
+          <!--Alert Bell -->
+          <a class="nav-link mr-2" routerLink="alerte" routerLinkActive="active" *ngIf="alerteActive"><fa-icon [icon]="faBell" class="badger-temoin"></fa-icon></a>
+        </li>
         <li class="nav-item">
           <!-- Badger -->
           <app-badger [presence]="presenceUser" [id_user]="idUser" *ngIf="badgerActive"></app-badger>

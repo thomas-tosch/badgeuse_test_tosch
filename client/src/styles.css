@@ -6,6 +6,11 @@ a, a:hover {
     text-decoration: none;
 }
 
+.badge-temoin {
+    font-size: 2rem;
+    transition: 1s ease;
+}
+
 /* =================================== */
 /* CONTENT PAGE                        */
 /* =================================== */

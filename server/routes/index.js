@@ -4,6 +4,7 @@ let badger = require('./controllers/user/badger');
 let newPass = require('./controllers/guest/newPass');
 let graph = require('./controllers/admin/graph');
 let liste = require('./controllers/admin/liste');
+let alerte = require('./controllers/user/alerte');
 
 
 module.exports = function(app)
@@ -15,5 +16,5 @@ module.exports = function(app)
     app.use('/newPass', newPass);
     app.use('/graph', graph);
     app.use('/liste', liste);
-
+    app.use('/alerte', alerte);
 };
