@@ -25,7 +25,7 @@ module.exports = function(router) {
                 if (usermailForm.length >= userMailLengthMin && usermailForm.length <= userMailLengthMax) {
                     if (passForm.length >= passLengthMin && passForm.length <= passLengthMax) {
                         // Read the Sql table if the userMail exist
-                        db.query('SELECT * FROM users INNER JOIN users_badger ON users.id_user = users_badger.id_user WHERE mail_user=?', [usermailForm], (err, result) => {
+                        db.query('SELECT * FROM users WHERE mail_user=?', [usermailForm], (err, result) => {
 
                             if (err) {
                                 res.json

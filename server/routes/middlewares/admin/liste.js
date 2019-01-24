@@ -18,20 +18,23 @@ module.exports = function(router) {
                 db.query('SELECT ' +
                     'users.id_user AS userId, ' +
                     'CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, ' +
-                    'users_badger.id_group, ' +
-                    'users_badger.presence AS presence ' +
+                    'IF(badger.id_point IS NULL,0,1) AS presence ' +
                     '' +
                     'FROM users ' +
                     '' +
-                    'INNER JOIN users_badger ON users.id_user = users_badger.id_user ' +
+                    'INNER JOIN users_extend ON users.id_user = users_extend.id_user ' +
+                    'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NULL AND start_point > CURRENT_DATE) badger ON users.id_user = badger.id_user ' +
                     '' +
-                    'ORDER BY presence DESC'
+                    'GROUP BY userId ' +
+                    '' +
+                    'ORDER BY presence'
                     , content, (err, rows) => {
                         if(err) throw err;
-
                         res.json({list: rows});
                     })
                 break
         }
     });
 }
+
+// TODO : faire une fonction presence
