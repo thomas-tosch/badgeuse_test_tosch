@@ -8,15 +8,17 @@ module.exports = function(router) {
     router.post('/', (req, res) => {
 
         const action = req.body.action;
+        let id_user = req.body.id_user;
 
         switch (action) {
 
             // GET ALL DATA OF USER CONNECTED
             case 'getDataUser':
-                let id_user = req.body.id_user;
+
                 db.query('SELECT *, ' +
                         'users.id_user AS id_user, ' +
                         'user_groups.nom_group AS nom_group, ' +
+                        'users_extend.id_group AS id_group, ' +
                         'roles.nom_role AS nom_role, ' +
                         'IF(badger.id_point IS NULL,0,1) AS presence ' +
                         '' +
@@ -44,7 +46,29 @@ module.exports = function(router) {
                     if(err) throw err;
                     res.json({user: rows[0].id_user});
                 })
-                break
+            break
+
+            // UPDATE THE USER GROUP
+            case 'updateGroup':
+                let id_group = req.body.id_group;
+                let content = [
+                    [id_group],
+                    [id_user]
+                ]
+                db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', content, (err)=>{
+                    if(err) {
+                        res.json({
+                            success: false,
+                            message: "Une erreur est survenue lors de la mise à jour de l'information."
+                        });
+                    } else {
+                        res.json({
+                            success: true,
+                            message: "L'information à bien été mise à jour."
+                        });
+                    }
+                });
+            break
         }
     });
 }

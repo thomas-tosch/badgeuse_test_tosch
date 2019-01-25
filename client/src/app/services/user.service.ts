@@ -3,7 +3,6 @@ import {LoginService} from "./login.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
-import {validate} from "email-validator";
 
 const helper = new JwtHelperService();
 
@@ -35,7 +34,6 @@ export class UserService {
                 return callback(res.user);
             });
         }
-
     }
 
     // get all data of user conected
@@ -53,20 +51,16 @@ export class UserService {
         });
     }
 
-    // Control if the e-mail content is on a valid format
-    static mailValidate(mailContent) {
-        return validate(mailContent);
+    isUserAdmin(callback) {
+        this.getDataUser((user)=>{
+            // activate administrator access if role = 3
+            if(user.id_role === 3){
+                return callback(true);
+            } else {
+                return callback(false);
+            }
+        })
     }
 
-    // Control if the password content is on a valid format
-    static validPass(password) {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{5,255}$/;
-        return !(regex.test(password));
-    }
-
-    // Compare two password
-    static comparePass(newPass, confPass) {
-        return !(newPass === confPass);
-    }
 
 }

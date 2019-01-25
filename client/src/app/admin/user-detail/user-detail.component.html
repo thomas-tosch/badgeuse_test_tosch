@@ -4,7 +4,7 @@
   <div class="infobar shadow">
     <ul>
 
-      <li class="mb-5">
+      <li class="mb-4">
         <button routerLink="/hebdo" class="btn btn-outline-light">< Retour</button>
       </li>
 
@@ -12,12 +12,24 @@
         {{ userData.nom_role }}
       </li>
 
-      <li>
+      <li class="h3">
         {{ userData.nom_user | uppercase}} {{ userData.prenom_user }}
       </li>
 
       <li>
-        {{ userData.nom_group }}
+        {{ userData.mail_user }}
+      </li>
+
+      <li>
+        <form [formGroup]="form" (change)="onSubmit()">
+          <select formControlName="nom_group">
+            <option value="0">Inactif</option>
+            <option value="1">1ere année</option>
+            <option value="2">2e année</option>
+            <option value="3">3e année</option>
+            <option value="4">Administrateur</option>
+          </select>
+        </form>
       </li>
 
     </ul>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {faAddressCard, faBell, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
@@ -15,7 +15,6 @@ export class MenuComponent implements OnInit {
 
   faChessQueen = faChessQueen;
   faUserAstronaut = faUserAstronaut;
-  faAddressCard = faAddressCard;
   faTimesCircle = faTimesCircle;
   faBell = faBell;
   userData;
@@ -24,7 +23,7 @@ export class MenuComponent implements OnInit {
   presenceUser;
   idUser;
   badgerActive;
-  adminActive = false;
+  @Input() adminActive;
   alerteActive = false;
 
   constructor(private userService: UserService,
@@ -42,15 +41,10 @@ export class MenuComponent implements OnInit {
     getDataUser(){
         this.userService.getDataUser((res)=> {
           this.userData = res;
-          console.log(res);
           this.nomUser = this.userData.nom_user;
           this.prenomUser = this.userData.prenom_user;
           this.presenceUser = this.userData.presence;
           this.idUser = this.userData.id_user;
-          // activate administrator access if role = 3
-          if(res.id_role === 3){
-              this.adminActive = true;
-          }
           this.getAlerte();
         });
     }
@@ -63,7 +57,6 @@ export class MenuComponent implements OnInit {
 
     // Check if the student are forget unbadge yesterday
     getAlerte(){
-      console.log(this.idUser);
       let content = {
         action : 'getDataAlerte',
         id_user:this.idUser

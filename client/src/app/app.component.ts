@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   iconIn;
   iconOut;
   btnSideBar;
+  adminActive = false;
 
   constructor(private expressService: ExpressService,
               private userService: UserService
@@ -25,8 +26,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.defineIconList();
-
     this.closeListOnInit();
+    this.userService.isUserAdmin((res)=>{this.adminActive = res});
   }
 
   // If true, show the menu. if false, hide the menu
