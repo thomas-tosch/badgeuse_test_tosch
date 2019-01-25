@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
-import {faCheckCircle, faTimesCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faTimesCircle, faSpinner, faBell} from '@fortawesome/free-solid-svg-icons';
 import {BadgerService} from "../../services/badger.service";
 import swal from 'sweetalert2';
 
@@ -16,6 +16,8 @@ export class BadgerComponent implements OnInit {
   buttonActivate = false;
   @Input() presence;
   @Input() id_user;
+  faBell = faBell;
+
 
   constructor(private loginService: LoginService,
               private badgerService: BadgerService) { }
