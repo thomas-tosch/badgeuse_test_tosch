@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faAddressCard, faBell, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
+import {faBell, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../services/user.service";
 import {LoginService} from "../services/login.service";
 import {Router} from "@angular/router";
 import {ExpressService} from "../services/express.service";
 import {Auth} from "../guards/auth";
-import swal from "../services/user.service";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-menu',

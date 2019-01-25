@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
 import {faCircle} from "@fortawesome/free-solid-svg-icons";
-import swal from "../../services/user.service";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-liste',

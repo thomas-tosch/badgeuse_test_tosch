@@ -3,7 +3,7 @@ import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
-import swal from "../../services/user.service";
+import swal from "sweetalert2";
 
 
 @Component({
@@ -24,8 +24,6 @@ export class HebdoComponent implements OnInit {
   checkbox3 = '';
   checkbox4 = '';
   filterGroup = '1,2,3';
-
-  test = 0;
 
   constructor(private expressService: ExpressService,
               private formBuilder: FormBuilder)

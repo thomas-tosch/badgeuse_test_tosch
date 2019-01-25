@@ -5,7 +5,7 @@ import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
 import {Router} from "@angular/router";
-import set = Reflect.set;
+
 
 const helper = new JwtHelperService();
 

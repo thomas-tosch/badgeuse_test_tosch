@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
 import {UserService} from "./user.service";
-import swal from "./user.service";
+import swal from "sweetalert2";
 
 @Injectable({
   providedIn: 'root'
