@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
 import {UserService} from "./user.service";
+import swal from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,11 @@ export class BadgerService {
         presence: presence
       };
       this.expressService.postExpress('badger', content).subscribe((res:Auth) => {
-        return callback(res);
+        if(!res.success) {
+          swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+        } else {
+          return callback(res);
+        }
       });
     });
   }

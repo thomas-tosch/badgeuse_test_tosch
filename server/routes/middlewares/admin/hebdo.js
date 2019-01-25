@@ -42,9 +42,17 @@ module.exports = function(router) {
                     '' +
                     'ORDER BY ??, userName'
                     , content, (err, rows) => {
-                        if(err) throw err;
-
-                        res.json({list: rows});
+                        if(err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                list: rows
+                            });
+                        }
                     })
                 break
 

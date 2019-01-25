@@ -5,6 +5,7 @@ import {LoginService} from "../services/login.service";
 import {Router} from "@angular/router";
 import {ExpressService} from "../services/express.service";
 import {Auth} from "../guards/auth";
+import swal from "../services/user.service";
 
 @Component({
   selector: 'app-menu',
@@ -62,7 +63,11 @@ export class MenuComponent implements OnInit {
         id_user:this.idUser
       };
       this.expressService.postExpress('alerte', content).subscribe((res:Auth)=>{
+        if(!res.success && res.message === 'error') {
+          swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+        } else {
           this.alerteActive = res.success;
+        }
       });
     }
 

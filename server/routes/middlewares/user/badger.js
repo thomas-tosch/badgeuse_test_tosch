@@ -33,12 +33,18 @@ module.exports = function(router) {
                         [id_user]
                     ];
                     db.query('INSERT INTO badger(id_user) VALUES (?)', content_badger_start, (err) => {
-                        if (err) throw err;
-                        res.json({
-                            success: true,
-                            title: title,
-                            message: message
-                        });
+                        if(err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                title: title,
+                                message: message
+                            });
+                        }
                     });
                 }
                 else {
@@ -52,12 +58,18 @@ module.exports = function(router) {
                         '' +
                         'WHERE start_point > CURRENT_DATE AND id_user = ? ' +
                         'AND end_point is NULL ', content_badger_end, (err)=> {
-                        if (err) throw err;
-                        res.json({
-                            success: true,
-                            title: title,
-                            message: message
-                        });
+                        if(err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                title: title,
+                                message: message
+                            });
+                        }
                     })
                 }
             break

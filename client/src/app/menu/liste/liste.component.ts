@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
 import {faCircle} from "@fortawesome/free-solid-svg-icons";
+import swal from "../../services/user.service";
 
 @Component({
   selector: 'app-liste',
@@ -28,8 +29,12 @@ export class ListeComponent implements OnInit {
       action: 'getUserList'
     };
     this.expressService.postExpress('liste', content).subscribe((res: Auth) => {
-      this.userList = res.list;
-      this.splitPresence();
+      if(!res.success) {
+        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+      } else {
+        this.userList = res.list;
+        this.splitPresence();
+      }
     })
   }
 

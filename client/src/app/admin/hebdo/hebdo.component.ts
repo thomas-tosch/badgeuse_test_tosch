@@ -3,6 +3,7 @@ import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
+import swal from "../../services/user.service";
 
 
 @Component({
@@ -83,8 +84,12 @@ export class HebdoComponent implements OnInit {
       orderBy: this.form.get('orderBy').value
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
-      this.userList = res.list;
-      this.emitUserListSubject();
+      if(!res.success) {
+        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+      } else {
+        this.userList = res.list;
+        this.emitUserListSubject();
+      }
     })
   }
 
