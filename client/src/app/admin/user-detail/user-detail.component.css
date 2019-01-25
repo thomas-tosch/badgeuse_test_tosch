@@ -1,7 +1,7 @@
 .infobar{
     width: 20%;
     background-color: #205081;
-    padding: 15px;
+    padding: 20px 10px 20px 0px;
     color: white;
 }
 .infobar li {

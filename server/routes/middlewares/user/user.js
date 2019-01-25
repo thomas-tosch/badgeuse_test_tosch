@@ -17,6 +17,7 @@ module.exports = function(router) {
                 db.query('SELECT *, ' +
                         'users.id_user AS id_user, ' +
                         'user_groups.nom_group AS nom_group, ' +
+                        'users_extend.id_group AS id_group, ' +
                         'roles.nom_role AS nom_role, ' +
                         'IF(badger.id_point IS NULL,0,1) AS presence ' +
                         '' +
