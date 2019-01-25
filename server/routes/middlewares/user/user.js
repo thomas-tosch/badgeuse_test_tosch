@@ -15,6 +15,7 @@ module.exports = function(router) {
             case 'getDataUser':
                 let id_user = req.body.id_user;
                 db.query('SELECT *, ' +
+                        'users.id_user AS id_user, ' +
                         'IF(badger.id_point IS NULL,0,1) AS presence ' +
                         '' +
                         'FROM users ' +

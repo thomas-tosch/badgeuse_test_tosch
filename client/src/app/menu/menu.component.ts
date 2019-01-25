@@ -1,5 +1,3 @@
-import {ExpressService} from "../services/express.service";
-
 import { Component, OnInit } from '@angular/core';
 import {faAddressCard, faBell, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../services/user.service";
@@ -44,15 +42,16 @@ export class MenuComponent implements OnInit {
     getDataUser(){
         this.userService.getDataUser((res)=> {
           this.userData = res;
+          console.log(res);
           this.nomUser = this.userData.nom_user;
           this.prenomUser = this.userData.prenom_user;
           this.presenceUser = this.userData.presence;
           this.idUser = this.userData.id_user;
-          this.getAlerte();
           // activate administrator access if role = 3
           if(res.id_role === 3){
               this.adminActive = true;
           }
+          this.getAlerte();
         });
     }
 
@@ -63,12 +62,13 @@ export class MenuComponent implements OnInit {
     }
 
     getAlerte(){
-
-    let content = {action : 'getDataAlerte', id_user:this.idUser} ;
+    console.log(this.idUser);
+    let content = {
+      action : 'getDataAlerte',
+      id_user:this.idUser
+    };
     this.expressService.postExpress('alerte', content).subscribe((res:Auth)=>{
-      if (res.success){
-        this.alerteActive=true;
-      }
+        this.alerteActive = res.success;
     })
 
     }
