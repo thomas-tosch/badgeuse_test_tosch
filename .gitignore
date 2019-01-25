@@ -6,3 +6,4 @@ Supprimerait server/public/
 Supprimerait .idea/
 Supprimerait .idea/codeStyles/Projet.xml
 .idea
+node_modules
