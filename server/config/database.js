@@ -6,5 +6,5 @@ db = mysql.createConnection(
             port     : 3306,
             user     : 'uhaSQL',
             password : 'uha',
-            database : 'showroom',
+            database : 'badgeuse',
     });

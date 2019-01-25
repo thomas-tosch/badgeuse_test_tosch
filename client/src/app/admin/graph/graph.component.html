@@ -1,52 +1,15 @@
-Sélectionnez un groupe: <br>
-<form [formGroup]="formSelectGroup" (submit)="onSelectGroup()" class="form-signin text-center">
-    <div class="input-group w-75">
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <input type="radio" id="userGroup_1" formControlName="userGroup" value="1" [checked]="true">
-            </div>
-        </div>
-        <label for="userGroup_1" class="form-control">1ère année</label>
 
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <input type="radio" id="userGroup_2" formControlName="userGroup" value="2">
-            </div>
-        </div>
-        <label for="userGroup_2" class="form-control">2e année</label>
-
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <input type="radio" id="userGroup_3" formControlName="userGroup" value="3">
-            </div>
-        </div>
-        <label for="userGroup_3" class="form-control">3e année</label>
-
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <input type="radio" id="userGroup_4" formControlName="userGroup" value="4">
-            </div>
-        </div>
-        <label for="userGroup_4" class="form-control">Résident</label>
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-secondary">Afficher</button>
-        </div>
+<section class="">
+    <div *ngIf="activeGraph" class="bg-white p-lg-3 cadre-graph">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                [colors]="colors"
+                class="graph"
+        >
+        </canvas>
     </div>
-</form>
-
-<h2>Heure total de la semaine du {{ startDate | date:'dd MMM yyyy'}} au {{ endDate | date:'dd MMM yyyy'}}</h2>
-
-<!--<section class="mr-3">-->
-    <!--<div *ngIf="activeGraph" class="shadow  bg-white p-3 mr-3">-->
-        <!--<canvas baseChart-->
-                <!--[datasets]="barChartData"-->
-                <!--[labels]="barChartLabels"-->
-                <!--[options]="barChartOptions"-->
-                <!--[legend]="barChartLegend"-->
-                <!--[chartType]="barChartType"-->
-                <!--[colors]="colors"-->
-                <!--class="graph"-->
-        <!--&gt;-->
-        <!--</canvas>-->
-    <!--</div>-->
-<!--</section>-->
+</section>
