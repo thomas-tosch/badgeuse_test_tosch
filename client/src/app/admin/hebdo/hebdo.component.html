@@ -98,11 +98,11 @@
         <th class="text-center pb-2">Etudiant</th>
         <th class="text-center pb-2">Total heure</th>
       </tr>
-      <tr *ngFor="let user of userList">
+      <tr *ngFor="let user of userList" [ngClass]="{'redLine': (user.duration | slice:0:2) < 35}">
         <!-- TODO : ngClass redLine non fonctionnel -->
         <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
         <td class="border p-2" id="userName">{{ user.userName }}</td>
-        <td class="border p-2" id="duration">{{ user.duration }}</td>
+        <td class="border p-2" id="duration">{{ user.duration | slice:0:5}}</td>
       </tr>
     </table>
   </div>
