@@ -3,6 +3,8 @@ import {ExpressService} from "../../services/express.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Auth} from "../../guards/auth";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-user-detail',
@@ -45,7 +47,18 @@ export class UserDetailComponent implements OnInit {
 
 
   onSubmit() {
-
+    let content = {
+      action: 'updateGroup',
+      id_user: this.id_user,
+      id_group: this.form.get('nom_group').value
+    };
+    this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
+      if(res.success) {
+        swal('Opération réussi !', res.message, 'success');
+      } else {
+        swal('Opération échoué !', res.message, 'error');
+      }
+    })
   }
 
 }
