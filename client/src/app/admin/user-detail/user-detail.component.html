@@ -4,7 +4,7 @@
   <div class="infobar shadow">
     <ul>
 
-      <li class="mb-5">
+      <li class="mb-4">
         <button routerLink="/hebdo" class="btn btn-outline-light">< Retour</button>
       </li>
 
@@ -12,8 +12,12 @@
         {{ userData.nom_role }}
       </li>
 
-      <li>
+      <li class="h3">
         {{ userData.nom_user | uppercase}} {{ userData.prenom_user }}
+      </li>
+
+      <li>
+        {{ userData.mail_user }}
       </li>
 
       <li>

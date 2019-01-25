@@ -1,5 +1,5 @@
 <!-- NAVBAR MENU -->
-<app-menu *ngIf="getConnectStatus()"></app-menu>
+<app-menu [adminActive]="adminActive" *ngIf="getConnectStatus()"></app-menu>
 
 <!-- CONTENT PAGE -->
 <div class="content-page d-lg-flex">
@@ -20,7 +20,7 @@
 
       <!-- SIDEBAR -->
       <div class="list-overflow ">
-      <app-liste></app-liste>
+      <app-liste [adminActive]="adminActive"></app-liste>
       </div>
     </div>
   </div>
