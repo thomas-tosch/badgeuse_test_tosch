@@ -4,3 +4,5 @@ Supprimerait client/node_modules/
 Supprimerait node_modules/
 Supprimerait server/public/
 Supprimerait .idea/
+Supprimerait .idea/codeStyles/Projet.xml
+.idea
