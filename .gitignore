@@ -3,4 +3,4 @@ Supprimerait .idea/workspace.xml
 Supprimerait client/node_modules/
 Supprimerait node_modules/
 Supprimerait server/public/
-.idea
+Supprimerait .idea/
