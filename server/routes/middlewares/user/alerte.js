@@ -20,14 +20,16 @@ require ('../../../config/database');
                         'ORDER BY start_point DESC ' +
                         'LIMIT 1'
                     , [id_user], (err, rows)=> {
-                    if (err) throw err;
-
-                    if (rows.length > 0) {
-                        res.json({user: rows[0], success: true});
-                    }
-                    else{
-                        res.json({succes: false});
-                    };
+                        if(err) {
+                            res.json({
+                                success: false,
+                                message: 'error'
+                            });
+                            throw err;
+                        } else {
+                            if (rows.length > 0) { res.json({user: rows[0], success: true});}
+                            else {res.json({succes: false});}
+                        }
                 });
                 break
         }

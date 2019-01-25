@@ -23,6 +23,7 @@ import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 import { HebdoComponent } from './admin/hebdo/hebdo.component';
 import { MonthlyCalendarComponent } from './user/monthly-calendar/monthly-calendar.component';
 import { FullCalendarModule } from 'ng-fullcalendar';
+import { Error404Component } from './guest/error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { FullCalendarModule } from 'ng-fullcalendar';
     ListeComponent,
     UserDetailComponent,
     HebdoComponent,
-    MonthlyCalendarComponent
+    MonthlyCalendarComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,

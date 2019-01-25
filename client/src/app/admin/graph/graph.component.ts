@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {ExpressService} from "../../services/express.service";
 import {UserService} from "../../services/user.service";
 import {FormBuilder} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -63,15 +62,14 @@ export class GraphComponent implements OnInit {
     backgroundColor: this.colorState
   }];
 
-  constructor(private expressService: ExpressService,
-              private userService: UserService,
+  constructor(private userService: UserService,
               private formBuilder: FormBuilder,
-              private graph: HebdoComponent,
+              private hebdoComponent: HebdoComponent,
               private router: Router) { }
 
   ngOnInit() {
       // subscription, update the data of graphic
-      this.listSubscription = this.graph.userListSubject.subscribe(
+      this.listSubscription = this.hebdoComponent.userListSubject.subscribe(
           (userList: any[]) => {
               this.usersList = userList;
               this.setGraphic();

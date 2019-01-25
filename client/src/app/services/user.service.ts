@@ -3,6 +3,9 @@ import {LoginService} from "./login.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
+import swal from "sweetalert2";
+import {Router} from "@angular/router";
+
 
 const helper = new JwtHelperService();
 
@@ -13,7 +16,8 @@ export class UserService {
 
 
     constructor(private loginService: LoginService,
-                private expressService: ExpressService) { }
+                private expressService: ExpressService,
+                private router: Router) { }
 
     // Get the status if connected or not
     getConnectStatus() {
@@ -31,7 +35,11 @@ export class UserService {
                 userName: userName
             };
             this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
-                return callback(res.user);
+                if(!res.success) {
+                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                } else {
+                    return callback(res.user);
+                }
             });
         }
     }
@@ -47,7 +55,11 @@ export class UserService {
             id_user: id_user
         };
         this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
-            return callback(res.user);
+            if(!res.success) {
+                swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+            } else {
+                return callback(res.user);
+            }
         });
     }
 

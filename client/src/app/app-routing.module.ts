@@ -7,6 +7,7 @@ import {NotAuthGuard} from "./guards/no-auth.guard";
 import {PersonalSpaceComponent} from "./user/personal-space/personal-space.component";
 import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
 import {HebdoComponent} from "./admin/hebdo/hebdo.component";
+import {Error404Component} from "./guest/error404/error404.component";
 
 // ROUTER
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   // other
   { path: '', component: LoginComponent, canActivate: [NotAuthGuard] },
-  { path: '**', redirectTo: 'login' }
+  { path: '404', component: Error404Component },
+  { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({

@@ -31,8 +31,17 @@ module.exports = function(router) {
                         '' +
                         'WHERE users.id_user = ?'
                     , [id_user], (err, rows)=> {
-                    if(err) throw err;
-                    res.json({user: rows[0]});
+                        if(err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                user: rows[0]
+                            });
+                        }
                 })
             break
 
@@ -43,8 +52,17 @@ module.exports = function(router) {
                         'FROM users ' +
                         'WHERE CONCAT(users.nom_user, \' \', users.prenom_user) = ?'
                     , [userName], (err, rows)=> {
-                    if(err) throw err;
-                    res.json({user: rows[0].id_user});
+                    if(err) {
+                        res.json({
+                            success: false
+                        });
+                        throw err;
+                    } else {
+                        res.json({
+                            success: true,
+                            user: rows[0].id_user
+                        });
+                    }
                 })
             break
 

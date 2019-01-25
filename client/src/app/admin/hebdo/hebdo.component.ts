@@ -3,6 +3,7 @@ import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
+import swal from "sweetalert2";
 
 
 @Component({
@@ -23,8 +24,6 @@ export class HebdoComponent implements OnInit {
   checkbox3 = '';
   checkbox4 = '';
   filterGroup = '1,2,3';
-
-  test = 0;
 
   constructor(private expressService: ExpressService,
               private formBuilder: FormBuilder)
@@ -83,8 +82,12 @@ export class HebdoComponent implements OnInit {
       orderBy: this.form.get('orderBy').value
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
-      this.userList = res.list;
-      this.emitUserListSubject();
+      if(!res.success) {
+        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+      } else {
+        this.userList = res.list;
+        this.emitUserListSubject();
+      }
     })
   }
 
