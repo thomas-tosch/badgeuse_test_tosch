@@ -16,11 +16,15 @@ module.exports = function(router) {
                 let id_user = req.body.id_user;
                 db.query('SELECT *, ' +
                         'users.id_user AS id_user, ' +
+                        'user_groups.nom_group AS nom_group, ' +
+                        'roles.nom_role AS nom_role, ' +
                         'IF(badger.id_point IS NULL,0,1) AS presence ' +
                         '' +
                         'FROM users ' +
                         '' +
                         'INNER JOIN users_extend ON users.id_user = users_extend.id_user ' +
+                        'LEFT JOIN user_groups ON users_extend.id_group = user_groups.id_group ' +
+                        'LEFT JOIN roles ON users.id_role = roles.id_role ' +
                         'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NULL AND start_point > CURRENT_DATE) badger ON users.id_user = badger.id_user ' +
                         '' +
                         'WHERE users.id_user = ?'
