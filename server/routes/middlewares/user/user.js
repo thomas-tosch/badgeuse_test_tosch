@@ -1,7 +1,4 @@
 require ('../../../config/database');
-let bcrypt = require('bcrypt');
-let jwt = require('jsonwebtoken');
-let config = require('../../../config/config');
 
 module.exports = function(router) {
 
