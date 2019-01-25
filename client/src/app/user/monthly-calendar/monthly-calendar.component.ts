@@ -18,7 +18,7 @@ export class MonthlyCalendarComponent implements OnInit {
       eventLimit: false,
       header: {
         left: 'prev',
-        center: 'title, today',
+        center: 'title',
         right: 'next'
       },
       //events: data
