@@ -61,26 +61,26 @@ export class MenuComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    // Check if the student are forget unbadge yesterday
     getAlerte(){
-    console.log(this.idUser);
-    let content = {
-      action : 'getDataAlerte',
-      id_user:this.idUser
-    };
-    this.expressService.postExpress('alerte', content).subscribe((res:Auth)=>{
-        this.alerteActive = res.success;
-    })
-
+      console.log(this.idUser);
+      let content = {
+        action : 'getDataAlerte',
+        id_user:this.idUser
+      };
+      this.expressService.postExpress('alerte', content).subscribe((res:Auth)=>{
+          this.alerteActive = res.success;
+      });
     }
 
     // check if the client is in UHA 4.0 area
     getAccessBadger() {
-    let content = {
-      action: 'getAccessBadger'
-    }
-      this.expressService.postExpress('badger', content).subscribe((res: Auth)=> {
-        this.badgerActive = res.success;
-      })
+      let content = {
+        action: 'getAccessBadger'
+      }
+        this.expressService.postExpress('badger', content).subscribe((res: Auth)=> {
+          this.badgerActive = res.success;
+        })
     }
 
 
