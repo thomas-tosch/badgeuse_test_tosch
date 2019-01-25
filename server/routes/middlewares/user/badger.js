@@ -50,7 +50,7 @@ module.exports = function(router) {
                         'end_point = CURRENT_TIMESTAMP, ' +
                         'duration = TIMEDIFF( end_point, start_point ) ' +
                         '' +
-                        'WHERE id_user = ? ' +
+                        'WHERE start_point > CURRENT_DATE AND id_user = ? ' +
                         'AND end_point is NULL ', content_badger_end, (err)=> {
                         if (err) throw err;
                         res.json({
