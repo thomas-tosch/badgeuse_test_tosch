@@ -2,7 +2,7 @@
 export interface Auth {
   title: string;
   message: string;
-  success: string;
+  success: boolean;
   token: string;
   user: string;
   list: string;
