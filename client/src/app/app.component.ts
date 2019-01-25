@@ -27,6 +27,10 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.defineIconList();
     this.closeListOnInit();
+    this.isUserAdmin();
+  }
+
+  isUserAdmin() {
     this.userService.isUserAdmin((res)=>{this.adminActive = res});
   }
 
@@ -39,6 +43,7 @@ export class AppComponent implements OnInit{
     setTimeout(()=>{
       if(this.getConnectStatus()) {
         this.onBtnSideBar();
+        this.isUserAdmin();
       } else {
         this.closeListOnInit();
       }
