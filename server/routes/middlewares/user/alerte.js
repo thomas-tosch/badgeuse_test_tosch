@@ -14,11 +14,16 @@ let config = require('../../../config/config');
             // GET ALL DISCONNECT TIME OF USER CONNECTED
             case 'getDataAlerte':
                 let id_user = req.body.id_user;
-                db.query('SELECT * FROM badger WHERE id_user = ? and end_point IS NULL and start_point < current_date () -1 ORDER BY start_point DESC LIMIT 1', [id_user], (err, rows)=> {
-                    // console.log(rows[0]);
-                    if (err) throw err;
+                db.query('SELECT * FROM badger WHERE id_user = ? and end_point IS NULL and start_point < current_date and start_point > current_date() -3 ORDER BY start_point DESC LIMIT 1', [id_user], (err, rows)=> {
 
-                    res.json({user: rows[0],success:true});
+                    if (err) throw err;
+                    // console.log(rows[0]);
+                    if (rows.length > 0) {
+                        res.json({user: rows[0], success: true});
+                    }
+                    else{
+                        res.json({succes: false});
+                    };
                 });
                 break
         }
