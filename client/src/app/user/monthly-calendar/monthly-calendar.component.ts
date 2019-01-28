@@ -20,6 +20,7 @@ export class MonthlyCalendarComponent implements OnInit {
         editable : true,
         eventLimit : false,
         slotLabelFormat : 'H(:mm)',
+        allDaySlot : false,
         header : {
             left : 'title',
             center : '',
