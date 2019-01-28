@@ -80,7 +80,7 @@ module.exports = function(router) {
                     let ipPublic = await publicIp.v4()
 
                     let localIp = ip.address();
-                    if (ipPublic === '193.50.153.129' && /10[.]3[.]1[.]\d{1,3}/.test(localIp)) {
+                    if (ipPublic === '193.50.153.129' && /10[.][03][.]1[.]\d{1,3}/.test(localIp)) {
                         res.json({
                             success: true
                         });
