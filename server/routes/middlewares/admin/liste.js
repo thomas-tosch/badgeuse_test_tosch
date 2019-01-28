@@ -25,19 +25,27 @@ module.exports = function(router) {
                     'INNER JOIN users_extend ON users.id_user = users_extend.id_user ' +
                     'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NULL AND start_point > CURRENT_DATE) badger ON users.id_user = badger.id_user ' +
                     '' +
-                    'GROUP BY userId ' +
+                    // 'GROUP BY userId ' +
                     '' +
-                    'ORDER BY presence'
+                    'ORDER BY userName'
                     , content, (err, rows) => {
-                        if(err) {
+                        if (err) {
                             res.json({
-                                success: false
+                                success: false,
+                                message: 'Une erreur est survenue lors de la requête vers la base de données.'
                             });
                             throw err;
-                        } else {
+                        }
+
+                        if(rows.length > 0) {
                             res.json({
                                 success: true,
                                 list: rows
+                            });
+                        } else {
+                            res.json({
+                                success: false,
+                                message: "Nous n'avons rien trouver dans la base de données."
                             });
                         }
                     })

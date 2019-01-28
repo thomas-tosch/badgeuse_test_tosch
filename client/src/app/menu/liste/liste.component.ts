@@ -30,7 +30,7 @@ export class ListeComponent implements OnInit {
     };
     this.expressService.postExpress('liste', content).subscribe((res: Auth) => {
       if(!res.success) {
-        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+        swal('Oups !', res.message, 'error');
       } else {
         this.userList = res.list;
         this.splitPresence();
