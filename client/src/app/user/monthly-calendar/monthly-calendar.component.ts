@@ -16,15 +16,19 @@ export class MonthlyCalendarComponent implements OnInit {
         defaultView : 'agendaWeek',
         showNonCurrentDates : true,
         weekends : false,
-        locale: 'fr',
-        editable: true,
-        eventLimit: false,
-        header: {
-            left: 'title',
-            center: '',
-            right: 'prev, month, agendaWeek, next'
+        locale : 'fr',
+        editable : true,
+        eventLimit : false,
+        header : {
+            left : 'title',
+            center : '',
+            right : 'prev, month, agendaWeek, next'
         },
-      // events: data
+        buttonText : {
+            month:    'Mois',
+            week:     'Semaine'
+        },
+        // events: data
     };
   }
 }
