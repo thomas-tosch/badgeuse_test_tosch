@@ -14,14 +14,16 @@ export class MonthlyCalendarComponent implements OnInit {
   constructor() {}
   ngOnInit() {
     this.calendarOptions = {
-      locale: 'fr',
-      editable: true,
-      eventLimit: false,
-      header: {
-        left: 'prev',
-        center: 'title',
-        right: 'next'
-      },
+        showNonCurrentDates : true,
+        weekends : false,
+        locale: 'fr',
+        editable: true,
+        eventLimit: false,
+        header: {
+            left: 'prev',
+            center: 'title',
+            right: 'next'
+        },
       // events: data
     };
   }
