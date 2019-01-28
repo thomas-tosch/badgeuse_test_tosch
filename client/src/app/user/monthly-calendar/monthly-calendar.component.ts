@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-monthly-calendar',
@@ -14,6 +15,7 @@ export class MonthlyCalendarComponent implements OnInit {
   constructor() {}
   ngOnInit() {
     this.calendarOptions = {
+      locale: 'fr',
       editable: true,
       eventLimit: false,
       header: {
@@ -21,7 +23,7 @@ export class MonthlyCalendarComponent implements OnInit {
         center: 'title',
         right: 'next'
       },
-      //events: data
+      // events: data
     };
   }
 
