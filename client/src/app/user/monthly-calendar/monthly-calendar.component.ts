@@ -19,6 +19,7 @@ export class MonthlyCalendarComponent implements OnInit {
         locale : 'fr',
         editable : true,
         eventLimit : false,
+        slotLabelFormat : 'H(:mm)',
         header : {
             left : 'title',
             center : '',
