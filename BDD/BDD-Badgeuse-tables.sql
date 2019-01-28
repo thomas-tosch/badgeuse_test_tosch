@@ -94,6 +94,7 @@ Engine = INNODB;
 CREATE TABLE absences (
 	id_absences INT NOT NULL AUTO_INCREMENT,
 	id_user SMALLINT NOT NULL,
+	id_status TINYINT(1) NOT NULL DEFAULT 2,
 	start_date DATE NOT NULL,
 	end_date DATE NOT NULL,
 	half_day TINYINT NOT NULL DEFAULT 0,
@@ -143,4 +144,4 @@ INSERT IGNORE INTO `reason` (`id_reason`, `nom_reason`) VALUES
 (1, 'malade'),
 (2, 'stage'),
 (3, 'alternance'),
-(4, 'aucune raison');
+(4, 'autre raison');
