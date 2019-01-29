@@ -34,7 +34,19 @@ export class MonthlyCalendarComponent implements OnInit {
             month:    'Mois',
             week:     'Semaine'
         },
-        // events: data
+        events: [
+            {
+                start: '2019-02-01T08:25:16',
+                end: '2019-02-01T17:08:52',
+                rendering: 'background'
+            },
+            {
+                start: '2019-01-31',
+                end: '2019-01-31',
+                rendering: 'background',
+                color  : '#FF6347'
+            }
+        ],
     };
   }
 }
