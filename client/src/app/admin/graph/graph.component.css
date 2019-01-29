@@ -6,4 +6,15 @@
 .cadre-graph {
     /*height: 600px;*/
 }
+#myProgress {
+    width: 80%;
+    background-color: white;
+    border: darkgrey solid;
 
+}
+
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+}

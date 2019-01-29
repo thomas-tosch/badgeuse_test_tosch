@@ -1,15 +1,23 @@
+<!--<div id="content" #content>-->
+    <!--<div>-->
+        <!--<button id="submitbutton" (click)="downloadPDF()">Exporter en PDF</button>-->
+    <!--</div>-->
+    <!--<div id="progress">-->
+        <!--<img src="assets/img/round-loader.gif" alt="en cours de chargement">-->
+    <!--</div>-->
 
-<section class="">
-    <div *ngIf="activeGraph" class="bg-white p-lg-3 cadre-graph">
-        <canvas baseChart
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [legend]="barChartLegend"
-                [chartType]="barChartType"
-                [colors]="colors"
-                class="graph"
-        >
-        </canvas>
-    </div>
-</section>
+    <section class="">
+            <div id="contentToConvert" *ngIf="activeGraph" class="bg-white p-lg-3 cadre-graph">
+                <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        [colors]="colors"
+                        class="graph"
+                >
+                </canvas>
+            </div>
+        </section>
+<!--</div>-->
