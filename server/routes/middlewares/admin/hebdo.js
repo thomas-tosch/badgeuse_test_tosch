@@ -20,6 +20,8 @@ module.exports = function(router) {
                 let content = [
                     [startDate],
                     [endDate],
+                    [startDate],
+                    [endDate],
                     [filterGroup],
                     [orderBy]
                 ];
@@ -29,12 +31,15 @@ module.exports = function(router) {
                     '' +
                     'users_extend.id_group AS id_group, ' +
                     '' +
-                    'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration ' +
+                    'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration,' +
+                    '' +
+                    'absences.day ' +
                     '' +
                     'FROM users ' +
                     '' +
                     'LEFT JOIN users_extend ON users.id_user = users_extend.id_user ' +
                     'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ON users.id_user = badger.id_user ' +
+                    'LEFT JOIN (SELECT id_user, absence_date, SUM(half_day) AS day FROM absences WHERE absence_date BETWEEN ? AND ? GROUP BY ref_absence) absences ON users.id_user = absences.id_user ' +
                     '' +
                     'WHERE FIND_IN_SET(id_group, ?) ' +
                     '' +
@@ -48,6 +53,7 @@ module.exports = function(router) {
                             });
                             throw err;
                         } else {
+                            console.log(endDate);
                             res.json({
                                 success: true,
                                 list: rows

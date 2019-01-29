@@ -22,7 +22,7 @@ export class GraphComponent implements OnInit {
   data = [];
   colorState = [];
 
-  // graph option
+  // CHART OPTION
   barChartOptions = {
     scaleShowVerticalLines: true,
     maintainAspectRatio: false,
@@ -31,9 +31,11 @@ export class GraphComponent implements OnInit {
       xAxes: [{
         ticks: {
             beginAtZero:true,
-            max: 50
+            max: 50,
+            stacked: false
         },
-      }]
+      }],
+        yAxes: [{ stacked: true }]
     },
     onClick: this.onClickBar.bind(this),
       annotation: {
@@ -51,13 +53,24 @@ export class GraphComponent implements OnInit {
           }]
       }
   };
+  // LABEL NAME STUDENT
   barChartLabels = [];
+  // CHART TYPE
   barChartType = 'horizontalBar';
+  // CHART LEGEND
   barChartLegend = false;
+  // CHART DATA
   barChartData = [{
-    data: this.data,
-    label: 'Total en heure'
+        data: this.data, // data total heure de la semaine
+        label: 'Présence',
+        stack: 1
+  },{
+        data: [0,30,7], // data total heure d'absence justifier
+        label: 'Absence justifié (malade, stage,etc...)',
+        backgroundColor: '#9d9d9d',
+        stack: 1
   }];
+  //CHART COLOR
   colors = [{
     backgroundColor: this.colorState
   }];
