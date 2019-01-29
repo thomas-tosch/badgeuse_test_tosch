@@ -28,7 +28,7 @@ export class MonthlyCalendarComponent implements OnInit {
         header : {
             left : 'title',
             center : '',
-            right : 'prev, month, agendaWeek, next'
+            right : 'prev, agendaWeek, month, next'
         },
         buttonText : {
             month:    'Mois',
