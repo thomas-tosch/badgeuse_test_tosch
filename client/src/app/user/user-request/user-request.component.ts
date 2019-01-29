@@ -46,6 +46,7 @@ constructor(
       DateDebut: ['', Validators.required],
       DateFin: ['', Validators.required],
       comment: ['', Validators.required]
+
     });
   }
 
@@ -54,6 +55,7 @@ constructor(
     this.userRequest.controls['DateDebut'].disable();
     this.userRequest.controls['DateFin'].disable();
     this.userRequest.controls['comment'].disable();
+
   }
 
   enableForm() {
@@ -61,11 +63,13 @@ constructor(
     this.userRequest.controls['DateDebut'].enable();
     this.userRequest.controls['DateFin'].enable();
     this.userRequest.controls['comment'].enable();
+
   }
 
-  /* onRequestSubmit() {
+   onRequestSubmit() {
 
-    const toast = swal.mixin({
+    //console.log(this.userRequest.get('Motif').value);
+   /* const toast = swal.mixin({
       toast: true,
       position: "top",
       showConfirmButton: true;
@@ -74,14 +78,16 @@ constructor(
 
     this.processing = true;
     this.disableForm();
+*/
 
-    const  content = {
-      action: 'tryConnect',
-      Motif: this.userRequest.get('Motif').value,
-      DateDebut: this.userRequest.get('DateDebut').value,
-      DateFin: this.userRequest.get('DateFin').value,
-      comment: this.userRequest.get('comment').value
+    console.log(
+      this.userRequest.get('Motif').value,
+      this.userRequest.get('DateDebut').value,
+      this.userRequest.get('DateFin').value,
+      this.userRequest.get('comment').value)
     };
+
     // TODO gerrer le pacourrir justificatif, vérifier onValidation différence avec onLoginSubmit (BDD?) mettre type inputDate
-  } */
+
+
 }
