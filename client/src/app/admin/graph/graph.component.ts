@@ -69,9 +69,6 @@ export class GraphComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-
-      document.getElementById("progress").style.display = "none"; // to undisplay
-
       // subscription, update the data of graphic
       this.listSubscription = this.hebdoComponent.userListSubject.subscribe(
           (userList: any[]) => {

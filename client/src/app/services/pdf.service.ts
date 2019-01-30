@@ -9,11 +9,11 @@ export class PdfService {
 
   constructor() { }
 
-  downloadPDF(startDate,endDate)
+  downloadPDF(startDate,endDate, callback)
   {
     //REVERSE BUTTON
-    document.getElementById("submitbutton").style.display = "none"; // to undisplay
-    document.getElementById("progress").style.display = ""; // to display
+    // document.getElementById("submitbutton").style.display = "none"; // to undisplay
+    // document.getElementById("progress").style.display = ""; // to display
 
     // CANVAS2HTML FUNCTION
         var data = document.getElementById('contentToConvert');
@@ -31,9 +31,11 @@ export class PdfService {
         pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
         pdf.save(""+ startDate.substring(0,10) +' au '+ endDate.substring(0,10) +'-badgeuseUHA40.pdf'); // Generated PDF
 
+        return callback(true);
+
     // REVERSE BUTTON TO NORMAL POSITION
-    document.getElementById("submitbutton").style.display = ""; // to display
-    document.getElementById("progress").style.display = "none"; // to undisplay
+    // document.getElementById("submitbutton").style.display = ""; // to display
+    // document.getElementById("progress").style.display = "none"; // to undisplay
     });
   }
 }

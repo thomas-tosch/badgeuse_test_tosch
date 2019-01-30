@@ -25,6 +25,8 @@ export class HebdoComponent implements OnInit {
   checkbox3 = '';
   checkbox4 = '';
   filterGroup = '1,2,3';
+  cssButton = '';
+  disabledButton = false;
 
   constructor(private expressService: ExpressService,
               private pdfService: PdfService,
@@ -35,6 +37,7 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
+    // document.getElementById("progress").style.display = "none"; // to undisplay
   }
 
   // emit to graphic the update list
@@ -107,7 +110,16 @@ export class HebdoComponent implements OnInit {
   }
 
   downloadPDF(){
+    this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
+    this.disabledButton = true;
+    this.pdfService.downloadPDF(this.startDateTime,this.endDateTime, (res)=>{
+      if(res === true){
+        setTimeout(()=>{
+          this.cssButton = '';
+          this.disabledButton = false;
+        },2000)
 
-    this.pdfService.downloadPDF(this.startDateTime,this.endDateTime);
+      }
+    });
   }
 }
