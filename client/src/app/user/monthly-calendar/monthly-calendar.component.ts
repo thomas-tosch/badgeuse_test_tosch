@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {Auth} from "../../guards/auth";
+import { CalendarService } from "../../services/calendar.service";
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import * as moment from 'moment';
@@ -11,8 +13,9 @@ import * as moment from 'moment';
 export class MonthlyCalendarComponent implements OnInit {
   calendarOptions: Options;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-  constructor() {}
+  constructor(private expressService: CalendarService) {}
   ngOnInit() {
+
     this.calendarOptions = {
         defaultView : 'agendaWeek',
         showNonCurrentDates : true,

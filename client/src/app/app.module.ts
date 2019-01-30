@@ -24,6 +24,7 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
 import { MonthlyCalendarComponent } from './user/monthly-calendar/monthly-calendar.component';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { Error404Component } from './guest/error404/error404.component';
+import { CalendarService } from "./services/calendar.service";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { Error404Component } from './guest/error404/error404.component';
       LoginService,
       ExpressService,
       UserService,
-      BadgerService
+      BadgerService,
+      CalendarService
   ],
   bootstrap: [AppComponent]
 })
