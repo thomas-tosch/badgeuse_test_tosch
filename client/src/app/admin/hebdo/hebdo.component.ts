@@ -4,6 +4,7 @@ import { Auth } from "../../guards/auth";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
 import swal from "sweetalert2";
+import {PdfService} from "../../services/pdf.service";
 
 
 @Component({
@@ -26,6 +27,7 @@ export class HebdoComponent implements OnInit {
   filterGroup = '1,2,3';
 
   constructor(private expressService: ExpressService,
+              private pdfService: PdfService,
               private formBuilder: FormBuilder)
   {
       this.createForm();
@@ -104,4 +106,8 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
+  downloadPDF(){
+
+    this.pdfService.downloadPDF(this.startDateTime,this.endDateTime);
+  }
 }
