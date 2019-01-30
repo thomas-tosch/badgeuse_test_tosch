@@ -21,6 +21,7 @@ export class GraphComponent implements OnInit {
   activeGraph = true;
   data = [];
   colorState = [];
+  absences = [];
 
   // CHART OPTION
   barChartOptions = {
@@ -65,7 +66,7 @@ export class GraphComponent implements OnInit {
         label: 'Présence',
         stack: 1
   },{
-        data: [0,30,7], // data total heure d'absence justifier
+        data: this.absences, // data total heure d'absence justifier
         label: 'Absence justifié (malade, stage,etc...)',
         backgroundColor: '#9d9d9d',
         stack: 1
@@ -113,6 +114,7 @@ export class GraphComponent implements OnInit {
       this.data.length = 0;
       this.barChartLabels = [];
       this.colorState.length = 0;
+      this.absences.length = 0;
 
       this.usersList.forEach((user)=> {
           // build userName array
@@ -121,6 +123,16 @@ export class GraphComponent implements OnInit {
           // build data array
           let duration = user.duration.substr(0, 5).replace(':', '.');
           this.data.push(duration);
+
+          // build absence array
+          let absence;
+          let hourDay = 7;
+          if(user.day === null){
+              absence = 0;
+          } else {
+              absence = user.day * hourDay;
+          }
+          this.absences.push(absence);
 
           // build color array
           if(duration > 35) {
