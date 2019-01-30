@@ -48,6 +48,8 @@ export class UserService {
     getDataUser(callback, id_user?) {
         let token = helper.decodeToken(this.loginService.getToken());
 
+        if(token === null) {return callback(false);}
+
         if(id_user === undefined){id_user = token.id_user;}
 
         let content = {
