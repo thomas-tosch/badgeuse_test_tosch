@@ -91,13 +91,11 @@
         <th class="text-center pb-2">Absence (jour)</th>
       </tr>
 
-      <tr *ngFor="let user of userList" [ngClass]="{'redLine': ((user.duration | slice:0:2) + (user.day * 7)) < 35}">
-        <!--<a routerLink="/userDetail/{{user.userId}}">-->
+      <tr *ngFor="let user of userList" [ngClass]="{'redLine': ((user.duration | slice:0:2) + (user.day * 7)) < 35}" routerLink="/userDetail/{{user.userId}}" id="tr">
         <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
         <td class="border p-2" id="userName">{{ user.userName }}</td>
         <td class="border p-2" id="duration">{{ user.duration | slice:0:5}}</td>
         <td class="border p-2" id="absence">{{ user.day}}</td>
-        <!--</a>-->
       </tr>
 
     </table>
