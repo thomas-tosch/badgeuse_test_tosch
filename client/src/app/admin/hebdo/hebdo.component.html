@@ -63,15 +63,6 @@
       <label class="form-control text-left" for="inlineCheckbox3">3e année</label>
     </div>
 
-    <!--<div class="input-group ">-->
-      <!--<div class="input-group-prepend">-->
-        <!--<div class="input-group-text">-->
-          <!--<input class="" type="checkbox" id="inlineCheckbox4" value="option4" formControlName="checkbox4">-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<label class="form-control text-left" for="inlineCheckbox4">Administrateur</label>-->
-    <!--</div>-->
-
   </div>
   </form>
 </div>
@@ -96,15 +87,17 @@
       <tr>
         <th class="text-center pb-2">Année</th>
         <th class="text-center pb-2">Etudiant</th>
-        <th class="text-center pb-2">Total heure</th>
+        <th class="text-center pb-2">Présence (heure)</th>
+        <th class="text-center pb-2">Absence (jour)</th>
       </tr>
 
-      <tr *ngFor="let user of userList" [ngClass]="{'redLine': (user.duration | slice:0:2) < 35}">
-        <a routerLink="/userDetail/{{user.userId}}">
+      <tr *ngFor="let user of userList" [ngClass]="{'redLine': ((user.duration | slice:0:2) + (user.day * 7)) < 35}">
+        <!--<a routerLink="/userDetail/{{user.userId}}">-->
         <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
         <td class="border p-2" id="userName">{{ user.userName }}</td>
         <td class="border p-2" id="duration">{{ user.duration | slice:0:5}}</td>
-        </a>
+        <td class="border p-2" id="absence">{{ user.day}}</td>
+        <!--</a>-->
       </tr>
 
     </table>

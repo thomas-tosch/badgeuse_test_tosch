@@ -135,10 +135,10 @@ export class GraphComponent implements OnInit {
           this.absences.push(absence);
 
           // build color array
-          if(duration > 35) {
-              this.colorState.push('#71e597');
+          if((Number(duration) + absence) > 35) {
+              this.colorState.push('#71e597'); // green
           } else {
-              this.colorState.push('#df6e6e');
+              this.colorState.push('#df6e6e'); // red
           }
       });
       // Dynamic height of graphic
