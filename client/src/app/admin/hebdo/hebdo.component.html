@@ -76,44 +76,40 @@
       </form>
     </div>
 
-    <!-- UPLOAD PDF BUTTON -->
-    <!--<div>-->
-      <!--<button id="submitbutton" (click)="downloadPDF()">Exporter en PDF</button>-->
-    <!--</div>-->
-    <!--<div id="progress">-->
-      <!--<img src="assets/img/round-loader.gif" alt="en cours de chargement" data-html2canvas-ignore="true">-->
-    <!--</div>-->
+  </div>
+  </form>
+</div>
 
-    <!-- NAV -->
-    <nav class="" data-html2canvas-ignore="true">
-      <div class="nav nav-tabs to-border-blue" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link bg-blue active" id="nav-graphic-tab" data-toggle="tab" href="#nav-graphic" role="tab" aria-controls="nav-graphic" aria-selected="true">Graphique</a>
-        <a class="nav-item nav-link bg-blue" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tableau</a>
-      </div>
-    </nav>
+<!-- NAV -->
+<nav class="">
+  <div class="nav nav-tabs to-border-blue" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link bg-blue active" id="nav-graphic-tab" data-toggle="tab" href="#nav-graphic" role="tab" aria-controls="nav-graphic" aria-selected="true">Graphique</a>
+    <a class="nav-item nav-link bg-blue" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tableau</a>
+  </div>
+</nav>
 
-    <!-- CONTENT NAV -->
-    <div class="tab-content pt-3" id="nav-tabContent">
-      <!-- graphic -->
-      <div class="tab-pane fade show active" id="nav-graphic" role="tabpanel" aria-labelledby="nav-graphic-tab">
-        <app-graph></app-graph>
-      </div>
-      <!-- table -->
-      <div class="tab-pane fade d-flex justify-content-center mb-5" id="nav-table">
-        <table>
-          <tr>
-            <th class="text-center pb-2">Année</th>
-            <th class="text-center pb-2">Etudiant</th>
-            <th class="text-center pb-2">Total heure</th>
-          </tr>
+<!-- CONTENT NAV -->
+<div class="tab-content pt-3" id="nav-tabContent">
+  <!-- graphic -->
+  <div class="tab-pane fade show active" id="nav-graphic" role="tabpanel" aria-labelledby="nav-graphic-tab">
+    <app-graph></app-graph>
+  </div>
+  <!-- table -->
+  <div class="tab-pane fade d-flex justify-content-center mb-5" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
+    <table>
+      <tr>
+        <th class="text-center pb-2">Année</th>
+        <th class="text-center pb-2">Etudiant</th>
+        <th class="text-center pb-2">Présence (heure)</th>
+        <th class="text-center pb-2">Absence (jour)</th>
+      </tr>
 
-          <tr *ngFor="let user of userList" [ngClass]="{'redLine': (user.duration | slice:0:2) < 35}">
-            <a routerLink="/userDetail/{{user.userId}}">
-            <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
-            <td class="border p-2" id="userName">{{ user.userName }}</td>
-            <td class="border p-2" id="duration">{{ user.duration | slice:0:5}}</td>
-            </a>
-          </tr>
+      <tr *ngFor="let user of userList" [ngClass]="{'redLine': ((user.duration | slice:0:2) + (user.day * 7)) < 35}" routerLink="/userDetail/{{user.userId}}" id="tr">
+        <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
+        <td class="border p-2" id="userName">{{ user.userName }}</td>
+        <td class="border p-2" id="duration">{{ user.duration | slice:0:5}}</td>
+        <td class="border p-2" id="absence">{{ user.day}}</td>
+      </tr>
 
         </table>
       </div>
