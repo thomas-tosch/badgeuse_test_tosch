@@ -22,6 +22,10 @@ tr{
     background-color: #d2e2f3;
 }
 
+.tab-pane:not(.active) table {
+    display: none;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */

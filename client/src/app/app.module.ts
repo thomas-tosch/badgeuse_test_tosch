@@ -24,6 +24,7 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
 import { MonthlyCalendarComponent } from './user/monthly-calendar/monthly-calendar.component';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { Error404Component } from './guest/error404/error404.component';
+import { UserRequestComponent } from './user/user-request/user-request.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { Error404Component } from './guest/error404/error404.component';
     UserDetailComponent,
     HebdoComponent,
     MonthlyCalendarComponent,
-    Error404Component
+    Error404Component,
+    UserRequestComponent
   ],
   imports: [
     BrowserModule,

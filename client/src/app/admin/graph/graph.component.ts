@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {FormBuilder} from "@angular/forms";
@@ -15,6 +15,7 @@ import 'chartjs-plugin-annotation';
   styleUrls: ['./graph.component.css']
 })
 export class GraphComponent implements OnInit {
+
 
   listSubscription: Subscription;
   usersList;
@@ -144,7 +145,4 @@ export class GraphComponent implements OnInit {
       // Dynamic height of graphic
       $(".cadre-graph").height((this.usersList.length * 27.5));
   }
-
-
-
 }

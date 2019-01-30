@@ -4,6 +4,7 @@ import { Auth } from "../../guards/auth";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
 import swal from "sweetalert2";
+import {PdfService} from "../../services/pdf.service";
 
 
 @Component({
@@ -24,8 +25,11 @@ export class HebdoComponent implements OnInit {
   checkbox3 = '';
   checkbox4 = '';
   filterGroup = '1,2,3';
+  cssButton = '';
+  disabledButton = false;
 
   constructor(private expressService: ExpressService,
+              private pdfService: PdfService,
               private formBuilder: FormBuilder)
   {
       this.createForm();
@@ -33,6 +37,7 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
+    // document.getElementById("progress").style.display = "none"; // to undisplay
   }
 
   // emit to graphic the update list
@@ -107,4 +112,17 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
+  downloadPDF(){
+    this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
+    this.disabledButton = true;
+    this.pdfService.downloadPDF(this.startDateTime,this.endDateTime, (res)=>{
+      if(res === true){
+        setTimeout(()=>{
+          this.cssButton = '';
+          this.disabledButton = false;
+        },2000)
+
+      }
+    });
+  }
 }
