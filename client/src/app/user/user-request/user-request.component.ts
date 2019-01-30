@@ -15,30 +15,18 @@ export class UserRequestComponent implements OnInit {
 
   userRequest: FormGroup;
   processing = false;
-  previousUrl;
 
-constructor(
-      private formBuilder: FormBuilder,
-      private loginService: LoginService,
-      private expressService: ExpressService,
-      private router: Router,
-      private authGuard: AuthGuard
-  ) {
+  constructor(private formBuilder: FormBuilder,)
+  {
     this.createForm();
   }
 
 
   ngOnInit() {
-    this.notAuth();
+
   }
 
-  notAuth() {
-    if (this.authGuard.redirectUrl) {
-      swal('Authentification requise!', 'Vous devez vous connecter pour accéder à cette page.', 'error');
-      this.previousUrl = this.authGuard.redirectUrl;
-      this.authGuard.redirectUrl = undefined;
-    }
-  }
+
 
   createForm() {
     this.userRequest = this.formBuilder.group({
