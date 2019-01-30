@@ -66,7 +66,7 @@ export class HebdoComponent implements OnInit {
     let first = curr.getDate() - curr.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
     let last = first + 6; // last day is the first day + 6
 
-    this.startDateTime = new Date(curr.setDate(first),0);
+    this.startDateTime = new Date(curr.setDate(first)).toISOString();
     console.log(this.startDateTime);
     this.endDateTime = new Date(curr.setDate(last)).toISOString();
     this.userList = [];
