@@ -10,14 +10,12 @@ module.exports = function(router) {
 
         switch (action) {
 
-            // UPDATE THE PRESENCE OF USER ON DB.
+            // INSERT OR UPDATE THE POINT BADGE
             case 'setPresence':
                  let id_user = req.body.id_user;
                  let presence = !req.body.presence;
                  let message;
                  let title;
-
-                 // TODO : appeler la fonction présence
 
                  // set the response message
                  if(presence) {
@@ -35,12 +33,18 @@ module.exports = function(router) {
                         [id_user]
                     ];
                     db.query('INSERT INTO badger(id_user) VALUES (?)', content_badger_start, (err) => {
-                        if (err) throw err;
-                        res.json({
-                            success: true,
-                            title: title,
-                            message: message
-                        });
+                        if(err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                title: title,
+                                message: message
+                            });
+                        }
                     });
                 }
                 else {
@@ -50,16 +54,26 @@ module.exports = function(router) {
                     db.query('UPDATE badger ' +
                         'SET ' +
                         'end_point = CURRENT_TIMESTAMP, ' +
-                        'duration = TIMEDIFF( end_point, start_point ) ' +
+                        'duration = IF(' +
+                            'IF(HOUR(start_point) < 12,1,0) = 1 ' +
+                            'AND IF(HOUR(CURRENT_TIME) > 14,1,0) = 1,' +
+                                'TIMEDIFF( DATE_ADD(end_point, INTERVAL -1 HOUR), start_point),' +
+                                'TIMEDIFF( end_point, start_point )) ' +
                         '' +
-                        'WHERE id_user = ? ' +
+                        'WHERE start_point > CURRENT_DATE AND id_user = ? ' +
                         'AND end_point is NULL ', content_badger_end, (err)=> {
-                        if (err) throw err;
-                        res.json({
-                            success: true,
-                            title: title,
-                            message: message
-                        });
+                        if(err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                title: title,
+                                message: message
+                            });
+                        }
                     })
                 }
             break
@@ -70,7 +84,7 @@ module.exports = function(router) {
                     let ipPublic = await publicIp.v4()
 
                     let localIp = ip.address();
-                    if (ipPublic === '193.50.153.129' && /10[.]3[.]1[.]\d{1,3}/.test(localIp)) {
+                    if (ipPublic === '193.50.153.129' && /10[.][03][.]1[.]\d{1,3}/.test(localIp)) {
                         res.json({
                             success: true
                         });

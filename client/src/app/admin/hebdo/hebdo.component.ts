@@ -3,6 +3,8 @@ import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
+import swal from "sweetalert2";
+import {PdfService} from "../../services/pdf.service";
 
 
 @Component({
@@ -23,10 +25,11 @@ export class HebdoComponent implements OnInit {
   checkbox3 = '';
   checkbox4 = '';
   filterGroup = '1,2,3';
-
-  test = 0;
+  cssButton = '';
+  disabledButton = false;
 
   constructor(private expressService: ExpressService,
+              private pdfService: PdfService,
               private formBuilder: FormBuilder)
   {
       this.createForm();
@@ -34,6 +37,7 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
+    // document.getElementById("progress").style.display = "none"; // to undisplay
   }
 
   // emit to graphic the update list
@@ -67,8 +71,11 @@ export class HebdoComponent implements OnInit {
     let first = curr.getDate() - curr.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
     let last = first + 6; // last day is the first day + 6
 
+    this.startDateTime = new Date(curr.setHours(0,0,0,0));
     this.startDateTime = new Date(curr.setDate(first)).toISOString();
+    this.endDateTime = new Date(curr.setHours(23,59,59,0));
     this.endDateTime = new Date(curr.setDate(last)).toISOString();
+
     this.userList = [];
     this.getUserListHebdo();
   }
@@ -83,8 +90,12 @@ export class HebdoComponent implements OnInit {
       orderBy: this.form.get('orderBy').value
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
-      this.userList = res.list;
-      this.emitUserListSubject();
+      if(!res.success) {
+        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+      } else {
+        this.userList = res.list;
+        this.emitUserListSubject();
+      }
     })
   }
 
@@ -101,4 +112,17 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
+  downloadPDF(){
+    this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
+    this.disabledButton = true;
+    this.pdfService.downloadPDF(this.startDateTime,this.endDateTime, (res)=>{
+      if(res === true){
+        setTimeout(()=>{
+          this.cssButton = '';
+          this.disabledButton = false;
+        },2000)
+
+      }
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
-import {faCheckCircle, faTimesCircle, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {BadgerService} from "../../services/badger.service";
 import swal from 'sweetalert2';
 
@@ -16,6 +16,7 @@ export class BadgerComponent implements OnInit {
   buttonActivate = false;
   @Input() presence;
   @Input() id_user;
+
 
   constructor(private loginService: LoginService,
               private badgerService: BadgerService) { }
@@ -44,11 +45,11 @@ export class BadgerComponent implements OnInit {
   getTemoinStatus() {
     if(this.presence) {
       this.temoinState = faCheckCircle;
-      this.tooltipState = "Présent";
+      this.tooltipState = "Vous êtes présent";
       return 'green';
     } else {
       this.temoinState = faTimesCircle;
-      this.tooltipState = "Absent";
+      this.tooltipState = "Vous êtes absent";
       return 'red';
     }
   }

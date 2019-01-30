@@ -13,6 +13,18 @@ tr{
 .redLine{
     background-color: #ff939399;
 }
+.redLine:hover{
+    background-color: #ff939355;
+}
+
+#tr:hover {
+    cursor: pointer;
+    background-color: #d2e2f3;
+}
+
+.tab-pane:not(.active) table {
+    display: none;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES

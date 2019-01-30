@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
-import {faCircle, faCircleNotch} from "@fortawesome/free-solid-svg-icons";
-import {Observable, Observer} from "rxjs";
-import {take} from "rxjs/operators";
+import {faCircle} from "@fortawesome/free-solid-svg-icons";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-liste',
@@ -15,6 +14,7 @@ export class ListeComponent implements OnInit {
   userList;
   userOn = [];
   userOff = [];
+  @Input() adminActive;
 
   faCircle = faCircle
 
@@ -29,8 +29,12 @@ export class ListeComponent implements OnInit {
       action: 'getUserList'
     };
     this.expressService.postExpress('liste', content).subscribe((res: Auth) => {
-      this.userList = res.list;
-      this.splitPresence();
+      if(!res.success) {
+        swal('Oups !', res.message, 'error');
+      } else {
+        this.userList = res.list;
+        this.splitPresence();
+      }
     })
   }
 

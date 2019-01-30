@@ -3,7 +3,9 @@ import {LoginService} from "./login.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
-import {validate} from "email-validator";
+import swal from "sweetalert2";
+import {Router} from "@angular/router";
+
 
 const helper = new JwtHelperService();
 
@@ -14,7 +16,8 @@ export class UserService {
 
 
     constructor(private loginService: LoginService,
-                private expressService: ExpressService) { }
+                private expressService: ExpressService,
+                private router: Router) { }
 
     // Get the status if connected or not
     getConnectStatus() {
@@ -32,15 +35,20 @@ export class UserService {
                 userName: userName
             };
             this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
-                return callback(res.user);
+                if(!res.success) {
+                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                } else {
+                    return callback(res.user);
+                }
             });
         }
-
     }
 
     // get all data of user conected
     getDataUser(callback, id_user?) {
         let token = helper.decodeToken(this.loginService.getToken());
+
+        if(token === null) {return callback(false);}
 
         if(id_user === undefined){id_user = token.id_user;}
 
@@ -49,24 +57,24 @@ export class UserService {
             id_user: id_user
         };
         this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
-            return callback(res.user);
+            if(!res.success) {
+                swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+            } else {
+                return callback(res.user);
+            }
         });
     }
 
-    // Control if the e-mail content is on a valid format
-    static mailValidate(mailContent) {
-        return validate(mailContent);
+    isUserAdmin(callback) {
+        this.getDataUser((user)=>{
+            // activate administrator access if role = 3
+            if(user.id_role === 3){
+                return callback(true);
+            } else {
+                return callback(false);
+            }
+        })
     }
 
-    // Control if the password content is on a valid format
-    static validPass(password) {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{5,255}$/;
-        return !(regex.test(password));
-    }
-
-    // Compare two password
-    static comparePass(newPass, confPass) {
-        return !(newPass === confPass);
-    }
 
 }

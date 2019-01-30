@@ -30,6 +30,11 @@ a:hover, a:focus, a:active {
     border-radius: 0px;
 }
 
+.badge-temoin {
+    font-size: 2rem;
+    transition: 1s ease;
+}
+
 /* =================================== */
 /* CONTENT PAGE                        */
 /* =================================== */
@@ -42,7 +47,7 @@ a:hover, a:focus, a:active {
 }
 
 .content-page-child {
-    padding: 20px 20px 10px 20px;
+    padding: 20px 0px 10px 20px;
     width: 100%;
     transition: all 0.3s;
     overflow: auto;
@@ -53,7 +58,6 @@ a:hover, a:focus, a:active {
     margin: 0;
     display: flex;
     max-height: 100%;
-
 }
 
 
@@ -72,11 +76,11 @@ a:hover, a:focus, a:active {
 .list-overflow {
     width: 300px;
     max-height: 100%;
-    margin-right: 10px;
+    margin-right: 0px;
     transition: all 0.3s;
     overflow: auto;
 }
-#sidebar.active .list-overflow{
+#sidebar.active .list-overflow, #sidebar.active{
     width: 0px;
     margin-right: 0px;
 }

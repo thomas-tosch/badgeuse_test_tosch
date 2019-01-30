@@ -1,11 +1,13 @@
+
 <!-- NAVBAR MENU -->
-<app-menu *ngIf="getConnectStatus()"></app-menu>
+<app-menu [adminActive]="adminActive" *ngIf="getConnectStatus()"></app-menu>
 
 <!-- CONTENT PAGE -->
-<div class="content-page d-lg-flex">
+
+  <div class="content-page d-lg-flex">
+
 
   <div class="content-page-child">
-    <!-- ROUTER -->
     <router-outlet></router-outlet>
   </div>
 
@@ -20,9 +22,10 @@
 
       <!-- SIDEBAR -->
       <div class="list-overflow ">
-      <app-liste></app-liste>
+      <app-liste [adminActive]="adminActive"></app-liste>
       </div>
     </div>
   </div>
 
 </div>
+<!--</div>-->
