@@ -94,8 +94,8 @@ Engine = INNODB;
 CREATE TABLE absences (
 	id_absences INT NOT NULL AUTO_INCREMENT,
 	id_user SMALLINT NOT NULL,
-	start_date DATE NOT NULL,
-	end_date DATE NOT NULL,
+	id_status TINYINT(1) NOT NULL DEFAULT 2,
+	absence_date DATE NOT NULL,
 	half_day TINYINT NOT NULL DEFAULT 0,
 	id_reason SMALLINT NOT NULL,
 	comment_absences VARCHAR(255) NULL,
