@@ -9,8 +9,10 @@
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "express-list-endpoints": "^4.0.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "ip": "^1.1.5",
     "jsonwebtoken": "^8.3.0",
+    "jspdf": "^1.5.3",
     "mysql": "^2.16.0",
     "node-cron": "^2.0.3",
     "nodemailer": "^4.6.8",
@@ -22,7 +24,9 @@
     "read-file": "^0.2.0",
     "sha1": "^1.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/jspdf": "^1.2.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

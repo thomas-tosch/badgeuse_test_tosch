@@ -143,4 +143,4 @@ INSERT IGNORE INTO `reason` (`id_reason`, `nom_reason`) VALUES
 (1, 'malade'),
 (2, 'stage'),
 (3, 'alternance'),
-(4, 'aucune raison');
+(4, 'autre raison');
