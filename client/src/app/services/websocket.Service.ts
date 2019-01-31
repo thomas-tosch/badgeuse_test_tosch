@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable, Subject} from 'rxjs';
 import * as Rx from 'rxjs/Rx';
@@ -10,15 +10,20 @@ export class WebsocketService {
     onListen: Subject<any>;
 
     constructor() {
+
+    }
+
+    // LISTEN
+    listenSocket(action) {
         //listen
         this.onListen = <Subject<any>>this
-            .connect('presence')
+            .connect(action)
             .map((response: any): any => {
                 return response;
             })
     }
 
-    // emit
+    // EMIT
     sendSocket(msg) {
         this.onListen.next(msg);
     }
@@ -46,6 +51,11 @@ export class WebsocketService {
         };
 
         return Rx.Subject.create(observer, observable);
+    }
+
+    // DISCONNECT
+    disconnect(){
+        this.socket.disconnect();
     }
 
 }
