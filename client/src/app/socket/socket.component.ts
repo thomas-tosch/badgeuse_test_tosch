@@ -17,7 +17,8 @@ export class SocketComponent implements OnInit {
   }
 
   onCreateCanal() {
-    this.wsService.listenSocket('presence');
+    this.wsService.listenSocket('presence', 'seb');
+
     this.wsService.onListen.subscribe(msg => {
       console.log(msg);
     });

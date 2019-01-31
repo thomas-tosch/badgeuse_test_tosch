@@ -7,12 +7,19 @@ module.exports = function(app) {
 
     io.on('connection', (socket) => {
 
-        // Log whenever a user connects
-        console.log('user connected');
+        socket.on('pseudo', (pseudo)=>{
+            io.pseudo = pseudo;
+            io.emit('pseudo', pseudo);
+
+            console.log(pseudo, ' is connected');
+        });
+
+
 
         // Log whenever a client disconnects from our websocket server
         socket.on('disconnect', () => {
-            console.log('user disconnected');
+            io.emit('disconnect', io.pseudo);
+            console.log(io.pseudo, ' is disconnected');
         });
 
 

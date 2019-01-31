@@ -3,6 +3,7 @@ import {LoginService} from "../../services/login.service";
 import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {BadgerService} from "../../services/badger.service";
 import swal from 'sweetalert2';
+import {WebsocketService} from "../../services/websocket.Service";
 
 @Component({
   selector: 'app-badger',
@@ -19,7 +20,8 @@ export class BadgerComponent implements OnInit {
 
 
   constructor(private loginService: LoginService,
-              private badgerService: BadgerService) { }
+              private badgerService: BadgerService,
+              private wsService: WebsocketService) { }
 
   ngOnInit() {
     this.getTemoinStatus();

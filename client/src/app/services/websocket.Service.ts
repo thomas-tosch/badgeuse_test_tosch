@@ -14,10 +14,10 @@ export class WebsocketService {
     }
 
     // LISTEN
-    listenSocket(action) {
+    listenSocket(action, pseudo) {
         //listen
         this.onListen = <Subject<any>>this
-            .connect(action)
+            .connect(action, pseudo)
             .map((response: any): any => {
                 return response;
             })
@@ -29,9 +29,22 @@ export class WebsocketService {
     }
 
     // PRINCIPAL FUNCTION
-    connect(action): Rx.Subject<MessageEvent> {
+    connect(action, pseudo): Rx.Subject<MessageEvent> {
         // server path
         this.socket = io('http://localhost:5000');
+
+        // emit the user name
+        this.socket.emit( 'pseudo', pseudo);
+
+        //recept a user connected
+        this.socket.on('pseudo', (pseudo)=>{
+            console.log(pseudo, ' est connecter');
+        });
+
+        // recept a user disconnected
+        this.socket.on('disconnect', ()=>{
+            console.log(pseudo, ' est déconnecter');
+        });
 
         // listen
         let observable = new Observable(observer => {
