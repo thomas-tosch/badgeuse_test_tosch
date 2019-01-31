@@ -3,6 +3,7 @@ import {ExpressService} from "../../services/express.service";
 import {Auth} from "../../guards/auth";
 import {faCircle} from "@fortawesome/free-solid-svg-icons";
 import swal from "sweetalert2";
+import {WebsocketService} from "../../services/websocket.Service";
 
 @Component({
   selector: 'app-liste',
@@ -16,14 +17,22 @@ export class ListeComponent implements OnInit {
   userOff = [];
   @Input() adminActive;
 
-  faCircle = faCircle
+  faCircle = faCircle;
 
-  constructor(private expressService: ExpressService) { }
+  constructor(private expressService: ExpressService,
+              private wsService: WebsocketService)
+  {
+    // refresh the list when a user badge or unbadge
+    this.wsService.onListen.subscribe(() => {
+      this.onRefresh();
+    });
+  }
 
   ngOnInit() {
     this.getUserList();
   }
 
+  // get the user list to the db
   getUserList() {
     let content = {
       action: 'getUserList'
@@ -38,6 +47,7 @@ export class ListeComponent implements OnInit {
     })
   }
 
+  // split user of presence or not
   splitPresence() {
     this.userList.forEach((user) => {
       if(user.presence === 1) {
@@ -48,6 +58,7 @@ export class ListeComponent implements OnInit {
     })
   }
 
+  // refresh function
   onRefresh() {
     this.userList = [];
     this.userOn = [];

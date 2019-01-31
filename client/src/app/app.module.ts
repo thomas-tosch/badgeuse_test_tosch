@@ -25,7 +25,6 @@ import { MonthlyCalendarComponent } from './user/monthly-calendar/monthly-calend
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { Error404Component } from './guest/error404/error404.component';
 import { UserRequestComponent } from './user/user-request/user-request.component';
-import { SocketComponent } from './socket/socket.component';
 import {WebsocketService} from "./services/websocket.Service";
 
 @NgModule({
@@ -42,8 +41,7 @@ import {WebsocketService} from "./services/websocket.Service";
     HebdoComponent,
     MonthlyCalendarComponent,
     Error404Component,
-    UserRequestComponent,
-    SocketComponent
+    UserRequestComponent
   ],
   imports: [
     BrowserModule,

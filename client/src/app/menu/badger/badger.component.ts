@@ -20,8 +20,7 @@ export class BadgerComponent implements OnInit {
 
 
   constructor(private loginService: LoginService,
-              private badgerService: BadgerService,
-              private wsService: WebsocketService) { }
+              private badgerService: BadgerService) { }
 
   ngOnInit() {
     this.getTemoinStatus();
@@ -55,7 +54,5 @@ export class BadgerComponent implements OnInit {
       return 'red';
     }
   }
-
-
 
 }

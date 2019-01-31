@@ -10,41 +10,28 @@ export class WebsocketService {
     onListen: Subject<any>;
 
     constructor() {
-
     }
 
     // LISTEN
-    listenSocket(action, pseudo) {
+    listenSocket(action) {
         //listen
         this.onListen = <Subject<any>>this
-            .connect(action, pseudo)
+            .connect(action)
             .map((response: any): any => {
                 return response;
             })
     }
 
     // EMIT
-    sendSocket(msg) {
-        this.onListen.next(msg);
+    sendSocket() {
+        this.onListen.next();
     }
 
     // PRINCIPAL FUNCTION
-    connect(action, pseudo): Rx.Subject<MessageEvent> {
+    connect(action): Rx.Subject<MessageEvent> {
         // server path
         this.socket = io('http://localhost:5000');
 
-        // emit the user name
-        this.socket.emit( 'pseudo', pseudo);
-
-        //recept a user connected
-        this.socket.on('pseudo', (pseudo)=>{
-            console.log(pseudo, ' est connecter');
-        });
-
-        // recept a user disconnected
-        this.socket.on('disconnect', ()=>{
-            console.log(pseudo, ' est déconnecter');
-        });
 
         // listen
         let observable = new Observable(observer => {
@@ -52,7 +39,7 @@ export class WebsocketService {
                 observer.next(data);
             })
             return () => {
-                this.socket.disconnect();
+                 this.socket.disconnect();
             }
         });
 
@@ -66,9 +53,5 @@ export class WebsocketService {
         return Rx.Subject.create(observer, observable);
     }
 
-    // DISCONNECT
-    disconnect(){
-        this.socket.disconnect();
-    }
 
 }
