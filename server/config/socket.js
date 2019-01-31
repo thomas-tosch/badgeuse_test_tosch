@@ -24,6 +24,6 @@ module.exports = function(app) {
 
     // Initialize our websocket server on port 5000
     http.listen(5000, () => {
-        console.log('Socket.io started on port 5000');
+        console.log('Socket.io is started on port 5000');
     });
 }
