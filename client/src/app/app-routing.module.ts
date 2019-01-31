@@ -9,6 +9,7 @@ import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
 import {HebdoComponent} from "./admin/hebdo/hebdo.component";
 import {Error404Component} from "./guest/error404/error404.component";
 import {UserRequestComponent} from "./user/user-request/user-request.component";
+import {SocketComponent} from "./socket/socket.component";
 
 // ROUTER
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'userRequest', component: UserRequestComponent, canActivate: [AuthGuard]},
   // guest
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
+  { path: 'socket', component: SocketComponent },
   // other
   { path: '', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: '404', component: Error404Component },
