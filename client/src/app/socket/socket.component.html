@@ -1,10 +1,4 @@
-<form [formGroup]="form" (submit)="onSubmit()">
-    <input type="text" formControlName="msg" placeholder="Tapez votre message">
-    <button type="submit" class="btn btn-secondary">Send Message</button>
-</form>
 
-<ul>
-    <li *ngFor="let message of messages">
-        {{ message.text }}
-    </li>
-</ul>
+
+<button class="btn btn-primary" (click)="onPresence()">presence</button>
+

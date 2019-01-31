@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ChatService} from "../services/chat.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {WebsocketService} from "../services/websocket.Service";
 
 
 @Component({
@@ -10,31 +10,20 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class SocketComponent implements OnInit {
 
-  messages = [];
-  form: FormGroup;
 
-  constructor(private chat: ChatService,
-              private formBuilder: FormBuilder){ }
+  constructor(private wsService: WebsocketService){ }
 
   ngOnInit() {
-    this.chat.messages.subscribe(msg => {
+
+    this.wsService.onListen.subscribe(msg => {
       console.log(msg);
-      this.messages.push(msg);
-    })
-    this.createForm();
-  }
-
-  createForm(){
-    this.form = this.formBuilder.group({
-      msg: ['']
     });
+
   }
 
-  onSubmit() {
-    let msg = this.form.get('msg').value;
-    this.chat.sendMsg(msg);
+  onPresence() {
+    this.wsService.sendSocket('test');
   }
-
 
 }
 

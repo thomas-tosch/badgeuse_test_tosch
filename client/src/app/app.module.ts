@@ -27,7 +27,6 @@ import { Error404Component } from './guest/error404/error404.component';
 import { UserRequestComponent } from './user/user-request/user-request.component';
 import { SocketComponent } from './socket/socket.component';
 import {WebsocketService} from "./services/websocket.Service";
-import {ChatService} from "./services/chat.service";
 
 @NgModule({
   declarations: [
@@ -64,8 +63,7 @@ import {ChatService} from "./services/chat.service";
       ExpressService,
       UserService,
       BadgerService,
-      WebsocketService,
-      ChatService
+      WebsocketService
   ],
   bootstrap: [AppComponent]
 })

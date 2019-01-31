@@ -13,7 +13,7 @@ app.use(cors({
     credentials: true
 }));
 
-require('./server/config/socket');
+require('./server/config/socket')(app);
 
 // Parse Application to Json
 app.use(bodyParser.urlencoded({ extended: false }));
