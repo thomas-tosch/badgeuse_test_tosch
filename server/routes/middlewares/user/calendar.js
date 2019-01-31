@@ -7,9 +7,12 @@ module.exports = function(router) {
         const action = req.body.action;
         let absence = req.body.absence;
 
-        db.query('SELECT * ' +
-            'FROM absences'
-            , [absence], (err, rows)=> { });
+        db.query('SELECT * FROM absences', [absence], (err, rows)=> {
+
+            res.json({
+                success: true,
+            });
+        });
 
     });
 }
