@@ -23,8 +23,9 @@ export class ListeComponent implements OnInit {
               private wsService: WebsocketService)
   {
     // refresh the list when a user badge or unbadge
-    this.wsService.onListen.subscribe(() => {
-      this.onRefresh();
+    this.wsService.onListen.subscribe((content) => {
+      this.updateList(content);
+      // this.onRefresh();
     });
   }
 
@@ -43,6 +44,7 @@ export class ListeComponent implements OnInit {
       } else {
         this.userList = res.list;
         this.splitPresence();
+        // console.log(this.userList);
       }
     })
   }
@@ -58,12 +60,23 @@ export class ListeComponent implements OnInit {
     })
   }
 
-  // refresh function
+  // refresh list view
   onRefresh() {
-    this.userList = [];
     this.userOn = [];
     this.userOff = [];
-    this.getUserList();
+    this.splitPresence();
+  }
+
+  // update the userList array
+  updateList(content) {
+    let presence = content.presence;
+    let id_user = content.id_user;
+    this.userList.find((user)=>{
+      if(user.userId === id_user) {
+        user.presence = Number(presence);
+        this.onRefresh();
+      }
+    })
   }
 
 

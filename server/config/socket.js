@@ -7,8 +7,8 @@ module.exports = function(app) {
     io.on('connection', (socket) => {
 
         // Send a signal for execute a refresh function
-        socket.on('presence', () => {
-            io.emit('presence')
+        socket.on('presence', (content) => {
+            io.emit('presence', content);
         });
     });
 

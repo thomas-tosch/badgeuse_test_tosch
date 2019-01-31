@@ -23,8 +23,8 @@ export class WebsocketService {
     }
 
     // EMIT
-    sendSocket() {
-        this.onListen.next();
+    sendSocket(content) {
+        this.onListen.next(content);
     }
 
     // PRINCIPAL FUNCTION

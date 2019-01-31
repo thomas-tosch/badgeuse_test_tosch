@@ -20,17 +20,21 @@ export class BadgerService {
 
   // update the presence to users table. 0 = 'absent', 1 = 'présent' and add a point to badger table.
   setPresence (presence, callback) {
-    this.userService.getIdUser((res) => {
+    this.userService.getIdUser((id_user) => {
       let content = {
         action: 'setPresence',
-        id_user: res,
+        id_user: id_user,
         presence: presence
       };
       this.expressService.postExpress('badger', content).subscribe((res:Auth) => {
         if(!res.success) {
           swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
         } else {
-          this.wsService.sendSocket(); // send a signal on socket.io
+          let socketContent = {
+            presence : !presence,
+            id_user: id_user
+          }
+          this.wsService.sendSocket(socketContent); // send a signal on socket.io
           return callback(res);
         }
       });
