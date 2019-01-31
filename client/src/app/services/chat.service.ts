@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import {WebsocketService} from './websocket.Service';
 
 @Injectable()
 export class ChatService {
 
     messages: Subject<any>;
-    private _ws;
 
     // Our constructor calls our wsService connect method
     constructor(private wsService: WebsocketService) {
