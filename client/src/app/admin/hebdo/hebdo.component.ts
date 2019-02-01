@@ -67,16 +67,17 @@ export class HebdoComponent implements OnInit {
 
   // initializes the date
   initDate() {
-    let curr = new Date; // get current date
-    let first = curr.getDate() - curr.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
+    const currFirst = new Date; // get current date for first
+    const currLast = new Date; // get current date for last
+    let first = currFirst.getDate() - currFirst.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
     let last = first + 6; // last day is the first day + 6
 
-    this.startDateTime = new Date(curr.setHours(0,0,0,0));
-    this.startDateTime = new Date(curr.setDate(first)).toISOString();
-    this.endDateTime = new Date(curr.setHours(23,59,59,0));
-    this.endDateTime = new Date(curr.setDate(last)).toISOString();
+    this.startDateTime = new Date(currFirst.setHours(0,0,0,0)); // set time at start day 00:00
+    this.startDateTime = new Date(currFirst.setDate(first)).toISOString(); // set first day of week
+    this.endDateTime = new Date(currLast.setHours(23,59,59,0)); // set time at end day 23:00
+    this.endDateTime = new Date(currLast.setDate(last)).toISOString(); // set last day of the week
 
-    this.userList = [];
+    this.userList = []; // initilizes the userlist
     this.getUserListHebdo();
   }
 
