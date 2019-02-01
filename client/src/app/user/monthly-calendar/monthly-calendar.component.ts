@@ -61,7 +61,7 @@ export class MonthlyCalendarComponent implements OnInit {
     getBackend() {
 
         const content = {
-            absence: ''
+            absences: ''
         };
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
             console.log(res.message);
