@@ -23,7 +23,13 @@
         </li>
         <li class="nav-item">
           <!--Alert Bell -->
-          <a class="nav-link mr-2" routerLink="alerte" routerLinkActive="active" *ngIf="alerteActive"><fa-icon [icon]="faBell" class="badger-temoin"></fa-icon></a>
+          <a class="nav-link mr-2 alerte-temoin"
+             *ngIf="alerteActive"
+             data-toggle="tooltip"
+             data-placement="right"
+             title="Hier tu as pointer à {{ alerteData.start_point | date:'HH:mm'}} mais tu n'à pas dépointé.">
+            <fa-icon [icon]="faBell" class="icone-bell"></fa-icon>
+          </a>
         </li>
         <li class="nav-item mr-2 pr-3 pl-2 bg-light rounded-top" *ngIf="badgerActive">
           <!-- Badger -->

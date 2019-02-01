@@ -33,6 +33,23 @@ nav a {
     transition: 0.3s ease;
 }
 
+.alerte-temoin {
+    font-size: 1.5rem;
+    padding: 0;
+}
+.icone-bell {
+    color: white;
+    animation-name: bell;
+    animation-duration: 1s;
+    animation-iteration-count: 10;
+}
+
+/* The animation code */
+@keyframes bell {
+    0%   {color: white; }
+    50%  {color: red;}
+    100% {color: white; }
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
