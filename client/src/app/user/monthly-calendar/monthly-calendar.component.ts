@@ -62,7 +62,6 @@ export class MonthlyCalendarComponent implements OnInit {
                             color: '#3b49ff'
                         });
                 }
-
                 i++;
                 if (this.absencesDates.length === i) {
                     this.calendar();
