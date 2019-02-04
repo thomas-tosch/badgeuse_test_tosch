@@ -36,13 +36,33 @@ export class MonthlyCalendarComponent implements OnInit {
             this.absencesDates = res.list;
 
             this.absencesDates.forEach((absence)=> {
-                this.eachDate.push(
-                    {
-                        start: absence.day,
-                        end: absence.day,
-                        rendering: 'background',
-                        color: '#FF6347'
-                    });
+                if (absence.status == 0) {
+                    this.eachDate.push(
+                        {
+                            start: absence.day,
+                            end: absence.day,
+                            rendering: 'background',
+                            color: '#ff3c38'
+                        });
+                }
+                if (absence.status == 1) {
+                    this.eachDate.push(
+                        {
+                            start: absence.day,
+                            end: absence.day,
+                            rendering: 'background',
+                            color: '#ff912a'
+                        });
+                }
+                if (absence.status == 2) {
+                    this.eachDate.push(
+                        {
+                            start: absence.day,
+                            end: absence.day,
+                            rendering: 'background',
+                            color: '#3b49ff'
+                        });
+                }
 
                 i++;
                 if(this.absencesDates.length === i) {

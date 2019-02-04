@@ -6,7 +6,7 @@ module.exports = function (router) {
 
         let absences = req.body.absences;
 
-        db.query('SELECT SUBSTR(absence_date, 1, 10) AS day FROM absences', [absences], (err, resultat) => {
+        db.query('SELECT SUBSTR(absence_date, 1, 10) AS day, id_status AS status FROM absences', [absences], (err, resultat) => {
 
             if(err) {
                 res.json({
