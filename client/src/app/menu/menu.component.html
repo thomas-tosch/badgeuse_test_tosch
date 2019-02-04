@@ -27,7 +27,7 @@
              *ngIf="alerteActive"
              data-toggle="tooltip"
              data-placement="right"
-             title="Hier tu as pointer à {{ alerteData.start_point | date:'HH:mm'}} mais tu n'à pas dépointé.">
+             title="{{ alerteData.start_point | date:'EEEE'}} tu as pointer à {{ alerteData.start_point | date:'HH:mm'}} mais tu n'à pas dépointé.">
             <fa-icon [icon]="faBell" class="icone-bell"></fa-icon>
           </a>
         </li>
