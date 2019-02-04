@@ -8,7 +8,7 @@ module.exports = function (router) {
 
         db.query('SELECT SUBSTR(absence_date, 1, 10) AS day, id_status AS status FROM absences', [absences], (err, resultat) => {
 
-            if(err) {
+            if (err) {
                 res.json({
                     success: false
                 });

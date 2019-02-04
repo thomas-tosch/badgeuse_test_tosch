@@ -35,7 +35,7 @@ export class MonthlyCalendarComponent implements OnInit {
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
             this.absencesDates = res.list;
 
-            this.absencesDates.forEach((absence)=> {
+            this.absencesDates.forEach((absence) => {
                 if (absence.status == 0) {
                     this.eachDate.push(
                         {
@@ -65,7 +65,7 @@ export class MonthlyCalendarComponent implements OnInit {
                 }
 
                 i++;
-                if(this.absencesDates.length === i) {
+                if (this.absencesDates.length === i) {
                     this.calendar();
                 }
             })
@@ -95,18 +95,18 @@ export class MonthlyCalendarComponent implements OnInit {
                 week: 'Semaine'
             },
             events:
-                this.eachDate
-                // {
-                //     start: '2019-02-01T08:25:16',
-                //     end: '2019-02-01T17:08:52',
-                //     rendering: 'background'
-                // },
-                // {
-                //     start: '2019-01-31',
-                //     end: '2019-01-31',
-                //     rendering: 'background',
-                //     color: '#FF6347'
-                // }
+            this.eachDate
+            // {
+            //     start: '2019-02-01T08:25:16',
+            //     end: '2019-02-01T17:08:52',
+            //     rendering: 'background'
+            // },
+            // {
+            //     start: '2019-01-31',
+            //     end: '2019-01-31',
+            //     rendering: 'background',
+            //     color: '#FF6347'
+            // }
             ,
         };
     }
