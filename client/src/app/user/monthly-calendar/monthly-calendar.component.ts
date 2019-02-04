@@ -43,6 +43,7 @@ export class MonthlyCalendarComponent implements OnInit {
                 week: 'Semaine'
             },
             events: [
+                // eachDate,
                 {
                     start: '2019-02-01T08:25:16',
                     end: '2019-02-01T17:08:52',
@@ -65,7 +66,16 @@ export class MonthlyCalendarComponent implements OnInit {
         };
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
             let absencesDates = res.list;
-            console.log(absencesDates);
+            for (let i = 0; i < absencesDates.length; i++) {
+                let eachDate =
+                    {
+                        start: absencesDates[i],
+                        end: absencesDates[i],
+                        rendering: 'background',
+                        color: '#FF6347'
+                    };
+                    console.log(eachDate);
+            }
         });
     }
 }
