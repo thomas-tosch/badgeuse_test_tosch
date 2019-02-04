@@ -33,7 +33,6 @@ export class MonthlyCalendarComponent implements OnInit {
         };
         let i = 0;
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
-            // console.log(res.list);
             this.absencesDates = res.list;
 
             this.absencesDates.forEach((absence)=> {
@@ -47,7 +46,6 @@ export class MonthlyCalendarComponent implements OnInit {
 
                 i++;
                 if(this.absencesDates.length === i) {
-                    console.log(this.eachDate);
                     this.calendar();
                 }
             })
