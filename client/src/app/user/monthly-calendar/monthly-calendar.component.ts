@@ -13,6 +13,8 @@ import * as moment from 'moment';
 export class MonthlyCalendarComponent implements OnInit {
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+    absencesDates;
+    eachDate = [];
 
     constructor(private expressService: CalendarService) {
     }
@@ -21,6 +23,38 @@ export class MonthlyCalendarComponent implements OnInit {
 
         this.getBackend();
 
+
+    }
+
+    getBackend() {
+
+        const content = {
+            absences: ''
+        };
+        let i = 0;
+        this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
+            // console.log(res.list);
+            this.absencesDates = res.list;
+
+            this.absencesDates.forEach((absence)=> {
+                this.eachDate.push(
+                    {
+                        start: absence.day,
+                        end: absence.day,
+                        rendering: 'background',
+                        color: '#FF6347'
+                    });
+
+                i++;
+                if(this.absencesDates.length === i) {
+                    console.log(this.eachDate);
+                    this.calendar();
+                }
+            })
+        });
+    }
+
+    calendar() {
         this.calendarOptions = {
             defaultView: 'agendaWeek',
             showNonCurrentDates: true,
@@ -42,40 +76,20 @@ export class MonthlyCalendarComponent implements OnInit {
                 month: 'Mois',
                 week: 'Semaine'
             },
-            events: [
-                // eachDate,
-                {
-                    start: '2019-02-01T08:25:16',
-                    end: '2019-02-01T17:08:52',
-                    rendering: 'background'
-                },
-                {
-                    start: '2019-01-31',
-                    end: '2019-01-31',
-                    rendering: 'background',
-                    color: '#FF6347'
-                }
-            ],
+            events:
+                this.eachDate
+                // {
+                //     start: '2019-02-01T08:25:16',
+                //     end: '2019-02-01T17:08:52',
+                //     rendering: 'background'
+                // },
+                // {
+                //     start: '2019-01-31',
+                //     end: '2019-01-31',
+                //     rendering: 'background',
+                //     color: '#FF6347'
+                // }
+            ,
         };
-    }
-
-    getBackend() {
-
-        const content = {
-            absences: ''
-        };
-        this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
-            let absencesDates = res.list;
-            for (let i = 0; i < absencesDates.length; i++) {
-                let eachDate =
-                    {
-                        start: absencesDates[i],
-                        end: absencesDates[i],
-                        rendering: 'background',
-                        color: '#FF6347'
-                    };
-                    console.log(eachDate);
-            }
-        });
     }
 }
