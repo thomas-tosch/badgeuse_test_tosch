@@ -41,7 +41,8 @@ export class MonthlyCalendarComponent implements OnInit {
                             start: absence.day,
                             end: absence.day,
                             rendering: 'background',
-                            color: '#ff3c38'
+                            color: '#ff3c38',
+                            title: absence.reason
                         });
                 }
                 if (absence.status == 1) {
@@ -50,7 +51,8 @@ export class MonthlyCalendarComponent implements OnInit {
                             start: absence.day,
                             end: absence.day,
                             rendering: 'background',
-                            color: '#ff912a'
+                            color: '#ff912a',
+                            title: absence.reason
                         });
                 }
                 if (absence.status == 2) {
@@ -59,7 +61,8 @@ export class MonthlyCalendarComponent implements OnInit {
                             start: absence.day,
                             end: absence.day,
                             rendering: 'background',
-                            color: '#3b49ff'
+                            color: '#3b49ff',
+                            title: absence.reason
                         });
                 }
                 i++;
