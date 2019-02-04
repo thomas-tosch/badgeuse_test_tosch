@@ -6,14 +6,20 @@ module.exports = function (router) {
 
         let absences = req.body.absences;
 
-        db.query('SELECT * FROM absences', [absences], () => {
+        db.query('SELECT absence_date FROM absences', [absences], (err, resultat) => {
 
-            res.json({
-                message: 'Test' + absences
-            });
+            if(err) {
+                res.json({
+                    success: false
+                });
+                throw err;
+            } else {
+
+                res.json({
+                    list: resultat
+                });
+            }
         });
-
-        console.log("Test" + absences);
 
     });
 };
