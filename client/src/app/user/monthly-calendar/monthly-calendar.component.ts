@@ -4,6 +4,7 @@ import {CalendarService} from "../../services/calendar.service";
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'app-monthly-calendar',
@@ -15,61 +16,72 @@ export class MonthlyCalendarComponent implements OnInit {
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     absencesDates;
     eachDate = [];
+    id_user;
 
-    constructor(private expressService: CalendarService) {
+    constructor(private expressService: CalendarService,
+                private userService: UserService) {
     }
 
     ngOnInit() {
+        this.getIdUser();
+    }
 
-        this.getBackend();
-
+    getIdUser() {
+        this.userService.getIdUser((res) => {
+            this.id_user = res;
+            this.getBackend();
+        })
     }
 
     getBackend() {
 
         const content = {
-            absences: ''
+            id_user: this.id_user
         };
         let i = 0;
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
             this.absencesDates = res.list;
 
-            this.absencesDates.forEach((absence) => {
-                if (absence.status == 0) {
-                    this.eachDate.push(
-                        {
-                            start: absence.day,
-                            end: absence.day,
-                            rendering: 'background',
-                            color: '#ff3c38',
-                            title: absence.id
-                        });
-                }
-                if (absence.status == 1) {
-                    this.eachDate.push(
-                        {
-                            start: absence.day,
-                            end: absence.day,
-                            rendering: 'background',
-                            color: '#ff912a',
-                            title: absence.id
-                        });
-                }
-                if (absence.status == 2) {
-                    this.eachDate.push(
-                        {
-                            start: absence.day,
-                            end: absence.day,
-                            rendering: 'background',
-                            color: '#3b49ff',
-                            title: absence.id
-                        });
-                }
-                i++;
-                if (this.absencesDates.length === i) {
-                    this.calendar();
-                }
-            })
+            if (this.absencesDates.length !== 0) {
+                this.absencesDates.forEach((absence) => {
+                    if (absence.status == 0) { // Absence refusée
+                        this.eachDate.push(
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                rendering: 'background',
+                                color: '#ff3c38',
+                                title: absence.id
+                            });
+                    }
+                    if (absence.status == 1) { // Absence validée
+                        this.eachDate.push(
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                rendering: 'background',
+                                color: '#3b49ff',
+                                title: absence.id
+                            });
+                    }
+                    if (absence.status == 2) { // En attente
+                        this.eachDate.push(
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                rendering: 'background',
+                                color: '#ff912a',
+                                title: absence.id
+                            });
+                    }
+                    i++;
+                    if (this.absencesDates.length === i) {
+                        this.calendar();
+                    }
+                });
+            } else {
+                this.calendar();
+            }
         });
 
     }

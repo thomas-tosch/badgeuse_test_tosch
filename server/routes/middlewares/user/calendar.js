@@ -4,9 +4,9 @@ module.exports = function (router) {
 
     router.post('/', (req, res) => {
 
-        let absences = req.body.absences;
+        let id_user = req.body.id_user;
 
-        db.query('SELECT SUBSTR(absence_date, 1, 10) AS day, id_status AS status, id_absences AS id FROM absences', [absences], (err, resultat) => {
+        db.query('SELECT SUBSTR(absence_date, 1, 10) AS day, id_status AS status, id_absences AS id FROM absences WHERE id_user = ?', [id_user], (err, resultat) => {
 
             if (err) {
                 res.json({
@@ -18,6 +18,7 @@ module.exports = function (router) {
                 res.json({
                     list: resultat
                 });
+
             }
         });
 
