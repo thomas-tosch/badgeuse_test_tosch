@@ -1,0 +1,49 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Identifiant</th>
+      <th scope="col">Etudiant</th>
+      <th scope="col">Status</th>
+      <th scope="col">Date Absence</th>
+      <th scope="col">Demi-journée</th>
+      <th scope="col">Raison</th>
+      <th scope="col">Certificat</th>
+      <th scope="col">Commentaire</th>
+      <th scope="col">Validation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let absence of absences">
+      <th>Default</th>
+      <td>{{ absence.id_user }}</td>
+      <td>{{ absence.id_status }}</td>
+      <td>Default</td>
+      <td>{{ absence.half_day }}</td>
+      <td>{{ absence.id_reason}}</td>
+      <td>{{ absence.certificate }}</td>
+      <td>Default</td>
+      <td>Default</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<!-- <form [formGroup]="form">
+  <label for="email">E-mail</label>
+  <input name="email"
+         formControlName="email"
+         type="email" />
+  <label for="name">Name</label>
+  <input name="name"
+         formControlName="name"
+         type="text" />
+  <label for="registeredOn">Registered On</label>
+  <input name="registeredOn"
+         formControlName="registeredOn"
+         type="date" />
+  <label for="password">Password</label>
+  <input name="password"
+         formControlName="password"
+         type="password" />
+</form> -->
