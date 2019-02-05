@@ -1,4 +1,11 @@
-#formcss {
+.input-group-top {
+    background-color: #2e6fb1ff;
+    color: white;
+    padding-top: 8px;
+    text-align: left;
+}
 
-    text-align: center;
+#justifFormControlFile1 {
+    background-color: white;
+    color: #000;
 }
