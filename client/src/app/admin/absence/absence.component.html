@@ -1,9 +1,9 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Identifiant</th>
-      <th scope="col">Etudiant</th>
       <th scope="col">Status</th>
+      <th scope="col">Etudiant</th>
+      <th scope="col">Reference</th>
       <th scope="col">Date Absence</th>
       <th scope="col">Demi-journée</th>
       <th scope="col">Raison</th>
@@ -14,15 +14,15 @@
   </thead>
   <tbody>
     <tr *ngFor="let absence of absences">
-      <th>Default</th>
+      <th>{{ absence.id_status}}</th>
       <td>{{ absence.id_user }}</td>
-      <td>{{ absence.id_status }}</td>
-      <td>Default</td>
+      <td>{{ absence.ref_absence }}</td>
+      <td>{{ absence.absence_date}}</td>
       <td>{{ absence.half_day }}</td>
       <td>{{ absence.id_reason}}</td>
       <td>{{ absence.certificate }}</td>
-      <td>Default</td>
-      <td>Default</td>
+      <td>Commentaire</td>
+      <td>Valide/Refuse</td>
     </tr>
   </tbody>
 </table>

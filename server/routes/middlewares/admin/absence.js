@@ -18,7 +18,11 @@ module.exports = function(router) {
 
                ];
 
-                 db.query('SELECT * FROM absences WHERE id_status = 2', content, (err, rows) => {
+                 db.query('SELECT * FROM absences ' +
+                     '' +
+                     'INNER JOIN users ON absences.id_user = users.id_user ' +
+                     'WHERE id_status = 2'
+                     , content, (err, rows) => {
                    console.log(rows);
                         if(err) {
                             res.json({

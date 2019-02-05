@@ -32,7 +32,8 @@ export class AbsenceComponent implements OnInit {
       action: 'getUserListAbsence'
     };
     this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
-      console.log(res);
+      console.log(res.list);
+      this.absences = res.list;
     })
   }
 }
