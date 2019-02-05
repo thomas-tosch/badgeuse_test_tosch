@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../../services/login.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ExpressService} from "../../services/express.service";
-import {Router} from "@angular/router";
-import {AuthGuard} from "../../guards/auth.guard";
 import swal from "sweetalert2";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {Auth} from 'src/app/guards/auth';
 
 @Component({
   selector: 'app-user-request',
@@ -18,8 +16,10 @@ export class UserRequestComponent implements OnInit {
     processing = false;
     faInfoCircle = faInfoCircle;
     justifiedPeriod = true;
+    reasonList;
 
-    constructor(private formBuilder: FormBuilder,)
+    constructor(private formBuilder: FormBuilder,
+                private expressService: ExpressService)
     {
     this.createForm();
     }
@@ -29,51 +29,70 @@ export class UserRequestComponent implements OnInit {
 
     }
 
+    getReason() {
+        let content = {
+            action: 'getReason'
+        };
+        this.expressService.postExpress('absence', content).subscribe((res:Auth) => {
+            if(res.success) {
+                // console.log(res.list);
+                this.reasonList = res.list;
+            } else {
+                swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+            }
+        })
+    }
+
     onJustifiedPeriod() {
         this.justifiedPeriod = !this.justifiedPeriod;
         if(!this.justifiedPeriod) {
-            this.userRequest.get('dateDebut').clearValidators();
-            this.userRequest.get('dateDebut').updateValueAndValidity();
-            this.userRequest.get('dateDebut').setValue(null);
-            this.userRequest.get('dateFin').clearValidators();
-            this.userRequest.get('dateFin').updateValueAndValidity();
-            this.userRequest.get('dateFin').setValue(null);
-            this.userRequest.get('inputDateOnly').setValidators([Validators.required]);
-            this.userRequest.get('inputDateOnly').updateValueAndValidity();
+            this.userRequest.get('startDate').clearValidators();
+            this.userRequest.get('startDate').updateValueAndValidity();
+            this.userRequest.get('startDate').setValue(null);
+            this.userRequest.get('endDate').clearValidators();
+            this.userRequest.get('endDate').updateValueAndValidity();
+            this.userRequest.get('endDate').setValue(null);
+            this.userRequest.get('dateOnly').setValidators([Validators.required]);
+            this.userRequest.get('dateOnly').updateValueAndValidity();
         } else {
-            this.userRequest.get('dateDebut').setValidators([Validators.required]);
-            this.userRequest.get('dateDebut').updateValueAndValidity();
-            this.userRequest.get('dateFin').setValidators([Validators.required]);
-            this.userRequest.get('dateFin').updateValueAndValidity();
-            this.userRequest.get('inputDateOnly').clearValidators();
-            this.userRequest.get('inputDateOnly').updateValueAndValidity();
-            this.userRequest.get('inputDateOnly').setValue(null);
+            this.userRequest.get('startDate').setValidators([Validators.required]);
+            this.userRequest.get('startDate').updateValueAndValidity();
+            this.userRequest.get('endDate').setValidators([Validators.required]);
+            this.userRequest.get('endDate').updateValueAndValidity();
+            this.userRequest.get('dateOnly').clearValidators();
+            this.userRequest.get('dateOnly').updateValueAndValidity();
+            this.userRequest.get('dateOnly').setValue(null);
         }
     }
 
     createForm() {
         this.userRequest = this.formBuilder.group({
-            reason: ['', Validators.required],
-            dateDebut: [null, Validators.required],
-            dateFin: [null, Validators.required],
-            inputDateOnly: [null],
-            checkboxHalfDay: [null],
+            reason: [0, Validators.required],
+            startDate: [null, Validators.required],
+            endDate: [null, Validators.required],
+            dateOnly: [null],
+            halfDay: [null],
             comment: ['']
         });
+        this.getReason();
     }
 
     disableForm() {
         this.userRequest.controls['reason'].disable();
-        this.userRequest.controls['dateDebut'].disable();
-        this.userRequest.controls['dateFin'].disable();
+        this.userRequest.controls['startDate'].disable();
+        this.userRequest.controls['endDate'].disable();
+        this.userRequest.controls['dateOnly'].disable();
+        this.userRequest.controls['halfDay'].disable();
         this.userRequest.controls['comment'].disable();
 
     }
 
     enableForm() {
         this.userRequest.controls['reason'].enable();
-        this.userRequest.controls['dateDebut'].enable();
-        this.userRequest.controls['dateFin'].enable();
+        this.userRequest.controls['startDate'].enable();
+        this.userRequest.controls['endDate'].enable();
+        this.userRequest.controls['dateOnly'].enable();
+        this.userRequest.controls['halfDay'].enable();
         this.userRequest.controls['comment'].enable();
 
     }
@@ -81,17 +100,19 @@ export class UserRequestComponent implements OnInit {
     onRequestSubmit() {
 
         let content = {
+            action: 'absenceRequest',
             reason: this.userRequest.get('reason').value,
-            dateDebut: this.userRequest.get('dateDebut').value,
-            dateFin: this.userRequest.get('dateFin').value,
-            inputDateOnly: this.userRequest.get('inputDateOnly').value,
-            checkboxHalfDay: this.userRequest.get('checkboxHalfDay').value,
+            startDate: this.userRequest.get('startDate').value,
+            endDate: this.userRequest.get('endDate').value,
+            dateOnly: this.userRequest.get('dateOnly').value,
+            halfDay: this.userRequest.get('halfDay').value,
             comment: this.userRequest.get('comment').value
         };
         console.log(content);
+        this.expressService.postExpress('absence', content).subscribe((res:Auth)=> {
+           console.log(res.success);
+        });
     };
-
-    // TODO gerrer le pacourrir justificatif, vérifier onValidation différence avec onLoginSubmit (BDD?) mettre type inputDate
 
 
 }
