@@ -1,4 +1,6 @@
 require ('../../../config/database');
+const isDateFormat = require('is-date-format');
+const htmlspecialchars = require('htmlspecialchars');
 
 module.exports = function(router) {
 
@@ -28,14 +30,27 @@ module.exports = function(router) {
 
             // REQUEST ABSENCE TO DB
             case 'absenceRequest':
-                let reason = req.body.reason.trim();
-                let startDate = req.body.startDate.trim();
-                let endDate = req.body.endDate.trim();
-                let dateOnly = req.body.dateOnly.trim();
-                let halfDay = req.body.halfDay.trim();
-                let comment = req.body.comment.trim();
+                let err = '';
 
-                // check all data
+                let reason = Number(req.body.reason);
+                let startDate = req.body.startDate;
+                let endDate = req.body.endDate;
+                let dateOnly = req.body.dateOnly;
+                let halfDay = req.body.halfDay;
+                let comment = req.body.comment;
+
+                // CHECK ALL DATA FROM FORMULAR
+                if(reason && Number.isInteger(reason)) {}
+                    else {err += '[reason] ';}
+                if(startDate && isDateFormat(startDate, 'yyyy-mm-dd')) {startDate = startDate.trim();}
+                    else {if(startDate !== null){ err += '[startDate] ';}}
+                if(endDate && isDateFormat(endDate, 'yyyy-mm-dd')) {endDate = endDate.trim();}
+                    else {if(endDate !== null){ err += '[endDate] ';}}
+                if(dateOnly && isDateFormat(dateOnly, 'yyyy-mm-dd')) {dateOnly = dateOnly.trim();}
+                    else {if(dateOnly !== null){ err += '[dateOnly] ';}}
+                if(halfDay === true || halfDay === false) {}
+                    else {if(halfDay !== null){ err += '[halfDay] ';}}
+                if(comment) {comment = htmlspecialchars(comment.trim());}
 
                 // insert to db
 
@@ -43,6 +58,7 @@ module.exports = function(router) {
                 res.json({
                     success: true
                 });
+                console.log('ERROR: ', err);
             break
         }
     });
