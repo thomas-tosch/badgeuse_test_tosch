@@ -13,6 +13,11 @@ import {UserService} from "../../services/user.service";
 })
 export class UserRequestComponent implements OnInit {
 
+    // TODO : vérifier que endDate soit supérieur à startDate
+    // TODO : bloquer les date supérieur a aujourd'hui si "malade" est choisie
+    // TODO : afficher des messages si les requis ne sont pas respectés
+    // TODO : limité le nombre de caractère dans le commentaire
+
     userRequest: FormGroup;
     processing = false;
     faInfoCircle = faInfoCircle;
