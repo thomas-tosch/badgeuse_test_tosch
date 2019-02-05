@@ -17,6 +17,7 @@ export class UserRequestComponent implements OnInit {
     // TODO : bloquer les date supérieur a aujourd'hui si "malade" est choisie
     // TODO : afficher des messages si les requis ne sont pas respectés
     // TODO : limité le nombre de caractère dans le commentaire
+    // TODO : afficher le nombre de caractère dans commentaire en temps réel
 
     userRequest: FormGroup;
     processing = false;
@@ -28,9 +29,9 @@ export class UserRequestComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
                 private userService: UserService)
-    {
-    this.createForm();
-    }
+        {
+        this.createForm();
+        }
 
     ngOnInit() {
         this.getIdUser();
@@ -48,7 +49,6 @@ export class UserRequestComponent implements OnInit {
         };
         this.expressService.postExpress('absence', content).subscribe((res:Auth) => {
             if(res.success) {
-                // console.log(res.list);
                 this.reasonList = res.list;
             } else {
                 swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
