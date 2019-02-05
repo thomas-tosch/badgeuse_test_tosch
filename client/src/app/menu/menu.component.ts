@@ -25,7 +25,8 @@ export class MenuComponent implements OnInit {
   idUser;
   badgerActive;
   @Input() adminActive;
-  alerteActive = false;
+  alerteActive = false
+  alerteData;
 
   constructor(private userService: UserService,
               private loginService: LoginService,
@@ -67,6 +68,7 @@ export class MenuComponent implements OnInit {
           swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
         } else {
           this.alerteActive = res.success;
+          this.alerteData = res.user;
         }
       });
     }

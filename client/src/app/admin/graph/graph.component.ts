@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {FormBuilder} from "@angular/forms";
@@ -16,13 +16,15 @@ import 'chartjs-plugin-annotation';
 })
 export class GraphComponent implements OnInit {
 
+
   listSubscription: Subscription;
   usersList;
   activeGraph = true;
   data = [];
   colorState = [];
+  absences = [];
 
-  // graph option
+  // CHART OPTION
   barChartOptions = {
     scaleShowVerticalLines: true,
     maintainAspectRatio: false,
@@ -31,9 +33,11 @@ export class GraphComponent implements OnInit {
       xAxes: [{
         ticks: {
             beginAtZero:true,
-            max: 50
+            max: 50,
+            stacked: false
         },
-      }]
+      }],
+        yAxes: [{ stacked: true }]
     },
     onClick: this.onClickBar.bind(this),
       annotation: {
@@ -51,13 +55,24 @@ export class GraphComponent implements OnInit {
           }]
       }
   };
+  // LABEL NAME STUDENT
   barChartLabels = [];
+  // CHART TYPE
   barChartType = 'horizontalBar';
+  // CHART LEGEND
   barChartLegend = false;
+  // CHART DATA
   barChartData = [{
-    data: this.data,
-    label: 'Total en heure'
+        data: this.data, // data total heure de la semaine
+        label: 'Présence',
+        stack: 1
+  },{
+        data: this.absences, // data total heure d'absence justifier
+        label: 'Absence justifié (malade, stage,etc...)',
+        backgroundColor: '#9d9d9d',
+        stack: 1
   }];
+  //CHART COLOR
   colors = [{
     backgroundColor: this.colorState
   }];
@@ -100,6 +115,7 @@ export class GraphComponent implements OnInit {
       this.data.length = 0;
       this.barChartLabels = [];
       this.colorState.length = 0;
+      this.absences.length = 0;
 
       this.usersList.forEach((user)=> {
           // build userName array
@@ -109,17 +125,24 @@ export class GraphComponent implements OnInit {
           let duration = user.duration.substr(0, 5).replace(':', '.');
           this.data.push(duration);
 
-          // build color array
-          if(duration > 35) {
-              this.colorState.push('#71e597');
+          // build absence array
+          let absence;
+          let hourDay = 7;
+          if(user.day === null){
+              absence = 0;
           } else {
-              this.colorState.push('#df6e6e');
+              absence = user.day * hourDay;
+          }
+          this.absences.push(absence);
+
+          // build color array
+          if((Number(duration) + absence) > 35) {
+              this.colorState.push('#71e597'); // green
+          } else {
+              this.colorState.push('#df6e6e'); // red
           }
       });
       // Dynamic height of graphic
       $(".cadre-graph").height((this.usersList.length * 27.5));
   }
-
-
-
 }

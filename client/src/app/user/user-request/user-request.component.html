@@ -1,0 +1,52 @@
+<form [formGroup]="userRequest" (submit)="onRequestSubmit()">
+    <div id="formcss" class="w-50 mx-auto">
+        <!-- SELECT BOX -->
+        <div class="form-group ">
+            <h1 class="h3 mb-3 font-weight-normal">Formulaire de requête</h1>
+            <div class="form-group ">
+                <label for="inputMotif">Motif</label>
+                <select id="inputMotif" class="form-control w-75 mx-auto" name="Motif" formControlName="Motif">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- INPUT DATE -->
+        <div class="form-groupe">
+            <div class="row">
+                <div class="row mx-auto">
+                    <div class="form-group mr-5">
+                        <label for="inputDateDebut">Entrez une date de début</label>
+                        <input type="Date" class="form-control" id="inputDateDebut"
+                               name="DateDebut" formControlName="DateDebut" required>
+                    </div>
+                    <div class="form-group ml-5">
+                        <label for="inputDateFin">Entrez une date de fin</label>
+                        <input type="Date" class="form-control" id="inputDateFin"
+                               name="DateFin" formControlName="DateFin" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INPUT COMMENT -->
+        <div class="form-group">
+            <label for="comment">Commentaire</label>
+            <textarea class="form-control" rows="5" id="comment" placeholder="Ajouter un Commentaire"
+                      name="comment" formControlName="comment"></textarea>
+        </div>
+
+        <!-- INPUT FILE -->
+        <div class="row">
+            <div class="form-group ">
+                <label for="justifFormControlFile1">Justificatif</label>
+                <input type="file" class="form-control-file" id="justifFormControlFile1"
+                       placeholder="renseigner un justificatif"
+                       name="justifFormControlFile1">
+            </div>
+        </div>
+        <!-- SUBMIT -->
+        <button type="submit" [disabled]="!userRequest.valid || processing" class="btn btn-primary">Valider</button>
+    </div>
+</form>

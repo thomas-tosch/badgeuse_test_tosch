@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from "./guards/auth.guard";
@@ -25,6 +25,12 @@ import { MonthlyCalendarComponent } from './user/monthly-calendar/monthly-calend
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { Error404Component } from './guest/error404/error404.component';
 import { CalendarService } from "./services/calendar.service";
+import { UserRequestComponent } from './user/user-request/user-request.component';
+import { WebsocketService } from "./services/websocket.Service";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
@@ -39,7 +45,8 @@ import { CalendarService } from "./services/calendar.service";
     UserDetailComponent,
     HebdoComponent,
     MonthlyCalendarComponent,
-    Error404Component
+    Error404Component,
+    UserRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +67,8 @@ import { CalendarService } from "./services/calendar.service";
       UserService,
       BadgerService,
       CalendarService
+      WebsocketService,
+      { provide: LOCALE_ID, useValue: 'fr' }
   ],
   bootstrap: [AppComponent]
 })
