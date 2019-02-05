@@ -4,6 +4,7 @@ import {ExpressService} from "../../services/express.service";
 import swal from "sweetalert2";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {Auth} from 'src/app/guards/auth';
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-user-request',
@@ -17,16 +18,23 @@ export class UserRequestComponent implements OnInit {
     faInfoCircle = faInfoCircle;
     justifiedPeriod = true;
     reasonList;
+    id_user;
 
     constructor(private formBuilder: FormBuilder,
-                private expressService: ExpressService)
+                private expressService: ExpressService,
+                private userService: UserService)
     {
     this.createForm();
     }
 
-
     ngOnInit() {
+        this.getIdUser();
+    }
 
+    getIdUser() {
+        this.userService.getIdUser((id)=> {
+            this.id_user = id;
+        })
     }
 
     getReason() {
@@ -101,6 +109,7 @@ export class UserRequestComponent implements OnInit {
 
         let content = {
             action: 'absenceRequest',
+            id_user: this.id_user,
             reason: this.userRequest.get('reason').value,
             startDate: this.userRequest.get('startDate').value,
             endDate: this.userRequest.get('endDate').value,
