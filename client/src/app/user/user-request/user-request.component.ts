@@ -5,6 +5,7 @@ import {ExpressService} from "../../services/express.service";
 import {Router} from "@angular/router";
 import {AuthGuard} from "../../guards/auth.guard";
 import swal from "sweetalert2";
+import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-user-request',
@@ -15,6 +16,7 @@ export class UserRequestComponent implements OnInit {
 
   userRequest: FormGroup;
   processing = false;
+  faInfoCircle = faInfoCircle
 
   constructor(private formBuilder: FormBuilder,)
   {
