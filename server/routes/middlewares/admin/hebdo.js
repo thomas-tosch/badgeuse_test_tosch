@@ -39,7 +39,7 @@ module.exports = function(router) {
                     '' +
                     'LEFT JOIN users_extend ON users.id_user = users_extend.id_user ' + // join users table with users_extend table
                     'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ON users.id_user = badger.id_user ' + // join users table with badger table. Select only the complete line between date.
-                    'LEFT JOIN (SELECT id_user, absence_date, SUM(IF(half_day = 1,1,0.5)) AS day FROM absences WHERE id_status = 1 AND absence_date BETWEEN ? AND ? GROUP BY ref_absence) absences ON users.id_user = absences.id_user ' + // koin users table table with absence table. Select all between date and summe de absence day
+                    'LEFT JOIN (SELECT id_user, absence_date, SUM(IF(half_day = 1,1,0.5)) AS day FROM absences WHERE id_status = 1 AND absence_date BETWEEN ? AND ? GROUP BY ref_absence) absences ON users.id_user = absences.id_user ' + // join users table table with absence table. Select all between date and summe de absence day
                     '' +
                     'WHERE FIND_IN_SET(id_group, ?) ' + // filter group
                     '' +

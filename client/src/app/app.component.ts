@@ -3,6 +3,7 @@ import {ExpressService} from "./services/express.service";
 import {UserService} from "./services/user.service";
 import {faAngleDoubleDown, faAngleDoubleLeft, faAngleDoubleRight, faAngleDoubleUp} from "@fortawesome/free-solid-svg-icons";
 import * as $ from 'jquery';
+import {WebsocketService} from "./services/websocket.Service";
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,12 @@ export class AppComponent implements OnInit{
   adminActive = false;
 
   constructor(private expressService: ExpressService,
-              private userService: UserService
-  ) {  }
+              private userService: UserService,
+              private wsService: WebsocketService
+  ) {
+    // connect the socket.io
+    this.wsService.listenSocket('presence');
+  }
 
   ngOnInit() {
     this.defineIconList();

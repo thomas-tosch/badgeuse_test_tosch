@@ -2,13 +2,16 @@ let express    = require('express'),
     app        = express(),
     bodyParser = require('body-parser'),
     cors       = require('cors'),
-    config     = require('./server/config/config'),
-    path       = require('path');
+    config     = require('./server/config/config');
 
 // required only to send cross data from frontend to backend
 app.use(cors({
     origin : `http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`,
+    credentials: true
 }));
+
+// Socket.io app
+require('./server/config/socket')(app);
 
 // Parse Application to Json
 app.use(bodyParser.urlencoded({ extended: false }));
