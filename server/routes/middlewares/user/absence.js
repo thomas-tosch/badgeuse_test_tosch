@@ -44,60 +44,64 @@ module.exports = function(router) {
                 // CHECK ALL DATA FROM FORMULAR
                 if(reason && Number.isInteger(reason)) {}
                     else {err += '[reason] ';}
+
                 if(startDate && isDateFormat(startDate, 'yyyy-mm-dd')) {startDate = new Date(startDate.trim());}
                     else {if(startDate !== null){ err += '[startDate] ';}}
+
                 if(endDate && isDateFormat(endDate, 'yyyy-mm-dd')) {endDate = new Date(endDate.trim());}
                     else {if(endDate !== null){ err += '[endDate] ';}}
+
                 if(dateOnly && isDateFormat(dateOnly, 'yyyy-mm-dd')) {dateOnly = new Date(dateOnly.trim()); startDate = dateOnly; endDate = dateOnly;}
                     else {if(dateOnly !== null){ err += '[dateOnly] ';}}
-                if(halfDay === true || halfDay === false) {if(halfDay === true){halfDay = 1;} else if(halfDay === false){halfDay = 0;}}
+
+                if(halfDay === true || halfDay === false || halfDay === null) {if(halfDay === true){halfDay = 0;} else if(halfDay === false || halfDay === null){halfDay = 1;}}
                     else {if(halfDay !== null){ err += '[halfDay] ';}}
+
                 if(comment) {comment = htmlspecialchars(comment.trim());}
+                if(comment === ''){comment = null;}
 
                 // DEFINE DATA FOR DB
 
-                db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => {
-                    // console.log(rows[0]);
-                    let newRef = rows[0].max_ref + 1;
+                if(err === '') {
+                    db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => {
 
+                        let newRef = rows[0].max_ref + 1;
+                        let entryNumber = new DateDiff(endDate, startDate);
+                        entryNumber = Number(entryNumber.days());
+                        if(entryNumber === 0){entryNumber = 1;}
+                        let entryCount = 0;
 
-                    let entryNumber = new DateDiff(endDate, startDate);
-                    // console.log(startDate);
+                        for (let i = 0; i < entryNumber; i++) {
+                            let newDate = new Date(startDate.setDate(startDate.getDate() + i));
 
-                    for(let i = 0; i < Number(entryNumber.days()); i++) {
-                        let newDate = new Date(startDate.setDate(startDate.getDate() + i));
-
-                        let content = {
-                            id_user: id_user,
-                            ref_absence: newRef,
-                            id_status: 2,
-                            absence_date: newDate,
-                            half_day: halfDay,
-                            id_reason: reason,
-                            comment_absences: comment,
-                            certificate: null
+                            // INSERT TO DB
+                            let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [null]];
+                            db.query('INSERT INTO absences(id_user, ref_absence, id_status, absence_date, half_day, id_reason, comment_absences, certificate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                                content, (err) => {
+                                    if (err) {
+                                        res.json({
+                                            success: false,
+                                            message: 'Nous avons eu un souçis avec la base de données.'
+                                        });
+                                        throw err;
+                                    } else {
+                                        entryCount++;
+                                        if (entryCount === entryNumber) {
+                                            res.json({
+                                                success: true,
+                                                message: 'Votre justification à été soumis. Un administrateur se chargera de la valider ou de la refuser.'
+                                            });
+                                        }
+                                    }
+                                });
                         }
-                        console.log(content);
-
-                        // INSERT TO DB
-                        db.query('INSERT INTO absences (id_user, ref_absence, id_status, absence_date, half_day, id_reason, comment_absences, certificate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                            content, (err) => {
-                            if(err) {
-                                throw err;
-                            }
-                            console.log('ok');
-                            });
-                    }
-                });
-
-
-
-
-                // callback a response
-                res.json({
-                    success: true
-                });
-                console.log('ERROR: ', err);
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        message: 'Une des données saisie n\'est pas valide: '+err
+                    });
+                }
             break
         }
     });

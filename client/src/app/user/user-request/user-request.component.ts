@@ -80,7 +80,7 @@ export class UserRequestComponent implements OnInit {
             endDate: [null, Validators.required],
             dateOnly: [null],
             halfDay: [null],
-            comment: ['']
+            comment: [null]
         });
         this.getReason();
     }
@@ -106,7 +106,8 @@ export class UserRequestComponent implements OnInit {
     }
 
     onRequestSubmit() {
-
+        // this.processing = true;
+        // this.disableForm();
         let content = {
             action: 'absenceRequest',
             id_user: this.id_user,
@@ -117,9 +118,14 @@ export class UserRequestComponent implements OnInit {
             halfDay: this.userRequest.get('halfDay').value,
             comment: this.userRequest.get('comment').value
         };
-        console.log(content);
         this.expressService.postExpress('absence', content).subscribe((res:Auth)=> {
-           console.log(res.success);
+           if(res.success){
+               swal('Opération réussie', res.message, 'success');
+           } else {
+               swal('Opération échouée', res.message, 'error');
+               // this.enableForm();
+               // this.processing = false;
+           }
         });
     };
 
