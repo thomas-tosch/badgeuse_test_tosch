@@ -21,6 +21,7 @@ export class UserRequestComponent implements OnInit {
     id_user;
     endDateMin;
     countLetter = 0;
+    uploader;
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
@@ -30,6 +31,8 @@ export class UserRequestComponent implements OnInit {
 
     ngOnInit() {
         this.getIdUser();
+        this.expressService.uploadFile('test');
+        this.uploader = this.expressService.uploader;
     }
 
 
@@ -140,8 +143,21 @@ export class UserRequestComponent implements OnInit {
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
            if (res.success) {
+               if (this.uploader.getNotUploadedItems().length) {
+                   this.uploader.uploadAll();
+                   this.uploader.onCompleteItem = (item: any) => {
+                       if (item.isUploaded) {
+                           console.log('uploaded');
+                       }
+                       if (item.isSuccess) {
+                           console.log('success');
+                       }
+                    };
+               }
                swal('Opération réussie', res.message, 'success');
-               setTimeout(() => {this.resetForm(); }, 2000);
+               setTimeout(() => {
+                   this.resetForm();
+               }, 2000);
            } else {
                swal('Opération échouée', res.message, 'error');
                this.enableForm();

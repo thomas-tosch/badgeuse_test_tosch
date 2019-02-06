@@ -104,8 +104,7 @@
             <!-- INPUT FILE -->
             <div class="form-group border rounded input-group-top">
                 <label for="justifFormControlFile1" class="pl-3">Justificatif</label>
-                <input type="file" class="form-control-file border-0 rounded-0" id="justifFormControlFile1"
-                       placeholder="renseigner un justificatif">
+                <input type="file" name="photo" class="form-control-file border-0 rounded-0" id="justifFormControlFile1" ng2FileSelect [uploader]="uploader">
             </div>
 
             <!-- SUBMIT -->
