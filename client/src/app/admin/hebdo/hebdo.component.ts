@@ -23,7 +23,6 @@ export class HebdoComponent implements OnInit {
   checkbox1 = '';
   checkbox2 = '';
   checkbox3 = '';
-  checkbox4 = '';
   filterGroup = '1,2,3';
   cssButton = '';
   disabledButton = false;
@@ -36,7 +35,6 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
-    // document.getElementById("progress").style.display = "none"; // to undisplay
   }
 
   // emit to graphic the update list
@@ -50,8 +48,7 @@ export class HebdoComponent implements OnInit {
         orderBy: ['userName'],
         checkbox1: [true],
         checkbox2: [true],
-        checkbox3: [true],
-        checkbox4: [false]
+        checkbox3: [true]
     });
   }
 
@@ -104,14 +101,14 @@ export class HebdoComponent implements OnInit {
     if (this.form.get('checkbox1').value) {this.checkbox1 = '1,'; } else {this.checkbox1 = ''; }
     if (this.form.get('checkbox2').value) {this.checkbox2 = '2,'; } else {this.checkbox2 = ''; }
     if (this.form.get('checkbox3').value) {this.checkbox3 = '3,'; } else {this.checkbox3 = ''; }
-    if (this.form.get('checkbox4').value) {this.checkbox4 = '4,'; } else {this.checkbox4 = ''; }
 
-    this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4;
+    this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3;
     this.filterGroup = this.filterGroup.substring(null, this.filterGroup.length - 1);
 
     this.getUserListHebdo();
   }
 
+  // dowload PDF function
   downloadPDF() {
     this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
     this.disabledButton = true;

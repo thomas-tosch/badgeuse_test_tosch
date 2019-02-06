@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ExpressService} from "../../services/express.service";
-import swal from "sweetalert2";
-import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ExpressService} from '../../services/express.service';
+import swal from 'sweetalert2';
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {Auth} from 'src/app/guards/auth';
-import {UserService} from "../../services/user.service";
-// import * as $ from 'jquery';
-declare var $: any;
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-user-request',
@@ -26,8 +24,7 @@ export class UserRequestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
-                private userService: UserService)
-        {
+                private userService: UserService) {
         this.createForm();
         }
 
@@ -38,29 +35,29 @@ export class UserRequestComponent implements OnInit {
 
     // get the id of user connected
     getIdUser() {
-        this.userService.getIdUser((id)=> {
+        this.userService.getIdUser((id) => {
             this.id_user = id;
-        })
+        });
     }
 
     // get all reason for the selectBox
     getReason() {
-        let content = {
+        const content = {
             action: 'getReason'
         };
-        this.expressService.postExpress('absence', content).subscribe((res:Auth) => {
-            if(res.success) {
+        this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+            if (res.success) {
                 this.reasonList = res.list;
             } else {
                 swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
             }
-        })
+        });
     }
 
     // change the require attribut for date input when other toggle is selected
     onJustifiedPeriod() {
         this.justifiedPeriod = !this.justifiedPeriod;
-        if(!this.justifiedPeriod) {
+        if (!this.justifiedPeriod) {
             this.userRequest.get('startDate').clearValidators();
             this.userRequest.get('startDate').updateValueAndValidity();
             this.userRequest.get('startDate').setValue(null);
@@ -131,7 +128,7 @@ export class UserRequestComponent implements OnInit {
     onRequestSubmit() {
         this.processing = true;
         this.disableForm();
-        let content = {
+        const content = {
             action: 'absenceRequest',
             id_user: this.id_user,
             reason: this.userRequest.get('reason').value,
@@ -141,24 +138,24 @@ export class UserRequestComponent implements OnInit {
             halfDay: this.userRequest.get('halfDay').value,
             comment: this.userRequest.get('comment').value
         };
-        this.expressService.postExpress('absence', content).subscribe((res:Auth)=> {
-           if(res.success){
+        this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+           if (res.success) {
                swal('Opération réussie', res.message, 'success');
-               setTimeout(()=>{this.resetForm();}, 2000);
+               setTimeout(() => {this.resetForm(); }, 2000);
            } else {
                swal('Opération échouée', res.message, 'error');
                this.enableForm();
                this.processing = false;
            }
         });
-    };
+    }
 
     // limit the date picker for input endDate
     onStartEndChange() {
         this.endDateMin = this.userRequest.get('startDate').value; // get the value
-        this.endDateMin = new Date(new Date(this.endDateMin).setDate(new Date(this.endDateMin).getDate()+1)).toISOString(); // add 1 day
-        this.endDateMin = this.endDateMin.slice(0,10); // slice on date format
-        if(this.userRequest.get('startDate').value >= this.userRequest.get('endDate').value) { // if startDate >= endDate
+        this.endDateMin = new Date(new Date(this.endDateMin).setDate(new Date(this.endDateMin).getDate() + 1)).toISOString(); // add 1 day
+        this.endDateMin = this.endDateMin.slice(0, 10); // slice on date format
+        if (this.userRequest.get('startDate').value >= this.userRequest.get('endDate').value) { // if startDate >= endDate
             this.userRequest.get('endDate').setValue(this.endDateMin); // set endDate > startDate
         }
     }
