@@ -15,18 +15,14 @@ declare var $: any;
 })
 export class UserRequestComponent implements OnInit {
 
-    // TODO : vérifier que endDate soit supérieur à startDate
-    // TODO : bloquer les date supérieur a aujourd'hui si "malade" est choisie
-    // TODO : afficher des messages si les requis ne sont pas respectés
-    // TODO : limité le nombre de caractère dans le commentaire
-    // TODO : afficher le nombre de caractère dans commentaire en temps réel
-
     userRequest: FormGroup;
     processing = false;
     faInfoCircle = faInfoCircle;
     justifiedPeriod = true;
     reasonList;
     id_user;
+    endDateMin;
+    countLetter = 0;
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
@@ -39,12 +35,15 @@ export class UserRequestComponent implements OnInit {
         this.getIdUser();
     }
 
+
+    // get the id of user connected
     getIdUser() {
         this.userService.getIdUser((id)=> {
             this.id_user = id;
         })
     }
 
+    // get all reason for the selectBox
     getReason() {
         let content = {
             action: 'getReason'
@@ -58,6 +57,7 @@ export class UserRequestComponent implements OnInit {
         })
     }
 
+    // change the require attribut for date input when other toggle is selected
     onJustifiedPeriod() {
         this.justifiedPeriod = !this.justifiedPeriod;
         if(!this.justifiedPeriod) {
@@ -80,6 +80,7 @@ export class UserRequestComponent implements OnInit {
         }
     }
 
+    // build the formular
     createForm() {
         this.userRequest = this.formBuilder.group({
             reason: [0, Validators.required],
@@ -92,6 +93,7 @@ export class UserRequestComponent implements OnInit {
         this.getReason();
     }
 
+    // disable all input in form
     disableForm() {
         this.userRequest.controls['reason'].disable();
         this.userRequest.controls['startDate'].disable();
@@ -102,6 +104,7 @@ export class UserRequestComponent implements OnInit {
 
     }
 
+    // enable all input in form
     enableForm() {
         this.userRequest.controls['reason'].enable();
         this.userRequest.controls['startDate'].enable();
@@ -109,12 +112,25 @@ export class UserRequestComponent implements OnInit {
         this.userRequest.controls['dateOnly'].enable();
         this.userRequest.controls['halfDay'].enable();
         this.userRequest.controls['comment'].enable();
+    }
+
+    // reset the form
+    resetForm() {
+        this.enableForm();
+        this.processing = false;
+        this.userRequest.controls['reason'].setValue(0);
+        this.userRequest.controls['startDate'].setValue(null);
+        this.userRequest.controls['endDate'].setValue(null);
+        this.userRequest.controls['dateOnly'].setValue(null);
+        this.userRequest.controls['halfDay'].setValue(null);
+        this.userRequest.controls['comment'].setValue(null);
 
     }
 
+    // on submit action, send the data to backend
     onRequestSubmit() {
-        // this.processing = true;
-        // this.disableForm();
+        this.processing = true;
+        this.disableForm();
         let content = {
             action: 'absenceRequest',
             id_user: this.id_user,
@@ -128,49 +144,28 @@ export class UserRequestComponent implements OnInit {
         this.expressService.postExpress('absence', content).subscribe((res:Auth)=> {
            if(res.success){
                swal('Opération réussie', res.message, 'success');
+               setTimeout(()=>{this.resetForm();}, 2000);
            } else {
                swal('Opération échouée', res.message, 'error');
-               // this.enableForm();
-               // this.processing = false;
+               this.enableForm();
+               this.processing = false;
            }
         });
     };
 
-    inputPop(idInput) {
-        let inputValue = this.userRequest.get(idInput).value;
-        console.log(inputValue);
-        switch (idInput) {
-            case 'startDate':
-                // console.log('start');
-                break
-            case 'endDate':
-                if(new Date(inputValue) <= new Date(this.userRequest.get('startDate').value)){
-                    $('#'+idInput).popover('show');
-                } else {
-                    $('#'+idInput).popover('hide');
-                }
-                break
-
+    // limit the date picker for input endDate
+    onStartEndChange() {
+        this.endDateMin = this.userRequest.get('startDate').value; // get the value
+        this.endDateMin = new Date(new Date(this.endDateMin).setDate(new Date(this.endDateMin).getDate()+1)).toISOString(); // add 1 day
+        this.endDateMin = this.endDateMin.slice(0,10); // slice on date format
+        if(this.userRequest.get('startDate').value >= this.userRequest.get('endDate').value) { // if startDate >= endDate
+            this.userRequest.get('endDate').setValue(this.endDateMin); // set endDate > startDate
         }
-        // $('#'+idInput).popover('toggle');
     }
 
-    getMsg(idInput) {
-        let inputValue = this.userRequest.get(idInput).value;
-        switch (idInput) {
-            case 'startDate':
-                // console.log('start');
-                break
-            case 'endDate':
-                if(new Date(inputValue) < new Date(this.userRequest.get('startDate').value)){
-                    return 'Cette date doit être supérieur à la date précédente.';
-                }
-                if(new Date(inputValue) === new Date(this.userRequest.get('startDate').value)){
-                    return 'Cette date ne peut pas être la même que la précédente.';
-                }
-                break
-
-        }
+    // count the character on comment input
+    onCommentChange() {
+        this.countLetter = this.userRequest.get('comment').value.length;
     }
 
 }

@@ -1,6 +1,6 @@
 require ('../../../config/database');
 const isDateFormat = require('is-date-format');
-const htmlspecialchars = require('htmlspecialchars');
+const Entities = require('html-entities').AllHtmlEntities;
 const  DateDiff = require('date-diff');
 
 module.exports = function(router) {
@@ -62,17 +62,21 @@ module.exports = function(router) {
                     else {if(halfDay !== null){ err += '[halfDay] ';}}
 
                 // convertie les éventuel balise HTML en texte
-                if(comment) {comment = htmlspecialchars(comment.trim());}
+                if(comment) {comment = Entities.encode(comment.trim());}
                 if(comment === ''){comment = null;}
 
                 // vérifie que la date de fin soit supérieur à la date de début
-                if(endDate <= startDate){err += '[endDate < StartDate] ';}
+                if(dateOnly === null) {
+                    if (endDate <= startDate) {
+                        err += '[La 1ere date doit être supérieur à la dernière date] ';
+                    }
+                }
 
                 // vérifie que lorsque le status est "malade", que les date ne soit pas supérieur à la date d'aujourd'hui
                 if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie futur]';}
 
                 // vérifie le nombre de caractère de commentaire
-                if(comment.length > 255){err += '[Nombre de caractère dépassé dans commentaire] ';}
+                if(comment !== null && comment.length > 255){err += '[Nombre de caractère dépassé dans commentaire] ';}
 
 
                 if(err === '') {

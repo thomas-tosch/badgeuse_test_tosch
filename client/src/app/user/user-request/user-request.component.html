@@ -65,19 +65,14 @@
                         <label for="startDate" class="pl-3">* La période d'absence commence le:</label>
                         <input type="Date" class="form-control border-0 rounded-0" id="startDate"
                                formControlName="startDate"
-                               (change)="inputPop('startDate')"
-                               data-toggle="popover" data-placement="right" data-trigger="manual"
-                               data-content="msg"
+                               (change)="onStartEndChange()"
                         >
 
                     </div>
                     <div class="form-group border rounded input-group-top">
                         <label for="endDate" class="pl-3"> *La période d'absence termine le:</label>
                         <input type="Date" class="form-control border-0 rounded-0" id="endDate"
-                               formControlName="endDate"
-                               (change)="inputPop('endDate')"
-                               data-toggle="popover" data-placement="right" data-trigger="manual"
-                               [attr.data-content]="getMsg('endDate')"
+                               formControlName="endDate" [min]="endDateMin"
                         >
                     </div>
                 </div>
@@ -120,9 +115,10 @@
         <!-- INPUT COMMENT -->
         <div class="w-100 ml-2">
             <div class="form-group  rounded input-group-top">
-                <label for="comment" class="pl-3">Commentaire</label>
+                <label for="comment" class="pl-3">Commentaire: <small class="ml-3">{{ countLetter }} / 255 caractères maximum</small></label>
                 <textarea class="form-control rounded-0" rows="18" id="comment" placeholder="Ajouter un Commentaire"
-                          formControlName="comment"></textarea>
+                          formControlName="comment" (keyup)="onCommentChange()" maxlength="255"
+                ></textarea>
             </div>
         </div>
 
