@@ -11,7 +11,7 @@ module.exports = function(router) {
 
         switch (action) {
 
-            // GET REASON DATA
+        // GET REASON DATA
             case 'getReason':
                 db.query('SELECT * FROM reason ORDER BY id_reason', (err, rows) => {
                     if(err) {
@@ -29,7 +29,7 @@ module.exports = function(router) {
 
             break
 
-            // REQUEST ABSENCE TO DB
+        // REQUEST ABSENCE TO DB
             case 'absenceRequest':
                 let err = '';
                 let currDate = new Date; // current date
@@ -41,7 +41,7 @@ module.exports = function(router) {
                 let halfDay = req.body.halfDay;
                 let comment = req.body.comment;
 
-                // CHECK ALL DATA FROM FORMULAR
+            // CHECK ALL DATA FROM FORMULAR
                 if(reason && Number.isInteger(reason)) {}
                     else {err += '[reason] ';}
 
@@ -76,44 +76,75 @@ module.exports = function(router) {
                 if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie futur]';}
 
                 // vérifie le nombre de caractère de commentaire
-                if(comment !== null && comment.length > 255){err += '[Nombre de caractère dépassé dans commentaire] ';}
+                if(comment !== null && comment.length > 512){err += '[Nombre de caractère dépassé dans commentaire] ';}
 
-
+            // IF NO ERROR
                 if(err === '') {
-                    db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => { // check the last reference
+                    // check if date selected isn't to db
+                    let check = [
+                        [id_user],
+                        [new Date(startDate).toISOString()],
+                        [new Date(endDate).toISOString()]
+                    ];
+                    db.query('SELECT * FROM absences WHERE id_user = ? AND id_status > 0 AND absence_date BETWEEN ? AND ?', check, (err,rows)=>{
+
+                       if(rows.length === 0){
+                        db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => { // check the last reference
 
                         // DEFINE DATA FOR DB
-                        let newRef = rows[0].max_ref + 1;
-                        let entryNumber = new DateDiff(endDate, startDate);
-                        entryNumber = Number(entryNumber.days());
-                        if(entryNumber === 0){entryNumber = 1;}
-                        let entryCount = 0;
+
+                            // set the new reference of absence
+                            let newRef = rows[0].max_ref + 1;
+
+                            // set the end Day for endDate
+                            endDate = new Date(endDate.setHours(23,59,59,0));
+
+                            // date difference
+                            let entryNumber = new DateDiff(endDate, startDate);
+
+                            // number of day
+                            entryNumber = Number(entryNumber.days());
+
+                            // only for 1 day
+                            if(entryNumber === 0){entryNumber = 1;}
+
+                            // for count in the loop
+                            let entryCount = 0;
+
 
                         // Loop for every day selected
-                        for (let i = 0; i < entryNumber; i++) {
-                            let newDate = new Date(startDate.setDate(startDate.getDate() + i));
+                            for (let i = 0; i < entryNumber; i++) {
+                                let otherDate = new Date(startDate);
+                                let newDate = new Date(otherDate.setDate(startDate.getDate() + i));
 
                             // INSERT TO DB
-                            let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [null]];
-                            db.query('INSERT INTO absences(id_user, ref_absence, id_status, absence_date, half_day, id_reason, comment_absences, certificate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                                content, (err) => {
-                                    if (err) {
-                                        res.json({
-                                            success: false,
-                                            message: 'Nous avons eu un souçis avec la base de données.'
-                                        });
-                                        throw err;
-                                    } else {
-                                        entryCount++;
-                                        if (entryCount === entryNumber) {
+                                let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [null]];
+                                db.query('INSERT INTO absences(id_user, ref_absence, id_status, absence_date, half_day, id_reason, comment_absences, certificate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                                    content, (err) => {
+                                        if (err) {
                                             res.json({
-                                                success: true,
-                                                message: 'Votre justification à été soumis. Un administrateur se chargera de la valider ou de la refuser.'
+                                                success: false,
+                                                message: 'Nous avons eu un souçis avec la base de données.'
                                             });
+                                            throw err;
+                                        } else {
+                                            entryCount++;
+                                            if (entryCount === entryNumber) {
+                                                res.json({
+                                                    success: true,
+                                                    message: 'Votre justification à été soumis. Un administrateur se chargera de la valider ou de la refuser.'
+                                                });
+                                            }
                                         }
-                                    }
-                                });
-                        }
+                                    });
+                            }
+                        });
+                       } else {
+                           res.json({
+                               success: false,
+                               message: 'Vous avez déjà une justification validé ou en attente aux dates choisie '
+                           });
+                       }
                     });
                 } else {
                     res.json({
