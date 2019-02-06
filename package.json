@@ -4,13 +4,16 @@
   "description": "Projet de l'UHA 4.0. - Objectif: Réaliser une badgeuse intelligente. Les étudiants doivent pouvoir pointer leur présence au technopole et les administrateurs doivent pouvoir visualisé et gérer la base de données.",
   "main": "index.js",
   "dependencies": {
+    "@types/socket.io": "^2.1.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "express-list-endpoints": "^4.0.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "ip": "^1.1.5",
     "jsonwebtoken": "^8.3.0",
+    "jspdf": "^1.5.3",
     "mysql": "^2.16.0",
     "node-cron": "^2.0.3",
     "nodemailer": "^4.6.8",
@@ -20,9 +23,12 @@
     "public-ip": "^3.0.0",
     "randomstring": "^1.1.5",
     "read-file": "^0.2.0",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "socket.io": "^2.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/jspdf": "^1.2.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

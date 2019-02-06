@@ -8,6 +8,7 @@ import {PersonalSpaceComponent} from "./user/personal-space/personal-space.compo
 import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
 import {HebdoComponent} from "./admin/hebdo/hebdo.component";
 import {Error404Component} from "./guest/error404/error404.component";
+import {UserRequestComponent} from "./user/user-request/user-request.component";
 
 // ROUTER
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] },
   // user
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
+  { path: 'userRequest', component: UserRequestComponent, canActivate: [AuthGuard]},
   // guest
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   // other

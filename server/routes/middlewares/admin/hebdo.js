@@ -20,27 +20,32 @@ module.exports = function(router) {
                 let content = [
                     [startDate],
                     [endDate],
+                    [startDate],
+                    [endDate],
                     [filterGroup],
                     [orderBy]
                 ];
                 db.query('SELECT ' +
                     'users.id_user AS userId, ' +
-                    'CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, ' +
+                    'CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, ' + // first name + last name = userName
                     '' +
                     'users_extend.id_group AS id_group, ' +
                     '' +
-                    'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration ' +
+                    'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration,' + // if duration is null, set zero
+                    '' +
+                    'absences.day ' + // It's a number of day of absense
                     '' +
                     'FROM users ' +
                     '' +
-                    'LEFT JOIN users_extend ON users.id_user = users_extend.id_user ' +
-                    'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ON users.id_user = badger.id_user ' +
+                    'LEFT JOIN users_extend ON users.id_user = users_extend.id_user ' + // join users table with users_extend table
+                    'LEFT JOIN (SELECT * FROM badger WHERE end_point IS NOT NULL AND start_point BETWEEN ? AND ? ) badger ON users.id_user = badger.id_user ' + // join users table with badger table. Select only the complete line between date.
+                    'LEFT JOIN (SELECT id_user, absence_date, SUM(IF(half_day = 1,1,0.5)) AS day FROM absences WHERE id_status = 1 AND absence_date BETWEEN ? AND ? GROUP BY ref_absence) absences ON users.id_user = absences.id_user ' + // join users table table with absence table. Select all between date and summe de absence day
                     '' +
-                    'WHERE FIND_IN_SET(id_group, ?) ' +
+                    'WHERE FIND_IN_SET(id_group, ?) ' + // filter group
                     '' +
                     'GROUP BY userId ' +
                     '' +
-                    'ORDER BY ??, userName'
+                    'ORDER BY ??, userName' // select order by
                     , content, (err, rows) => {
                         if(err) {
                             res.json({

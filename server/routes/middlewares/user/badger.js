@@ -10,7 +10,7 @@ module.exports = function(router) {
 
         switch (action) {
 
-            // UPDATE THE PRESENCE OF USER ON DB.
+            // INSERT OR UPDATE THE POINT BADGE
             case 'setPresence':
                  let id_user = req.body.id_user;
                  let presence = !req.body.presence;
@@ -54,7 +54,11 @@ module.exports = function(router) {
                     db.query('UPDATE badger ' +
                         'SET ' +
                         'end_point = CURRENT_TIMESTAMP, ' +
-                        'duration = TIMEDIFF( end_point, start_point ) ' +
+                        'duration = IF(' +
+                            'IF(HOUR(start_point) < 12,1,0) = 1 ' +
+                            'AND IF(HOUR(CURRENT_TIME) > 14,1,0) = 1,' +
+                                'TIMEDIFF( DATE_ADD(end_point, INTERVAL -1 HOUR), start_point),' +
+                                'TIMEDIFF( end_point, start_point )) ' +
                         '' +
                         'WHERE start_point > CURRENT_DATE AND id_user = ? ' +
                         'AND end_point is NULL ', content_badger_end, (err)=> {

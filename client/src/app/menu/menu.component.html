@@ -5,7 +5,7 @@
     <!-- Heading navbar -->
     <img src="../../assets/img/logo_uha_40_white.png" alt="UHA 4.0" class="nav-img-logo d-none d-lg-block">
       <a class="nav-link" routerLink="userSpace" routerLinkActive="active">
-          <span class="navbar-brand mb-0 h1"><fa-icon [icon]="faUserAstronaut" class="mr-2"></fa-icon>{{ nomUser | uppercase}} {{ prenomUser }}</span>
+          <span class="navbar-brand mb-0 pr-2 pl-2 h1"><fa-icon [icon]="faUserAstronaut" class="mr-2"></fa-icon>{{ nomUser | uppercase}} {{ prenomUser }}</span>
       </a>
 
     <!-- Navbar -->
@@ -23,7 +23,13 @@
         </li>
         <li class="nav-item">
           <!--Alert Bell -->
-          <a class="nav-link mr-2" routerLink="alerte" routerLinkActive="active" *ngIf="alerteActive"><fa-icon [icon]="faBell" class="badger-temoin"></fa-icon></a>
+          <a class="nav-link mr-2 alerte-temoin"
+             *ngIf="alerteActive"
+             data-toggle="tooltip"
+             data-placement="right"
+             title="{{ alerteData.start_point | date:'EEEE'}} tu as pointer à {{ alerteData.start_point | date:'HH:mm'}} mais tu n'à pas dépointé.">
+            <fa-icon [icon]="faBell" class="icone-bell"></fa-icon>
+          </a>
         </li>
         <li class="nav-item mr-2 pr-3 pl-2 bg-light rounded-top" *ngIf="badgerActive">
           <!-- Badger -->

@@ -1,6 +1,5 @@
-
 <section class="">
-    <div *ngIf="activeGraph" class="bg-white p-lg-3 cadre-graph">
+    <div id="contentToConvert" *ngIf="activeGraph" class="bg-white p-lg-3 cadre-graph">
         <canvas baseChart
                 [datasets]="barChartData"
                 [labels]="barChartLabels"
@@ -13,3 +12,4 @@
         </canvas>
     </div>
 </section>
+

@@ -6,7 +6,6 @@ let alerte = require('./controllers/user/alerte');
 let hebdo = require('./controllers/admin/hebdo');
 let calendar = require('./controllers/user/calendar');
 
-
 module.exports = function(app)
 {
 
