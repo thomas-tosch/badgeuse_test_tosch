@@ -139,8 +139,38 @@ export class UserRequestComponent implements OnInit {
     inputPop(idInput) {
         let inputValue = this.userRequest.get(idInput).value;
         console.log(inputValue);
-        $('#'+idInput).popover('toggle');
+        switch (idInput) {
+            case 'startDate':
+                // console.log('start');
+                break
+            case 'endDate':
+                if(new Date(inputValue) <= new Date(this.userRequest.get('startDate').value)){
+                    $('#'+idInput).popover('show');
+                } else {
+                    $('#'+idInput).popover('hide');
+                }
+                break
+
+        }
+        // $('#'+idInput).popover('toggle');
     }
 
+    getMsg(idInput) {
+        let inputValue = this.userRequest.get(idInput).value;
+        switch (idInput) {
+            case 'startDate':
+                // console.log('start');
+                break
+            case 'endDate':
+                if(new Date(inputValue) < new Date(this.userRequest.get('startDate').value)){
+                    return 'Cette date doit être supérieur à la date précédente.';
+                }
+                if(new Date(inputValue) === new Date(this.userRequest.get('startDate').value)){
+                    return 'Cette date ne peut pas être la même que la précédente.';
+                }
+                break
+
+        }
+    }
 
 }
