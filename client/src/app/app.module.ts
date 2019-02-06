@@ -30,6 +30,7 @@ import { WebsocketService } from "./services/websocket.Service";
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
+
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
