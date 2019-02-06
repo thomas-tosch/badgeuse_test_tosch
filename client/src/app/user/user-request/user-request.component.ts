@@ -22,6 +22,8 @@ export class UserRequestComponent implements OnInit {
     endDateMin;
     countLetter = 0;
     uploader;
+    fileName;
+    reason;
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
@@ -31,10 +33,37 @@ export class UserRequestComponent implements OnInit {
 
     ngOnInit() {
         this.getIdUser();
+        this.getFileName();
+        // TODO : shema pour le nom du fichier: nom_prenom-date-[raison]-ref
+        // TODO : refaire cette fonction, la faire coté backend et la récupe pour l'upload file de suite après
         this.expressService.uploadFile('test');
         this.uploader = this.expressService.uploader;
     }
 
+
+    getFileName() {
+        this.userService.getDataUser((user) => {
+            let userName = user.nom_user + '_' + user.prenom_user;
+            let currentDate = new Date().toISOString().slice(0,10);
+
+            this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
+
+            const content = {
+                action: 'getRefAbsence'
+            };
+            this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+                if (res.success) {
+                    console.log(res.list);
+                } else {
+                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                }
+            });
+
+            this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + 'ref';
+            console.log(this.fileName);
+        })
+
+    }
 
     // get the id of user connected
     getIdUser() {

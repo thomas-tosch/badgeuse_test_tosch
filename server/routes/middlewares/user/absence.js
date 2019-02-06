@@ -29,6 +29,22 @@ module.exports = function(router) {
 
             break
 
+            case 'getRefAbsence':
+                db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => {
+                    if(err) {
+                        res.json({
+                            success: false
+                        });
+                        throw err;
+                    } else {
+                        res.json({
+                            success: true,
+                            list: rows[0]
+                        });
+                    }
+                })
+                break;
+
         // REQUEST ABSENCE TO DB
             case 'absenceRequest':
                 let err = '';
