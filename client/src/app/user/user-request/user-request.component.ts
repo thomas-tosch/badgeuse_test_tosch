@@ -5,6 +5,8 @@ import swal from "sweetalert2";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {Auth} from 'src/app/guards/auth';
 import {UserService} from "../../services/user.service";
+// import * as $ from 'jquery';
+declare var $: any;
 
 @Component({
   selector: 'app-user-request',
@@ -133,6 +135,12 @@ export class UserRequestComponent implements OnInit {
            }
         });
     };
+
+    inputPop(idInput) {
+        let inputValue = this.userRequest.get(idInput).value;
+        console.log(inputValue);
+        $('#'+idInput).popover('toggle');
+    }
 
 
 }

@@ -1,9 +1,9 @@
-<form [formGroup]="userRequest" (submit)="onRequestSubmit()" class="text-center">
+<form [formGroup]="userRequest" (submit)="onRequestSubmit()"  class="text-center">
 
-    <h1 class="h3 mb-3 font-weight-normal">Justifier une absence</h1>
+    <h3 class="mb-3">Justifier une absence</h3>
 
     <!-- INFO -->
-    <div class="m-5">
+    <div class="ml-5 mr-5">
         <div class="alert alert-info d-flex" role="alert">
             <div class="h2 mr-5 ml-4">
                 <fa-icon [icon]="faInfoCircle"></fa-icon>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="m-5 p-5 d-flex border shadow">
+    <div class="ml-5 mr-5 p-5 d-flex border shadow">
 
         <div class="w-100 mr-2">
             <!-- SELECT BOX -->
@@ -64,12 +64,21 @@
                     <div class="form-group border rounded input-group-top">
                         <label for="startDate" class="pl-3">* La période d'absence commence le:</label>
                         <input type="Date" class="form-control border-0 rounded-0" id="startDate"
-                               formControlName="startDate">
+                               formControlName="startDate"
+                               (change)="inputPop('startDate')"
+                               data-toggle="popover" data-placement="right" data-trigger="manual"
+                               data-content="endDate"
+                        >
+
                     </div>
                     <div class="form-group border rounded input-group-top">
                         <label for="endDate" class="pl-3"> *La période d'absence termine le:</label>
                         <input type="Date" class="form-control border-0 rounded-0" id="endDate"
-                               formControlName="endDate">
+                               formControlName="endDate"
+                               (change)="inputPop('endDate')"
+                               data-toggle="popover" data-placement="right" data-trigger="manual"
+                               data-content="endDate"
+                        >
                     </div>
                 </div>
 
