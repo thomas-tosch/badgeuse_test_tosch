@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ExpressService } from "../../services/express.service";
-import { Auth } from "../../guards/auth";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Subject } from "rxjs";
-import swal from "sweetalert2";
-import {PdfService} from "../../services/pdf.service";
+import { ExpressService } from '../../services/express.service';
+import { Auth } from '../../guards/auth';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+import swal from 'sweetalert2';
+import {PdfService} from '../../services/pdf.service';
 
 
 @Component({
@@ -30,8 +30,7 @@ export class HebdoComponent implements OnInit {
 
   constructor(private expressService: ExpressService,
               private pdfService: PdfService,
-              private formBuilder: FormBuilder)
-  {
+              private formBuilder: FormBuilder) {
       this.createForm();
   }
 
@@ -69,12 +68,12 @@ export class HebdoComponent implements OnInit {
   initDate() {
     const currFirst = new Date; // get current date for first
     const currLast = new Date; // get current date for last
-    let first = currFirst.getDate() - currFirst.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
-    let last = first + 6; // last day is the first day + 6
+    const first = currFirst.getDate() - currFirst.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
+    const last = first + 6; // last day is the first day + 6
 
-    this.startDateTime = new Date(currFirst.setHours(0,0,0,0)); // set time at start day 00:00
+    this.startDateTime = new Date(currFirst.setHours(0, 0, 0, 0)); // set time at start day 00:00
     this.startDateTime = new Date(currFirst.setDate(first)).toISOString(); // set first day of week
-    this.endDateTime = new Date(currLast.setHours(23,59,59,0)); // set time at end day 23:00
+    this.endDateTime = new Date(currLast.setHours(23, 59, 59, 0)); // set time at end day 23:00
     this.endDateTime = new Date(currLast.setDate(last)).toISOString(); // set last day of the week
 
     this.userList = []; // initilizes the userlist
@@ -83,7 +82,7 @@ export class HebdoComponent implements OnInit {
 
   // get the user  list to db
   getUserListHebdo() {
-    let content = {
+    const content = {
       action: 'getUserListHebdo',
       startDate: this.startDateTime,
       endDate: this.endDateTime,
@@ -91,37 +90,37 @@ export class HebdoComponent implements OnInit {
       orderBy: this.form.get('orderBy').value
     };
     this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
-      if(!res.success) {
+      if (!res.success) {
         swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
       } else {
         this.userList = res.list;
         this.emitUserListSubject();
       }
-    })
+    });
   }
 
   // initializes the group selected
   onInitGroup() {
-    if(this.form.get('checkbox1').value){this.checkbox1 = '1,';}else{this.checkbox1 = '';}
-    if(this.form.get('checkbox2').value){this.checkbox2 = '2,';}else{this.checkbox2 = '';}
-    if(this.form.get('checkbox3').value){this.checkbox3 = '3,';}else{this.checkbox3 = '';}
-    if(this.form.get('checkbox4').value){this.checkbox4 = '4,';}else{this.checkbox4 = '';}
+    if (this.form.get('checkbox1').value) {this.checkbox1 = '1,'; } else {this.checkbox1 = ''; }
+    if (this.form.get('checkbox2').value) {this.checkbox2 = '2,'; } else {this.checkbox2 = ''; }
+    if (this.form.get('checkbox3').value) {this.checkbox3 = '3,'; } else {this.checkbox3 = ''; }
+    if (this.form.get('checkbox4').value) {this.checkbox4 = '4,'; } else {this.checkbox4 = ''; }
 
     this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4;
-    this.filterGroup = this.filterGroup.substring(null,this.filterGroup.length-1);
+    this.filterGroup = this.filterGroup.substring(null, this.filterGroup.length - 1);
 
     this.getUserListHebdo();
   }
 
-  downloadPDF(){
+  downloadPDF() {
     this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
     this.disabledButton = true;
-    this.pdfService.downloadPDF(this.startDateTime,this.endDateTime, (res)=>{
-      if(res === true){
-        setTimeout(()=>{
+    this.pdfService.downloadPDF(this.startDateTime, this.endDateTime, (res) => {
+      if (res === true) {
+        setTimeout(() => {
           this.cssButton = '';
           this.disabledButton = false;
-        },2000)
+        }, 2000);
 
       }
     });
