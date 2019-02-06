@@ -75,7 +75,7 @@ export class MonthlyCalendarComponent implements OnInit {
                             {
                                 start: absence.day,
                                 end: absence.day,
-                                backgroundColor: '#3b49ff',
+                                backgroundColor: '#0900a3',
                                 rendering: 'background'
                             }
                             );

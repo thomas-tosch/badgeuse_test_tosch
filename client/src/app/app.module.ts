@@ -66,7 +66,7 @@ registerLocaleData(localeFr, 'fr');
       ExpressService,
       UserService,
       BadgerService,
-      CalendarService
+      CalendarService,
       WebsocketService,
       { provide: LOCALE_ID, useValue: 'fr' }
   ],
