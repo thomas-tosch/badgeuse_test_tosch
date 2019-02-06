@@ -58,10 +58,10 @@ module.exports = function(router) {
                                 list: rows
                             });
                         }
-                    })
+                    });
                 break
 
 
         }
     });
-}
+};

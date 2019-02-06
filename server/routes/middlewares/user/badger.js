@@ -76,7 +76,7 @@ module.exports = function(router) {
                         }
                     })
                 }
-            break
+            break;
 
             // Check if the user is in the UHA 4.0 area
             case 'getAccessBadger':

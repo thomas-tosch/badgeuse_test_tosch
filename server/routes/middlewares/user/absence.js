@@ -59,7 +59,9 @@ module.exports = function(router) {
 
                 // check the halfDay variable
                 if(halfDay === true || halfDay === false || halfDay === null) {if(halfDay === true){halfDay = 0;} else if(halfDay === false || halfDay === null){halfDay = 1;}}
-                    else {if(halfDay !== null){ err += '[halfDay] ';}}
+                    else {
+                    err += '[halfDay] ';
+                }
 
                 // convertie les éventuel balise HTML en texte
                 if(comment) {comment = Entities.encode(comment.trim());}
