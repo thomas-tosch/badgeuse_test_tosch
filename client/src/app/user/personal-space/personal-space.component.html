@@ -1,30 +1,36 @@
- <div class="cadre-user-legends d-flex">
+ <div class="d-flex">
 
   <!-- INFO -->
-  <div class="legendbar shadow">
-    <ul>
+  <div class="infobar shadow">
 
-      <li class="h2">
-       Légende des couleurs
-      </li>
+    <!-- LEGEND CALENDAR -->
+    <div class="card text-black-50 bg-light mb-3">
+      <div class="card-header h4">
+        Légende des couleurs
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-valide m-0">Absence validé</li>
+        <li class="list-group-item bg-encours m-0">Absence en attente</li>
+        <li class="list-group-item bg-refuse m-0">Absence refusé</li>
+      </ul>
+    </div>
 
-      <li class="h3 validetext row">
-        Absence validé:
-        <div class="valide"></div>
-      </li>
+    <div class="border p-2">
+      <p>
+        Vous pouvez justifier une absence (maladie, stage, altérnance ou autre). Celle-ci sera validée ou refusée par un professeur.
+        Pour plus d'information, contactez un professeur.
+      </p>
 
-      <li class="h3 encourstext row">
-       Absence en attente:
-        <div class="encours"></div>
-      </li>
+      <button class="mt-1 btn btn-outline-primary alert-primary w-100"
+              routerLink="/userRequest"
+      >
+        Soumettre une absence
+      </button>
+    </div>
 
-      <li class="h3 refusetext row">
-        Absence refusé:
-        <div class="refuse"></div>
-      </li>
-
-    </ul>
   </div>
+
+
 
  <!-- CALENDAR -->
   <div class="">

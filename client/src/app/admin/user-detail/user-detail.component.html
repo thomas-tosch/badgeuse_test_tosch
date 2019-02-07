@@ -1,8 +1,8 @@
-<div class="cadre-user-detail d-flex">
+<div class="d-flex">
 
   <!-- INFO -->
   <div class="infobar shadow">
-    <ul>
+    <ul class="p-0">
 
       <li class="mb-4">
         <button routerLink="/hebdo" class="btn btn-outline-light">< Retour</button>
@@ -32,25 +32,16 @@
         </form>
       </li>
 
-      <div class="legendadmin mt-5 pt-5">
-      <li class="h2">
-       Légende des couleurs
-      </li>
-
-      <li class="h3 validetext row">
-        Absence validé:
-        <div class="valide"></div>
-      </li>
-
-      <li class="h3 encourstext row">
-       Absence en attente:
-        <div class="encours"></div>
-      </li>
-
-      <li class="h3 refusetext row">
-        Absence refusé:
-        <div class="refuse"></div>
-      </li>
+      <!-- LEGEND CALENDAR -->
+      <div class="card text-black-50 bg-light mb-3">
+        <div class="card-header h4">
+          Légende des couleurs
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-valide m-0">Absence validé</li>
+          <li class="list-group-item bg-encours m-0">Absence en attente</li>
+          <li class="list-group-item bg-refuse m-0">Absence refusé</li>
+        </ul>
       </div>
     </ul>
   </div>

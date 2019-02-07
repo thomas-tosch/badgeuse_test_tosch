@@ -60,7 +60,7 @@ export class MonthlyCalendarComponent implements OnInit {
                                 start: absence.day,
                                 end: absence.day,
                                 rendering: 'background',
-                                color: '#3b49ff',
+                                color: '#0075ff',
                                 title: absence.id
                             });
                     }
