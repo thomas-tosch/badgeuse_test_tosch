@@ -26,15 +26,14 @@ export class ExpressService {
 
   /**
    * upload a file to express
-   * @param fileName
    */
-  uploadFile(fileName) {
+  uploadFile() {
     this.uploader = new FileUploader({url: URL, itemAlias: 'justificatif'});
 
     this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-      const fileExtension = '.' + file.file.name.split('.').pop();
-      file.file.name = fileName + fileExtension;
+      // file.withCredentials = false;
+      // const fileExtension = '.' + file.file.name.split('.').pop();
+      // file.file.name = fileName + fileExtension;
     };
   }
 }

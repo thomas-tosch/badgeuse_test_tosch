@@ -29,6 +29,7 @@ module.exports = function(router) {
 
             break
 
+        // GET THE NEXT REFERENCE OF ABSENCE
             case 'getRefAbsence':
                 db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => {
                     if(err) {
@@ -37,10 +38,17 @@ module.exports = function(router) {
                         });
                         throw err;
                     } else {
-                        res.json({
-                            success: true,
-                            list: rows[0]
-                        });
+                        if(rows.length !== 0) {
+                            res.json({
+                                success: true,
+                                list: rows[0].max_ref + 1
+                            });
+                        } else {
+                            res.json({
+                                success: true,
+                                list: rows[0].max_ref
+                            });
+                        }
                     }
                 })
                 break;

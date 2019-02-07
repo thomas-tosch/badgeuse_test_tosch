@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {Auth} from 'src/app/guards/auth';
 import {UserService} from '../../services/user.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-user-request',
@@ -24,6 +25,7 @@ export class UserRequestComponent implements OnInit {
     uploader;
     fileName;
     reason;
+    cssButton = '';
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
@@ -33,37 +35,12 @@ export class UserRequestComponent implements OnInit {
 
     ngOnInit() {
         this.getIdUser();
-        this.getFileName();
-        // TODO : shema pour le nom du fichier: nom_prenom-date-[raison]-ref
-        // TODO : refaire cette fonction, la faire coté backend et la récupe pour l'upload file de suite après
-        this.expressService.uploadFile('test');
+        this.expressService.uploadFile();
         this.uploader = this.expressService.uploader;
     }
 
 
-    getFileName() {
-        this.userService.getDataUser((user) => {
-            let userName = user.nom_user + '_' + user.prenom_user;
-            let currentDate = new Date().toISOString().slice(0,10);
 
-            this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
-
-            const content = {
-                action: 'getRefAbsence'
-            };
-            this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
-                if (res.success) {
-                    console.log(res.list);
-                } else {
-                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
-                }
-            });
-
-            this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + 'ref';
-            console.log(this.fileName);
-        })
-
-    }
 
     // get the id of user connected
     getIdUser() {
@@ -153,11 +130,36 @@ export class UserRequestComponent implements OnInit {
         this.userRequest.controls['dateOnly'].setValue(null);
         this.userRequest.controls['halfDay'].setValue(null);
         this.userRequest.controls['comment'].setValue(null);
+        $('#justifFormControlFile1').val('');
+    }
 
+    // get file name
+    getFileName() {
+        this.userService.getDataUser((user) => {
+            const userName = user.nom_user + '_' + user.prenom_user;
+            let firstDate;
+            if (this.userRequest.get('startDate').value !== null) {firstDate = this.userRequest.get('startDate').value; }
+            if (this.userRequest.get('dateOnly').value !== null) {firstDate = this.userRequest.get('dateOnly').value; }
+            const currentDate = new Date(firstDate).toISOString().slice(0, 10);
+
+            this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
+
+            const content = {
+                action: 'getRefAbsence'
+            };
+            this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+                if (res.success) {
+                    this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
+                } else {
+                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                }
+            });
+        });
     }
 
     // on submit action, send the data to backend
     onRequestSubmit() {
+        this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
         this.processing = true;
         this.disableForm();
         const content = {
@@ -172,25 +174,37 @@ export class UserRequestComponent implements OnInit {
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
            if (res.success) {
-               if (this.uploader.getNotUploadedItems().length) {
-                   this.uploader.uploadAll();
-                   this.uploader.onCompleteItem = (item: any) => {
-                       if (item.isUploaded) {
-                           console.log('uploaded');
-                       }
+               if (this.uploader.getNotUploadedItems().length) { // if a file selected
+                   this.uploader.onBeforeUploadItem = (item) => { // sete the file name
+                       item.withCredentials = false;
+                       const fileExtension = '.' + item.file.name.split('.').pop();
+                       item.file.name = this.fileName + fileExtension;
+                   };
+                   this.uploader.uploadAll(); // upload the file
+                   this.uploader.onCompleteItem = (item: any) => { // response uploaded file
                        if (item.isSuccess) {
-                           console.log('success');
+                           swal('Opération réussie', res.message, 'success');
+                           setTimeout(() => {
+                               this.resetForm();
+                               this.cssButton = '';
+                           }, 2000);
+                       }
+                       if (item.isError || item.isCancel) {
+                           swal('Opération échouée', 'Le fichier n\'à pas été télécharger', 'error');
                        }
                     };
+               } else {
+                   swal('Opération réussie', res.message, 'success');
+                   setTimeout(() => {
+                       this.resetForm();
+                       this.cssButton = '';
+                   }, 2000);
                }
-               swal('Opération réussie', res.message, 'success');
-               setTimeout(() => {
-                   this.resetForm();
-               }, 2000);
            } else {
                swal('Opération échouée', res.message, 'error');
                this.enableForm();
                this.processing = false;
+               this.cssButton = '';
            }
         });
     }
@@ -203,6 +217,12 @@ export class UserRequestComponent implements OnInit {
         if (this.userRequest.get('startDate').value >= this.userRequest.get('endDate').value) { // if startDate >= endDate
             this.userRequest.get('endDate').setValue(this.endDateMin); // set endDate > startDate
         }
+        if ($('#justifFormControlFile1').val() !== '') {this.getFileName(); }
+    }
+
+    // update file name if onlyDate change
+    onDateOnlyChange() {
+        if ($('#justifFormControlFile1').val() !== '') {this.getFileName(); }
     }
 
     // count the character on comment input
