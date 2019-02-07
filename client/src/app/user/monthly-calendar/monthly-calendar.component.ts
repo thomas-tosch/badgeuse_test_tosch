@@ -49,30 +49,54 @@ export class MonthlyCalendarComponent implements OnInit {
                             {
                                 start: absence.day,
                                 end: absence.day,
-                                rendering: 'background',
-                                color: '#ff3c38',
-                                title: absence.id
-                            });
+                                textColor: '#111',
+                                title: absence.reason.toUpperCase(),
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent'
+                            },
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                backgroundColor: '#ff3c38',
+                                rendering: 'background'
+                            }
+                            );
                     }
                     if (absence.status == 1) { // Absence validée
                         this.eachDate.push(
                             {
                                 start: absence.day,
                                 end: absence.day,
-                                rendering: 'background',
-                                color: '#0075ff',
-                                title: absence.id
-                            });
+                                textColor: '#111',
+                                title: absence.reason.toUpperCase(),
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent'
+                            },
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                backgroundColor: '#0075ff',
+                                rendering: 'background'
+                            }
+                            );
                     }
                     if (absence.status == 2) { // En attente
                         this.eachDate.push(
                             {
                                 start: absence.day,
                                 end: absence.day,
-                                rendering: 'background',
-                                color: '#ff912a',
-                                title: absence.id
-                            });
+                                textColor: '#111',
+                                title: absence.reason.toUpperCase(),
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent'
+                            },
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                backgroundColor: '#ff912a',
+                                rendering: 'background'
+                            }
+                            );
                     }
                     i++;
                     if (this.absencesDates.length === i) {
@@ -92,7 +116,7 @@ export class MonthlyCalendarComponent implements OnInit {
             showNonCurrentDates: true,
             weekends: false,
             locale: 'fr',
-            editable: true,
+            editable: false,
             eventLimit: false,
             slotLabelFormat: 'H(:mm)',
             allDaySlot: false,

@@ -203,3 +203,16 @@ a:hover, a:focus, a:active {
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
     }
 }
+
+/* =================================== */
+/* CALENDAR                            */
+/* =================================== */
+.fc-title {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+}
+.fc-content {
+    text-align: center;
+    position: relative;
+    top: 10px;
+}
