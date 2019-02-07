@@ -48,8 +48,8 @@ module.exports = function(router) {
                                 message: "Nous n'avons rien trouver dans la base de données."
                             });
                         }
-                    })
+                    });
                 break
         }
     });
-}
+};

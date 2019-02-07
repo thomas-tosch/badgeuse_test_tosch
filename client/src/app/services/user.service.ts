@@ -19,12 +19,18 @@ export class UserService {
                 private expressService: ExpressService,
                 private router: Router) { }
 
-    // Get the status if connected or not
+    /**
+     * Get the status if connected or not
+     */
     getConnectStatus() {
         return !helper.isTokenExpired(this.loginService.getToken());
     }
 
-    // get only the id of user
+    /**
+     * get only the id of user
+     * @param callback
+     * @param userName
+     */
     getIdUser(callback, userName?) {
         if(userName === undefined){
             let token = helper.decodeToken(this.loginService.getToken());
@@ -44,7 +50,11 @@ export class UserService {
         }
     }
 
-    // get all data of user conected
+    /**
+     * get all data of user conected
+     * @param callback
+     * @param id_user
+     */
     getDataUser(callback, id_user?) {
         let token = helper.decodeToken(this.loginService.getToken());
 
@@ -65,6 +75,10 @@ export class UserService {
         });
     }
 
+    /**
+     * check if the user connected is administrator
+     * @param callback
+     */
     isUserAdmin(callback) {
         this.getDataUser((user)=>{
             // activate administrator access if role = 3

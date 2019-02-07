@@ -1,8 +1,8 @@
-<div class="cadre-user-detail d-flex">
+<div class="d-flex">
 
   <!-- INFO -->
   <div class="infobar shadow">
-    <ul>
+    <ul class="p-0">
 
       <li class="mb-4">
         <button routerLink="/hebdo" class="btn btn-outline-light">< Retour</button>
@@ -20,7 +20,7 @@
         {{ userData.mail_user }}
       </li>
 
-      <li>
+      <li class="pb-5">
         <form [formGroup]="form" (change)="onSubmit()">
           <select formControlName="nom_group">
             <option value="0">Inactif</option>
@@ -32,6 +32,17 @@
         </form>
       </li>
 
+      <!-- LEGEND CALENDAR -->
+      <div class="card text-black-50 bg-light mb-3">
+        <div class="card-header h4">
+          Légende des couleurs
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-valide m-0">Absence validé</li>
+          <li class="list-group-item bg-encours m-0">Absence en attente</li>
+          <li class="list-group-item bg-refuse m-0">Absence refusé</li>
+        </ul>
+      </div>
     </ul>
   </div>
 

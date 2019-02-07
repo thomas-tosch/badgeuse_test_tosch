@@ -39,8 +39,8 @@ module.exports = function(router) {
                                 user: rows[0]
                             });
                         }
-                })
-            break
+                });
+            break;
 
             // GET ID OF USER REQUESTED
             case 'getIdUser':
@@ -60,8 +60,8 @@ module.exports = function(router) {
                             user: rows[0].id_user
                         });
                     }
-                })
-            break
+                });
+            break;
 
             // UPDATE THE USER GROUP
             case 'updateGroup':
@@ -69,7 +69,7 @@ module.exports = function(router) {
                 let content = [
                     [id_group],
                     [id_user]
-                ]
+                ];
                 db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', content, (err)=>{
                     if(err) {
                         res.json({
@@ -86,4 +86,4 @@ module.exports = function(router) {
             break
         }
     });
-}
+};
