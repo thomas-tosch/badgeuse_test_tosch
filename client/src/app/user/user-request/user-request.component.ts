@@ -149,7 +149,7 @@ export class UserRequestComponent implements OnInit {
     }
 
     /**
-     * limit the date picker for input endDate
+     * limit the date picker for input endDate and if a file was selected, rename this
      */
     onStartEndChange() {
         // get the value
@@ -227,7 +227,7 @@ export class UserRequestComponent implements OnInit {
     }
 
     /**
-     * show the confirm modal
+     * show the confirm modal with the formular data
      */
     toConfirmModal() {
         this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';

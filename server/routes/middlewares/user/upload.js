@@ -11,8 +11,10 @@ module.exports = function(router) {
         let imgFile = req.files.justificatif;
         // define the file name
         let fileName = req.files.justificatif.name;
+        // check the extension file
         let regex = /^pdf$|^jpg$|^jpeg$|^png$/;
         let fileExt = fileName.split('.').pop();
+
         if(regex.test(fileExt)) {
 
             // define the absence years
