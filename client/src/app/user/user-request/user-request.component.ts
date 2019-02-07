@@ -14,6 +14,10 @@ import * as $ from 'jquery';
 })
 export class UserRequestComponent implements OnInit {
 
+    // TODO : faire un modal de validation avant soumition du formulaire, il faut que l'étudiant vérifie les donnée avant d'envoyer
+    // TODO : faire des dossiers à l'année pour les fichiers. lancé une petite fonction qui vérifie si le dossier existe bien sinon il le crée
+    // TODO : limité les extention de fichier, seul les format jpg, png et pdf seront autorisés
+
     userRequest: FormGroup;
     processing = false;
     faInfoCircle = faInfoCircle;
@@ -42,14 +46,18 @@ export class UserRequestComponent implements OnInit {
 
 
 
-    // get the id of user connected
+    /**
+     * get the id of user connected
+     */
     getIdUser() {
         this.userService.getIdUser((id) => {
             this.id_user = id;
         });
     }
 
-    // get all reason for the selectBox
+    /**
+     * get all reason for the selectBox
+     */
     getReason() {
         const content = {
             action: 'getReason'
@@ -63,7 +71,9 @@ export class UserRequestComponent implements OnInit {
         });
     }
 
-    // change the require attribut for date input when other toggle is selected
+    /**
+     * change the require attribut for date input when other toggle is selected
+     */
     onJustifiedPeriod() {
         this.justifiedPeriod = !this.justifiedPeriod;
         if (!this.justifiedPeriod) {
@@ -86,7 +96,9 @@ export class UserRequestComponent implements OnInit {
         }
     }
 
-    // build the formular
+    /**
+     * build the formular
+     */
     createForm() {
         this.userRequest = this.formBuilder.group({
             reason: [0, Validators.required],
@@ -99,7 +111,9 @@ export class UserRequestComponent implements OnInit {
         this.getReason();
     }
 
-    // disable all input in form
+    /**
+     * disable all input in form
+     */
     disableForm() {
         this.userRequest.controls['reason'].disable();
         this.userRequest.controls['startDate'].disable();
@@ -110,7 +124,9 @@ export class UserRequestComponent implements OnInit {
 
     }
 
-    // enable all input in form
+    /**
+     * enable all input in form
+     */
     enableForm() {
         this.userRequest.controls['reason'].enable();
         this.userRequest.controls['startDate'].enable();
@@ -120,7 +136,9 @@ export class UserRequestComponent implements OnInit {
         this.userRequest.controls['comment'].enable();
     }
 
-    // reset the form
+    /**
+     * reset the form
+     */
     resetForm() {
         this.enableForm();
         this.processing = false;
@@ -133,7 +151,9 @@ export class UserRequestComponent implements OnInit {
         $('#justifFormControlFile1').val('');
     }
 
-    // get file name
+    /**
+     * get file name
+     */
     getFileName() {
         this.userService.getDataUser((user) => {
             const userName = user.nom_user + '_' + user.prenom_user;
@@ -157,7 +177,9 @@ export class UserRequestComponent implements OnInit {
         });
     }
 
-    // on submit action, send the data to backend
+    /**
+     * on submit action, send the data to backend
+     */
     onRequestSubmit() {
         this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
         this.processing = true;
@@ -209,7 +231,9 @@ export class UserRequestComponent implements OnInit {
         });
     }
 
-    // limit the date picker for input endDate
+    /**
+     * limit the date picker for input endDate
+     */
     onStartEndChange() {
         this.endDateMin = this.userRequest.get('startDate').value; // get the value
         this.endDateMin = new Date(new Date(this.endDateMin).setDate(new Date(this.endDateMin).getDate() + 1)).toISOString(); // add 1 day
@@ -220,12 +244,16 @@ export class UserRequestComponent implements OnInit {
         if ($('#justifFormControlFile1').val() !== '') {this.getFileName(); }
     }
 
-    // update file name if onlyDate change
+    /**
+     * update file name if onlyDate change
+     */
     onDateOnlyChange() {
         if ($('#justifFormControlFile1').val() !== '') {this.getFileName(); }
     }
 
-    // count the character on comment input
+    /**
+     * count the character on comment input
+     */
     onCommentChange() {
         this.countLetter = this.userRequest.get('comment').value.length;
     }
