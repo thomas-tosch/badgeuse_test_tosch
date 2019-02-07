@@ -20,7 +20,7 @@
         {{ userData.mail_user }}
       </li>
 
-      <li>
+      <li class="pb-5">
         <form [formGroup]="form" (change)="onSubmit()">
           <select formControlName="nom_group">
             <option value="0">Inactif</option>
@@ -32,6 +32,26 @@
         </form>
       </li>
 
+      <div class="legendadmin mt-5 pt-5">
+      <li class="h2">
+       Légende des couleurs
+      </li>
+
+      <li class="h3 validetext row">
+        Absence validé:
+        <div class="valide"></div>
+      </li>
+
+      <li class="h3 encourstext row">
+       Absence en attente:
+        <div class="encours"></div>
+      </li>
+
+      <li class="h3 refusetext row">
+        Absence refusé:
+        <div class="refuse"></div>
+      </li>
+      </div>
     </ul>
   </div>
 
