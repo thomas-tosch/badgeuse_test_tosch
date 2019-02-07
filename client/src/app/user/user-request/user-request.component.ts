@@ -14,7 +14,6 @@ import * as $ from 'jquery';
 })
 export class UserRequestComponent implements OnInit {
 
-    // TODO : faire des dossiers à l'année pour les fichiers. lancé une petite fonction qui vérifie si le dossier existe bien sinon il le crée
     // TODO : limité les extention de fichier, seul les format jpg, png et pdf seront autorisés
 
     userRequest: FormGroup;

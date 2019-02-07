@@ -1,5 +1,6 @@
 require('../../../config/database');
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
 
 module.exports = function(router) {
 
@@ -8,19 +9,24 @@ module.exports = function(router) {
     router.post('/', (req, res) => {
 
         let imgFile = req.files.justificatif
+        // define the file name
         let fileName = req.files.justificatif.name;
-        let filePath = './justificatif/';
+        // define the absence years
+        let posYears = fileName.indexOf("-") + 1;
+        let getYears = fileName.slice(posYears, posYears + 4);
+        // define the folder
+        let filePath = './justificatif/' + getYears + '/';
+        // check if the folder exists
+        if (!fs.existsSync(filePath)){
+            fs.mkdirSync(filePath);
+        }
 
-        if (!imgFile) {
-            console.log("No file received");
-
-        } else {
+        // moove the file
+        if (imgFile){
             imgFile.mv(filePath + fileName, (err)=>{
                 if(err) throw err;
                 res.send('success')
             })
-
-
         }
 
     });
