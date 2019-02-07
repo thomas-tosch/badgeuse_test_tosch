@@ -99,7 +99,7 @@ CREATE TABLE absences (
 	absence_date DATE NOT NULL,
 	half_day TINYINT NOT NULL DEFAULT 1,
 	id_reason SMALLINT NOT NULL,
-	comment_absences VARCHAR(255) NULL,
+	comment_absences VARCHAR(512) NULL,
 	certificate VARCHAR(255) NULL,
 	PRIMARY KEY (id_absences),
 	CONSTRAINT fk_absences_id_user

@@ -1,10 +1,10 @@
-<form [formGroup]="userRequest" (submit)="onRequestSubmit()"  class="text-center">
+<form [formGroup]="userRequest" (submit)="toConfirmModal()"  class="text-center">
 
     <h3 class="mb-3">Justifier une absence</h3>
 
     <!-- INFO -->
     <div class="ml-5 mr-5">
-        <div class="alert alert-info d-flex" role="alert">
+        <div class="alert alert-info d-flex shadow" role="alert">
             <div class="h2 mr-5 ml-4">
                 <fa-icon [icon]="faInfoCircle"></fa-icon>
             </div>
@@ -83,7 +83,7 @@
                     <div class="form-group border rounded input-group-top">
                         <label for="dateOnly" class="pl-3">* Date de l'absence</label>
                         <input type="Date" class="form-control border-0 rounded-0" id="dateOnly"
-                               formControlName="dateOnly">
+                               formControlName="dateOnly" (change)="onDateOnlyChange()">
                     </div>
                     <div class="form-group">
                         <div class="input-group border rounded">
@@ -103,13 +103,16 @@
 
             <!-- INPUT FILE -->
             <div class="form-group border rounded input-group-top">
-                <label for="justifFormControlFile1" class="pl-3">Justificatif</label>
-                <input type="file" class="form-control-file border-0 rounded-0" id="justifFormControlFile1"
-                       placeholder="renseigner un justificatif">
+                <label for="justifFormControlFile1" class="pl-3">Justificatif <small>(Format autorisés: .jpg .jpeg .png .pdf)</small></label>
+                <input type="file" name="photo" class="form-control-file border-0 rounded-0" id="justifFormControlFile1"
+                       ng2FileSelect [uploader]="uploader" (change)="getFileName()" [accept]="expressService.allowedMimeType.toString()"
+                       [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing">
             </div>
 
             <!-- SUBMIT -->
-            <button type="submit" [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing" class="btn btn-primary w-100 bg-blue">Soumettre la justification d'absence</button>
+            <button type="submit" [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing || !validFile"
+                    class="btn btn-primary w-100 bg-blue  {{ cssButton }}"
+            >Soumettre la justification d'absence</button>
         </div>
 
         <!-- INPUT COMMENT -->

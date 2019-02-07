@@ -10,6 +10,7 @@
     "date-diff": "^0.2.1",
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
+    "express-fileupload": "^1.1.1-alpha.1",
     "express-list-endpoints": "^4.0.0",
     "html-entities": "^1.2.1",
     "html2canvas": "^1.0.0-alpha.12",
