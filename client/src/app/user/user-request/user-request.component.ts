@@ -14,7 +14,6 @@ import * as $ from 'jquery';
 })
 export class UserRequestComponent implements OnInit {
 
-    // TODO : faire un modal de validation avant soumition du formulaire, il faut que l'étudiant vérifie les donnée avant d'envoyer
     // TODO : faire des dossiers à l'année pour les fichiers. lancé une petite fonction qui vérifie si le dossier existe bien sinon il le crée
     // TODO : limité les extention de fichier, seul les format jpg, png et pdf seront autorisés
 
@@ -72,7 +71,7 @@ export class UserRequestComponent implements OnInit {
     }
 
     /**
-     * change the require attribut for date input when other toggle is selected
+     * change the require attribute for date input when other toggle is selected
      */
     onJustifiedPeriod() {
         this.justifiedPeriod = !this.justifiedPeriod;
@@ -152,128 +151,19 @@ export class UserRequestComponent implements OnInit {
     }
 
     /**
-     * get file name
-     */
-    getFileName() {
-        this.userService.getDataUser((user) => {
-            const userName = user.nom_user + '_' + user.prenom_user;
-            let firstDate;
-            if (this.userRequest.get('startDate').value !== null) {firstDate = this.userRequest.get('startDate').value; }
-            if (this.userRequest.get('dateOnly').value !== null) {firstDate = this.userRequest.get('dateOnly').value; }
-            const currentDate = new Date(firstDate).toISOString().slice(0, 10);
-
-            this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
-
-            const content = {
-                action: 'getRefAbsence'
-            };
-            this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
-                if (res.success) {
-                    this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
-                } else {
-                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
-                }
-            });
-        });
-    }
-
-
-    // TODO : diviser cette fonction
-    /**
-     * on submit action, send the data to backend
-     */
-    onRequestSubmit() {
-        this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
-        this.processing = true;
-        this.disableForm();
-
-        let periode = 'La période du : ' + this.userRequest.get('startDate').value + ' au ' + this.userRequest.get('endDate').value;
-        if (this.userRequest.get('dateOnly').value !== null) {
-            let halfday = 'journée';
-            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée';}
-            periode = 'La ' + halfday + ' du :' + this.userRequest.get('dateOnly').value;
-        }
-
-        let comment = this.userRequest.get('comment').value;
-        if (comment === null) {comment = 'Aucun commentaire';}
-
-        swal({
-            title: 'Confirmez votre justification',
-            html: "<u>Est-ce que les informations que vous avez saisie sont juste? </u><br><br>" +
-                "<div class='text-left ml-4'>" +
-                "La raison: " + this.reasonList[this.userRequest.get('reason').value - 1].nom_reason + "<br>" +
-                periode + "<br>" +
-                "Commentaire: " + comment + "" +
-                "</div>",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Oui, les informations sont justes',
-            cancelButtonText: 'Non',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                const content = {
-                    action: 'absenceRequest',
-                    id_user: this.id_user,
-                    reason: this.userRequest.get('reason').value,
-                    startDate: this.userRequest.get('startDate').value,
-                    endDate: this.userRequest.get('endDate').value,
-                    dateOnly: this.userRequest.get('dateOnly').value,
-                    halfDay: this.userRequest.get('halfDay').value,
-                    comment: this.userRequest.get('comment').value
-                };
-                this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
-                    if (res.success) {
-                        if (this.uploader.getNotUploadedItems().length) { // if a file selected
-                            this.uploader.onBeforeUploadItem = (item) => { // sete the file name
-                                item.withCredentials = false;
-                                const fileExtension = '.' + item.file.name.split('.').pop();
-                                item.file.name = this.fileName + fileExtension;
-                            };
-                            this.uploader.uploadAll(); // upload the file
-                            this.uploader.onCompleteItem = (item: any) => { // response uploaded file
-                                if (item.isSuccess) {
-                                    swal('Opération réussie', res.message, 'success');
-                                    setTimeout(() => {
-                                        this.resetForm();
-                                        this.cssButton = '';
-                                    }, 2000);
-                                }
-                                if (item.isError || item.isCancel) {
-                                    swal('Opération échouée', 'Le fichier n\'à pas été télécharger', 'error');
-                                }
-                            };
-                        } else {
-                            swal('Opération réussie', res.message, 'success');
-                            setTimeout(() => {
-                                this.resetForm();
-                                this.cssButton = '';
-                            }, 2000);
-                        }
-                    } else {
-                        swal('Opération échouée', res.message, 'error');
-                        this.enableForm();
-                        this.processing = false;
-                        this.cssButton = '';
-                    }
-                });
-            } else {
-                this.enableForm();
-                this.processing = false;
-                this.cssButton = '';
-            }
-        });
-    }
-
-    /**
      * limit the date picker for input endDate
      */
     onStartEndChange() {
-        this.endDateMin = this.userRequest.get('startDate').value; // get the value
-        this.endDateMin = new Date(new Date(this.endDateMin).setDate(new Date(this.endDateMin).getDate() + 1)).toISOString(); // add 1 day
-        this.endDateMin = this.endDateMin.slice(0, 10); // slice on date format
-        if (this.userRequest.get('startDate').value >= this.userRequest.get('endDate').value) { // if startDate >= endDate
-            this.userRequest.get('endDate').setValue(this.endDateMin); // set endDate > startDate
+        // get the value
+        this.endDateMin = this.userRequest.get('startDate').value;
+        // add 1 day
+        this.endDateMin = new Date(new Date(this.endDateMin).setDate(new Date(this.endDateMin).getDate() + 1)).toISOString();
+        // slice on date format
+        this.endDateMin = this.endDateMin.slice(0, 10);
+        // if startDate >= endDate
+        if (this.userRequest.get('startDate').value >= this.userRequest.get('endDate').value) {
+            // set endDate > startDate
+            this.userRequest.get('endDate').setValue(this.endDateMin);
         }
         if ($('#justifFormControlFile1').val() !== '') {this.getFileName(); }
     }
@@ -292,4 +182,141 @@ export class UserRequestComponent implements OnInit {
         this.countLetter = this.userRequest.get('comment').value.length;
     }
 
+    /**
+     * define and set file name
+     */
+    getFileName() {
+        // get data user for his name
+        this.userService.getDataUser((user) => {
+            const userName = user.nom_user + '_' + user.prenom_user;
+
+            // define the date
+            let firstDate;
+            if (this.userRequest.get('startDate').value !== null) {firstDate = this.userRequest.get('startDate').value; }
+            if (this.userRequest.get('dateOnly').value !== null) {firstDate = this.userRequest.get('dateOnly').value; }
+            const currentDate = new Date(firstDate).toISOString().slice(0, 10);
+
+            // define the reason
+            this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
+
+            // define the reference
+            const content = {action: 'getRefAbsence'};
+            this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+                if (res.success) {
+                    // define the full fileName
+                    this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
+                } else {
+                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                }
+            });
+        });
+    }
+
+    /**
+     * show the confirm modal
+     */
+    toConfirmModal() {
+        this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
+        this.processing = true;
+        this.disableForm();
+
+        // define the period or the day
+        let periode = 'La période du : ' + this.userRequest.get('startDate').value + ' au ' + this.userRequest.get('endDate').value;
+        if (this.userRequest.get('dateOnly').value !== null) {
+            let halfday = 'journée';
+            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée';}
+            periode = 'La ' + halfday + ' du :' + this.userRequest.get('dateOnly').value;
+        }
+
+        // define the comment
+        let comment = this.userRequest.get('comment').value;
+        if (comment === null) {comment = 'Aucun commentaire';}
+
+        // show the modal
+        swal({
+            title: 'Confirmez votre justification',
+            html: "<u>Est-ce que les informations que vous avez saisie sont juste? </u><br><br>" +
+                "<div class='text-left ml-4'>" +
+                "La raison: " + this.reasonList[this.userRequest.get('reason').value - 1].nom_reason + "<br>" +
+                periode + "<br>" +
+                "Commentaire: " + comment + "" +
+                "</div>",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, les informations sont justes',
+            cancelButtonText: 'Non',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                // then the student confirm, do the request to backend
+                this.onRequestSubmit();
+            } else {
+
+                // then the student cancel
+                this.enableForm();
+                this.processing = false;
+                this.cssButton = '';
+            }
+        });
+    }
+
+    /**
+     * on submit action, send the data to backend
+     */
+    onRequestSubmit() {
+        const content = {
+            action: 'absenceRequest',
+            id_user: this.id_user,
+            reason: this.userRequest.get('reason').value,
+            startDate: this.userRequest.get('startDate').value,
+            endDate: this.userRequest.get('endDate').value,
+            dateOnly: this.userRequest.get('dateOnly').value,
+            halfDay: this.userRequest.get('halfDay').value,
+            comment: this.userRequest.get('comment').value
+        };
+        this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+            if (res.success) {
+
+                // if a file selected
+                if (this.uploader.getNotUploadedItems().length) {
+
+                    // set the file name
+                    this.uploader.onBeforeUploadItem = (item) => {
+                        item.withCredentials = false;
+                        const fileExtension = '.' + item.file.name.split('.').pop();
+                        item.file.name = this.fileName + fileExtension;
+                    };
+
+                    // upload the file
+                    this.uploader.uploadAll();
+
+                    // response uploaded file
+                    this.uploader.onCompleteItem = (item: any) => {
+                        if (item.isSuccess) {
+                            swal('Opération réussie', res.message, 'success');
+                            setTimeout(() => {
+                                this.resetForm();
+                                this.cssButton = '';
+                            }, 2000);
+                        }
+                        if (item.isError || item.isCancel) {
+                            swal('Opération échouée', 'Le fichier n\'à pas été télécharger', 'error');
+                        }
+                    };
+                } else {
+                    swal('Opération réussie', res.message, 'success');
+                    setTimeout(() => {
+                        this.resetForm();
+                        this.cssButton = '';
+                    }, 2000);
+                }
+            } else {
+                swal('Opération échouée', res.message, 'error');
+                this.enableForm();
+                this.processing = false;
+                this.cssButton = '';
+            }
+        });
+    }
 }
