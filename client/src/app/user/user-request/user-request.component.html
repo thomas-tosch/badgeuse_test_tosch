@@ -103,13 +103,14 @@
 
             <!-- INPUT FILE -->
             <div class="form-group border rounded input-group-top">
-                <label for="justifFormControlFile1" class="pl-3">Justificatif</label>
+                <label for="justifFormControlFile1" class="pl-3">Justificatif <small>(Format autorisés: .jpg .jpeg .png .pdf)</small></label>
                 <input type="file" name="photo" class="form-control-file border-0 rounded-0" id="justifFormControlFile1"
-                       ng2FileSelect [uploader]="uploader" (change)="getFileName()" [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing">
+                       ng2FileSelect [uploader]="uploader" (change)="getFileName()" [accept]="expressService.allowedMimeType.toString()"
+                       [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing">
             </div>
 
             <!-- SUBMIT -->
-            <button type="submit" [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing"
+            <button type="submit" [disabled]="!userRequest.valid || userRequest.get('reason').value === 0 || processing || !validFile"
                     class="btn btn-primary w-100 bg-blue  {{ cssButton }}"
             >Soumettre la justification d'absence</button>
         </div>

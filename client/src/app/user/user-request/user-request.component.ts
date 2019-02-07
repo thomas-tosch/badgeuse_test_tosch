@@ -14,10 +14,9 @@ import * as $ from 'jquery';
 })
 export class UserRequestComponent implements OnInit {
 
-    // TODO : limité les extention de fichier, seul les format jpg, png et pdf seront autorisés
-
     userRequest: FormGroup;
     processing = false;
+    validFile = true;
     faInfoCircle = faInfoCircle;
     justifiedPeriod = true;
     reasonList;
@@ -182,33 +181,49 @@ export class UserRequestComponent implements OnInit {
     }
 
     /**
-     * define and set file name
+     * check the extension file, define and set file name
      */
     getFileName() {
-        // get data user for his name
-        this.userService.getDataUser((user) => {
-            const userName = user.nom_user + '_' + user.prenom_user;
+        const fileName: string = <string>$('#justifFormControlFile1').val();
 
-            // define the date
-            let firstDate;
-            if (this.userRequest.get('startDate').value !== null) {firstDate = this.userRequest.get('startDate').value; }
-            if (this.userRequest.get('dateOnly').value !== null) {firstDate = this.userRequest.get('dateOnly').value; }
-            const currentDate = new Date(firstDate).toISOString().slice(0, 10);
+        // check extension file
+        const regex = /^pdf$|^jpg$|^jpeg$|^png$/;
+        const fileExt = fileName.split('.').pop();
 
-            // define the reason
-            this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
+        if (regex.test(fileExt)) {
+            this.validFile = true;
+            // get data user for his name
+            this.userService.getDataUser((user) => {
+                const userName = user.nom_user + '_' + user.prenom_user;
 
-            // define the reference
-            const content = {action: 'getRefAbsence'};
-            this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
-                if (res.success) {
-                    // define the full fileName
-                    this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
-                } else {
-                    swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                // define the date
+                let firstDate;
+                if (this.userRequest.get('startDate').value !== null) {
+                    firstDate = this.userRequest.get('startDate').value;
                 }
+                if (this.userRequest.get('dateOnly').value !== null) {
+                    firstDate = this.userRequest.get('dateOnly').value;
+                }
+                const currentDate = new Date(firstDate).toISOString().slice(0, 10);
+
+                // define the reason
+                this.reason = this.reasonList[this.userRequest.get('reason').value - 1].nom_reason;
+
+                // define the reference
+                const content = {action: 'getRefAbsence'};
+                this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+                    if (res.success) {
+                        // define the full fileName
+                        this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
+                    } else {
+                        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                    }
+                });
             });
-        });
+        } else {
+            swal('Oups !', 'Le fichier à une extention non autorisée. Les extentions acceptées sont: .jpg .jpeg .png .pdf', 'error');
+            this.validFile = false;
+        }
     }
 
     /**
@@ -238,7 +253,7 @@ export class UserRequestComponent implements OnInit {
                 "<div class='text-left ml-4'>" +
                 "La raison: " + this.reasonList[this.userRequest.get('reason').value - 1].nom_reason + "<br>" +
                 periode + "<br>" +
-                "Commentaire: " + comment + "" +
+                "Commentaire: " + comment +
                 "</div>",
             type: 'warning',
             showCancelButton: true,
@@ -281,11 +296,7 @@ export class UserRequestComponent implements OnInit {
                 if (this.uploader.getNotUploadedItems().length) {
 
                     // set the file name
-                    this.uploader.onBeforeUploadItem = (item) => {
-                        item.withCredentials = false;
-                        const fileExtension = '.' + item.file.name.split('.').pop();
-                        item.file.name = this.fileName + fileExtension;
-                    };
+                    this.expressService.setFileName(this.fileName);
 
                     // upload the file
                     this.uploader.uploadAll();

@@ -12,6 +12,7 @@ export class ExpressService {
 
   private domain = 'http://localhost:8080';
   public uploader: FileUploader;
+  public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
 
   constructor(private http: HttpClient) { }
 
@@ -25,15 +26,21 @@ export class ExpressService {
   }
 
   /**
+   * set the name of file before upload
+   * @param fileName
+   */
+  setFileName(fileName) {
+    this.uploader.onBeforeUploadItem = (item) => {
+      item.withCredentials = false;
+      const fileExtension = '.' + item.file.name.split('.').pop();
+      item.file.name = fileName + fileExtension;
+    };
+  }
+
+  /**
    * upload a file to express
    */
   uploadFile() {
-    this.uploader = new FileUploader({url: URL, itemAlias: 'justificatif'});
-
-    this.uploader.onAfterAddingFile = (file) => {
-      // file.withCredentials = false;
-      // const fileExtension = '.' + file.file.name.split('.').pop();
-      // file.file.name = fileName + fileExtension;
-    };
+    this.uploader = new FileUploader({url: URL, itemAlias: 'justificatif', allowedMimeType: this.allowedMimeType});
   }
 }

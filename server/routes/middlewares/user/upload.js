@@ -8,27 +8,33 @@ module.exports = function(router) {
 
     router.post('/', (req, res) => {
 
-        let imgFile = req.files.justificatif
+        let imgFile = req.files.justificatif;
         // define the file name
         let fileName = req.files.justificatif.name;
-        // define the absence years
-        let posYears = fileName.indexOf("-") + 1;
-        let getYears = fileName.slice(posYears, posYears + 4);
-        // define the folder
-        let filePath = './justificatif/' + getYears + '/';
-        // check if the folder exists
-        if (!fs.existsSync(filePath)){
-            fs.mkdirSync(filePath);
-        }
+        let regex = /^pdf$|^jpg$|^jpeg$|^png$/;
+        let fileExt = fileName.split('.').pop();
+        if(regex.test(fileExt)) {
 
-        // moove the file
-        if (imgFile){
-            imgFile.mv(filePath + fileName, (err)=>{
-                if(err) throw err;
-                res.send('success')
-            })
+            // define the absence years
+            let posYears = fileName.indexOf("-") + 1;
+            let getYears = fileName.slice(posYears, posYears + 4);
+            // define the folder
+            let filePath = './justificatif/' + getYears + '/';
+            // check if the folder exists
+            if (!fs.existsSync(filePath)) {
+                fs.mkdirSync(filePath);
+            }
+
+            // moove the file
+            if (imgFile) {
+                imgFile.mv(filePath + fileName, (err) => {
+                    if (err) throw err;
+                    res.send('success')
+                })
+            }
+        } else {
+            res.send('error')
         }
 
     });
-}
-
+};
