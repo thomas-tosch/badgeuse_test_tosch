@@ -177,6 +177,8 @@ export class UserRequestComponent implements OnInit {
         });
     }
 
+
+    // TODO : diviser cette fonction
     /**
      * on submit action, send the data to backend
      */
@@ -184,50 +186,82 @@ export class UserRequestComponent implements OnInit {
         this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
         this.processing = true;
         this.disableForm();
-        const content = {
-            action: 'absenceRequest',
-            id_user: this.id_user,
-            reason: this.userRequest.get('reason').value,
-            startDate: this.userRequest.get('startDate').value,
-            endDate: this.userRequest.get('endDate').value,
-            dateOnly: this.userRequest.get('dateOnly').value,
-            halfDay: this.userRequest.get('halfDay').value,
-            comment: this.userRequest.get('comment').value
-        };
-        this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
-           if (res.success) {
-               if (this.uploader.getNotUploadedItems().length) { // if a file selected
-                   this.uploader.onBeforeUploadItem = (item) => { // sete the file name
-                       item.withCredentials = false;
-                       const fileExtension = '.' + item.file.name.split('.').pop();
-                       item.file.name = this.fileName + fileExtension;
-                   };
-                   this.uploader.uploadAll(); // upload the file
-                   this.uploader.onCompleteItem = (item: any) => { // response uploaded file
-                       if (item.isSuccess) {
-                           swal('Opération réussie', res.message, 'success');
-                           setTimeout(() => {
-                               this.resetForm();
-                               this.cssButton = '';
-                           }, 2000);
-                       }
-                       if (item.isError || item.isCancel) {
-                           swal('Opération échouée', 'Le fichier n\'à pas été télécharger', 'error');
-                       }
-                    };
-               } else {
-                   swal('Opération réussie', res.message, 'success');
-                   setTimeout(() => {
-                       this.resetForm();
-                       this.cssButton = '';
-                   }, 2000);
-               }
-           } else {
-               swal('Opération échouée', res.message, 'error');
-               this.enableForm();
-               this.processing = false;
-               this.cssButton = '';
-           }
+
+        let periode = 'La période du : ' + this.userRequest.get('startDate').value + ' au ' + this.userRequest.get('endDate').value;
+        if (this.userRequest.get('dateOnly').value !== null) {
+            let halfday = 'journée';
+            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée';}
+            periode = 'La ' + halfday + ' du :' + this.userRequest.get('dateOnly').value;
+        }
+
+        let comment = this.userRequest.get('comment').value;
+        if (comment === null) {comment = 'Aucun commentaire';}
+
+        swal({
+            title: 'Confirmez votre justification',
+            html: "<u>Est-ce que les informations que vous avez saisie sont juste? </u><br><br>" +
+                "<div class='text-left ml-4'>" +
+                "La raison: " + this.reasonList[this.userRequest.get('reason').value - 1].nom_reason + "<br>" +
+                periode + "<br>" +
+                "Commentaire: " + comment + "" +
+                "</div>",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, les informations sont justes',
+            cancelButtonText: 'Non',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                const content = {
+                    action: 'absenceRequest',
+                    id_user: this.id_user,
+                    reason: this.userRequest.get('reason').value,
+                    startDate: this.userRequest.get('startDate').value,
+                    endDate: this.userRequest.get('endDate').value,
+                    dateOnly: this.userRequest.get('dateOnly').value,
+                    halfDay: this.userRequest.get('halfDay').value,
+                    comment: this.userRequest.get('comment').value
+                };
+                this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+                    if (res.success) {
+                        if (this.uploader.getNotUploadedItems().length) { // if a file selected
+                            this.uploader.onBeforeUploadItem = (item) => { // sete the file name
+                                item.withCredentials = false;
+                                const fileExtension = '.' + item.file.name.split('.').pop();
+                                item.file.name = this.fileName + fileExtension;
+                            };
+                            this.uploader.uploadAll(); // upload the file
+                            this.uploader.onCompleteItem = (item: any) => { // response uploaded file
+                                if (item.isSuccess) {
+                                    swal('Opération réussie', res.message, 'success');
+                                    setTimeout(() => {
+                                        this.resetForm();
+                                        this.cssButton = '';
+                                    }, 2000);
+                                }
+                                if (item.isError || item.isCancel) {
+                                    swal('Opération échouée', 'Le fichier n\'à pas été télécharger', 'error');
+                                }
+                            };
+                        } else {
+                            swal('Opération réussie', res.message, 'success');
+                            setTimeout(() => {
+                                this.resetForm();
+                                this.cssButton = '';
+                            }, 2000);
+                        }
+                    } else {
+                        swal('Opération échouée', res.message, 'error');
+                        this.enableForm();
+                        this.processing = false;
+                        this.cssButton = '';
+                    }
+                });
+            } else {
+                this.enableForm();
+                this.processing = false;
+                this.cssButton = '';
+            }
         });
     }
 
