@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {Auth} from "../../guards/auth";
-import {CalendarService} from "../../services/calendar.service";
+import {Auth} from '../../guards/auth';
+import {CalendarService} from '../../services/calendar.service';
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
-import {UserService} from "../../services/user.service";
+import {UserService} from '../../services/user.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -25,28 +25,14 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        if (this.id_user === undefined) {
-            this.getIdUser();
-        }
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes.id_user.currentValue);
         this.id_user = changes.id_user.currentValue;
         this.getBackend();
     }
 
-    getIdUser() {
-        if (this.id_user === undefined) {
-            this.userService.getIdUser((res) => {
-                console.log(res);
-                this.id_user = res;
-                this.getBackend();
-            });
-        } else {
-            this.getBackend();
-        });
-    }
 
     getBackend() {
         this.absencesDates = [];
@@ -292,6 +278,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     }
 
     calendar() {
+        $('#Calendar').fullCalendar('removeEvents');
         this.calendarOptions = {
             defaultView: this.monthActive,
             showNonCurrentDates: true,
@@ -314,18 +301,11 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                 month: 'Mois',
                 week: 'Semaine'
             },
-            events:
-            this.eachDate
-            // {
-            //     start: '2019-02-01T08:25:16',
-            //     end: '2019-02-01T17:08:52',
-            //     rendering: 'background'
-            // }
-            ,
+            events: this.eachDate
 
         };
-        $('#Calendar').fullCalendar( 'removeEvents');
-        $('#Calendar').fullCalendar( 'renderEvents', this.eachDate);
-        // $('#Calendar').fullCalendar('rerenderEvents');
+
+        $('#Calendar').fullCalendar('renderEvents', this.eachDate);
+        $('#Calendar').fullCalendar('rerenderEvents');
     }
 }
