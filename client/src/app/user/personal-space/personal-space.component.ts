@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalSpaceComponent implements OnInit {
 
+  monthActive = 'month';
+
   constructor() { }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Auth} from "../../guards/auth";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarComponent} from 'ng-fullcalendar';
@@ -14,9 +14,10 @@ import {UserService} from "../../services/user.service";
 export class MonthlyCalendarComponent implements OnInit {
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+    @Input() monthActive = 'month';
+    @Input() id_user;
     absencesDates;
     eachDate = [];
-    id_user;
 
     constructor(private expressService: CalendarService,
                 private userService: UserService) {
@@ -27,10 +28,14 @@ export class MonthlyCalendarComponent implements OnInit {
     }
 
     getIdUser() {
-        this.userService.getIdUser((res) => {
-            this.id_user = res;
+        if (this.id_user === undefined) {
+            this.userService.getIdUser((res) => {
+                this.id_user = res;
+                this.getBackend();
+            });
+        } else {
             this.getBackend();
-        })
+        }
     }
 
     getBackend() {
@@ -112,7 +117,7 @@ export class MonthlyCalendarComponent implements OnInit {
 
     calendar() {
         this.calendarOptions = {
-            defaultView: 'agendaWeek',
+            defaultView: this.monthActive,
             showNonCurrentDates: true,
             weekends: false,
             locale: 'fr',
