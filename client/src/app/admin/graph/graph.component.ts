@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {FormBuilder} from '@angular/forms';
@@ -23,6 +23,7 @@ export class GraphComponent implements OnInit {
     data = [];
     colorState = [];
     absences = [];
+    @Input() startDate;
 
     /** CHART OPTION */
     barChartOptions = {
@@ -89,6 +90,7 @@ export class GraphComponent implements OnInit {
 
     ngOnInit() {
       this.refreshGraphic();
+
     }
 
     /**
@@ -109,10 +111,11 @@ export class GraphComponent implements OnInit {
      * @param bar
      */
     onClickBar(table, bar) {
-      if(bar[0] !== undefined) {
-          let userName = bar[0]._model.label;
+      if (bar[0] !== undefined) {
+          const userName = bar[0]._model.label;
+          const dateSelected = new Date(this.startDate).toISOString().slice(0, 10);
           this.getIdUser((userId) => {
-              this.router.navigate(['userDetail/' + userId]);
+              this.router.navigate(['userDetail/' + userId + '/' + dateSelected]);
           }, userName);
       }
     }

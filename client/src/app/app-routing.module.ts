@@ -16,7 +16,7 @@ const routes: Routes = [
     // TODO : rajouter une condition d'amin dans AuthGuard
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
-  { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] },
+  { path: 'userDetail/:id_user/:dateSelected', component: UserDetailComponent, canActivate: [AuthGuard] },
   // user
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   { path: 'userRequest', component: UserRequestComponent, canActivate: [AuthGuard]},

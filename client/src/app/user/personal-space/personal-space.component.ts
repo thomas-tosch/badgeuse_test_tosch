@@ -10,12 +10,14 @@ export class PersonalSpaceComponent implements OnInit {
 
   monthActive = 'month';
   id_user;
+  currentDate = new Date().toISOString().slice(0, 10);
 
   constructor(private userService: UserService) {
     this.getIdUser();
   }
 
   ngOnInit() {
+    console.log(this.currentDate);
   }
 
   /**

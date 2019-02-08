@@ -1,11 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Auth} from '../../guards/auth';
-import {CalendarService} from '../../services/calendar.service';
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
 import * as $ from 'jquery';
-import {ExpressService} from "../../services/express.service";
+import {ExpressService} from '../../services/express.service';
 
 @Component({
     selector: 'app-monthly-calendar',

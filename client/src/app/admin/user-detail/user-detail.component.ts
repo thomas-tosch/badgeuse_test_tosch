@@ -17,6 +17,7 @@ export class UserDetailComponent implements OnInit {
   userData = {};
   form: FormGroup;
   monthActive = 'agendaWeek';
+  dateSelected;
 
   constructor(private expressService: ExpressService,
               private userService: UserService,
@@ -35,6 +36,7 @@ export class UserDetailComponent implements OnInit {
   refreshUser() {
     this.route.params.subscribe(() => {
       this.id_user = this.route.snapshot.params['id_user'];
+      this.dateSelected = this.route.snapshot.params['dateSelected'];
       this.getUser();
     });
   }
