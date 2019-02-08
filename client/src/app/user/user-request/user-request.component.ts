@@ -249,7 +249,7 @@ export class UserRequestComponent implements OnInit {
         // show the modal
         swal({
             title: 'Confirmez votre justification',
-            html: "<u>Est-ce que les informations que vous avez saisie sont juste? </u><br><br>" +
+            html: "<u>Est-ce que les informations que vous avez saisies sont justes? </u><br><br>" +
                 "<div class='text-left ml-4'>" +
                 "La raison: " + this.reasonList[this.userRequest.get('reason').value - 1].nom_reason + "<br>" +
                 periode + "<br>" +
