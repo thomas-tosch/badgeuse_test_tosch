@@ -15,9 +15,9 @@ export class MonthlyCalendarComponent implements OnInit {
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @Input() monthActive = 'month';
+    @Input() id_user;
     absencesDates;
     eachDate = [];
-    id_user;
 
     constructor(private expressService: CalendarService,
                 private userService: UserService) {
@@ -28,10 +28,14 @@ export class MonthlyCalendarComponent implements OnInit {
     }
 
     getIdUser() {
-        this.userService.getIdUser((res) => {
-            this.id_user = res;
+        if (this.id_user === undefined) {
+            this.userService.getIdUser((res) => {
+                this.id_user = res;
+                this.getBackend();
+            });
+        } else {
             this.getBackend();
-        })
+        }
     }
 
     getBackend() {
