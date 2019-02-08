@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
         // the modal success
         toast({
           type: 'success',
-          title: 'Authentification réussi !'
+          title: 'Authentification réussie !'
         })
 
         // redirection
