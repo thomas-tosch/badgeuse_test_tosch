@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Auth} from "../../guards/auth";
-import {CalendarService} from "../../services/calendar.service";
+import {Auth} from '../../guards/auth';
+import {CalendarService} from '../../services/calendar.service';
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
-import {UserService} from "../../services/user.service";
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-monthly-calendar',
@@ -30,7 +30,7 @@ export class MonthlyCalendarComponent implements OnInit {
         this.userService.getIdUser((res) => {
             this.id_user = res;
             this.getBackend();
-        })
+        });
     }
 
     getBackend() {
@@ -44,7 +44,7 @@ export class MonthlyCalendarComponent implements OnInit {
 
             if (this.absencesDates.length !== 0) {
                 this.absencesDates.forEach((absence) => {
-                    if (absence.status == 0) { // Absence refusée
+                    if (absence.status === 0) { // Absence refusée
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -60,9 +60,9 @@ export class MonthlyCalendarComponent implements OnInit {
                                 backgroundColor: '#ff3c38',
                                 rendering: 'background'
                             }
-                            );
+                        );
                     }
-                    if (absence.status == 1) { // Absence validée
+                    if (absence.status === 1) { // Absence validée
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -78,9 +78,9 @@ export class MonthlyCalendarComponent implements OnInit {
                                 backgroundColor: '#0075ff',
                                 rendering: 'background'
                             }
-                            );
+                        );
                     }
-                    if (absence.status == 2) { // En attente
+                    if (absence.status === 2) { // En attente
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -96,7 +96,7 @@ export class MonthlyCalendarComponent implements OnInit {
                                 backgroundColor: '#ff912a',
                                 rendering: 'background'
                             }
-                            );
+                        );
                     }
                     i++;
                     if (this.absencesDates.length === i) {
