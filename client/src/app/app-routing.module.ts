@@ -13,6 +13,7 @@ import {UserRequestComponent} from "./user/user-request/user-request.component";
 // ROUTER
 const routes: Routes = [
   // admin
+    // TODO : rajouter une condition d'amin dans AuthGuard
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
   { path: 'userDetail/:id_user', component: UserDetailComponent, canActivate: [AuthGuard] },

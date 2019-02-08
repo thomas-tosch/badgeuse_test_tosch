@@ -1,19 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Auth} from '../../guards/auth';
 import {CalendarService} from '../../services/calendar.service';
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
 import {UserService} from '../../services/user.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-monthly-calendar',
     templateUrl: './monthly-calendar.component.html',
     styleUrls: ['./monthly-calendar.component.css']
 })
-export class MonthlyCalendarComponent implements OnInit {
+export class MonthlyCalendarComponent implements OnInit, OnChanges {
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+    @Input() monthActive = 'month';
+    @Input() id_user;
     absencesDates;
     eachDate = [];
     id_user;
@@ -24,18 +27,18 @@ export class MonthlyCalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getIdUser();
+
     }
 
-    getIdUser() {
-        this.userService.getIdUser((res) => {
-            this.id_user = res;
-            this.getBackend();
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        this.id_user = changes.id_user.currentValue;
+        this.getBackend();
     }
+
 
     getBackend() {
-
+        this.absencesDates = [];
+        this.eachDate = [];
         const content = {
             id_user: this.id_user
         };
@@ -266,6 +269,7 @@ export class MonthlyCalendarComponent implements OnInit {
                     i++;
                     if (this.absencesDates.length === i) {
                         this.calendar();
+
                     }
                 });
             } else {
@@ -276,8 +280,9 @@ export class MonthlyCalendarComponent implements OnInit {
     }
 
     calendar() {
+        $('#Calendar').fullCalendar('removeEvents');
         this.calendarOptions = {
-            defaultView: 'agendaWeek',
+            defaultView: this.monthActive,
             showNonCurrentDates: true,
             defaultDate: this.selectedWeek,
             weekends: false,
@@ -299,14 +304,11 @@ export class MonthlyCalendarComponent implements OnInit {
                 month: 'Mois',
                 week: 'Semaine'
             },
-            events:
-            this.eachDate
-            // {
-            //     start: '2019-02-01T08:25:16',
-            //     end: '2019-02-01T17:08:52',
-            //     rendering: 'background'
-            // }
-            ,
+            events: this.eachDate
+
         };
+
+        $('#Calendar').fullCalendar('renderEvents', this.eachDate);
+        $('#Calendar').fullCalendar('rerenderEvents');
     }
 }
