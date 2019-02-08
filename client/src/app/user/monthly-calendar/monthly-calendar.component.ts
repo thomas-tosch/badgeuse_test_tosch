@@ -19,7 +19,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     @Input() id_user;
     absencesDates;
     eachDate = [];
-    selectedWeek = '2019-01-29';
+    @Input() selectedWeek;
 
     constructor(private expressService: ExpressService) { }
 
@@ -39,7 +39,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
      * edit and define each date of calendar
      */
     getBackend() {
-        this.absencesDates = [];
+        this.absencesDates = 0;
         this.eachDate = [];
         const content = {
             id_user: this.id_user
@@ -286,6 +286,8 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
      * set the calendar option and refresh
      */
     calendar() {
+
+        // remove event calendar
         $('#Calendar').fullCalendar('removeEvents'); // remove all events
 
         this.calendarOptions = {
@@ -312,10 +314,10 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                 week: 'Semaine'
             },
             events: this.eachDate
-
         };
 
-        $('#Calendar').fullCalendar('renderEvents', this.eachDate); // add new events
+        // add and refresh event calendar
+        $('#Calendar').fullCalendar('addEventSource', this.eachDate); // add new events
         $('#Calendar').fullCalendar('rerenderEvents'); // refresh
     }
 }
