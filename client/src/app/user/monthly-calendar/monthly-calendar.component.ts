@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Auth} from "../../guards/auth";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarComponent} from 'ng-fullcalendar';
@@ -14,6 +14,7 @@ import {UserService} from "../../services/user.service";
 export class MonthlyCalendarComponent implements OnInit {
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+    @Input() monthActive = 'month';
     absencesDates;
     eachDate = [];
     id_user;
@@ -112,7 +113,7 @@ export class MonthlyCalendarComponent implements OnInit {
 
     calendar() {
         this.calendarOptions = {
-            defaultView: 'agendaWeek',
+            defaultView: this.monthActive,
             showNonCurrentDates: true,
             weekends: false,
             locale: 'fr',

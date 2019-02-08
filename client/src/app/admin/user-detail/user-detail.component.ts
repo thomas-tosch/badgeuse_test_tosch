@@ -16,6 +16,7 @@ export class UserDetailComponent implements OnInit {
   id_user;
   userData ={};
   form: FormGroup;
+  monthActive = 'agendaWeek';
 
   constructor(private expressService: ExpressService,
               private userService: UserService,
