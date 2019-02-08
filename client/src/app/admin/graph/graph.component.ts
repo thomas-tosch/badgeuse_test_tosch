@@ -68,7 +68,7 @@ export class GraphComponent implements OnInit {
         stack: 1
   },{
         data: this.absences, // data total heure d'absence justifier
-        label: 'Absence justifié (malade, stage,etc...)',
+        label: 'Absence justifiée (malade, stage,etc...)',
         backgroundColor: '#9d9d9d',
         stack: 1
   }];

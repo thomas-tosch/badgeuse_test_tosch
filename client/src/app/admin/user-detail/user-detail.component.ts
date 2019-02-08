@@ -55,9 +55,9 @@ export class UserDetailComponent implements OnInit {
     };
     this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
       if(res.success) {
-        swal('Opération réussi !', res.message, 'success');
+        swal('Opération réussie !', res.message, 'success');
       } else {
-        swal('Opération échoué !', res.message, 'error');
+        swal('Opération échouée !', res.message, 'error');
       }
     })
   }
