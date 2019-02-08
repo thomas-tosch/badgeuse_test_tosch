@@ -216,3 +216,6 @@ a:hover, a:focus, a:active {
     position: relative;
     top: 10px;
 }
+.fc-day-grid-event .fc-time {
+    display : none;
+}

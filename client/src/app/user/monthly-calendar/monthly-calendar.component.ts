@@ -49,14 +49,20 @@ export class MonthlyCalendarComponent implements OnInit {
                             {
                                 start: absence.day,
                                 end: absence.day,
+                                backgroundColor: '#ff3c38',
+                                rendering: 'background'
+                            },
+                            {
+                                start: absence.day + 'T09:00:00',
+                                end: absence.day + 'T17:00:00',
                                 textColor: '#111',
                                 title: absence.reason.toUpperCase(),
                                 backgroundColor: 'transparent',
                                 borderColor: 'transparent'
                             },
                             {
-                                start: absence.day,
-                                end: absence.day,
+                                start: absence.day + 'T09:00:00',
+                                end: absence.day + 'T17:00:00',
                                 backgroundColor: '#ff3c38',
                                 rendering: 'background'
                             }
@@ -67,14 +73,20 @@ export class MonthlyCalendarComponent implements OnInit {
                             {
                                 start: absence.day,
                                 end: absence.day,
+                                backgroundColor: '#0075ff',
+                                rendering: 'background'
+                            },
+                            {
+                                start: absence.day + 'T09:00:00',
+                                end: absence.day + 'T17:00:00',
                                 textColor: '#111',
                                 title: absence.reason.toUpperCase(),
                                 backgroundColor: 'transparent',
                                 borderColor: 'transparent'
                             },
                             {
-                                start: absence.day,
-                                end: absence.day,
+                                start: absence.day + 'T09:00:00',
+                                end: absence.day + 'T17:00:00',
                                 backgroundColor: '#0075ff',
                                 rendering: 'background'
                             }
@@ -85,14 +97,20 @@ export class MonthlyCalendarComponent implements OnInit {
                             {
                                 start: absence.day,
                                 end: absence.day,
+                                backgroundColor: '#ff912a',
+                                rendering: 'background'
+                            },
+                            {
+                                start: absence.day + 'T09:00:00',
+                                end: absence.day + 'T17:00:00',
                                 textColor: '#111',
                                 title: absence.reason.toUpperCase(),
                                 backgroundColor: 'transparent',
                                 borderColor: 'transparent'
                             },
                             {
-                                start: absence.day,
-                                end: absence.day,
+                                start: absence.day + 'T09:00:00',
+                                end: absence.day + 'T17:00:00',
                                 backgroundColor: '#ff912a',
                                 rendering: 'background'
                             }
@@ -118,8 +136,9 @@ export class MonthlyCalendarComponent implements OnInit {
             locale: 'fr',
             editable: false,
             eventLimit: false,
-            slotLabelFormat: 'H(:mm)',
+            slotLabelFormat: 'HH:mm',
             allDaySlot: false,
+            timeFormat: 'HH:mm',
             minTime: moment.duration('07:00:00'),
             maxTime: moment.duration('20:00:00'),
             height: 730,
