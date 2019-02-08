@@ -1,17 +1,18 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Auth} from "../../guards/auth";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
 import {UserService} from "../../services/user.service";
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-monthly-calendar',
     templateUrl: './monthly-calendar.component.html',
     styleUrls: ['./monthly-calendar.component.css']
 })
-export class MonthlyCalendarComponent implements OnInit {
+export class MonthlyCalendarComponent implements OnInit, OnChanges {
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @Input() monthActive = 'month';
@@ -24,12 +25,21 @@ export class MonthlyCalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getIdUser();
+        if (this.id_user === undefined) {
+            this.getIdUser();
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log(changes.id_user.currentValue);
+        this.id_user = changes.id_user.currentValue;
+        this.getBackend();
     }
 
     getIdUser() {
         if (this.id_user === undefined) {
             this.userService.getIdUser((res) => {
+                console.log(res);
                 this.id_user = res;
                 this.getBackend();
             });
@@ -39,7 +49,8 @@ export class MonthlyCalendarComponent implements OnInit {
     }
 
     getBackend() {
-
+        this.absencesDates = [];
+        this.eachDate = [];
         const content = {
             id_user: this.id_user
         };
@@ -49,7 +60,7 @@ export class MonthlyCalendarComponent implements OnInit {
 
             if (this.absencesDates.length !== 0) {
                 this.absencesDates.forEach((absence) => {
-                    if (absence.status == 0) { // Absence refusée
+                    if (absence.status === 0) { // Absence refusée
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -67,7 +78,7 @@ export class MonthlyCalendarComponent implements OnInit {
                             }
                             );
                     }
-                    if (absence.status == 1) { // Absence validée
+                    if (absence.status === 1) { // Absence validée
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -85,7 +96,7 @@ export class MonthlyCalendarComponent implements OnInit {
                             }
                             );
                     }
-                    if (absence.status == 2) { // En attente
+                    if (absence.status === 2) { // En attente
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -106,6 +117,7 @@ export class MonthlyCalendarComponent implements OnInit {
                     i++;
                     if (this.absencesDates.length === i) {
                         this.calendar();
+
                     }
                 });
             } else {
@@ -145,6 +157,10 @@ export class MonthlyCalendarComponent implements OnInit {
             //     rendering: 'background'
             // }
             ,
+
         };
+        $('#Calendar').fullCalendar( 'removeEvents');
+        $('#Calendar').fullCalendar( 'renderEvents', this.eachDate);
+        // $('#Calendar').fullCalendar('rerenderEvents');
     }
 }

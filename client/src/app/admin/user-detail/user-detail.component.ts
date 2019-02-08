@@ -39,7 +39,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.getDataUser((res)=> {
+    this.userService.getDataUser((res) => {
       this.userData = res;
       this.form.get('nom_group').setValue(res.id_group);
     }, this.id_user);
