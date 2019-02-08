@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {AdminComponent} from "./admin/admin.component";
-import {LoginComponent} from "./guest/login/login.component";
+import {AdminComponent} from './admin/admin.component';
+import {LoginComponent} from './guest/login/login.component';
 import {AuthGuard} from './guards/auth.guard';
-import {NotAuthGuard} from "./guards/no-auth.guard";
-import {PersonalSpaceComponent} from "./user/personal-space/personal-space.component";
-import {UserDetailComponent} from "./admin/user-detail/user-detail.component";
-import {HebdoComponent} from "./admin/hebdo/hebdo.component";
-import {Error404Component} from "./guest/error404/error404.component";
-import {UserRequestComponent} from "./user/user-request/user-request.component";
+import {NotAuthGuard} from './guards/no-auth.guard';
+import {PersonalSpaceComponent} from './user/personal-space/personal-space.component';
+import {UserDetailComponent} from './admin/user-detail/user-detail.component';
+import {HebdoComponent} from './admin/hebdo/hebdo.component';
+import {Error404Component} from './guest/error404/error404.component';
+import {UserRequestComponent} from './user/user-request/user-request.component';
 
 // ROUTER
 const routes: Routes = [
