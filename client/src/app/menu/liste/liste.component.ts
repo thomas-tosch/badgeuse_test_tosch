@@ -16,6 +16,7 @@ export class ListeComponent implements OnInit {
   userOn = [];
   userOff = [];
   @Input() adminActive;
+  currentDate = new Date().toISOString().slice(0, 10);
 
   faCircle = faCircle;
 

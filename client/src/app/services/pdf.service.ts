@@ -34,6 +34,7 @@ export class PdfService {
         const contentDataURL = canvas.toDataURL('image/png');
         const pdf = new jsPDF('l', 'mm', 'a4'); // A4 size page of PDF
         const position = 0;
+
         pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
         pdf.save(startDate.substring(0, 10) + ' au ' + endDate.substring(0, 10) + '-badgeuseUHA40.pdf'); // Generated PDF
 

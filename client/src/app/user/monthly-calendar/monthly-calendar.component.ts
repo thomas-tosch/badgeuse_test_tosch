@@ -19,7 +19,6 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     @Input() id_user;
     absencesDates;
     eachDate = [];
-    id_user;
     selectedWeek = '2019-01-29';
 
     constructor(private expressService: ExpressService) { }

@@ -43,9 +43,8 @@ tr{
     FOOTER
 -------------------------------------------------------
  */
-.legend{
-    padding-left: 15%;
-    padding-right:15%;
+.legend-case{
+    width: 200px;
+    margin: 0 5px 0 5px;
     text-align: center;
-    padding-bottom:3%;
 }

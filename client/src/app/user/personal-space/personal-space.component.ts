@@ -16,9 +16,7 @@ export class PersonalSpaceComponent implements OnInit {
     this.getIdUser();
   }
 
-  ngOnInit() {
-    console.log(this.currentDate);
-  }
+  ngOnInit() {}
 
   /**
    * get the id of user connected

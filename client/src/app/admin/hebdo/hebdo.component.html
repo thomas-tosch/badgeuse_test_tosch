@@ -100,7 +100,7 @@
             <th class="text-center pb-2">Absence (jour)</th>
           </tr>
 
-          <tr *ngFor="let user of userList" class="tr" [ngClass]="{'redLine': ((user.duration | slice:0:2) + (user.day * 7)) < 35}" routerLink="/userDetail/{{user.userId}}">
+          <tr *ngFor="let user of userList" class="tr" [ngClass]="{'redLine': ((user.duration | slice:0:2) + (user.day * 7)) < 35}" routerLink="/userDetail/{{user.userId}}/{{ startDateTime | slice:0:10 }}">
             <td class="border p-2 text-center" id="group">{{ user.id_group }}</td>
             <td class="border p-2" id="userName">{{ user.userName }}</td>
             <td class="border p-2" id="duration">{{ user.duration | slice:0:5}}</td>
@@ -110,13 +110,23 @@
         </table>
       </div>
     </div>
+
+    <!-- LEGEND GRAPHIC -->
+    <footer>
+      <section class="shadow mb-5 ml-5 mr-5 pb-3">
+        <div class="text-center">
+          Légende gu graphique
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="list-group-item-success legend-case">Supérieur à 35H</div>
+          <div class="list-group-item-danger legend-case">Inférieur à 35H</div>
+          <div class="list-group-item-dark legend-case">Absence validé</div>
+        </div>
+      </section>
+    </footer>
+
   </div>
 </div>
 
-<footer>
-  <div class="row legend">
-    <div class="list-group-item-success col-sm-4">Supérieur à 35H</div>
-    <div class="list-group-item-danger col-sm-4">Inférieur à 35H</div>
-    <div class="list-group-item-dark col-sm-4">Absence validé</div>
-  </div>
-</footer>
+
+
