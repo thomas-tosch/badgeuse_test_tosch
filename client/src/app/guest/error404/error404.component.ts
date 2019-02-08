@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-error404',
@@ -13,6 +13,9 @@ export class Error404Component implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * redirect to home page
+   */
   onRedirect() {
     this.router.navigate(['/login']);
   }

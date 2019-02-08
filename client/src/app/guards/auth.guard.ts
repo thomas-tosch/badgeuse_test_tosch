@@ -13,8 +13,12 @@ export class AuthGuard implements CanActivate {
 
   constructor(private loginService: LoginService, private router: Router) { }
 
+  /**
+   * When user is disconnected, redirect to Login page
+   * @param router
+   * @param state
+   */
   canActivate (router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
     if (this.loginService.loggedIn()) {
       return true;
     } else {

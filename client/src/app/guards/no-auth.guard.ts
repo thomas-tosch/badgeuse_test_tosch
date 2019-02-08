@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import {LoginService} from "../services/login.service";
+import {LoginService} from '../services/login.service';
 
 
 @Injectable({
@@ -13,6 +13,9 @@ export class NotAuthGuard implements CanActivate {
       private router: Router
   ) { }
 
+  /**
+   * when user is connected, redirect to Home page
+   */
   canActivate() {
     if (this.loginService.loggedIn()) {
       this.router.navigate(['/userSpace']);
