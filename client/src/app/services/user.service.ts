@@ -16,8 +16,7 @@ export class UserService {
 
 
     constructor(private loginService: LoginService,
-                private expressService: ExpressService,
-                private router: Router) { }
+                private expressService: ExpressService) { }
 
     /**
      * Get the status if connected or not
@@ -32,16 +31,16 @@ export class UserService {
      * @param userName
      */
     getIdUser(callback, userName?) {
-        if(userName === undefined){
-            let token = helper.decodeToken(this.loginService.getToken());
+        if (userName === undefined) {
+            const token = helper.decodeToken(this.loginService.getToken());
             return callback(token.id_user);
         } else {
-            let content = {
+            const content = {
                 action: 'getIdUser',
                 userName: userName
             };
             this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
-                if(!res.success) {
+                if (!res.success) {
                     swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                 } else {
                     return callback(res.user);
@@ -56,18 +55,18 @@ export class UserService {
      * @param id_user
      */
     getDataUser(callback, id_user?) {
-        let token = helper.decodeToken(this.loginService.getToken());
+        const token = helper.decodeToken(this.loginService.getToken());
 
-        if(token === null) {return callback(false);}
+        if (token === null) {return callback(false); }
 
-        if(id_user === undefined){id_user = token.id_user;}
+        if (id_user === undefined){id_user = token.id_user; }
 
-        let content = {
+        const content = {
             action: 'getDataUser',
             id_user: id_user
         };
-        this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
-            if(!res.success) {
+        this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+            if (!res.success) {
                 swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
             } else {
                 return callback(res.user);
@@ -80,14 +79,14 @@ export class UserService {
      * @param callback
      */
     isUserAdmin(callback) {
-        this.getDataUser((user)=>{
+        this.getDataUser((user) => {
             // activate administrator access if role = 3
-            if(user.id_role === 3){
+            if (user.id_role === 3){
                 return callback(true);
             } else {
                 return callback(false);
             }
-        })
+        });
     }
 
 

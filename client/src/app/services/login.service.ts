@@ -16,12 +16,18 @@ export class LoginService {
         this.user = JSON.parse(localStorage.getItem('user'));
     }
 
-    // get the token
-    getToken(){
+    /**
+     * get the token
+     */
+    getToken() {
         return this.authToken;
     }
 
-    // We use this method to record the information of the connected user.
+    /**
+     * We use this method to record the information of the connected user.
+     * @param token
+     * @param user
+     */
      storeUserData (token, user) {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
@@ -29,12 +35,16 @@ export class LoginService {
         this.user = user;
     }
 
-    // If is still logged, return false if the time has expired.
+    /**
+     * If is still logged, return false if the time has expired.
+     */
     public loggedIn() {
         return !helper.isTokenExpired(this.authToken);
     }
 
-    // We disconnect the user
+    /**
+     * We disconnect the user
+     */
     logout() {
         this.authToken = null;
         this.user = null;

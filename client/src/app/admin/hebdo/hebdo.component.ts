@@ -37,12 +37,16 @@ export class HebdoComponent implements OnInit {
     this.initDate();
   }
 
-  // emit to graphic the update list
+  /**
+   * emit to graphic the update list
+   */
   emitUserListSubject() {
     this.userListSubject.next(this.userList.slice());
   }
 
-  // create the checkbox form
+  /**
+   * create the checkbox form
+   */
   createForm() {
     this.form = this.formBuilder.group({
         orderBy: ['userName'],
@@ -52,23 +56,32 @@ export class HebdoComponent implements OnInit {
     });
   }
 
+  /**
+   * Define the previous week
+   */
   onPrevWeek() {
     this.selectWeek += 1;
     this.initDate();
   }
+
+  /**
+   * Define the next week
+   */
   onNextWeek() {
     this.selectWeek -= 1;
     this.initDate();
   }
 
-  // initializes the date
+  /**
+   *  initializes the date of week
+   */
   initDate() {
     const currFirst = new Date; // get current date for first
     const currLast = new Date; // get current date for last
     const first = currFirst.getDate() - currFirst.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
     const last = first + 6; // last day is the first day + 6
 
-    this.startDateTime = new Date(currFirst.setHours(0, 0, 0, 0)); // set time at start day 00:00
+    this.startDateTime = new Date(currFirst.setHours(1, 0, 0, 0)); // set time at start day 00:00
     this.startDateTime = new Date(currFirst.setDate(first)).toISOString(); // set first day of week
     this.endDateTime = new Date(currLast.setHours(23, 59, 59, 0)); // set time at end day 23:00
     this.endDateTime = new Date(currLast.setDate(last)).toISOString(); // set last day of the week
@@ -77,7 +90,9 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
-  // get the user  list to db
+  /**
+   * get the user  list to db
+   */
   getUserListHebdo() {
     const content = {
       action: 'getUserListHebdo',
@@ -96,7 +111,9 @@ export class HebdoComponent implements OnInit {
     });
   }
 
-  // initializes the group selected
+  /**
+   * initializes the group selected
+   */
   onInitGroup() {
     if (this.form.get('checkbox1').value) {this.checkbox1 = '1,'; } else {this.checkbox1 = ''; }
     if (this.form.get('checkbox2').value) {this.checkbox2 = '2,'; } else {this.checkbox2 = ''; }
@@ -108,7 +125,9 @@ export class HebdoComponent implements OnInit {
     this.getUserListHebdo();
   }
 
-  // dowload PDF function
+  /**
+   * dowload PDF function
+   */
   downloadPDF() {
     this.cssButton = 'progress-bar progress-bar-striped progress-bar-animated';
     this.disabledButton = true;
