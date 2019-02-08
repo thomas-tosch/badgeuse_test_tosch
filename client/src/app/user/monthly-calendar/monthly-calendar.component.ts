@@ -17,6 +17,7 @@ export class MonthlyCalendarComponent implements OnInit {
     absencesDates;
     eachDate = [];
     id_user;
+    selectedWeek = '2019-01-29';
 
     constructor(private expressService: CalendarService,
                 private userService: UserService) {
@@ -278,6 +279,7 @@ export class MonthlyCalendarComponent implements OnInit {
         this.calendarOptions = {
             defaultView: 'agendaWeek',
             showNonCurrentDates: true,
+            defaultDate: this.selectedWeek,
             weekends: false,
             locale: 'fr',
             editable: false,
