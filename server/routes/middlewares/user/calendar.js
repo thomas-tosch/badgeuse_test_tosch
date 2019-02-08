@@ -8,7 +8,8 @@ module.exports = function (router) {
 
         db.query('SELECT SUBSTR(a.absence_date, 1, 10) AS day, ' +
             'a.id_status AS status, ' +
-            'r.nom_reason AS reason ' +
+            'r.nom_reason AS reason, ' +
+            'a.half_day AS half ' +
             'FROM absences a ' +
             'INNER JOIN reason r ' +
             'ON a.id_reason = r.id_reason ' +
