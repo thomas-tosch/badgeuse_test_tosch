@@ -24,7 +24,6 @@ import { HebdoComponent } from './admin/hebdo/hebdo.component';
 import { MonthlyCalendarComponent } from './user/monthly-calendar/monthly-calendar.component';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { Error404Component } from './guest/error404/error404.component';
-import { CalendarService } from './services/calendar.service';
 import { UserRequestComponent } from './user/user-request/user-request.component';
 import { WebsocketService } from './services/websocket.Service';
 import { registerLocaleData } from '@angular/common';
@@ -69,7 +68,6 @@ registerLocaleData(localeFr, 'fr');
       ExpressService,
       UserService,
       BadgerService,
-      CalendarService,
       WebsocketService,
       { provide: LOCALE_ID, useValue: 'fr' }
   ],

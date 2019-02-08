@@ -102,7 +102,7 @@ export class UserRequestComponent implements OnInit {
             startDate: [null, Validators.required],
             endDate: [null, Validators.required],
             dateOnly: [null],
-            halfDay: [null],
+            halfDay: ['0'],
             comment: [null]
         });
         this.getReason();
@@ -143,7 +143,7 @@ export class UserRequestComponent implements OnInit {
         this.userRequest.controls['startDate'].setValue(null);
         this.userRequest.controls['endDate'].setValue(null);
         this.userRequest.controls['dateOnly'].setValue(null);
-        this.userRequest.controls['halfDay'].setValue(null);
+        this.userRequest.controls['halfDay'].setValue('0');
         this.userRequest.controls['comment'].setValue(null);
         $('#justifFormControlFile1').val('');
     }

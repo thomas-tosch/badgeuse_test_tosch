@@ -4,8 +4,8 @@ import {CalendarService} from '../../services/calendar.service';
 import {CalendarComponent} from 'ng-fullcalendar';
 import {Options} from 'fullcalendar';
 import * as moment from 'moment';
-import {UserService} from '../../services/user.service';
 import * as $ from 'jquery';
+import {ExpressService} from "../../services/express.service";
 
 @Component({
     selector: 'app-monthly-calendar',
@@ -13,6 +13,7 @@ import * as $ from 'jquery';
     styleUrls: ['./monthly-calendar.component.css']
 })
 export class MonthlyCalendarComponent implements OnInit, OnChanges {
+
     calendarOptions: Options;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @Input() monthActive = 'month';
@@ -20,20 +21,23 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     absencesDates;
     eachDate = [];
 
-    constructor(private expressService: CalendarService,
-                private userService: UserService) {
-    }
+    constructor(private expressService: ExpressService) { }
 
-    ngOnInit() {
+    ngOnInit() { }
 
-    }
-
+    /**
+     * update the id of user when his change
+     * @param changes
+     */
     ngOnChanges(changes: SimpleChanges): void {
         this.id_user = changes.id_user.currentValue;
         this.getBackend();
     }
 
 
+    /**
+     * edit and define each date of calendar
+     */
     getBackend() {
         this.absencesDates = [];
         this.eachDate = [];
@@ -47,6 +51,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
             if (this.absencesDates.length !== 0) {
                 this.absencesDates.forEach((absence) => {
                     if (absence.status === 0 && absence.half === 0) { // Absence refusée
+                        // TODO : simplifié cette partie du code
                         this.eachDate.push(
                             {
                                 start: absence.day,
@@ -277,8 +282,12 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
 
     }
 
+    /**
+     * set the calendar option and refresh
+     */
     calendar() {
-        $('#Calendar').fullCalendar('removeEvents');
+        $('#Calendar').fullCalendar('removeEvents'); // remove all events
+
         this.calendarOptions = {
             defaultView: this.monthActive,
             showNonCurrentDates: true,
@@ -305,7 +314,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
 
         };
 
-        $('#Calendar').fullCalendar('renderEvents', this.eachDate);
-        $('#Calendar').fullCalendar('rerenderEvents');
+        $('#Calendar').fullCalendar('renderEvents', this.eachDate); // add new events
+        $('#Calendar').fullCalendar('rerenderEvents'); // refresh
     }
 }

@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faBell, faChessQueen, faTimesCircle, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
-import {UserService} from "../services/user.service";
-import {LoginService} from "../services/login.service";
-import {Router} from "@angular/router";
-import {ExpressService} from "../services/express.service";
-import {Auth} from "../guards/auth";
-import swal from "sweetalert2";
+import {faBell, faChessQueen, faTimesCircle, faUserAstronaut} from '@fortawesome/free-solid-svg-icons';
+import {UserService} from '../services/user.service';
+import {LoginService} from '../services/login.service';
+import {Router} from '@angular/router';
+import {ExpressService} from '../services/express.service';
+import {Auth} from '../guards/auth';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-menu',
@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
   idUser;
   badgerActive;
   @Input() adminActive;
-  alerteActive = false
+  alerteActive = false;
   alerteData;
 
   constructor(private userService: UserService,
@@ -39,9 +39,11 @@ export class MenuComponent implements OnInit {
         this.getAccessBadger();
     }
 
-    // get all data of user
-    getDataUser(){
-        this.userService.getDataUser((res)=> {
+    /**
+     * get all data of user
+     */
+    getDataUser() {
+        this.userService.getDataUser((res) => {
           this.userData = res;
           this.nomUser = this.userData.nom_user;
           this.prenomUser = this.userData.prenom_user;
@@ -51,20 +53,24 @@ export class MenuComponent implements OnInit {
         });
     }
 
-    // logOut the user
+    /**
+     * logOut the user
+     */
     onDisconnect() {
         this.loginService.logout();
         this.router.navigate(['/']);
     }
 
-    // Check if the student are forget unbadge yesterday
-    getAlerte(){
-      let content = {
+    /**
+     *  Check if the student are forget unbadge yesterday
+     */
+    getAlerte() {
+      const content = {
         action : 'getDataAlerte',
-        id_user:this.idUser
+        id_user: this.idUser
       };
-      this.expressService.postExpress('alerte', content).subscribe((res:Auth)=>{
-        if(!res.success && res.message === 'error') {
+      this.expressService.postExpress('alerte', content).subscribe((res: Auth) => {
+        if (!res.success && res.message === 'error') {
           swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
         } else {
           this.alerteActive = res.success;
@@ -73,14 +79,16 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    // check if the client is in UHA 4.0 area
+    /**
+     * check if the client is in UHA 4.0 area
+     */
     getAccessBadger() {
-      let content = {
+      const content = {
         action: 'getAccessBadger'
-      }
-        this.expressService.postExpress('badger', content).subscribe((res: Auth)=> {
+      };
+        this.expressService.postExpress('badger', content).subscribe((res: Auth) => {
           this.badgerActive = res.success;
-        })
+        });
     }
 
 
