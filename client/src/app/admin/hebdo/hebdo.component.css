@@ -43,4 +43,9 @@ tr{
     FOOTER
 -------------------------------------------------------
  */
-
+.legend{
+    padding-left: 15%;
+    padding-right:15%;
+    text-align: center;
+    padding-bottom:3%;
+}
