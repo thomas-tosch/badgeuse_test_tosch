@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
-import {faDownload} from "@fortawesome/free-solid-svg-icons";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-absence',

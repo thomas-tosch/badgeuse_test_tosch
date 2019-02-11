@@ -137,7 +137,8 @@ module.exports = function(router) {
                             let entryCount = 0;
 
                             let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
-                            // console.log(certificate);
+                            if(fileName === 'undefined.undefined') {certificate = null;}
+                            console.log(fileName);
 
 
                         // Loop for every day selected

@@ -31,7 +31,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ReplaceSpace } from './pipe/replaceSpace';
-import {HTMLEscapeUnescapeModule} from "html-escape-unescape";
+import { HTMLEscapeUnescapeModule } from "html-escape-unescape";
 import {TruncatePipe} from "./pipe/truncate";
 
 
