@@ -64,6 +64,7 @@ module.exports = function(router) {
                 let dateOnly = req.body.dateOnly;
                 let halfDay = Number(req.body.halfDay);
                 let comment = req.body.comment;
+                let fileName = req.body.fileName;
 
             // CHECK ALL DATA FROM FORMULAR
                 if(reason && Number.isInteger(reason)) {}
@@ -135,6 +136,9 @@ module.exports = function(router) {
                             // for count in the loop
                             let entryCount = 0;
 
+                            let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
+                            // console.log(certificate);
+
 
                         // Loop for every day selected
                             for (let i = 0; i < entryNumber; i++) {
@@ -142,7 +146,7 @@ module.exports = function(router) {
                                 let newDate = new Date(otherDate.setDate(startDate.getDate() + i));
 
                             // INSERT TO DB
-                                let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [null]];
+                                let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [certificate]];
                                 db.query('INSERT INTO absences(id_user, ref_absence, id_status, absence_date, half_day, id_reason, comment_absences, certificate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                                     content, (err) => {
                                         if (err) {

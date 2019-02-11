@@ -1,0 +1,17 @@
+.dllIcon {
+    font-size: 1.2rem;
+}
+
+/* =================================== */
+/* COLUMN TABLE                        */
+/* =================================== */
+#absName {width: 10%;}
+#absDate {width: 20%;}
+#absReason {width: 10%;}
+#absCertif {width: 5%;}
+#absComment {width: 30%;}
+#absValid {width: 15%;}
+
+#absComment:hover {
+    cursor: pointer;
+}

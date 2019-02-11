@@ -1,4 +1,5 @@
 require ('../../../config/database');
+const Entities = require('html-entities').AllHtmlEntities;
 
 
 module.exports = function(router) {
@@ -20,23 +21,26 @@ module.exports = function(router) {
 
                  db.query('SELECT ' +
                      'CONCAT(users.nom_user, \' \', users.prenom_user) AS absName, ' +
+                     'absences.ref_absence AS ref, ' +
+                     'MIN(absences.absence_date) AS minDate, ' +
+                     'MAX(absences.absence_date) AS maxDate, ' +
+                     'absences.half_day AS halfDay, ' +
+                     'absences.comment_absences as comment, ' +
+                     'absences.certificate as certificate, ' +
                      '' +
-                     'reason.nom_reason AS absReason, ' +
+                     'reason.nom_reason AS absReason ' +
                      '' +
-                     'CASE WHEN half_day < 1 THEN "Non" ELSE "Oui" END AS miAbs' +
+                     'FROM absences ' +
                      '' +
-                     ' FROM ((absences ' +
-                     '' +
-                     'INNER JOIN users ON absences.id_user = users.id_user) ' +
-                     'INNER JOIN reason ON absences.id_reason = reason.id_reason) ' +
-                     //'LEFT JOIN (SELECT id_user, ref_absence, id_status, absence_date, id_reason FROM absences WHERE id_status = 2 AND GROUP BY ref_absence) absences ON users.id_user = absences.id_user ' + // join users table table with absence table. Select all between date and summe de absence day
-                     'WHERE id_status = 2'
+                     'INNER JOIN users ON absences.id_user = users.id_user ' +
+                     'INNER JOIN reason ON absences.id_reason = reason.id_reason ' +
+                     'WHERE id_status = 2 ' +
                      //'' +
-                     //'GROUP BY red_absence ' +
+                     'GROUP BY ref ' +
                      //'' +
-                     //'ORDER BY ??, absName' // select order by
+                     'ORDER BY ref' // select order by
                      , content, (err, rows) => {
-                   console.log(rows);
+                   // console.log(rows);
                         if(err) {
                             res.json({
                                 success: false

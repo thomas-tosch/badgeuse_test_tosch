@@ -25,6 +25,7 @@ export class UserRequestComponent implements OnInit {
     countLetter = 0;
     uploader;
     fileName;
+    fileNameExt;
     reason;
     cssButton = '';
 
@@ -189,6 +190,7 @@ export class UserRequestComponent implements OnInit {
         // check extension file
         const regex = /^pdf$|^jpg$|^jpeg$|^png$/;
         const fileExt = fileName.split('.').pop();
+        this.fileNameExt = fileExt;
 
         if (regex.test(fileExt)) {
             this.validFile = true;
@@ -287,7 +289,8 @@ export class UserRequestComponent implements OnInit {
             endDate: this.userRequest.get('endDate').value,
             dateOnly: this.userRequest.get('dateOnly').value,
             halfDay: this.userRequest.get('halfDay').value,
-            comment: this.userRequest.get('comment').value
+            comment: this.userRequest.get('comment').value,
+            fileName: this.fileName + '.' + this.fileNameExt
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
             if (res.success) {

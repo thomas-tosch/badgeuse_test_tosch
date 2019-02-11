@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
 import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Subject } from "rxjs";
-import swal from "sweetalert2";
+import {faDownload} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-absence',
@@ -13,11 +10,15 @@ import swal from "sweetalert2";
 })
 export class AbsenceComponent implements OnInit {
 
-  absences;
+  absences: string;
+  faDownload = faDownload;
+  halfDayName = {
+    0: 'La journée',
+    1: 'Le matin',
+    2: 'L\'aprés midi'
+  };
 
-  constructor(private expressService: ExpressService,
-              private formBuilder: FormBuilder,
-              private router: Router) { }
+  constructor(private expressService: ExpressService) { }
 
   ngOnInit() {
 
@@ -28,12 +29,12 @@ export class AbsenceComponent implements OnInit {
 
   // get the user  list to db
   getUserListAbsence() {
-    let content = {
+    const content = {
       action: 'getUserListAbsence'
     };
     this.expressService.postExpress('absence_admin', content).subscribe((res: Auth) => {
-      console.log(res.list);
       this.absences = res.list;
-    })
+    });
   }
 }
+
