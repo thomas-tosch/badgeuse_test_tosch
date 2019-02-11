@@ -4,8 +4,6 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
-import {Router} from "@angular/router";
-
 
 const helper = new JwtHelperService();
 
