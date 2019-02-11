@@ -38,9 +38,9 @@
           Légende des couleurs
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item bg-valide m-0">Absence validé</li>
+          <li class="list-group-item bg-valide m-0">Absence validée</li>
           <li class="list-group-item bg-encours m-0">Absence en attente</li>
-          <li class="list-group-item bg-refuse m-0">Absence refusé</li>
+          <li class="list-group-item bg-refuse m-0">Absence refusée</li>
         </ul>
       </div>
     </ul>
@@ -48,7 +48,7 @@
 
   <!-- CALENDAR -->
   <div class="">
-    <app-monthly-calendar></app-monthly-calendar>
+    <app-monthly-calendar [monthActive]="monthActive" [id_user]="id_user" [selectedWeek]="dateSelected"></app-monthly-calendar>
   </div>
 
 </div>

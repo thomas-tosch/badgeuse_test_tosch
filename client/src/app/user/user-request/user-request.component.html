@@ -9,8 +9,8 @@
                 <fa-icon [icon]="faInfoCircle"></fa-icon>
             </div>
             <div class="h-100 pt-2">
-                A travers ce formulaire, choissez la raison de votre absence, la période ou le jour de votre absence. Vous pouvez
-                fournire un justificatif et/ou  décrire la raison dans l'espace commentaire.
+                A travers ce formulaire, choisissez la raison ainsi que la période ou le jour de votre absence. Vous pouvez
+                fournir un justificatif et/ou décrire la raison dans l'espace commentaire.
             </div>
         </div>
     </div>
@@ -90,11 +90,29 @@
 
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" class="" id="halfDay"
-                                           formControlName="halfDay">
+                                    <input type="radio" class="" id="day"
+                                           formControlName="halfDay" value="0">
                                 </div>
                             </div>
-                            <label for="halfDay" class="form-control text-left">A cocher pour compter une demi-journée.</label>
+
+                            <label for="day" class="form-control text-left">Journée entière</label>
+
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="radio" class="" id="morning"
+                                           formControlName="halfDay" value="1">
+                                </div>
+                            </div>
+                            <label for="morning" class="form-control text-left">Le matin</label>
+
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="radio" class="" id="afternoon"
+                                           formControlName="halfDay" value="2">
+                                </div>
+                            </div>
+                            <label for="afternoon" class="form-control text-left">L'après-midi</label>
+
                         </div>
                     </div>
 

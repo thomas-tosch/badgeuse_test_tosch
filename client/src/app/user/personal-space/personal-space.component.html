@@ -21,10 +21,10 @@
         Pour plus d'information, contactez un professeur.
       </p>
 
-      <button class="mt-1 btn btn-primary alert-primary w-100"
-              routerLink="/userRequest" [disabled]="true"
+      <button class="mt-1 btn btn-outline-primary alert-primary w-100"
+              routerLink="/userRequest"
       >
-        Soumettre une absence (en contruction)
+        Soumettre une absence
       </button>
     </div>
 
@@ -34,7 +34,7 @@
 
  <!-- CALENDAR -->
   <div class="">
-    <app-monthly-calendar></app-monthly-calendar>
+    <app-monthly-calendar [monthActive]="monthActive" [id_user]="id_user" [selectedWeek]="currentDate"></app-monthly-calendar>
   </div>
 
  </div>

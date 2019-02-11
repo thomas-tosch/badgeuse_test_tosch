@@ -53,7 +53,7 @@ module.exports = function(router) {
                 })
                 break;
 
-        // REQUEST ABSENCE TO DB
+        // REQUEST ABSENCE TO DB FOR CERTIFICATE
             case 'absenceRequest':
                 let err = '';
                 let currDate = new Date; // current date
@@ -62,7 +62,7 @@ module.exports = function(router) {
                 let startDate = req.body.startDate;
                 let endDate = req.body.endDate;
                 let dateOnly = req.body.dateOnly;
-                let halfDay = req.body.halfDay;
+                let halfDay = Number(req.body.halfDay);
                 let comment = req.body.comment;
 
             // CHECK ALL DATA FROM FORMULAR
@@ -81,11 +81,9 @@ module.exports = function(router) {
                 if(dateOnly && isDateFormat(dateOnly, 'yyyy-mm-dd')) {dateOnly = new Date(dateOnly.trim()); startDate = dateOnly; endDate = dateOnly;}
                     else {if(dateOnly !== null){ err += '[dateOnly] ';}}
 
-                // check the halfDay variable
-                if(halfDay === true || halfDay === false || halfDay === null) {if(halfDay === true){halfDay = 0;} else if(halfDay === false || halfDay === null){halfDay = 1;}}
-                    else {
-                    err += '[halfDay] ';
-                }
+                // check the halfDay variable format
+                if(Number.isInteger(halfDay)) {}
+                    else {err += '[halfDay] ';}
 
                 // convertie les éventuel balise HTML en texte
                 if(comment) {comment = Entities.encode(comment.trim());}

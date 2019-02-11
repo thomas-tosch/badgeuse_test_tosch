@@ -102,7 +102,7 @@ export class UserRequestComponent implements OnInit {
             startDate: [null, Validators.required],
             endDate: [null, Validators.required],
             dateOnly: [null],
-            halfDay: [null],
+            halfDay: ['0'],
             comment: [null]
         });
         this.getReason();
@@ -143,7 +143,7 @@ export class UserRequestComponent implements OnInit {
         this.userRequest.controls['startDate'].setValue(null);
         this.userRequest.controls['endDate'].setValue(null);
         this.userRequest.controls['dateOnly'].setValue(null);
-        this.userRequest.controls['halfDay'].setValue(null);
+        this.userRequest.controls['halfDay'].setValue('0');
         this.userRequest.controls['comment'].setValue(null);
         $('#justifFormControlFile1').val('');
     }
@@ -249,7 +249,7 @@ export class UserRequestComponent implements OnInit {
         // show the modal
         swal({
             title: 'Confirmez votre justification',
-            html: "<u>Est-ce que les informations que vous avez saisie sont juste? </u><br><br>" +
+            html: "<u>Est-ce que les informations que vous avez saisies sont justes? </u><br><br>" +
                 "<div class='text-left ml-4'>" +
                 "La raison: " + this.reasonList[this.userRequest.get('reason').value - 1].nom_reason + "<br>" +
                 periode + "<br>" +

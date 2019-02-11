@@ -3,7 +3,7 @@
 <ul class="mb-3">
   <li *ngFor="let user of userOn">
     <!-- if admin -->
-    <a routerLink="userDetail/{{ user.userId }}" *ngIf="adminActive">
+    <a routerLink="userDetail/{{ user.userId }}/{{ currentDate }}" *ngIf="adminActive">
       <fa-icon [icon]="faCircle" class="iconOn ml-3"></fa-icon> {{ user.userName }}
     </a>
     <!-- if not admin -->
@@ -17,7 +17,7 @@
 <ul class="ulOff">
   <li *ngFor="let user of userOff">
     <!-- if admin -->
-    <a routerLink="userDetail/{{ user.userId }}" *ngIf="adminActive">
+    <a routerLink="userDetail/{{ user.userId }}/{{ currentDate }}" *ngIf="adminActive">
       <fa-icon [icon]="faCircle" class="iconOff ml-3"></fa-icon> {{ user.userName }}
     </a>
     <!-- if not admin -->
