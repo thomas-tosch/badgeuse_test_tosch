@@ -3,6 +3,21 @@
 }
 
 /* =================================== */
+/* MODAL                               */
+/* =================================== */
+.modal-dialog {
+    margin-top: 10%;
+}
+.modal-header {
+    background-color: #205081;
+    color: white;
+}
+
+.modal-body {
+    padding: 20px 50px;
+}
+
+/* =================================== */
 /* COLUMN TABLE                        */
 /* =================================== */
 #absName {width: 10%;}
