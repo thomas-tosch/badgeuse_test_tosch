@@ -1,7 +1,7 @@
 <ng-template  *ngIf="absences?.length === 0;then none ;else table"></ng-template>
 
 <ng-template #none>
-  aucune absence
+  <h2 class="text-center mt-5 p-3 alert-success">Aucune absence à validée</h2>
 </ng-template>
 
 <ng-template #table>
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let absence of absences; let i = index">
+      <tr *ngFor="let absence of absences; let i = index;">
 
         <td id="absName">{{ absence.absName }}</td>
 
@@ -28,12 +28,12 @@
 
         <td id="absCertif"><a *ngIf="absence.certificate !== null" [href]="absence.certificate" target="_blank"><fa-icon [icon]="faDownload" class="dllIcon"></fa-icon> {{ absence.certificate | slice:-4}}</a></td>
 
-        <td id="absComment" *ngIf="absence.comment !== null" data-toggle="modal" [attr.data-target]="'#exampleModal'+i">{{ absence.comment | unescape | truncate:[100,'...']}}</td>
+        <td id="absComment" *ngIf="absence.comment !== null" data-toggle="modal" [attr.data-target]="'#exampleModal'+i">{{ absence.comment | truncate:[100,'...']}}</td>
         <td id="absComment" *ngIf="absence.comment === null" ></td>
 
         <td id="absValid">
-          <button type="button" class="btn btn-outline-success">Valider</button>
-          <button type="button" class="btn btn-outline-danger">Refuser</button>
+          <button type="button" class="btn btn-outline-success" (click)="onValidate(absence.ref)">Valider</button>
+          <button type="button" class="btn btn-outline-danger" (click)="onRefuse(absence.ref)">Refuser</button>
         </td>
 
         <!-- Modal Comment-->
@@ -47,7 +47,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                {{ absence.comment}}
+                {{ absence.comment }}
               </div>
             </div>
           </div>

@@ -246,6 +246,7 @@ export class UserRequestComponent implements OnInit {
 
         // define the comment
         let comment = this.userRequest.get('comment').value;
+        // comment = $("comment").html();
         if (comment === null) {comment = 'Aucun commentaire';}
 
         // show the modal
@@ -281,6 +282,8 @@ export class UserRequestComponent implements OnInit {
      * on submit action, send the data to backend
      */
     onRequestSubmit() {
+        let comment = this.userRequest.get('comment').value;
+        // comment = $(comment).text();
         const content = {
             action: 'absenceRequest',
             id_user: this.id_user,
@@ -289,7 +292,7 @@ export class UserRequestComponent implements OnInit {
             endDate: this.userRequest.get('endDate').value,
             dateOnly: this.userRequest.get('dateOnly').value,
             halfDay: this.userRequest.get('halfDay').value,
-            comment: this.userRequest.get('comment').value,
+            comment: comment,
             fileName: this.fileName + '.' + this.fileNameExt
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {

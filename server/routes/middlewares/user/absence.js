@@ -87,7 +87,8 @@ module.exports = function(router) {
                     else {err += '[halfDay] ';}
 
                 // convertie les éventuel balise HTML en texte
-                if(comment) {comment = Entities.encode(comment.trim());}
+                // if(comment) {comment = Entities.encode(comment.trim());}
+                if(comment) {comment = comment.trim();}
                 if(comment === ''){comment = null;}
 
                 // vérifie que la date de fin soit supérieur à la date de début
@@ -138,7 +139,6 @@ module.exports = function(router) {
 
                             let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
                             if(fileName === 'undefined.undefined') {certificate = null;}
-                            console.log(fileName);
 
 
                         // Loop for every day selected

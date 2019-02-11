@@ -13,11 +13,6 @@ module.exports = function(router) {
 
              // GET ABSENCE LIST FOR ADMIN
              case 'getUserListAbsence':
-                 // let startDate = req.body.absenceDate;
-
-                 let content = [
-
-               ];
 
                  db.query('SELECT ' +
                      'CONCAT(users.nom_user, \' \', users.prenom_user) AS absName, ' +
@@ -35,12 +30,11 @@ module.exports = function(router) {
                      'INNER JOIN users ON absences.id_user = users.id_user ' +
                      'INNER JOIN reason ON absences.id_reason = reason.id_reason ' +
                      'WHERE id_status = 2 ' +
-                     //'' +
+                     '' +
                      'GROUP BY ref ' +
-                     //'' +
-                     'ORDER BY ref' // select order by
-                     , content, (err, rows) => {
-                   // console.log(rows);
+                     '' +
+                     'ORDER BY ref'
+                     , (err, rows) => {
                         if(err) {
                             res.json({
                                 success: false
@@ -53,9 +47,22 @@ module.exports = function(router) {
                             });
                         }
                     });
+                break;
+
+            case 'getUpdateAbsence':
+                const ref = req.body.ref;
+                const valide = req.body.valide;
+
+                const content = [[valide], [ref]];
+                db.query('UPDATE absences SET id_status = ? WHERE ref_absence = ?', content, (err) => {
+                    if(err) {
+                        res.json({success: false});
+                        throw err;
+                    } else {
+                        res.json({success: true});
+                    }
+                });
                 break
-
-
         }
     });
-}
+};
