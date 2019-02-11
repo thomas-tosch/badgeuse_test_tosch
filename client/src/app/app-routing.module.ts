@@ -9,6 +9,7 @@ import {UserDetailComponent} from './admin/user-detail/user-detail.component';
 import {HebdoComponent} from './admin/hebdo/hebdo.component';
 import {Error404Component} from './guest/error404/error404.component';
 import {UserRequestComponent} from './user/user-request/user-request.component';
+import {AbsenceComponent} from "./admin/absence/absence.component";
 
 // ROUTER
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
   { path: 'userDetail/:id_user/:dateSelected', component: UserDetailComponent, canActivate: [AuthGuard] },
+  { path: 'absence', component: AbsenceComponent, canActivate: [AuthGuard] },
   // user
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   { path: 'userRequest', component: UserRequestComponent, canActivate: [AuthGuard]},

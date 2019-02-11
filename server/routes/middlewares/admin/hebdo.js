@@ -33,7 +33,7 @@ module.exports = function(router) {
                     '' +
                     'IFNULL(SEC_TO_TIME(SUM(TIME_TO_SEC(badger.duration))), 0) AS duration,' + // if duration is null, set zero
                     '' +
-                    'absences.day ' + // It's a number of day of absense
+                    'absences.day ' + // It's a number of day of absence
                     '' +
                     'FROM users ' +
                     '' +

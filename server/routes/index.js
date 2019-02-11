@@ -5,8 +5,9 @@ let liste = require('./controllers/admin/liste');
 let alerte = require('./controllers/user/alerte');
 let hebdo = require('./controllers/admin/hebdo');
 let calendar = require('./controllers/user/calendar');
-let absence = require('./controllers/user/absence');
 let upload = require('./controllers/user/upload');
+let absence = require('./controllers/admin/absence');
+
 
 module.exports = function(app)
 {
@@ -20,5 +21,6 @@ module.exports = function(app)
     app.use('/calendar', calendar);
     app.use('/absence', absence);
     app.use('/upload', upload);
+    app.use('/absence', absence);
 
 };
