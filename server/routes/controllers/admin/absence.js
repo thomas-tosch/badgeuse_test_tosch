@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-require('../../middlewares/admin/absence')(router);
+require('../../middlewares/admin/absence_admin')(router);
 
 router.use(function timeLog(req, res, next) {
     next();

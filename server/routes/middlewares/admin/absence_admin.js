@@ -10,7 +10,7 @@ module.exports = function(router) {
 
         switch (action) {
 
-             // Get the user list for graphic week with filter and order by
+             // GET ABSENCE LIST FOR ADMIN
              case 'getUserListAbsence':
                  // let startDate = req.body.absenceDate;
 
@@ -48,7 +48,7 @@ module.exports = function(router) {
                                 list: rows
                             });
                         }
-                    })
+                    });
                 break
 
 

@@ -53,7 +53,7 @@ module.exports = function(router) {
                 })
                 break;
 
-        // REQUEST ABSENCE TO DB
+        // REQUEST ABSENCE TO DB FOR CERTIFICATE
             case 'absenceRequest':
                 let err = '';
                 let currDate = new Date; // current date
