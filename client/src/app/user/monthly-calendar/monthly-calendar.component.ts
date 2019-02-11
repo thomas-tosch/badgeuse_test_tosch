@@ -18,6 +18,9 @@ export class MonthlyCalendarComponent implements OnInit {
     eachDate = [];
     id_user;
     selectedWeek = '2019-01-29';
+    backgroundColor;
+    startWeek;
+    endWeek;
 
     constructor(private expressService: CalendarService,
                 private userService: UserService) {
@@ -46,223 +49,74 @@ export class MonthlyCalendarComponent implements OnInit {
             if (this.absencesDates.length !== 0) {
                 this.absencesDates.forEach((absence) => {
                     if (absence.status === 0 && absence.half === 0) { // Absence refusée
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#ff3c38',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T17:00:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T17:00:00',
-                                backgroundColor: '#ff3c38',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#ff3c38';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
                     if (absence.status === 1 && absence.half === 0) { // Absence validée
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#0075ff',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T17:00:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T17:00:00',
-                                backgroundColor: '#0075ff',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#0075ff';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
                     if (absence.status === 2 && absence.half === 0) { // En attente
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#ff912a',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T17:00:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T17:00:00',
-                                backgroundColor: '#ff912a',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#ff912a';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
                     // DEMI JOURNEE MATIN
                     if (absence.status === 0 && absence.half === 1) { // Absence refusée
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#ff3c38',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T12:30:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T12:30:00',
-                                backgroundColor: '#ff3c38',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#ff3c38';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T12:30:00';
                     }
                     if (absence.status === 1 && absence.half === 1) { // Absence validée
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#0075ff',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T12:30:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T12:30:00',
-                                backgroundColor: '#0075ff',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#0075ff';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T12:30:00';
                     }
                     if (absence.status === 2 && absence.half === 1) { // En attente
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#ff912a',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T12:30:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T09:00:00',
-                                end: absence.day + 'T12:30:00',
-                                backgroundColor: '#ff912a',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#ff912a';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T12:30:00';
                     }
                     // DEMI JOURNEE APRES MIDI
                     if (absence.status === 0 && absence.half === 2) { // Absence refusée
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#ff3c38',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T13:30:00',
-                                end: absence.day + 'T17:00:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T13:30:00',
-                                end: absence.day + 'T17:00:00',
-                                backgroundColor: '#ff3c38',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#ff3c38';
+                        this.startWeek = absence.day + 'T13:30:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
                     if (absence.status === 1 && absence.half === 2) { // Absence validée
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#0075ff',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T13:30:00',
-                                end: absence.day + 'T17:00:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T13:30:00',
-                                end: absence.day + 'T17:00:00',
-                                backgroundColor: '#0075ff',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#0075ff';
+                        this.startWeek = absence.day + 'T13:30:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
                     if (absence.status === 2 && absence.half === 2) { // En attente
-                        this.eachDate.push(
-                            {
-                                start: absence.day,
-                                end: absence.day,
-                                backgroundColor: '#ff912a',
-                                rendering: 'background'
-                            },
-                            {
-                                start: absence.day + 'T13:30:00',
-                                end: absence.day + 'T17:00:00',
-                                textColor: '#111',
-                                title: absence.reason.toUpperCase(),
-                                backgroundColor: 'transparent',
-                                borderColor: 'transparent'
-                            },
-                            {
-                                start: absence.day + 'T13:30:00',
-                                end: absence.day + 'T17:00:00',
-                                backgroundColor: '#ff912a',
-                                rendering: 'background'
-                            }
-                        );
+                        this.backgroundColor = '#ff912a';
+                        this.startWeek = absence.day + 'T13:30:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
+                    this.eachDate.push(
+                        {
+                            start: absence.day,
+                            end: absence.day,
+                            backgroundColor: this.backgroundColor,
+                            rendering: 'background'
+                        },
+                        {
+                            start: this.startWeek,
+                            end: this.endWeek,
+                            textColor: '#111',
+                            title: absence.reason.toUpperCase(),
+                            backgroundColor: 'transparent',
+                            borderColor: 'transparent'
+                        },
+                        {
+                            start: this.startWeek,
+                            end: this.endWeek,
+                            backgroundColor: this.backgroundColor,
+                            rendering: 'background'
+                        }
+                    );
                     i++;
                     if (this.absencesDates.length === i) {
                         this.calendar();
