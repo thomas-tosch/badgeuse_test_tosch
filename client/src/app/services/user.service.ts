@@ -56,6 +56,7 @@ export class UserService {
      */
     getDataUser(callback, id_user?) {
         const token = helper.decodeToken(this.loginService.getToken());
+        // console.log(token);
 
         if (token === null) {return callback(false); }
 

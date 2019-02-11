@@ -19,7 +19,6 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     @Input() id_user;
     absencesDates;
     eachDate = [];
-    id_user;
     @Input() selectedWeek;
     backgroundColor;
     startWeek;
@@ -55,7 +54,6 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
             if (this.absencesDates.length !== 0) {
                 this.absencesDates.forEach((absence) => {
                     if (absence.status === 0 && absence.half === 0) { // Absence refusée
-<<<<<<< client/src/app/user/monthly-calendar/monthly-calendar.component.ts
                         this.backgroundColor = '#ff3c38';
                         this.startWeek = absence.day + 'T09:00:00';
                         this.endWeek = absence.day + 'T17:00:00';
