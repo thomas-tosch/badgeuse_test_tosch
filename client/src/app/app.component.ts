@@ -35,11 +35,17 @@ export class AppComponent implements OnInit{
     this.isUserAdmin();
   }
 
+
+  /**
+   * check if user is a administrator
+   */
   isUserAdmin() {
     this.userService.isUserAdmin((res)=>{this.adminActive = res});
   }
 
-  // If true, show the menu. if false, hide the menu
+  /**
+   * If true, show the menu. if false, hide the menu
+   */
   getConnectStatus() {
     return this.userService.getConnectStatus();
   }
@@ -55,7 +61,9 @@ export class AppComponent implements OnInit{
     },500);
   }
 
-  // define the icon direction on function of the screen
+  /**
+   * define the icon direction on function of the screen
+   */
   defineIconList() {
     if($(window).width() > 991) {
       this.btnSideBar = this.faAngleDoubleRight;
@@ -68,7 +76,9 @@ export class AppComponent implements OnInit{
     }
   }
 
-  // icon for the button collapse
+  /**
+   * icon for the button collapse
+   */
   onBtnSideBar() {
     $('#sidebar').toggleClass('active');
 

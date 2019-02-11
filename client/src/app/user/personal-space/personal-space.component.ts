@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-personal-space',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalSpaceComponent implements OnInit {
 
-  constructor() { }
+  monthActive = 'month';
+  id_user;
+  currentDate = new Date().toISOString().slice(0, 10);
 
-  ngOnInit() {
+  constructor(private userService: UserService) {
+    this.getIdUser();
   }
 
+  ngOnInit() {}
+
+  /**
+   * get the id of user connected
+   */
+  getIdUser() {
+    this.userService.getIdUser((id) => {
+      this.id_user = id;
+    });
+  }
 }

@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import swal from 'sweetalert2';
-import {LoginService} from "../../services/login.service";
-import {AuthGuard} from "../../guards/auth.guard";
-import {ExpressService} from "../../services/express.service";
-import {Auth} from "../../guards/auth";
+import {LoginService} from '../../services/login.service';
+import {AuthGuard} from '../../guards/auth.guard';
+import {ExpressService} from '../../services/express.service';
+import {Auth} from '../../guards/auth';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,10 @@ export class LoginComponent implements OnInit {
     this.notAuth();
   }
 
-  // swal alert if redirectUrl
+
+  /**
+   * swal alert if redirectUrl
+   */
   notAuth() {
     if (this.authGuard.redirectUrl) {
       swal('Authentification requise !', 'Vous devez vous connecter pour accéder à cette page.', 'error');
@@ -42,7 +45,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // create the login form
+  /**
+   * create the login form
+   */
   createForm() {
     this.formLogin = this.formBuilder.group({
       userMail: ['', Validators.required],
@@ -50,19 +55,25 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // disable the form
+  /**
+   * disable the form
+   */
   disableForm() {
     this.formLogin.controls['userMail'].disable();
     this.formLogin.controls['password'].disable();
   }
 
-  // enable the form
+  /**
+   * enable the form
+   */
   enableForm() {
     this.formLogin.controls['userMail'].enable();
     this.formLogin.controls['password'].enable();
   }
 
-  // when we submit the form
+  /**
+   * when we submit the form
+   */
   onLoginSubmit() {
     // the modal swal parameter
     const toast = swal.mixin({
@@ -94,7 +105,7 @@ export class LoginComponent implements OnInit {
         toast({
           type: 'success',
           title: 'Authentification réussie !'
-        })
+        });
 
         // redirection
         if (this.previousUrl) {

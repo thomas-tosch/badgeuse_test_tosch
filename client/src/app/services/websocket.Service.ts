@@ -12,39 +12,47 @@ export class WebsocketService {
     constructor() {
     }
 
-    // LISTEN
+    /**
+     * Listen the backend
+     * @param action
+     */
     listenSocket(action) {
-        //listen
         this.onListen = <Subject<any>>this
             .connect(action)
             .map((response: any): any => {
                 return response;
-            })
+            });
     }
 
-    // EMIT
+    /**
+     * Emit to backend
+     * @param content
+     */
     sendSocket(content) {
         this.onListen.next(content);
     }
 
-    // PRINCIPAL FUNCTION
+    /**
+     * Principal function for listen and emit
+     * @param action
+     */
     connect(action): Rx.Subject<MessageEvent> {
         // server path
         this.socket = io('http://localhost:5000');
 
 
         // listen
-        let observable = new Observable(observer => {
+        const observable = new Observable(observer => {
             this.socket.on(action, (data) => {
                 observer.next(data);
             })
             return () => {
                  this.socket.disconnect();
-            }
+            };
         });
 
-        //emit
-        let observer = {
+        // emit
+        const observer = {
             next: (data: Object) => {
                 this.socket.emit(action, data);
             },
