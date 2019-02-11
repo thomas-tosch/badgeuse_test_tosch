@@ -221,7 +221,7 @@ export class UserRequestComponent implements OnInit {
                 });
             });
         } else {
-            swal('Oups !', 'Le fichier à une extention non autorisée. Les extentions acceptées sont: .jpg .jpeg .png .pdf', 'error');
+            swal('Oups !', 'Le fichier a une extension non autorisée. Les extensions acceptées sont: .jpg .jpeg .png .pdf', 'error');
             this.validFile = false;
         }
     }
@@ -311,7 +311,7 @@ export class UserRequestComponent implements OnInit {
                             }, 2000);
                         }
                         if (item.isError || item.isCancel) {
-                            swal('Opération échouée', 'Le fichier n\'à pas été télécharger', 'error');
+                            swal('Opération échouée', 'Le fichier n\'a pas été téléchargé', 'error');
                         }
                     };
                 } else {
