@@ -38,7 +38,7 @@ export class AbsenceComponent implements OnInit {
       this.absences = res.list;
     });
   }
-
+// TODO : ajouter un modal de validation
   onValidate(ref) {
     this.getUpdateAbsence(ref, 1);
   }

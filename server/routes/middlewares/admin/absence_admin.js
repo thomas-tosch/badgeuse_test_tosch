@@ -16,6 +16,7 @@ module.exports = function(router) {
 
                  db.query('SELECT ' +
                      'CONCAT(users.nom_user, \' \', users.prenom_user) AS absName, ' +
+                     '' +
                      'absences.ref_absence AS ref, ' +
                      'MIN(absences.absence_date) AS minDate, ' +
                      'MAX(absences.absence_date) AS maxDate, ' +
