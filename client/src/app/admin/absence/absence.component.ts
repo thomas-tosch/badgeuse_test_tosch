@@ -28,7 +28,10 @@ export class AbsenceComponent implements OnInit {
 
   }
 
-  // get the user  list to db
+
+  /**
+   * get the user  list to db
+   */
   getUserListAbsence() {
     this.absences = [];
     const content = {
@@ -38,15 +41,36 @@ export class AbsenceComponent implements OnInit {
       this.absences = res.list;
     });
   }
-// TODO : ajouter un modal de validation
-  onValidate(ref) {
-    this.getUpdateAbsence(ref, 1);
+
+  /**
+   * On validate function button. Valide or refuse the absence
+   * @param ref
+   * @param valide
+   */
+  onValidate(ref, valide) {
+    let valideName = 'Validée';
+    if (valide === 0) {valideName = 'Refusée';}
+
+    swal({
+      title: valideName + ' ?',
+      text: "Confirmez-vous que vous " + valideName + " cette absence?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, je confirme !'
+    }).then((result) => {
+      if (result.value) {
+        this.getUpdateAbsence(ref, valide);
+      }
+    });
   }
 
-  onRefuse(ref) {
-    this.getUpdateAbsence(ref, 0);
-  }
-
+  /**
+   * Update on db the absence status on validate or refused
+   * @param ref
+   * @param valide
+   */
   getUpdateAbsence(ref, valide) {
     let valideName = 'validée';
     if (valide === 0) {valideName = 'refusée';}

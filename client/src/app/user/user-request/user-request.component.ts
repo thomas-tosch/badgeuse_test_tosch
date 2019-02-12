@@ -39,6 +39,7 @@ export class UserRequestComponent implements OnInit {
         this.getIdUser();
         this.expressService.uploadFile();
         this.uploader = this.expressService.uploader;
+        this.checkFileSize();
     }
 
 
@@ -226,6 +227,22 @@ export class UserRequestComponent implements OnInit {
             swal('Oups !', 'Le fichier a une extension non autorisée. Les extensions acceptées sont: .jpg .jpeg .png .pdf', 'error');
             this.validFile = false;
         }
+
+
+    }
+
+    /**
+     * check the File size
+     */
+    checkFileSize() {
+        this.expressService.checkFileSize((res) => {
+            if (res) {
+                swal('Oups !', res, 'error');
+                setTimeout(() => {
+                    $('#justifFormControlFile1').val('');
+                }, 1000);
+            }
+        });
     }
 
     /**
@@ -336,5 +353,3 @@ export class UserRequestComponent implements OnInit {
         });
     }
 }
-
-// TODO : limité la taille du fichier

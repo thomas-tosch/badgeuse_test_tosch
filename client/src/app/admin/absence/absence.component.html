@@ -32,8 +32,8 @@
         <td id="absComment" *ngIf="absence.comment === null" ></td>
 
         <td id="absValid">
-          <button type="button" class="btn btn-outline-success" (click)="onValidate(absence.ref)">Valider</button>
-          <button type="button" class="btn btn-outline-danger" (click)="onRefuse(absence.ref)">Refuser</button>
+          <button type="button" class="btn btn-outline-success" (click)="onValidate(absence.ref, 1)">Valider</button>
+          <button type="button" class="btn btn-outline-danger" (click)="onValidate(absence.ref, 0)">Refuser</button>
         </td>
 
         <!-- Modal Comment-->
