@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {ExpressService} from '../services/express.service';
 import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
+import {AbsenceService} from "../services/absence.service";
+import {Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-menu',
@@ -27,16 +29,37 @@ export class MenuComponent implements OnInit {
   @Input() adminActive;
   alerteActive = false;
   alerteData;
+  nbAbsence = 0;
+  nbAbsenceSubscription: Subscription;
+
 
   constructor(private userService: UserService,
               private loginService: LoginService,
               private router: Router,
-              private expressService: ExpressService) { }
+              private expressService: ExpressService,
+              private absenceService: AbsenceService) { }
 
     ngOnInit() {
         this.badgerActive = false;
         this.getDataUser();
         this.getAccessBadger();
+        this.getTotalAbsence();
+        this.refreshNbAbsence();
+    }
+
+
+  refreshNbAbsence() {
+    this.nbAbsenceSubscription = this.absenceService.nbAbsenceSubject.subscribe(
+        (nbAbsence: number) => {
+          this.nbAbsence = nbAbsence;
+        }
+    );
+  }
+
+    getTotalAbsence() {
+      this.absenceService.getUserListAbsence((res) => {
+        this.nbAbsence = res.length;
+      })
     }
 
     /**

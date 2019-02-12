@@ -6,6 +6,7 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {Auth} from 'src/app/guards/auth';
 import {UserService} from '../../services/user.service';
 import * as $ from 'jquery';
+import {AbsenceService} from "../../services/absence.service";
 
 @Component({
   selector: 'app-user-request',
@@ -31,7 +32,8 @@ export class UserRequestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
-                private userService: UserService) {
+                private userService: UserService,
+                private absenceService: AbsenceService) {
         this.createForm();
         }
 
@@ -339,6 +341,8 @@ export class UserRequestComponent implements OnInit {
                     };
                 } else {
                     swal('Opération réussie', res.message, 'success');
+                    // TODO : faire passer cette variable par socket.io
+                    this.absenceService.emitNbAbsenceSubject();
                     setTimeout(() => {
                         this.resetForm();
                         this.cssButton = '';
