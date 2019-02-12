@@ -11,6 +11,7 @@ const URL = 'http://localhost:8080/upload';
 export class ExpressService {
 
   private domain = 'http://localhost:8080';
+  private maxFileSize = 10 * 1024 * 1024; // 10 MB
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
 
@@ -38,9 +39,31 @@ export class ExpressService {
   }
 
   /**
+   * check the File size
+   * @param callback
+   */
+  checkFileSize(callback) {
+    this.uploader.onWhenAddingFileFailed = (item, filter, options) => {
+      switch (filter.name) {
+        case 'fileSize':
+          const errorMessage = 'La taille du fichier dépasse la taille maximal autorisée. <br> (' + Math.round(item.size / 1024 / 1024) + ' Mb sur ' + this.maxFileSize / 1024 / 1024 + ' Mb autorisé)';
+          console.log(errorMessage);
+          return callback(errorMessage);
+          break;
+      }
+    };
+  }
+
+  /**
    * upload a file to express
    */
   uploadFile() {
-    this.uploader = new FileUploader({url: URL, itemAlias: 'justificatif', allowedMimeType: this.allowedMimeType});
+    this.uploader = new FileUploader({
+      url: URL,
+      itemAlias: 'justificatif',
+      allowedMimeType: this.allowedMimeType,
+      maxFileSize: this.maxFileSize
+    });
+
   }
 }

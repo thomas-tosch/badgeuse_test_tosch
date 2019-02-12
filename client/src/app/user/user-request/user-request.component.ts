@@ -25,6 +25,7 @@ export class UserRequestComponent implements OnInit {
     countLetter = 0;
     uploader;
     fileName;
+    fileNameExt;
     reason;
     cssButton = '';
 
@@ -38,6 +39,7 @@ export class UserRequestComponent implements OnInit {
         this.getIdUser();
         this.expressService.uploadFile();
         this.uploader = this.expressService.uploader;
+        this.checkFileSize();
     }
 
 
@@ -189,6 +191,7 @@ export class UserRequestComponent implements OnInit {
         // check extension file
         const regex = /^pdf$|^jpg$|^jpeg$|^png$/;
         const fileExt = fileName.split('.').pop();
+        this.fileNameExt = fileExt;
 
         if (regex.test(fileExt)) {
             this.validFile = true;
@@ -224,6 +227,22 @@ export class UserRequestComponent implements OnInit {
             swal('Oups !', 'Le fichier a une extension non autorisée. Les extensions acceptées sont: .jpg .jpeg .png .pdf', 'error');
             this.validFile = false;
         }
+
+
+    }
+
+    /**
+     * check the File size
+     */
+    checkFileSize() {
+        this.expressService.checkFileSize((res) => {
+            if (res) {
+                swal('Oups !', res, 'error');
+                setTimeout(() => {
+                    $('#justifFormControlFile1').val('');
+                }, 1000);
+            }
+        });
     }
 
     /**
@@ -244,6 +263,7 @@ export class UserRequestComponent implements OnInit {
 
         // define the comment
         let comment = this.userRequest.get('comment').value;
+        // comment = $("comment").html();
         if (comment === null) {comment = 'Aucun commentaire';}
 
         // show the modal
@@ -279,6 +299,8 @@ export class UserRequestComponent implements OnInit {
      * on submit action, send the data to backend
      */
     onRequestSubmit() {
+        let comment = this.userRequest.get('comment').value;
+        // comment = $(comment).text();
         const content = {
             action: 'absenceRequest',
             id_user: this.id_user,
@@ -287,7 +309,8 @@ export class UserRequestComponent implements OnInit {
             endDate: this.userRequest.get('endDate').value,
             dateOnly: this.userRequest.get('dateOnly').value,
             halfDay: this.userRequest.get('halfDay').value,
-            comment: this.userRequest.get('comment').value
+            comment: comment,
+            fileName: this.fileName + '.' + this.fileNameExt
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
             if (res.success) {
