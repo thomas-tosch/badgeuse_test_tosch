@@ -6,6 +6,7 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {Auth} from 'src/app/guards/auth';
 import {UserService} from '../../services/user.service';
 import * as $ from 'jquery';
+import {AbsenceService} from "../../services/absence.service";
 
 @Component({
   selector: 'app-user-request',
@@ -31,7 +32,8 @@ export class UserRequestComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
-                private userService: UserService) {
+                private userService: UserService,
+                private absenceService: AbsenceService) {
         this.createForm();
         }
 
@@ -41,8 +43,6 @@ export class UserRequestComponent implements OnInit {
         this.uploader = this.expressService.uploader;
         this.checkFileSize();
     }
-
-
 
 
     /**
@@ -335,10 +335,12 @@ export class UserRequestComponent implements OnInit {
                         }
                         if (item.isError || item.isCancel) {
                             swal('Opération échouée', 'Le fichier n\'a pas été téléchargé', 'error');
+                            // TODO : si le téléchargement de l'image échoue, supprimer dans la bdd toute l'absence de cette reference
                         }
                     };
                 } else {
                     swal('Opération réussie', res.message, 'success');
+                    this.absenceService.emitNbAbsenceSubject(); // emit a new number of absence in wait
                     setTimeout(() => {
                         this.resetForm();
                         this.cssButton = '';
