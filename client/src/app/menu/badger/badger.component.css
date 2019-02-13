@@ -36,23 +36,23 @@
         flex-direction: column;
     }
     .badge-temoin {
-        font-size: 25px;
+        font-size: 2rem;
         margin-top: -5px;
         transition: 1s ease;
     }
     .btn-badger {
-        font-size: 16px;
+        font-size: 2rem;
         margin: 0;
     }
 
     @media (max-width: 550px) {
         .badge-temoin {
-            font-size: 20px;
+            font-size: 2rem;
             margin-top: -5px;
             transition: 1s ease;
         }
         .btn-badger {
-            font-size: 14px;
+            font-size: 2rem;
         }
     }
 

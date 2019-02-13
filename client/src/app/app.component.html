@@ -1,16 +1,15 @@
 
 <!-- NAVBAR MENU -->
-<app-menu [adminActive]="adminActive" *ngIf="getConnectStatus()"></app-menu>
-
+    <app-menu [adminActive]="adminActive" *ngIf="getConnectStatus()"></app-menu>
 <!-- CONTENT PAGE -->
 
-  <div class="content-page d-lg-flex">
-
+  <div class="content-page d-lg-flex d-md-block" [ngClass]="{'d-none': getConnectStatus()}">
 
   <div class="content-page-child">
     <router-outlet></router-outlet>
   </div>
 
+<div class="d-none d-lg-block">
   <div class="content-list" *ngIf="getConnectStatus()">
 
     <!-- BUTTON SIDEBAR COLLAPSE -->
@@ -26,6 +25,6 @@
       </div>
     </div>
   </div>
-
+</div>
 </div>
 <!--</div>-->
