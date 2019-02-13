@@ -56,3 +56,6 @@ export class BadgerComponent implements OnInit {
   }
 
 }
+
+
+// TODO : faire un modal de confirmation lorsque la personne dépointe
