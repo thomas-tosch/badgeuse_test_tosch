@@ -29,6 +29,7 @@ export class UserRequestComponent implements OnInit {
     fileNameExt;
     reason;
     cssButton = '';
+    refAbsence;
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
@@ -216,8 +217,9 @@ export class UserRequestComponent implements OnInit {
                 const content = {action: 'getRefAbsence'};
                 this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
                     if (res.success) {
+                        this.refAbsence = res.list;
                         // define the full fileName
-                        this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
+                        this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + this.refAbsence;
                     } else {
                         swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                     }
@@ -334,8 +336,10 @@ export class UserRequestComponent implements OnInit {
                             }, 2000);
                         }
                         if (item.isError || item.isCancel) {
-                            swal('Opération échouée', 'Le fichier n\'a pas été téléchargé', 'error');
-                            // TODO : si le téléchargement de l'image échoue, supprimer dans la bdd toute l'absence de cette reference
+                            this.uploadFailed(this.refAbsence);
+                            this.enableForm();
+                            this.processing = false;
+                            this.cssButton = '';
                         }
                     };
                 } else {
@@ -351,6 +355,20 @@ export class UserRequestComponent implements OnInit {
                 this.enableForm();
                 this.processing = false;
                 this.cssButton = '';
+            }
+        });
+    }
+
+    uploadFailed(ref) {
+        const content = {
+            action: 'uploadFailed',
+            ref: ref
+        };
+        this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+            if(res.success) {
+                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, aucune donnée n\'à donc été enregistrée. Si le problème persiste, contacter l\'administrateur.', 'error');
+            } else {
+                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, mais les données ont quand même été enregistrées. Contacter l\'administrateur pour soumettre votre fichier.', 'error');
             }
         });
     }

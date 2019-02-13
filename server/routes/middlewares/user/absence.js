@@ -182,6 +182,24 @@ module.exports = function(router) {
                     });
                 }
             break
+
+        // IF UPLOAD FILE FAILED, DELETE THE ABSENCE ON DB
+            case 'uploadFailed':
+                let ref = req.body.ref;
+                const content = [ref];
+                db.query('DELETE FROM absences WHERE ref_absence = ?', content, (err) => {
+                    if (err) {
+                        res.json({
+                            success: false
+                        });
+                        throw err;
+                    } else {
+                        res.json({
+                            success: true
+                        })
+                    }
+                });
+                break
         }
     });
 };
