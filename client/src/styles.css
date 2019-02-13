@@ -47,7 +47,7 @@ a:hover, a:focus, a:active {
 }
 
 .content-page-child {
-    padding: 20px 0px 10px 20px;
+    padding: 20px 40px 10px 20px;
     width: 100%;
     transition: all 0.3s;
     overflow: auto;

@@ -6,6 +6,7 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {Auth} from 'src/app/guards/auth';
 import {UserService} from '../../services/user.service';
 import * as $ from 'jquery';
+import {AbsenceService} from "../../services/absence.service";
 
 @Component({
   selector: 'app-user-request',
@@ -25,12 +26,15 @@ export class UserRequestComponent implements OnInit {
     countLetter = 0;
     uploader;
     fileName;
+    fileNameExt;
     reason;
     cssButton = '';
+    refAbsence;
 
     constructor(private formBuilder: FormBuilder,
                 private expressService: ExpressService,
-                private userService: UserService) {
+                private userService: UserService,
+                private absenceService: AbsenceService) {
         this.createForm();
         }
 
@@ -38,9 +42,8 @@ export class UserRequestComponent implements OnInit {
         this.getIdUser();
         this.expressService.uploadFile();
         this.uploader = this.expressService.uploader;
+        this.checkFileSize();
     }
-
-
 
 
     /**
@@ -189,6 +192,7 @@ export class UserRequestComponent implements OnInit {
         // check extension file
         const regex = /^pdf$|^jpg$|^jpeg$|^png$/;
         const fileExt = fileName.split('.').pop();
+        this.fileNameExt = fileExt;
 
         if (regex.test(fileExt)) {
             this.validFile = true;
@@ -213,8 +217,9 @@ export class UserRequestComponent implements OnInit {
                 const content = {action: 'getRefAbsence'};
                 this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
                     if (res.success) {
+                        this.refAbsence = res.list;
                         // define the full fileName
-                        this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + res.list;
+                        this.fileName = userName + '-' + currentDate + '-[' + this.reason + ']-' + this.refAbsence;
                     } else {
                         swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                     }
@@ -224,6 +229,22 @@ export class UserRequestComponent implements OnInit {
             swal('Oups !', 'Le fichier a une extension non autorisée. Les extensions acceptées sont: .jpg .jpeg .png .pdf', 'error');
             this.validFile = false;
         }
+
+
+    }
+
+    /**
+     * check the File size
+     */
+    checkFileSize() {
+        this.expressService.checkFileSize((res) => {
+            if (res) {
+                swal('Oups !', res, 'error');
+                setTimeout(() => {
+                    $('#justifFormControlFile1').val('');
+                }, 1000);
+            }
+        });
     }
 
     /**
@@ -244,6 +265,7 @@ export class UserRequestComponent implements OnInit {
 
         // define the comment
         let comment = this.userRequest.get('comment').value;
+        // comment = $("comment").html();
         if (comment === null) {comment = 'Aucun commentaire';}
 
         // show the modal
@@ -279,6 +301,8 @@ export class UserRequestComponent implements OnInit {
      * on submit action, send the data to backend
      */
     onRequestSubmit() {
+        let comment = this.userRequest.get('comment').value;
+        // comment = $(comment).text();
         const content = {
             action: 'absenceRequest',
             id_user: this.id_user,
@@ -287,7 +311,8 @@ export class UserRequestComponent implements OnInit {
             endDate: this.userRequest.get('endDate').value,
             dateOnly: this.userRequest.get('dateOnly').value,
             halfDay: this.userRequest.get('halfDay').value,
-            comment: this.userRequest.get('comment').value
+            comment: comment,
+            fileName: this.fileName + '.' + this.fileNameExt
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
             if (res.success) {
@@ -311,11 +336,15 @@ export class UserRequestComponent implements OnInit {
                             }, 2000);
                         }
                         if (item.isError || item.isCancel) {
-                            swal('Opération échouée', 'Le fichier n\'a pas été téléchargé', 'error');
+                            this.uploadFailed(this.refAbsence);
+                            this.enableForm();
+                            this.processing = false;
+                            this.cssButton = '';
                         }
                     };
                 } else {
                     swal('Opération réussie', res.message, 'success');
+                    this.absenceService.emitNbAbsenceSubject(); // emit a new number of absence in wait
                     setTimeout(() => {
                         this.resetForm();
                         this.cssButton = '';
@@ -326,6 +355,20 @@ export class UserRequestComponent implements OnInit {
                 this.enableForm();
                 this.processing = false;
                 this.cssButton = '';
+            }
+        });
+    }
+
+    uploadFailed(ref) {
+        const content = {
+            action: 'uploadFailed',
+            ref: ref
+        };
+        this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
+            if(res.success) {
+                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, aucune donnée n\'à donc été enregistrée. Si le problème persiste, contacter l\'administrateur.', 'error');
+            } else {
+                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, mais les données ont quand même été enregistrées. Contacter l\'administrateur pour soumettre votre fichier.', 'error');
             }
         });
     }

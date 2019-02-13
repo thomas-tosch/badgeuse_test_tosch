@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {LoginService} from "../../services/login.service";
+import {LoginService} from '../../services/login.service';
 import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
-import {BadgerService} from "../../services/badger.service";
+import {BadgerService} from '../../services/badger.service';
 import swal from 'sweetalert2';
-import {WebsocketService} from "../../services/websocket.Service";
 
 @Component({
   selector: 'app-badger',
@@ -26,7 +25,10 @@ export class BadgerComponent implements OnInit {
     this.getTemoinStatus();
   }
 
-  // Update the presence to users table (1 = 'présent', 0 = 'absent') and add a point to badger table
+
+  /**
+   * Update the presence to users table (1 = 'présent', 0 = 'absent') and add a point to badger table
+   */
   onBadge() {
       this.buttonActivate = true;
       this.badgerService.setPresence(this.presence,(res)=> {
@@ -34,23 +36,25 @@ export class BadgerComponent implements OnInit {
           swal(res.title, res.message, 'success');
           this.presence = !this.presence;
           this.getTemoinStatus();
-          // disable the button during 5 secondes
+          // disable the button during 15 minute
           setTimeout(()=>{
             this.buttonActivate = false;
-          }, 5000); //after 5 secondes
+          }, 900000); //after 15 minute
         }
       });
   }
 
-  // change the icon temoin
+  /**
+   * change the icon temoin
+   */
   getTemoinStatus() {
     if(this.presence) {
       this.temoinState = faCheckCircle;
-      this.tooltipState = "Vous êtes présent";
+      this.tooltipState = 'Vous êtes présent';
       return 'green';
     } else {
       this.temoinState = faTimesCircle;
-      this.tooltipState = "Vous êtes absent";
+      this.tooltipState = 'Vous êtes absent';
       return 'red';
     }
   }

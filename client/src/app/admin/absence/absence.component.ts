@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
 import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { Subject } from "rxjs";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import swal from "sweetalert2";
+import {AbsenceService} from "../../services/absence.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-absence',
@@ -14,26 +14,81 @@ import swal from "sweetalert2";
 export class AbsenceComponent implements OnInit {
 
   absences;
+  faDownload = faDownload;
+  halfDayName = {
+    0: 'La journée',
+    1: 'Le matin',
+    2: 'L\'aprés midi'
+  };
+
 
   constructor(private expressService: ExpressService,
-              private formBuilder: FormBuilder,
-              private router: Router) { }
+              private absenceService: AbsenceService) { }
 
   ngOnInit() {
-
     // Call the uss List Absence
     this.getUserListAbsence();
 
   }
 
-  // get the user  list to db
+
+  /**
+   * get the user  list to db
+   */
   getUserListAbsence() {
-    let content = {
-      action: 'getUserListAbsence'
+    this.absences = [];
+    this.absenceService.getUserListAbsence((res) => {
+      this.absences = res;
+    });
+  }
+
+  /**
+   * On validate function button. Valide or refuse the absence
+   * @param ref
+   * @param valide
+   */
+  onValidate(ref, valide) {
+    let valideName = 'Validée';
+    if (valide === 0) {valideName = 'Refusée';}
+
+    swal({
+      title: valideName + ' ?',
+      text: "Confirmez-vous que vous " + valideName + " cette absence?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, je confirme !'
+    }).then((result) => {
+      if (result.value) {
+        this.getUpdateAbsence(ref, valide);
+      }
+    });
+  }
+
+  /**
+   * Update on db the absence status on validate or refused
+   * @param ref
+   * @param valide
+   */
+  getUpdateAbsence(ref, valide) {
+    let valideName = 'validée';
+    if (valide === 0) {valideName = 'refusée';}
+
+    const content = {
+      action: 'getUpdateAbsence',
+      valide: valide,
+      ref: ref
     };
     this.expressService.postExpress('absence_admin', content).subscribe((res: Auth) => {
-      console.log(res.list);
-      this.absences = res.list;
-    })
+      if (res.success) {
+        swal(valideName + ' !', 'L\'absence à été ' + valideName, 'success');
+        this.getUserListAbsence();
+        this.absenceService.emitNbAbsenceSubject();
+      } else {
+        swal('Oups', 'Votre requète n\'à pue aboutir.', 'error');
+      }
+    });
   }
 }
+
