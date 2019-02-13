@@ -25,11 +25,9 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     startWeek;
     endWeek;
 
-    constructor(private expressService: ExpressService) {
-    }
+    constructor(private expressService: ExpressService) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     /**
      * update the id of user when his change
@@ -37,20 +35,20 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
      */
     ngOnChanges(changes: SimpleChanges): void {
         this.id_user = changes.id_user.currentValue;
-        this.getBackend();
-        this.getBackend2();
+        this.getEventAbsence();
+        this.getEventPresence();
     }
 
 
     /**
-     * edit and define each date of calendar
+     * edit and define each date of calendar for absence
      */
-    getBackend() {
+    getEventAbsence() {
         this.absencesDates = 0;
         this.eachDate = [];
         const content = {
-            id_user: this.id_user,
-            action: 'getMonth'
+            action: 'getMonth',
+            id_user: this.id_user
         };
         let i = 0;
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
@@ -58,54 +56,33 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
 
             if (this.absencesDates.length !== 0) {
                 this.absencesDates.forEach((absence) => {
-                    if (absence.status === 0 && absence.half === 0) { // Absence refusée
-                        this.backgroundColor = '#ff3c38';
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T17:00:00';
 
-                    }
-                    if (absence.status === 1 && absence.half === 0) { // Absence validée
-                        this.backgroundColor = '#0075ff';
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T17:00:00';
-                    }
-                    if (absence.status === 2 && absence.half === 0) { // En attente
-                        this.backgroundColor = '#ff912a';
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T17:00:00';
-                    }
-                    // DEMI JOURNEE MATIN
-                    if (absence.status === 0 && absence.half === 1) { // Absence refusée
+                    // DEFINE COLOR
+                    if (absence.status === 0) { // Absence refusée
                         this.backgroundColor = '#ff3c38';
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T12:30:00';
                     }
-                    if (absence.status === 1 && absence.half === 1) { // Absence validée
+                    if (absence.status === 1) { // Absence validée
                         this.backgroundColor = '#0075ff';
+                    }
+                    if (absence.status === 2) { // En attente
+                        this.backgroundColor = '#ff912a';
+                    }
+
+                    // DEFINE JOURNEY / MORNING / AFTERNOON
+                    if (absence.half === 0) { // Journéé
+                        this.startWeek = absence.day + 'T00:00:00';
+                        this.endWeek = absence.day + 'T00:00:00';
+                    }
+                    if (absence.half === 1) { // matin
                         this.startWeek = absence.day + 'T09:00:00';
                         this.endWeek = absence.day + 'T12:30:00';
                     }
-                    if (absence.status === 2 && absence.half === 1) { // En attente
-                        this.backgroundColor = '#ff912a';
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T12:30:00';
-                    }
-                    // DEMI JOURNEE APRES MIDI
-                    if (absence.status === 0 && absence.half === 2) { // Absence refusée
-                        this.backgroundColor = '#ff3c38';
+                    if (absence.half === 2) { // aprés_midi
                         this.startWeek = absence.day + 'T13:30:00';
                         this.endWeek = absence.day + 'T17:00:00';
                     }
-                    if (absence.status === 1 && absence.half === 2) { // Absence validée
-                        this.backgroundColor = '#0075ff';
-                        this.startWeek = absence.day + 'T13:30:00';
-                        this.endWeek = absence.day + 'T17:00:00';
-                    }
-                    if (absence.status === 2 && absence.half === 2) { // En attente
-                        this.backgroundColor = '#ff912a';
-                        this.startWeek = absence.day + 'T13:30:00';
-                        this.endWeek = absence.day + 'T17:00:00';
-                    }
+
+                    // MAKE ARRAY FOR CALENDAR EVENT
                     this.eachDate.push(
                         {
                             start: absence.day,
@@ -131,22 +108,23 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                     i++;
                     if (this.absencesDates.length === i) {
                         this.calendar();
-
                     }
                 });
             } else {
                 this.calendar();
             }
         });
-
     }
 
-    getBackend2() {
+    /**
+     * edit and define each date of calendar for presence
+     */
+    getEventPresence() {
         this.presencesDates = 0;
         this.eachDate = [];
         const content = {
-            id_user: this.id_user,
-            action: 'getWeek'
+            action: 'getWeek',
+            id_user: this.id_user
         };
         let i = 0;
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
@@ -154,6 +132,8 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
 
             if (this.presencesDates.length !== 0) {
                 this.presencesDates.forEach((presence) => {
+
+                    // ADD TO ARRAY FOR CALENDAR EVENT
                     this.eachDate.push(
                         {
                             start: presence.startHeure + 'T' + presence.startMinute,
@@ -172,7 +152,6 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                     i++;
                     if (this.presencesDates.length === i) {
                         this.calendar();
-
                     }
                 });
             } else {
@@ -186,9 +165,9 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
      * set the calendar option and refresh
      */
     calendar() {
-
+        let calendar = $('#Calendar');
         // remove event calendar
-        $('#Calendar').fullCalendar('removeEvents'); // remove all events
+        calendar.fullCalendar('removeEvents'); // remove all events
 
         this.calendarOptions = {
             defaultView: this.monthActive,
@@ -217,7 +196,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
         };
 
         // add and refresh event calendar
-        $('#Calendar').fullCalendar('addEventSource', this.eachDate); // add new events
-        $('#Calendar').fullCalendar('rerenderEvents'); // refresh
+        calendar.fullCalendar('addEventSource', this.eachDate); // add new events
+        calendar.fullCalendar('rerenderEvents'); // refresh
     }
 }
