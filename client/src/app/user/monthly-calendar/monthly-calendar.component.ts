@@ -18,15 +18,18 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     @Input() monthActive = 'month';
     @Input() id_user;
     absencesDates;
+    presencesDates;
     eachDate = [];
     @Input() selectedWeek;
     backgroundColor;
     startWeek;
     endWeek;
 
-    constructor(private expressService: ExpressService) { }
+    constructor(private expressService: ExpressService) {
+    }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
     /**
      * update the id of user when his change
@@ -35,6 +38,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         this.id_user = changes.id_user.currentValue;
         this.getBackend();
+        this.getBackend2();
     }
 
 
@@ -45,7 +49,8 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
         this.absencesDates = 0;
         this.eachDate = [];
         const content = {
-            id_user: this.id_user
+            id_user: this.id_user,
+            action: 'getMonth'
         };
         let i = 0;
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
@@ -125,6 +130,47 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                     );
                     i++;
                     if (this.absencesDates.length === i) {
+                        this.calendar();
+
+                    }
+                });
+            } else {
+                this.calendar();
+            }
+        });
+
+    }
+
+    getBackend2() {
+        this.presencesDates = 0;
+        this.eachDate = [];
+        const content = {
+            id_user: this.id_user,
+            action: 'getWeek'
+        };
+        let i = 0;
+        this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
+            this.presencesDates = res.list;
+
+            if (this.presencesDates.length !== 0) {
+                this.presencesDates.forEach((presence) => {
+                    this.eachDate.push(
+                        {
+                            start: presence.startHeure + 'T' + presence.startMinute,
+                            end: presence.endHeure + 'T' + presence.endMinute,
+                            textColor: '#111',
+                            backgroundColor: 'transparent',
+                            borderColor: 'transparent'
+                        },
+                        {
+                            start: presence.startHeure + 'T' + presence.startMinute,
+                            end: presence.endHeure + 'T' + presence.endMinute,
+                            backgroundColor: '#4baf00',
+                            rendering: 'background'
+                        }
+                    );
+                    i++;
+                    if (this.presencesDates.length === i) {
                         this.calendar();
 
                     }
