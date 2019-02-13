@@ -45,8 +45,11 @@ module.exports = function(router) {
 
                                 // compare the password
                                 if(passFormCript === passDb) {
+                                    // check if the user is admin
+                                    let adminActive = false;
+                                    if(result[0].id_role === 3) {adminActive = true;}
                                     // generate a token
-                                    const token = jwt.sign({id_user: result[0].id_user, admin: true}, config.auth.SECRET_KEY, {expiresIn: '3h'});
+                                    const token = jwt.sign({id_user: result[0].id_user, admin: adminActive}, config.auth.SECRET_KEY, {expiresIn: '3h'});
                                     res.json({
                                         success: true,
                                         message: "Vous allez être redirigé dans quelques instants.",

@@ -64,6 +64,7 @@ module.exports = function(router) {
                 let dateOnly = req.body.dateOnly;
                 let halfDay = Number(req.body.halfDay);
                 let comment = req.body.comment;
+                let fileName = req.body.fileName;
 
             // CHECK ALL DATA FROM FORMULAR
                 if(reason && Number.isInteger(reason)) {}
@@ -86,7 +87,8 @@ module.exports = function(router) {
                     else {err += '[halfDay] ';}
 
                 // convertie les éventuel balise HTML en texte
-                if(comment) {comment = Entities.encode(comment.trim());}
+                // if(comment) {comment = Entities.encode(comment.trim());}
+                if(comment) {comment = comment.trim();}
                 if(comment === ''){comment = null;}
 
                 // vérifie que la date de fin soit supérieur à la date de début
@@ -135,6 +137,9 @@ module.exports = function(router) {
                             // for count in the loop
                             let entryCount = 0;
 
+                            let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
+                            if(fileName === 'undefined.undefined') {certificate = null;}
+
 
                         // Loop for every day selected
                             for (let i = 0; i < entryNumber; i++) {
@@ -142,7 +147,7 @@ module.exports = function(router) {
                                 let newDate = new Date(otherDate.setDate(startDate.getDate() + i));
 
                             // INSERT TO DB
-                                let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [null]];
+                                let content = [[id_user], [newRef], [2], [newDate], [halfDay], [reason], [comment], [certificate]];
                                 db.query('INSERT INTO absences(id_user, ref_absence, id_status, absence_date, half_day, id_reason, comment_absences, certificate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                                     content, (err) => {
                                         if (err) {
@@ -177,6 +182,24 @@ module.exports = function(router) {
                     });
                 }
             break
+
+        // IF UPLOAD FILE FAILED, DELETE THE ABSENCE ON DB
+            case 'uploadFailed':
+                let ref = req.body.ref;
+                const content = [ref];
+                db.query('DELETE FROM absences WHERE ref_absence = ?', content, (err) => {
+                    if (err) {
+                        res.json({
+                            success: false
+                        });
+                        throw err;
+                    } else {
+                        res.json({
+                            success: true
+                        })
+                    }
+                });
+                break
         }
     });
 };

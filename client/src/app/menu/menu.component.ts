@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {ExpressService} from '../services/express.service';
 import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
+import {AbsenceService} from "../services/absence.service";
+import {WebsocketService} from "../services/websocket.Service";
 
 @Component({
   selector: 'app-menu',
@@ -27,16 +29,41 @@ export class MenuComponent implements OnInit {
   @Input() adminActive;
   alerteActive = false;
   alerteData;
+  nbAbsence = 0;
+
 
   constructor(private userService: UserService,
               private loginService: LoginService,
               private router: Router,
-              private expressService: ExpressService) { }
+              private expressService: ExpressService,
+              private absenceService: AbsenceService,
+              private wsService: WebsocketService) { }
 
     ngOnInit() {
         this.badgerActive = false;
         this.getDataUser();
         this.getAccessBadger();
+        this.getTotalAbsence();
+        this.refreshNbAbsence();
+    }
+
+
+    /**
+     * refresh number of absence in wait when websocket.io emit
+     */
+    refreshNbAbsence() {
+      this.wsService.onListenAbsenceList.subscribe((content) => {
+        this.nbAbsence = content.nbAbsence;
+      });
+    }
+
+    /**
+     * get number of absence in wait
+     */
+    getTotalAbsence() {
+      this.absenceService.getUserListAbsence((res) => {
+        this.nbAbsence = res.length;
+      })
     }
 
     /**
