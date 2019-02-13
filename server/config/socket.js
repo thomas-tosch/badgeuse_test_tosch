@@ -11,7 +11,6 @@ module.exports = function(app) {
          */
         socket.on('presence', (content) => {
             io.emit('presence', content);
-            console.log('presence', content);
         });
 
         /**
@@ -19,7 +18,6 @@ module.exports = function(app) {
          */
         socket.on('absenceList', (content) => {
             io.emit('absenceList', content);
-            console.log('absenceList', content);
         });
     });
 
