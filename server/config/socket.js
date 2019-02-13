@@ -6,9 +6,20 @@ module.exports = function(app) {
 
     io.on('connection', (socket) => {
 
-        // Send a signal for execute a refresh function
+        /**
+         * send a signal for refresh the user list of presence
+         */
         socket.on('presence', (content) => {
             io.emit('presence', content);
+            console.log('presence', content);
+        });
+
+        /**
+         * send a signal for refresh the number of absence in wait
+         */
+        socket.on('absenceList', (content) => {
+            io.emit('absenceList', content);
+            console.log('absenceList', content);
         });
     });
 

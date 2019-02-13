@@ -45,8 +45,6 @@ export class UserRequestComponent implements OnInit {
     }
 
 
-
-
     /**
      * get the id of user connected
      */
@@ -337,12 +335,12 @@ export class UserRequestComponent implements OnInit {
                         }
                         if (item.isError || item.isCancel) {
                             swal('Opération échouée', 'Le fichier n\'a pas été téléchargé', 'error');
+                            // TODO : si le téléchargement de l'image échoue, supprimer dans la bdd toute l'absence de cette reference
                         }
                     };
                 } else {
                     swal('Opération réussie', res.message, 'success');
-                    // TODO : faire passer cette variable par socket.io
-                    this.absenceService.emitNbAbsenceSubject();
+                    this.absenceService.emitNbAbsenceSubject(); // emit a new number of absence in wait
                     setTimeout(() => {
                         this.resetForm();
                         this.cssButton = '';

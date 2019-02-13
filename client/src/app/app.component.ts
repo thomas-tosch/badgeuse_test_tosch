@@ -25,8 +25,8 @@ export class AppComponent implements OnInit{
               private userService: UserService,
               private wsService: WebsocketService
   ) {
-    // connect the socket.io
-    this.wsService.listenSocket('presence');
+    // connect the socket.io and listen
+    this.wsService.listenSocket();
   }
 
   ngOnInit() {

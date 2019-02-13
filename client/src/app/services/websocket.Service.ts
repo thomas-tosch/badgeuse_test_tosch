@@ -7,18 +7,25 @@ import * as Rx from 'rxjs/Rx';
 export class WebsocketService {
 
     private socket;
-    onListen: Subject<any>;
+    onListenPresence: Subject<any>;
+    onListenAbsenceList: Subject<any>;
 
     constructor() {
     }
 
     /**
      * Listen the backend
-     * @param action
      */
-    listenSocket(action) {
-        this.onListen = <Subject<any>>this
-            .connect(action)
+    listenSocket() {
+        // subject variable for user list presence
+        this.onListenPresence = <Subject<any>>this
+            .connect('presence')
+            .map((response: any): any => {
+                return response;
+            });
+        // subject varaible for number of absence in wait
+        this.onListenAbsenceList = <Subject<any>>this
+            .connect('absenceList')
             .map((response: any): any => {
                 return response;
             });
@@ -29,7 +36,7 @@ export class WebsocketService {
      * @param content
      */
     sendSocket(content) {
-        this.onListen.next(content);
+        this.onListenPresence.next(content);
     }
 
     /**
@@ -53,8 +60,8 @@ export class WebsocketService {
 
         // emit
         const observer = {
-            next: (data: Object) => {
-                this.socket.emit(action, data);
+            next: (data) => {
+                this.socket.emit(data.action, data);
             },
         };
 

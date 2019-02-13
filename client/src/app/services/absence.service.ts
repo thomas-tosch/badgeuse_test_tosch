@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
-import {Subject} from "rxjs";
+import {WebsocketService} from "./websocket.Service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AbsenceService {
 
-  nbAbsence = 0;
-  public nbAbsenceSubject = new Subject<Number>();
 
-  constructor(private expressService: ExpressService) { }
+  constructor(private expressService: ExpressService,
+              private wsService: WebsocketService) { }
 
   /**
    * get the user  list to db
@@ -25,9 +24,17 @@ export class AbsenceService {
     });
   }
 
+  /**
+   * emit to websocket.io a new number of absence in wait
+   */
   emitNbAbsenceSubject() {
     this.getUserListAbsence((res) => {
-      this.nbAbsenceSubject.next(res.length);
+
+      const socketContent = {
+        action :'absenceList',
+        nbAbsence : res.length
+      };
+      this.wsService.sendSocket(socketContent); // send a signal on socket.io
     })
 
   }
