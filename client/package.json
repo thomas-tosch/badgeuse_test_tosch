@@ -33,7 +33,6 @@
     "foreach-end": "^1.1.0",
     "fullcalendar": "^3.6.1",
     "fullcalendar-scheduler": "^1.9.4",
-    "html-escape-unescape": "^1.0.3",
     "html2canvas": "^1.0.0-alpha.12",
     "http": "0.0.0",
     "ip": "^1.1.5",

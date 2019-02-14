@@ -56,23 +56,17 @@
   <nav class="justify-content-center">
     <ul class="navbar-nav text-center">
       <li class="nav-item">
-        <a class="nav-link" routerLink="userSpace" routerLinkActive="active">
+        <span class="nav-link">
           <div><fa-icon [icon]="faUserAstronaut" class=""></fa-icon></div>
           <div><small>{{ nomUser | uppercase}} {{prenomUser}}</small></div>
-        </a>
-      </li>
-      <li class="nav-item text-center" *ngIf="adminActive">
-        <a class="nav-link" routerLink="hebdo" routerLinkActive="active">
-          <div><fa-icon [icon]="faChessQueen" class=""></fa-icon></div>
-          <div><small>Administration</small></div>
-        </a>
+        </span>
       </li>
       <li class="nav-item text-center">
-        <a class="nav-link">
-          <button type="button" class="btn btn-light btn-lg">
+        <span class="nav-link">
+          <div class="btn btn-light btn-lg p-0">
             <app-badger [presence]="presenceUser" [id_user]="idUser" *ngIf="badgerActive"></app-badger>
-          </button>
-        </a>
+          </div>
+        </span>
       </li>
       <li class="nav-item text-center" (click)="onDisconnect()">
         <a class="nav-link" routerLink="login" routerLinkActive="active">
