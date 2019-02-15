@@ -29,10 +29,9 @@ import { UserRequestComponent } from './user/user-request/user-request.component
 import { WebsocketService } from './services/websocket.Service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule} from 'ng2-file-upload';
 import { ReplaceSpace } from './pipe/replaceSpace';
-import { HTMLEscapeUnescapeModule } from 'html-escape-unescape';
-import {TruncatePipe} from './pipe/truncate';
+import { TruncatePipe} from './pipe/truncate';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -52,7 +51,6 @@ registerLocaleData(localeFr, 'fr');
     MonthlyCalendarComponent,
     Error404Component,
     UserRequestComponent,
-    FileSelectDirective,
     AbsenceComponent,
     ReplaceSpace,
     TruncatePipe
@@ -68,7 +66,7 @@ registerLocaleData(localeFr, 'fr');
     FormsModule,
     BrowserModule,
     FullCalendarModule,
-    HTMLEscapeUnescapeModule
+    FileUploadModule
   ],
   providers: [
       AuthGuard,

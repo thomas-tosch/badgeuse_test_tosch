@@ -1,9 +1,9 @@
 //fait le lien entre angular et expresse
 const AUTH = {
-    HOST_EXPRESS : "localhost",
-    PORT_EXPRESS : 8080,
-    HOST_ANGULAR : "localhost",
-    PORT_ANGULAR : 4200,
+    HOST_EXPRESS : "10.3.1.53",
+    PORT_EXPRESS : 3000,
+    HOST_ANGULAR : "10.3.1.53",
+    PORT_ANGULAR : 8084,
     SECRET_KEY: makeId()
 };
 

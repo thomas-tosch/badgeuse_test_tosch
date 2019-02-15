@@ -8,6 +8,8 @@ import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
 import {AbsenceService} from "../services/absence.service";
 import {WebsocketService} from "../services/websocket.Service";
+import publicIp from 'public-ip';
+
 
 @Component({
   selector: 'app-menu',
@@ -30,6 +32,7 @@ export class MenuComponent implements OnInit {
   alerteActive = false;
   alerteData;
   nbAbsence = 0;
+  publicIp;
 
 
   constructor(private userService: UserService,
@@ -45,8 +48,19 @@ export class MenuComponent implements OnInit {
         this.getAccessBadger();
         this.getTotalAbsence();
         this.refreshNbAbsence();
+        this.getPublicIp();
     }
 
+
+  /**
+   * get the public ip adresse
+   */
+  getPublicIp() {
+      publicIp.v4().then((ip) => {
+        this.publicIp = ip;
+        console.log('publicIp: ', this.publicIp);
+      });
+    }
 
     /**
      * refresh number of absence in wait when websocket.io emit
@@ -111,7 +125,8 @@ export class MenuComponent implements OnInit {
      */
     getAccessBadger() {
       const content = {
-        action: 'getAccessBadger'
+        action: 'getAccessBadger',
+        ipPublic: this.publicIp
       };
         this.expressService.postExpress('badger', content).subscribe((res: Auth) => {
           this.badgerActive = res.success;
