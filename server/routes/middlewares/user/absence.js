@@ -94,12 +94,12 @@ module.exports = function(router) {
                 // vérifie que la date de fin soit supérieur à la date de début
                 if(dateOnly === null) {
                     if (endDate <= startDate) {
-                        err += '[La 1ere date doit être supérieur à la dernière date] ';
+                        err += '[La 1ere date doit être supérieure à la dernière date] ';
                     }
                 }
 
                 // vérifie que lorsque le status est "malade", que les date ne soit pas supérieur à la date d'aujourd'hui
-                if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie futur]';}
+                if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie future]';}
 
                 // vérifie le nombre de caractère de commentaire
                 if(comment !== null && comment.length > 512){err += '[Nombre de caractère dépassé dans commentaire] ';}
@@ -142,7 +142,8 @@ module.exports = function(router) {
                             let posYears = fileName.indexOf("-") + 1;
                             let getYears = fileName.slice(posYears, posYears + 4);
 
-                            let certificate = './assets/justificatif/'+getYears+'/'+fileName;
+                            let certificate = '/home/badgeuse/Badgeuse_Intelligente/app/client/assets/justificatif/'+getYears+'/'+fileName;
+                            console.log('---- PATH CERTIFICATE: ', certificate);
                             if(fileName === 'undefined.undefined') {certificate = null;}
 
 

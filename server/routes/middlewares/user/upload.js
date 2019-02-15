@@ -22,7 +22,8 @@ module.exports = function(router) {
             let getYears = fileName.slice(posYears, posYears + 4);
             // define the folder
             // let filePath = './client/src/assets/justificatif/' + getYears + '/';
-            let filePath = './client/assets/justificatif/' + getYears + '/';
+            let filePath = './' + getYears + '/';
+            console.log('---- DIRNAME', __dirname);
             // check if the folder exists
             if (!fs.existsSync(filePath)) {
                 fs.mkdirSync(filePath);
