@@ -137,6 +137,7 @@ module.exports = function(router) {
                             // for count in the loop
                             let entryCount = 0;
 
+                            // TODO : changer le 2019 par une variable
                             let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
                             if(fileName === 'undefined.undefined') {certificate = null;}
 

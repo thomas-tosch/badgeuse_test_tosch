@@ -47,7 +47,6 @@ export class UserRequestComponent implements OnInit {
         this.checkFileSize();
     }
 
-    allowedMimeType = this.expressService.allowedMimeType.toString();
 
     /**
      * get the id of user connected

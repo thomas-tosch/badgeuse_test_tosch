@@ -45,7 +45,7 @@ export class MenuComponent implements OnInit {
     ngOnInit() {
         this.badgerActive = false;
         this.getDataUser();
-        this.getAccessBadger();
+
         this.getTotalAbsence();
         this.refreshNbAbsence();
         this.getPublicIp();
@@ -59,6 +59,7 @@ export class MenuComponent implements OnInit {
       publicIp.v4().then((ip) => {
         this.publicIp = ip;
         console.log('publicIp: ', this.publicIp);
+          this.getAccessBadger();
       });
     }
 
