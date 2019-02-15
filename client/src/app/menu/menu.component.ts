@@ -6,8 +6,8 @@ import {Router} from '@angular/router';
 import {ExpressService} from '../services/express.service';
 import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
-import {AbsenceService} from "../services/absence.service";
-import {WebsocketService} from "../services/websocket.Service";
+import {AbsenceService} from '../services/absence.service';
+import {WebsocketService} from '../services/websocket.Service';
 import publicIp from 'public-ip';
 
 
@@ -77,7 +77,7 @@ export class MenuComponent implements OnInit {
     getTotalAbsence() {
       this.absenceService.getUserListAbsence((res) => {
         this.nbAbsence = res.length;
-      })
+      });
     }
 
     /**

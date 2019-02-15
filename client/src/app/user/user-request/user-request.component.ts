@@ -262,14 +262,14 @@ export class UserRequestComponent implements OnInit {
         let periode = 'La période du : ' + this.userRequest.get('startDate').value + ' au ' + this.userRequest.get('endDate').value;
         if (this.userRequest.get('dateOnly').value !== null) {
             let halfday = 'journée';
-            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée';}
+            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée'; }
             periode = 'La ' + halfday + ' du :' + this.userRequest.get('dateOnly').value;
         }
 
         // define the comment
         let comment = this.userRequest.get('comment').value;
         // comment = $("comment").html();
-        if (comment === null) {comment = 'Aucun commentaire';}
+        if (comment === null) {comment = 'Aucun commentaire'; }
 
         // show the modal
         swal({
