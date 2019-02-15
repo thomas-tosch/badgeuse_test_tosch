@@ -1,7 +1,6 @@
 require ('../../../config/database');
 const Entities = require('html-entities').AllHtmlEntities;
 
-
 module.exports = function(router) {
 
     router.post('/', (req, res) => {

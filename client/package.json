@@ -31,7 +31,7 @@
     "chartjs-plugin-annotation": "^0.5.7",
     "core-js": "^2.6.3",
     "foreach-end": "^1.1.0",
-    "fullcalendar": "^3.7.0",
+    "fullcalendar": "^3.6.1",
     "fullcalendar-scheduler": "^1.9.4",
     "html-escape-unescape": "^1.0.3",
     "html2canvas": "^1.0.0-alpha.12",

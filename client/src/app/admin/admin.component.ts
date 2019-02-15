@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AbsenceService} from "../services/absence.service";
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  nbAbsence = 0;
 
-  ngOnInit() { }
+  constructor(private absenceService: AbsenceService) { }
+
+  ngOnInit() {
+    this.getTotalAbsence();
+  }
+
+  getTotalAbsence() {
+    this.absenceService.getUserListAbsence((res) => {
+      this.nbAbsence = res.length;
+    })
+  }
 
 
 

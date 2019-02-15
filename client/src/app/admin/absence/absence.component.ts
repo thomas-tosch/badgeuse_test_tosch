@@ -3,6 +3,8 @@ import { ExpressService } from "../../services/express.service";
 import { Auth } from "../../guards/auth";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import swal from "sweetalert2";
+import {AbsenceService} from "../../services/absence.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-absence',
@@ -16,13 +18,14 @@ export class AbsenceComponent implements OnInit {
   halfDayName = {
     0: 'La journée',
     1: 'Le matin',
-    2: 'L\'aprés midi'
+    2: 'L\'après-midi'
   };
 
-  constructor(private expressService: ExpressService) { }
+
+  constructor(private expressService: ExpressService,
+              private absenceService: AbsenceService) { }
 
   ngOnInit() {
-
     // Call the uss List Absence
     this.getUserListAbsence();
 
@@ -34,11 +37,8 @@ export class AbsenceComponent implements OnInit {
    */
   getUserListAbsence() {
     this.absences = [];
-    const content = {
-      action: 'getUserListAbsence'
-    };
-    this.expressService.postExpress('absence_admin', content).subscribe((res: Auth) => {
-      this.absences = res.list;
+    this.absenceService.getUserListAbsence((res) => {
+      this.absences = res;
     });
   }
 
@@ -82,10 +82,11 @@ export class AbsenceComponent implements OnInit {
     };
     this.expressService.postExpress('absence_admin', content).subscribe((res: Auth) => {
       if (res.success) {
-        swal(valideName + ' !', 'L\'absence à été ' + valideName, 'success');
+        swal(valideName + ' !', 'L\'absence a été ' + valideName, 'success');
         this.getUserListAbsence();
+        this.absenceService.emitNbAbsenceSubject();
       } else {
-        swal('Oups', 'Votre requète n\'à pue aboutir.', 'error');
+        swal('Oups', 'Votre requête n\'a pu aboutir.', 'error');
       }
     });
   }

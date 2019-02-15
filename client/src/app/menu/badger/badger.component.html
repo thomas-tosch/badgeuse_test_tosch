@@ -28,7 +28,7 @@
 
 <!-- navbar small screen -->
 <section class="d-block d-lg-none">
-    <div class="badge-panel" (click)="onBadge()">
+    <button class="badge-panel btn btn-outline-secondary btn-badger border-0" (click)="onBadge()" [disabled]="buttonActivate">
 
         <!-- status présence -->
         <section class="badge-section">
@@ -36,11 +36,14 @@
                      [ngStyle]="{color: getTemoinStatus()}"
                      class="badge-temoin"
             ></fa-icon>
+            <small class="text-muted">{{ tooltipState }}</small>
         </section>
 
         <!-- badgeuse -->
         <section class="badge-section">
-            <span class=" btn-badger">Pointer</span>
+            <button class="btn btn-outline-secondary btn-badger border-0 w-100"
+
+            >Pointer</button>
         </section>
-    </div>
+    </button>
 </section>

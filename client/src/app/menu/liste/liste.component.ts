@@ -33,7 +33,7 @@ export class ListeComponent implements OnInit {
    * refresh the list when a user badge or unbadge
    */
   refreshList() {
-    this.wsService.onListen.subscribe((content) => {
+    this.wsService.onListenPresence.subscribe((content) => {
       this.updateList(content);
     });
   }

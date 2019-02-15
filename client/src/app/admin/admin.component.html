@@ -16,7 +16,7 @@
                 <img src="assets/img/justification_icon.png" alt="Justification des absences" class="img-icon">
             </div>
             <div>
-                Justification des absences
+                <span class="badge badge-danger" *ngIf="nbAbsence !== 0">{{nbAbsence}}</span> Justification des absences
             </div>
         </div>
 

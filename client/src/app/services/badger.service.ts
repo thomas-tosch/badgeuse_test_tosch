@@ -31,6 +31,7 @@ export class BadgerService {
           swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
         } else {
           const socketContent = {
+            action: 'presence',
             presence : !presence,
             id_user: id_user
           };

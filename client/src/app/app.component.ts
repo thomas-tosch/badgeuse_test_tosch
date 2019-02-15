@@ -25,8 +25,8 @@ export class AppComponent implements OnInit{
               private userService: UserService,
               private wsService: WebsocketService
   ) {
-    // connect the socket.io
-    this.wsService.listenSocket('presence');
+    // connect the socket.io and listen
+    this.wsService.listenSocket();
   }
 
   ngOnInit() {
@@ -51,21 +51,21 @@ export class AppComponent implements OnInit{
   }
 
   closeListOnInit() {
-    setTimeout(()=>{
-      if(this.getConnectStatus()) {
+    setTimeout(() => {
+      if (this.getConnectStatus()) {
         this.onBtnSideBar();
         this.isUserAdmin();
       } else {
         this.closeListOnInit();
       }
-    },500);
+    }, 500);
   }
 
   /**
    * define the icon direction on function of the screen
    */
   defineIconList() {
-    if($(window).width() > 991) {
+    if ($(window).width() > 991) {
       this.btnSideBar = this.faAngleDoubleRight;
       this.iconIn = this.faAngleDoubleRight;
       this.iconOut = this.faAngleDoubleLeft;
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit{
   onBtnSideBar() {
     $('#sidebar').toggleClass('active');
 
-    if(this.btnSideBar === this.iconOut){
+    if (this.btnSideBar === this.iconOut) {
       this.btnSideBar = this.iconIn;
     } else {
       this.btnSideBar = this.iconOut;
