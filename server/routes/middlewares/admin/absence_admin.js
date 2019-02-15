@@ -1,4 +1,5 @@
 require ('../../../config/database');
+const Entities = require('html-entities').AllHtmlEntities;
 
 
 module.exports = function(router) {
@@ -12,31 +13,29 @@ module.exports = function(router) {
 
              // GET ABSENCE LIST FOR ADMIN
              case 'getUserListAbsence':
-                 // let startDate = req.body.absenceDate;
-
-                 let content = [
-
-               ];
 
                  db.query('SELECT ' +
                      'CONCAT(users.nom_user, \' \', users.prenom_user) AS absName, ' +
                      '' +
-                     'reason.nom_reason AS absReason, ' +
+                     'absences.ref_absence AS ref, ' +
+                     'MIN(absences.absence_date) AS minDate, ' +
+                     'MAX(absences.absence_date) AS maxDate, ' +
+                     'absences.half_day AS halfDay, ' +
+                     'absences.comment_absences as comment, ' +
+                     'absences.certificate as certificate, ' +
                      '' +
-                     'CASE WHEN half_day < 1 THEN "Non" ELSE "Oui" END AS miAbs' +
+                     'reason.nom_reason AS absReason ' +
                      '' +
-                     ' FROM ((absences ' +
+                     'FROM absences ' +
                      '' +
-                     'INNER JOIN users ON absences.id_user = users.id_user) ' +
-                     'INNER JOIN reason ON absences.id_reason = reason.id_reason) ' +
-                     //'LEFT JOIN (SELECT id_user, ref_absence, id_status, absence_date, id_reason FROM absences WHERE id_status = 2 AND GROUP BY ref_absence) absences ON users.id_user = absences.id_user ' + // join users table table with absence table. Select all between date and summe de absence day
-                     'WHERE id_status = 2'
-                     //'' +
-                     //'GROUP BY red_absence ' +
-                     //'' +
-                     //'ORDER BY ??, absName' // select order by
-                     , content, (err, rows) => {
-                   console.log(rows);
+                     'INNER JOIN users ON absences.id_user = users.id_user ' +
+                     'INNER JOIN reason ON absences.id_reason = reason.id_reason ' +
+                     'WHERE id_status = 2 ' +
+                     '' +
+                     'GROUP BY ref ' +
+                     '' +
+                     'ORDER BY ref'
+                     , (err, rows) => {
                         if(err) {
                             res.json({
                                 success: false
@@ -49,9 +48,22 @@ module.exports = function(router) {
                             });
                         }
                     });
+                break;
+
+            case 'getUpdateAbsence':
+                const ref = req.body.ref;
+                const valide = req.body.valide;
+
+                const content = [[valide], [ref]];
+                db.query('UPDATE absences SET id_status = ? WHERE ref_absence = ?', content, (err) => {
+                    if(err) {
+                        res.json({success: false});
+                        throw err;
+                    } else {
+                        res.json({success: true});
+                    }
+                });
                 break
-
-
         }
     });
-}
+};

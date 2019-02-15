@@ -3,7 +3,21 @@
   <nav class="navbar fixed-top navbar-expand-lg">
 
     <!-- Heading navbar -->
-    <img src="../../assets/img/logo_uha_40_white.png" alt="UHA 4.0" class="nav-img-logo d-none d-lg-block">
+      <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+              <a><h1>≡</h1></a>
+          </button>
+          <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+              <a class="dropdown-item" href="http://145.239.32.252:8090" style="color: #000080;">Confluence</a>
+              <a class="dropdown-item" href="http://145.239.32.252:8080" style="color: #000080;">Jira</a>
+              <a class="dropdown-item" href="http://145.239.32.253" style="color: #000080;">Gitlab</a>
+              <a class="dropdown-item" href="https://uha40-workspace.slack.com" style="color: #000080;">Slack</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://calendar.google.com/calendar/embed?src=uha4.0promo2@gmail.com" style="color: #000080;">UHA 4.0 Global</a>
+          </div>
+      </div>
+
+      <img alt="UHA 4.0" class="nav-img-logo d-none d-lg-block" src="../../assets/img/logo_uha_40_white.png">
       <a class="nav-link" routerLink="userSpace" routerLinkActive="active">
           <span class="navbar-brand mb-0 pr-2 pl-2 h1"><fa-icon [icon]="faUserAstronaut" class="mr-2"></fa-icon>{{ nomUser | uppercase}} {{ prenomUser }}</span>
       </a>
@@ -20,6 +34,7 @@
         <li class="nav-item">
           <!-- Administration access -->
           <a class="nav-link mr-4" routerLink="admin" routerLinkActive="active" *ngIf="adminActive"><fa-icon [icon]="faChessQueen" class="mr-2"></fa-icon>Administration</a>
+          <!-- TODO : afficher un badge sur administrateur si il y a des absence a justifier -->
         </li>
 
         <li class="nav-item">

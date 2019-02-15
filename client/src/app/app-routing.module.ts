@@ -14,7 +14,6 @@ import {AbsenceComponent} from "./admin/absence/absence.component";
 // ROUTER
 const routes: Routes = [
   // admin
-    // TODO : rajouter une condition d'amin dans AuthGuard
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
   { path: 'userDetail/:id_user/:dateSelected', component: UserDetailComponent, canActivate: [AuthGuard] },
