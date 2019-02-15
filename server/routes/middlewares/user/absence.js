@@ -138,7 +138,11 @@ module.exports = function(router) {
                             let entryCount = 0;
 
                             // TODO : changer le 2019 par une variable
-                            let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
+                            // define the absence years
+                            let posYears = fileName.indexOf("-") + 1;
+                            let getYears = fileName.slice(posYears, posYears + 4);
+
+                            let certificate = './assets/justificatif/'+getYears+'/'+fileName;
                             if(fileName === 'undefined.undefined') {certificate = null;}
 
 
