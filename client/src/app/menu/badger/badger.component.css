@@ -34,6 +34,7 @@
         border-radius: 0px;
         display: flex;
         flex-direction: column;
+        padding: 10px 30px 10px 30px;
     }
     .badge-temoin {
         font-size: 2rem;
@@ -41,13 +42,16 @@
         transition: 1s ease;
     }
     .btn-badger {
-        font-size: 2rem;
+        font-size: 1rem;
         margin: 0;
     }
+    .btn-badger:hover {background-color: #ffffff00;}
+    .btn-badger:active {background-color: cornflowerblue;}
+    .text-muted { font-size: 1rem;}
 
     @media (max-width: 550px) {
         .badge-temoin {
-            font-size: 2rem;
+            font-size: 4rem;
             margin-top: -5px;
             transition: 1s ease;
         }

@@ -50,11 +50,11 @@ export class BadgerComponent implements OnInit {
   getTemoinStatus() {
     if(this.presence) {
       this.temoinState = faCheckCircle;
-      this.tooltipState = 'Vous êtes présent';
+      this.tooltipState = 'Vous êtes pointé présent';
       return 'green';
     } else {
       this.temoinState = faTimesCircle;
-      this.tooltipState = 'Vous êtes absent';
+      this.tooltipState = 'Vous êtes pointé absent';
       return 'red';
     }
   }
