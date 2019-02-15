@@ -49,7 +49,7 @@ export class ExpressService {
     this.uploader.onWhenAddingFileFailed = (item, filter, options) => {
       switch (filter.name) {
         case 'fileSize':
-          const errorMessage = 'La taille du fichier dépasse la taille maximal autorisée. <br> (' + Math.round(item.size / 1024 / 1024) + ' Mb sur ' + this.maxFileSize / 1024 / 1024 + ' Mb autorisé)';
+          const errorMessage = 'La taille du fichier dépasse la taille maximale autorisée. <br> (' + Math.round(item.size / 1024 / 1024) + ' Mb sur ' + this.maxFileSize / 1024 / 1024 + ' Mb autorisé)';
           console.log(errorMessage);
           return callback(errorMessage);
           break;

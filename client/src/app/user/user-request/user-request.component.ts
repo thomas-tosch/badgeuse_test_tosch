@@ -367,7 +367,7 @@ export class UserRequestComponent implements OnInit {
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
             if(res.success) {
-                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, aucune donnée n\'à donc été enregistrée. Si le problème persiste, contacter l\'administrateur.', 'error');
+                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, aucune donnée n\'à donc été enregistrée. Si le problème persiste, contactez l\'administrateur.', 'error');
             } else {
                 swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, mais les données ont quand même été enregistrées. Contacter l\'administrateur pour soumettre votre fichier.', 'error');
             }
