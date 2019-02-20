@@ -142,7 +142,7 @@ module.exports = function(router) {
                             let posYears = fileName.indexOf("-") + 1;
                             let getYears = fileName.slice(posYears, posYears + 4);
 
-                            let certificate = '/home/badgeuse/Badgeuse_Intelligente/app/client/assets/justificatif/'+getYears+'/'+fileName;
+                            let certificate = './assets/justificatif/'+getYears+'/'+fileName;
                             console.log('---- PATH CERTIFICATE: ', certificate);
                             if(fileName === 'undefined.undefined') {certificate = null;}
 

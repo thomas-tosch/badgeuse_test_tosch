@@ -4,7 +4,7 @@ import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
 
 // const URL = 'http://localhost:8080/upload';
-const URL = 'http://10.3.1.53:8083/upload';
+const URL = 'http://10.3.1.56:8080/upload';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ const URL = 'http://10.3.1.53:8083/upload';
 export class ExpressService {
 
   // private domain = 'http://localhost:8080';
-  private domain = 'http://10.3.1.53:8083';
+  private domain = 'http://10.3.1.56:8080';
   private maxFileSize = 10 * 1024 * 1024; // 10 MB
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];

@@ -6,8 +6,8 @@ let express    = require('express'),
 
 // required only to send cross data from frontend to backend
 app.use(cors({
-    origin : `http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`,
-    // origin : `http://${config.auth.HOST_ANGULAR}`,
+    // origin : `http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`,
+    origin : `http://${config.auth.HOST_ANGULAR}`,
     credentials: true
 }));
 
