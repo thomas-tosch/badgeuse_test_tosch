@@ -9,6 +9,8 @@ import swal from 'sweetalert2';
 import {AbsenceService} from '../services/absence.service';
 import {WebsocketService} from '../services/websocket.Service';
 import publicIp from 'public-ip';
+import {Subject, Subscription} from "rxjs";
+import {BadgerService} from "../services/badger.service";
 
 
 @Component({
@@ -26,6 +28,7 @@ export class MenuComponent implements OnInit {
   nomUser;
   prenomUser;
   presenceUser;
+  presenceUserSubscription: Subscription;
   idUser;
   badgerActive;
   @Input() adminActive;
@@ -40,10 +43,12 @@ export class MenuComponent implements OnInit {
               private router: Router,
               private expressService: ExpressService,
               private absenceService: AbsenceService,
-              private wsService: WebsocketService) { }
+              private wsService: WebsocketService,
+              private badgerService: BadgerService) { }
 
     ngOnInit() {
         this.badgerActive = false;
+        this.refreshPresence();
         this.getDataUser();
 
         this.getTotalAbsence();
@@ -51,6 +56,16 @@ export class MenuComponent implements OnInit {
         this.getPublicIp();
     }
 
+  /**
+   * refresh status of presence
+   */
+  refreshPresence() {
+    this.presenceUserSubscription = this.badgerService.presenceSubject.subscribe(
+        (presence: any[]) => {
+          this.presenceUser = presence;
+        }
+    );
+  }
 
   /**
    * get the public ip adresse

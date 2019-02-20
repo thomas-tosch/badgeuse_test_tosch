@@ -80,7 +80,9 @@ module.exports = function(router) {
             case 'getAccessBadger':
 
                     let ipPublic = req.body.ipPublic;
-                    let localIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                    // let localIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                    let localIp = '10.3.1.85';
+                    console.log(ipPublic, localIp);
 
                     if (ipPublic === '193.50.153.129' && /10[.][03][.]1[.]\d{1,3}/.test(localIp)) {
                         res.json({

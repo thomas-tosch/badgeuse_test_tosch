@@ -143,7 +143,7 @@ module.exports = function(router) {
                             let getYears = fileName.slice(posYears, posYears + 4);
 
                             let certificate = './assets/justificatif/'+getYears+'/'+fileName;
-                            console.log('---- PATH CERTIFICATE: ', certificate);
+                            // console.log('---- PATH CERTIFICATE: ', certificate);
                             if(fileName === 'undefined.undefined') {certificate = null;}
 
 
