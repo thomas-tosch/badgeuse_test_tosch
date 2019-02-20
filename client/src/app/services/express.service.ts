@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
+import {LoginService} from "./login.service";
 
 /**
  * for developpement. Comment and uncomment the line of ip of you need
  */
-const ip = 'localhost';
-// const ip = '10.3.1.56';
+// const ip = 'localhost';
+const ip = '10.3.1.56';
 
 const URL = 'http://'+ip+':8080/upload';
 
@@ -21,7 +22,8 @@ export class ExpressService {
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private loginService: LoginService) { }
 
   /**
    * post request to express and get the response
@@ -29,6 +31,7 @@ export class ExpressService {
    * @param contentPost
    */
   postExpress(target, contentPost) {
+    contentPost.token = this.loginService.getToken();
     return this.http.post<Auth>(this.domain + '/' + target, contentPost);
   }
 
