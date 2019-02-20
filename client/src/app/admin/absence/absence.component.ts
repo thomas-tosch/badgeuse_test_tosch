@@ -18,7 +18,7 @@ export class AbsenceComponent implements OnInit {
   halfDayName = {
     0: 'La journée',
     1: 'Le matin',
-    2: 'L\'aprés midi'
+    2: 'L\'après-midi'
   };
 
 
@@ -82,11 +82,11 @@ export class AbsenceComponent implements OnInit {
     };
     this.expressService.postExpress('absence_admin', content).subscribe((res: Auth) => {
       if (res.success) {
-        swal(valideName + ' !', 'L\'absence à été ' + valideName, 'success');
+        swal(valideName + ' !', 'L\'absence a été ' + valideName, 'success');
         this.getUserListAbsence();
         this.absenceService.emitNbAbsenceSubject();
       } else {
-        swal('Oups', 'Votre requète n\'à pue aboutir.', 'error');
+        swal('Oups', 'Votre requête n\'a pu aboutir.', 'error');
       }
     });
   }

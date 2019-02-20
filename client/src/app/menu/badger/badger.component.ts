@@ -31,15 +31,15 @@ export class BadgerComponent implements OnInit {
    */
   onBadge() {
       this.buttonActivate = true;
-      this.badgerService.setPresence(this.presence,(res)=> {
-        if(res.success === true) {
+      this.badgerService.setPresence(this.presence, (res) => {
+        if (res.success === true) {
           swal(res.title, res.message, 'success');
           this.presence = !this.presence;
           this.getTemoinStatus();
           // disable the button during 15 minute
-          setTimeout(()=>{
+          setTimeout(() => {
             this.buttonActivate = false;
-          }, 900000); //after 15 minute
+          }, 900000); // after 15 minute
         }
       });
   }
@@ -48,13 +48,13 @@ export class BadgerComponent implements OnInit {
    * change the icon temoin
    */
   getTemoinStatus() {
-    if(this.presence) {
+    if (this.presence) {
       this.temoinState = faCheckCircle;
-      this.tooltipState = 'Vous êtes présent';
+      this.tooltipState = 'Vous êtes pointé présent';
       return 'green';
     } else {
       this.temoinState = faTimesCircle;
-      this.tooltipState = 'Vous êtes absent';
+      this.tooltipState = 'Vous êtes pointé absent';
       return 'red';
     }
   }

@@ -14,7 +14,7 @@ import swal from 'sweetalert2';
 export class UserDetailComponent implements OnInit {
 
   id_user;
-  userData = {};
+  userData;
   form: FormGroup;
   monthActive = 'agendaWeek';
   dateSelected;

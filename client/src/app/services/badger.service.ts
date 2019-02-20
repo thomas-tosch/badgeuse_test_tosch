@@ -4,15 +4,26 @@ import {Auth} from '../guards/auth';
 import {UserService} from './user.service';
 import swal from 'sweetalert2';
 import {WebsocketService} from './websocket.Service';
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BadgerService {
 
+  presenceSubject = new Subject<any[]>();
+
   constructor(private expressService: ExpressService,
               private userService: UserService,
               private wsService: WebsocketService) { }
+
+  /**
+   * emit status of presence
+   * @param presence
+   */
+  emitPresenceSubject(presence) {
+    this.presenceSubject.next(presence);
+  }
 
   /**
    * update the presence to users table. 0 = 'absent', 1 = 'présent' and add a point to badger table.
@@ -36,6 +47,7 @@ export class BadgerService {
             id_user: id_user
           };
           this.wsService.sendSocket(socketContent); // send a signal on socket.io
+          this.emitPresenceSubject(!presence);
           return callback(res);
         }
       });

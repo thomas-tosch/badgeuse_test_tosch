@@ -3,7 +3,21 @@
   <nav class="navbar fixed-top navbar-expand-lg">
 
     <!-- Heading navbar -->
-    <img src="../../assets/img/logo_uha_40_white.png" alt="UHA 4.0" class="nav-img-logo d-none d-lg-block">
+      <div class="dropdown">
+          <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+              <a><h1>≡</h1></a>
+          </button>
+          <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+              <a class="dropdown-item" href="http://145.239.32.252:8090" style="color: #000080;">Confluence</a>
+              <a class="dropdown-item" href="http://145.239.32.252:8080" style="color: #000080;">Jira</a>
+              <a class="dropdown-item" href="http://145.239.32.253" style="color: #000080;">Gitlab</a>
+              <a class="dropdown-item" href="https://uha40-workspace.slack.com" style="color: #000080;">Slack</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://calendar.google.com/calendar/embed?src=uha4.0promo2@gmail.com" style="color: #000080;">UHA 4.0 Global</a>
+          </div>
+      </div>
+
+      <img alt="UHA 4.0" class="nav-img-logo d-none d-lg-block" src="../../assets/img/logo_uha_40_white.png">
       <a class="nav-link" routerLink="userSpace" routerLinkActive="active">
           <span class="navbar-brand mb-0 pr-2 pl-2 h1"><fa-icon [icon]="faUserAstronaut" class="mr-2"></fa-icon>{{ nomUser | uppercase}} {{ prenomUser }}</span>
       </a>
@@ -53,24 +67,20 @@
 
 <!-- NAVBAR SMALL SCREEN -->
 <section class="d-block d-lg-none">
-  <nav class="navbar navbar-expand justify-content-center navbar-dark fixed-bottom bg-nav">
+  <nav class="justify-content-center">
     <ul class="navbar-nav text-center">
       <li class="nav-item">
-        <a class="nav-link" routerLink="userSpace" routerLinkActive="active">
+        <span class="nav-link">
           <div><fa-icon [icon]="faUserAstronaut" class=""></fa-icon></div>
-          <div><small>{{ nomUser | uppercase}}</small></div>
-        </a>
-      </li>
-      <li class="nav-item text-center" *ngIf="adminActive">
-        <a class="nav-link" routerLink="hebdo" routerLinkActive="active">
-          <div><fa-icon [icon]="faChessQueen" class=""></fa-icon></div>
-          <div><small>Administration</small></div>
-        </a>
+          <div><small>{{ nomUser | uppercase}} {{prenomUser}}</small></div>
+        </span>
       </li>
       <li class="nav-item text-center">
-        <a class="nav-link">
-          <app-badger [presence]="presenceUser" [id_user]="idUser" *ngIf="badgerActive"></app-badger>
-        </a>
+        <span class="nav-link">
+          <div class="btn btn-light btn-lg p-0">
+            <app-badger [presence]="presenceUser" [id_user]="idUser" *ngIf="badgerActive"></app-badger>
+          </div>
+        </span>
       </li>
       <li class="nav-item text-center" (click)="onDisconnect()">
         <a class="nav-link" routerLink="login" routerLinkActive="active">

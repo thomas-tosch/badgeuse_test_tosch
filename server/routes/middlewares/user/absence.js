@@ -94,15 +94,15 @@ module.exports = function(router) {
                 // vérifie que la date de fin soit supérieur à la date de début
                 if(dateOnly === null) {
                     if (endDate <= startDate) {
-                        err += '[La 1ere date doit être supérieur à la dernière date] ';
+                        err += '[La 1ère date doit être supérieure à la dernière date] ';
                     }
                 }
 
                 // vérifie que lorsque le status est "malade", que les date ne soit pas supérieur à la date d'aujourd'hui
-                if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie futur]';}
+                if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie future]';}
 
                 // vérifie le nombre de caractère de commentaire
-                if(comment !== null && comment.length > 512){err += '[Nombre de caractère dépassé dans commentaire] ';}
+                if(comment !== null && comment.length > 512){err += '[Nombre de caractères dépassé dans commentaire] ';}
 
             // IF NO ERROR
                 if(err === '') {
@@ -137,7 +137,13 @@ module.exports = function(router) {
                             // for count in the loop
                             let entryCount = 0;
 
-                            let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
+                            // TODO : changer le 2019 par une variable
+                            // define the absence years
+                            let posYears = fileName.indexOf("-") + 1;
+                            let getYears = fileName.slice(posYears, posYears + 4);
+
+                            let certificate = './assets/justificatif/'+getYears+'/'+fileName;
+                            // console.log('---- PATH CERTIFICATE: ', certificate);
                             if(fileName === 'undefined.undefined') {certificate = null;}
 
 
@@ -161,7 +167,7 @@ module.exports = function(router) {
                                             if (entryCount === entryNumber) {
                                                 res.json({
                                                     success: true,
-                                                    message: 'Votre justification à été soumis. Un administrateur se chargera de la valider ou de la refuser.'
+                                                    message: 'Votre justification a été soumise. Un administrateur se chargera de la valider ou de la refuser.'
                                                 });
                                             }
                                         }
@@ -171,7 +177,7 @@ module.exports = function(router) {
                        } else {
                            res.json({
                                success: false,
-                               message: 'Vous avez déjà une justification validé ou en attente aux dates choisie '
+                               message: 'Vous avez déjà une justification validée ou en attente aux dates choisies '
                            });
                        }
                     });

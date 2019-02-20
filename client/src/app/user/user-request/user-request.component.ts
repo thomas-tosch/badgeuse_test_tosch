@@ -38,6 +38,8 @@ export class UserRequestComponent implements OnInit {
         this.createForm();
         }
 
+    allowedMimeType = this.expressService.allowedMimeType.toString();
+
     ngOnInit() {
         this.getIdUser();
         this.expressService.uploadFile();
@@ -259,14 +261,14 @@ export class UserRequestComponent implements OnInit {
         let periode = 'La période du : ' + this.userRequest.get('startDate').value + ' au ' + this.userRequest.get('endDate').value;
         if (this.userRequest.get('dateOnly').value !== null) {
             let halfday = 'journée';
-            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée';}
+            if (this.userRequest.get('halfDay').value === true) {halfday = 'demi-journée'; }
             periode = 'La ' + halfday + ' du :' + this.userRequest.get('dateOnly').value;
         }
 
         // define the comment
         let comment = this.userRequest.get('comment').value;
         // comment = $("comment").html();
-        if (comment === null) {comment = 'Aucun commentaire';}
+        if (comment === null) {comment = 'Aucun commentaire'; }
 
         // show the modal
         swal({
@@ -366,7 +368,7 @@ export class UserRequestComponent implements OnInit {
         };
         this.expressService.postExpress('absence', content).subscribe((res: Auth) => {
             if(res.success) {
-                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, aucune donnée n\'à donc été enregistrée. Si le problème persiste, contacter l\'administrateur.', 'error');
+                swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, aucune donnée n\'à donc été enregistrée. Si le problème persiste, contactez l\'administrateur.', 'error');
             } else {
                 swal('Opération échouée', 'Le fichier n\'a pas été téléchargé, mais les données ont quand même été enregistrées. Contacter l\'administrateur pour soumettre votre fichier.', 'error');
             }

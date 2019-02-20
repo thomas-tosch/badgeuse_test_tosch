@@ -3,14 +3,20 @@ import {HttpClient} from '@angular/common/http';
 import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
 
-const URL = 'http://localhost:8080/upload';
+/**
+ * for developpement. Comment and uncomment the line of ip of you need
+ */
+// const ip = 'localhost';
+const ip = '10.3.1.56';
+
+const URL = 'http://'+ip+':8080/upload';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpressService {
 
-  private domain = 'http://localhost:8080';
+  private domain = 'http://'+ip+':8080';
   private maxFileSize = 10 * 1024 * 1024; // 10 MB
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
@@ -46,7 +52,7 @@ export class ExpressService {
     this.uploader.onWhenAddingFileFailed = (item, filter, options) => {
       switch (filter.name) {
         case 'fileSize':
-          const errorMessage = 'La taille du fichier dépasse la taille maximal autorisée. <br> (' + Math.round(item.size / 1024 / 1024) + ' Mb sur ' + this.maxFileSize / 1024 / 1024 + ' Mb autorisé)';
+          const errorMessage = 'La taille du fichier dépasse la taille maximale autorisée. <br> (' + Math.round(item.size / 1024 / 1024) + ' Mb sur ' + this.maxFileSize / 1024 / 1024 + ' Mb autorisé)';
           console.log(errorMessage);
           return callback(errorMessage);
           break;

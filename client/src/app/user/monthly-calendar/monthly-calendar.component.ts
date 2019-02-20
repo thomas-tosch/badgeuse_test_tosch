@@ -70,8 +70,8 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
 
                     // DEFINE JOURNEY / MORNING / AFTERNOON
                     if (absence.half === 0) { // Journéé
-                        this.startWeek = absence.day + 'T00:00:00';
-                        this.endWeek = absence.day + 'T00:00:00';
+                        this.startWeek = absence.day + 'T09:00:00';
+                        this.endWeek = absence.day + 'T17:00:00';
                     }
                     if (absence.half === 1) { // matin
                         this.startWeek = absence.day + 'T09:00:00';
