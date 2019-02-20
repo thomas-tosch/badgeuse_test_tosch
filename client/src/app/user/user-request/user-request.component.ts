@@ -38,6 +38,8 @@ export class UserRequestComponent implements OnInit {
         this.createForm();
         }
 
+    allowedMimeType = this.expressService.allowedMimeType.toString();
+
     ngOnInit() {
         this.getIdUser();
         this.expressService.uploadFile();
@@ -45,7 +47,6 @@ export class UserRequestComponent implements OnInit {
         this.checkFileSize();
     }
 
-    allowedMimeType = this.expressService.allowedMimeType.toString();
 
     /**
      * get the id of user connected

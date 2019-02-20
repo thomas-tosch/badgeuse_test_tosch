@@ -1,6 +1,4 @@
 require ('../../../config/database');
-const ip = require('ip');
-const publicIp = require('public-ip');
 
 module.exports = function(router) {
 
@@ -80,10 +78,11 @@ module.exports = function(router) {
 
             // Check if the user is in the UHA 4.0 area
             case 'getAccessBadger':
-                (async () => {
-                    let ipPublic = await publicIp.v4();
 
-                    let localIp = ip.address();
+                    let ipPublic = req.body.ipPublic;
+                    let localIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress; // uncomment this line for prod on server
+                    // let localIp = '10.3.1.85'; // uncomment his line for dev on local
+
                     if (ipPublic === '193.50.153.129' && /10[.][03][.]1[.]\d{1,3}/.test(localIp)) {
                         res.json({
                             success: true
@@ -93,7 +92,7 @@ module.exports = function(router) {
                             success: false
                         });
                     }
-                })();
+
             break
 
         }

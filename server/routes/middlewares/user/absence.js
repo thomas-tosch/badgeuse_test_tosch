@@ -137,7 +137,13 @@ module.exports = function(router) {
                             // for count in the loop
                             let entryCount = 0;
 
-                            let certificate = './assets/justificatif/'+'2019'+'/'+fileName;
+                            // TODO : changer le 2019 par une variable
+                            // define the absence years
+                            let posYears = fileName.indexOf("-") + 1;
+                            let getYears = fileName.slice(posYears, posYears + 4);
+
+                            let certificate = './assets/justificatif/'+getYears+'/'+fileName;
+                            // console.log('---- PATH CERTIFICATE: ', certificate);
                             if(fileName === 'undefined.undefined') {certificate = null;}
 
 

@@ -1,8 +1,14 @@
+/**
+ * for developpement. Comment and uncomment the line of ip of you need
+ */
+// const ip = 'localhost';
+const ip = '10.3.1.56';
+
 //fait le lien entre angular et expresse
 const AUTH = {
-    HOST_EXPRESS : "localhost",
+    HOST_EXPRESS : ip,
     PORT_EXPRESS : 8080,
-    HOST_ANGULAR : "localhost",
+    HOST_ANGULAR : ip,
     PORT_ANGULAR : 4200,
     SECRET_KEY: makeId()
 };

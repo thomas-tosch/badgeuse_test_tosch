@@ -8,6 +8,10 @@ import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
 import {AbsenceService} from '../services/absence.service';
 import {WebsocketService} from '../services/websocket.Service';
+import publicIp from 'public-ip';
+import {Subject, Subscription} from "rxjs";
+import {BadgerService} from "../services/badger.service";
+
 
 @Component({
   selector: 'app-menu',
@@ -24,12 +28,14 @@ export class MenuComponent implements OnInit {
   nomUser;
   prenomUser;
   presenceUser;
+  presenceUserSubscription: Subscription;
   idUser;
   badgerActive;
   @Input() adminActive;
   alerteActive = false;
   alerteData;
   nbAbsence = 0;
+  publicIp;
 
 
   constructor(private userService: UserService,
@@ -37,16 +43,40 @@ export class MenuComponent implements OnInit {
               private router: Router,
               private expressService: ExpressService,
               private absenceService: AbsenceService,
-              private wsService: WebsocketService) { }
+              private wsService: WebsocketService,
+              private badgerService: BadgerService) { }
 
     ngOnInit() {
         this.badgerActive = false;
+        this.refreshPresence();
         this.getDataUser();
-        this.getAccessBadger();
+
         this.getTotalAbsence();
         this.refreshNbAbsence();
+        this.getPublicIp();
     }
 
+  /**
+   * refresh status of presence
+   */
+  refreshPresence() {
+    this.presenceUserSubscription = this.badgerService.presenceSubject.subscribe(
+        (presence: any[]) => {
+          this.presenceUser = presence;
+        }
+    );
+  }
+
+  /**
+   * get the public ip adresse
+   */
+  getPublicIp() {
+      publicIp.v4().then((ip) => {
+        this.publicIp = ip;
+        console.log('publicIp: ', this.publicIp);
+          this.getAccessBadger();
+      });
+    }
 
     /**
      * refresh number of absence in wait when websocket.io emit
@@ -111,7 +141,8 @@ export class MenuComponent implements OnInit {
      */
     getAccessBadger() {
       const content = {
-        action: 'getAccessBadger'
+        action: 'getAccessBadger',
+        ipPublic: this.publicIp
       };
         this.expressService.postExpress('badger', content).subscribe((res: Auth) => {
           this.badgerActive = res.success;

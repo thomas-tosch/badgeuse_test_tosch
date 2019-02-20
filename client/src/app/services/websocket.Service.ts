@@ -45,7 +45,7 @@ export class WebsocketService {
      */
     connect(action): Rx.Subject<MessageEvent> {
         // server path
-        this.socket = io('http://localhost:5000');
+        this.socket = io('http://10.3.1.56:5000');
 
 
         // listen

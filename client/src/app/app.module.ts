@@ -29,9 +29,9 @@ import { UserRequestComponent } from './user/user-request/user-request.component
 import { WebsocketService } from './services/websocket.Service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import {FileSelectDirective, FileUploadModule} from 'ng2-file-upload';
+import { FileUploadModule} from 'ng2-file-upload';
 import { ReplaceSpace } from './pipe/replaceSpace';
-import {TruncatePipe} from './pipe/truncate';
+import { TruncatePipe} from './pipe/truncate';
 
 
 registerLocaleData(localeFr, 'fr');
