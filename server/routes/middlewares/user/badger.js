@@ -27,21 +27,34 @@ module.exports = function(router) {
 
                  // add a point on db badger for START
                 if(presence) {
-                    let content_badger_start = [
-                        [id_user]
-                    ];
-                    db.query('INSERT INTO badger(id_user) VALUES (?)', content_badger_start, (err) => {
-                        if(err) {
+
+                    db.query('SELECT * FROM badger WHERE id_user = ? AND end_point IS NULL AND start_point > CURRENT_DATE', [id_user], (err, rows) => {
+
+                        // if any end_point is nul today
+                        if(rows.length === 0) {
+
+                            let content_badger_start = [
+                                [id_user]
+                            ];
+                            db.query('INSERT INTO badger(id_user) VALUES (?)', content_badger_start, (err) => {
+                                if (err) {
+                                    res.json({
+                                        success: false
+                                    });
+                                    throw err;
+                                } else {
+                                    res.json({
+                                        success: true,
+                                        title: title,
+                                        message: message
+                                    });
+                                }
+                            });
+                        } else {
                             res.json({
                                 success: false
                             });
                             throw err;
-                        } else {
-                            res.json({
-                                success: true,
-                                title: title,
-                                message: message
-                            });
                         }
                     });
                 }
@@ -80,8 +93,8 @@ module.exports = function(router) {
             case 'getAccessBadger':
 
                     let ipPublic = req.body.ipPublic;
-                    let localIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress; // uncomment this line for prod on server
-                    // let localIp = '10.3.1.85'; // uncomment his line for dev on local
+                    // let localIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress; // uncomment this line for prod on server
+                    let localIp = '10.3.1.85'; // uncomment his line for dev on local
 
                     if (ipPublic === '193.50.153.129' && /10[.][03][.]1[.]\d{1,3}/.test(localIp)) {
                         res.json({
@@ -98,3 +111,4 @@ module.exports = function(router) {
         }
     });
 };
+

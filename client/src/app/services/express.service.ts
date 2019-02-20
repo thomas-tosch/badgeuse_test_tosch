@@ -6,8 +6,8 @@ import {FileUploader} from 'ng2-file-upload';
 /**
  * for developpement. Comment and uncomment the line of ip of you need
  */
-// const ip = 'localhost';
-const ip = '10.3.1.56';
+const ip = 'localhost';
+// const ip = '10.3.1.56';
 
 const URL = 'http://'+ip+':8080/upload';
 
