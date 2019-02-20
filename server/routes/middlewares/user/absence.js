@@ -94,7 +94,7 @@ module.exports = function(router) {
                 // vérifie que la date de fin soit supérieur à la date de début
                 if(dateOnly === null) {
                     if (endDate <= startDate) {
-                        err += '[La 1ere date doit être supérieure à la dernière date] ';
+                        err += '[La 1ère date doit être supérieure à la dernière date] ';
                     }
                 }
 
@@ -102,7 +102,7 @@ module.exports = function(router) {
                 if(reason === 1 && (startDate > currDate || endDate > currDate)) {err += '[Vous ne pouvez pas justifier une maladie future]';}
 
                 // vérifie le nombre de caractère de commentaire
-                if(comment !== null && comment.length > 512){err += '[Nombre de caractère dépassé dans commentaire] ';}
+                if(comment !== null && comment.length > 512){err += '[Nombre de caractères dépassé dans commentaire] ';}
 
             // IF NO ERROR
                 if(err === '') {
@@ -167,7 +167,7 @@ module.exports = function(router) {
                                             if (entryCount === entryNumber) {
                                                 res.json({
                                                     success: true,
-                                                    message: 'Votre justification à été soumis. Un administrateur se chargera de la valider ou de la refuser.'
+                                                    message: 'Votre justification a été soumise. Un administrateur se chargera de la valider ou de la refuser.'
                                                 });
                                             }
                                         }
@@ -177,7 +177,7 @@ module.exports = function(router) {
                        } else {
                            res.json({
                                success: false,
-                               message: 'Vous avez déjà une justification validé ou en attente aux dates choisie '
+                               message: 'Vous avez déjà une justification validée ou en attente aux dates choisies '
                            });
                        }
                     });

@@ -79,7 +79,7 @@ module.exports = function(router) {
                     } else {
                         res.json({
                             success: true,
-                            message: "L'information à bien été mise à jour."
+                            message: "L'information a bien été mise à jour."
                         });
                     }
                 });
