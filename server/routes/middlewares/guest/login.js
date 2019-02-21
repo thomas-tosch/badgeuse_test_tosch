@@ -2,6 +2,8 @@ require ('../../../config/database');
 const sha1 = require('sha1');
 const jwt = require('jsonwebtoken');
 const config = require('../../../config/config');
+let tokenList = require ('../../../config/tokenList');
+
 
 module.exports = function(router) {
 
@@ -50,6 +52,7 @@ module.exports = function(router) {
                                     if(result[0].id_role === 3) {adminActive = true;}
                                     // generate a token
                                     const token = jwt.sign({id_user: result[0].id_user, admin: adminActive}, config.auth.SECRET_KEY, {expiresIn: '3h'});
+                                    tokenList.addToken(token);
                                     res.json({
                                         success: true,
                                         message: "Vous allez être redirigé dans quelques instants.",
@@ -76,6 +79,11 @@ module.exports = function(router) {
                     });
                 }
             break;
+
+            // case 'delToken':
+                // const tokenClient = req.body.token;
+                // tokenList.delToken(tokenClient);
+            // break
         }
     });
 };
