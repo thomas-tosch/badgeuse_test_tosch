@@ -73,7 +73,6 @@ export class MenuComponent implements OnInit {
   getPublicIp() {
       publicIp.v4().then((ip) => {
         this.publicIp = ip;
-        console.log('publicIp: ', this.publicIp);
           this.getAccessBadger();
       });
     }

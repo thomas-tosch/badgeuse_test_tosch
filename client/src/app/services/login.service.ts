@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {ExpressService} from "./express.service";
+import {Auth} from "../guards/auth";
+import {UserService} from "./user.service";
 
 const helper = new JwtHelperService();
 
@@ -20,6 +23,7 @@ export class LoginService {
      * get the token
      */
     getToken() {
+        // console.log(this.authToken);
         return this.authToken;
     }
 

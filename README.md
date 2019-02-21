@@ -1,40 +1,71 @@
-# :sparkles: Projet Badgeuse intelligente  :sparkles: #
+# :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
-## DESCRIPTION ##
-> Description de l'UHA 4.0
    
 ## PRÉ-REQUIS ##
 
-* Node.js (v10.11.0)
+* MariaDb (10.1)
+* Node.js (v10.15.0)
 * Npm (v6.4.1)
-* Angular CLI (v7.0.7)
 
-## ÉTAPE 1 : INSTALLATION DES DEPENDANCES ##
+## ÉTAPE 1 : REGLAGE ADRESSE ##
   
-  Pour installer les dépendances du projet il suffit de vous rendre dans deux dossiers.
-  Le premier est le dossier racine, en ligne de commande exécutez simplement :
+  Il y a 3 fichier à vérifier avant d'installer le projet sur un serveur. Il faut s'assurer que l'adresse du serveur correspond.
   
-  `npm install`
+  Dans le fichier: 
   
-  Et pour le deuxième, faites de même en vous plaçant cette fois-ci dans le dossier client :
+   - `./client/src/app/service/express.service.ts : ligne 10 `=> la variable `ip` doit être l'adresse de votre serveur.
+   - `./server/config/config.js : ligne 5 `=> la variable `ip` doit être l'adresse de votre serveur.
+   - `./index.js => ligne 10`=> assurez-vous que cette ligne n'est pas commenté (la ligne 9, elle, doit être commenté).
   
-  `npm install`
+## ÉTAPE 2 : COMPILATION ANGULAR ##
   
-## ÉTAPE 2 : INSTALLATION DE NODEMON ##
+  Depuis le dossier client, dans un terminal, éxecutez la commande suivante:
   
-  Nodemon nous servira à lancer le serveur express, pour ce faire, exécutez la commande suivante :
+  `ng build --prod`
   
-  `npm install -g nodemon`
-  
-## ÉTAPE 3 : LANCEMENT DU PROJET ##
-  
-  Le lancement s'effectue en deux étapes, la première est de faire fonctionner le serveur epxress, pour ce faire, placez-vous dans le dossier racine du projet et exécutez cette commande :
-  
-  `nodemon`
-  
-  La seconde étape consiste à lancer le client Angular, exécutez simplement cette commande dans le dossier client:
-  
-  `ng serve`
+  Celle-ci sert à compiler la partie angular définitivement. Une fois terminer et qu'il n'y a aucune erreur, vous trouverez la compilation final dans le dossier `./client/dist/`
   
   
-  Et voilà, vous pouvez commencer à coder  :sunglasses:
+## ÉTAPE 3 : BDD ##
+
+   Pour la base de donnée, il faut importer les deux fichier sql situés dans le dossier ./BDD dans l'ordre suivant:
+   
+   1. BDD-Badgeuse-tables.sql
+   2. BDD-Badgeuse-Data.sql
+   
+   Un utilisateur est automatiquement crée (uhaSQL) avec un mot de passe (uha), ainsi que les données des étudiants actuellement inscrit en cette année 2018-2019.
+
+
+## ÉTAPE 4 : GO TO SERVER ##
+  
+  Sur le serveur, mettez les éléments suivant:
+  
+    - le dossier client que vous venez de compiler,
+    - le dossier server,
+    - le fichier index.js,
+    - le fichier package.json
+    
+  Enfin, éxecutez la commande suivante depuis la racine du projet:
+  
+  `npm install` 
+  
+  `npm install -g pm2`
+  
+  Pour lancer pm2:
+  
+  `pm2 start index.js --name badgeuse`
+  
+  
+## BONUS : INFO ##
+
+   #### Quelque commande de pm2: ####
+   
+   `pm2 restart badgeuse` -> redémarre le service 'badgeuse', neccessaire pour toute modification du backend
+   
+   `pm2 stop badgeuse` -> arrête le service 'badgeuse'
+   
+   `pm2 delete badgeuse` -> supprime le service 'badgeuse'
+   
+   `pm2 log` -> affiche les logs de pm2 (ctrl + C pour quitter)
+   
+   `pm2 flush` -> efface tous les logs de pm2
