@@ -55,6 +55,13 @@
   
   `pm2 start index.js --name badgeuse`
   
+  # IMPORTANT #
+  
+  3 ports doivent être disponible:
+  
+     - port 80: pointant le dossier client,
+     - port 8080: pointant la racine du projet,
+     - port 5000: pointant la racine du projet.
   
 ## BONUS : INFO ##
 

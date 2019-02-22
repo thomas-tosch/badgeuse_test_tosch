@@ -7,8 +7,8 @@ import {LoginService} from "./login.service";
 /**
  * for developpement. Comment and uncomment the line of ip of you need
  */
-// const ip = 'localhost';
-const ip = '10.3.1.56';
+// const ip = 'localhost'; // for dev in local
+const ip = '10.3.1.56'; // for prod on server
 
 const URL = 'http://'+ip+':8080/upload';
 
