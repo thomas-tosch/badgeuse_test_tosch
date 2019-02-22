@@ -48,12 +48,13 @@ export class AbsenceComponent implements OnInit {
    * @param valide
    */
   onValidate(ref, valide) {
-    let valideName = 'Validée';
+    let valideName = 'Validez';
+    let valideAdjectif = 'Validée';
     if (valide === 0) {valideName = 'Refusée';}
 
     swal({
       title: valideName + ' ?',
-      text: "Confirmez-vous que vous " + valideName + " cette absence?",
+      text: "Confirmez-vous que vous " + valideAdjectif + " cette absence?",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
