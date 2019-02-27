@@ -14,7 +14,7 @@ export class ExpressService {
   /**
    * Define the backend port
    */
-  private port = '8080';
+  private port = '80';
   private domain;
   private URL;
   private maxFileSize = 10 * 1024 * 1024; // 10 MB
@@ -36,7 +36,7 @@ export class ExpressService {
     url = url.slice(0, -1);
     const regex2 = /(.{6}):/;
     if(url.match(regex2)){
-      url = url.match(regex2).toString();
+      url = url.match(/.*:/).toString();
       url = url.slice(0, -1);
       console.log(url);
     };

@@ -1,15 +1,16 @@
+const ipLocal = require('ip');
 /**
  * for developpement. Comment and uncomment the line of ip of you need
  */
 // const ip = 'localhost';
-const ip = '10.3.1.56';
+const ip = ipLocal.address();
 
 //fait le lien entre angular et expresse
 const AUTH = {
-    HOST_EXPRESS : ip,
-    PORT_EXPRESS : 8080,
-    HOST_ANGULAR : ip,
-    PORT_ANGULAR : 4200,
+    HOST_EXPRESS : ip, // use for view in console, systeme don'tn need this
+    PORT_EXPRESS : 8080, // use for listen this port on backend
+    HOST_ANGULAR : ip, // use for multi-cross origin request
+    PORT_ANGULAR : 4200, // port for dev on localhost, not use in prod
     SECRET_KEY: makeId()
 };
 
