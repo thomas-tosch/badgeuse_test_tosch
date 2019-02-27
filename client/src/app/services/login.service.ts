@@ -1,30 +1,16 @@
 import { Injectable } from '@angular/core';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {ExpressService} from "./express.service";
-import {Auth} from "../guards/auth";
-import {UserService} from "./user.service";
+import { AuthTokenService } from "./auth-token.service";
 
-const helper = new JwtHelperService();
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
 
-    private authToken: string;
     private user: string;
 
-    constructor() {
-        this.authToken = localStorage.getItem('token');
+    constructor(private authTokenService: AuthTokenService) {
         this.user = JSON.parse(localStorage.getItem('user'));
-    }
-
-    /**
-     * get the token
-     */
-    getToken() {
-        // console.log(this.authToken);
-        return this.authToken;
     }
 
     /**
@@ -35,23 +21,16 @@ export class LoginService {
      storeUserData (token, user) {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        this.authToken = token;
+        this.authTokenService.setAuthToken(token);
         this.user = user;
     }
 
-    /**
-     * If is still logged, return false if the time has expired.
-     */
-    public loggedIn() {
-        return !helper.isTokenExpired(this.authToken);
-    }
 
     /**
      * We disconnect the user
      */
     logout() {
-        this.authToken = null;
+        this.authTokenService.clearAuthToken();
         this.user = null;
-        localStorage.clear();
     }
 }

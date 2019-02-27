@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import {LoginService} from "./login.service";
-import {JwtHelperService} from "@auth0/angular-jwt";
 import {ExpressService} from "./express.service";
 import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
+import {Router} from "@angular/router";
+import {AuthTokenService} from "./auth-token.service";
 
-const helper = new JwtHelperService();
 
 @Injectable({
     providedIn: 'root'
@@ -13,15 +12,10 @@ const helper = new JwtHelperService();
 export class UserService {
 
 
-    constructor(private loginService: LoginService,
+    constructor(private authTokenService: AuthTokenService,
+                private router: Router,
                 private expressService: ExpressService) { }
 
-    /**
-     * Get the status if connected or not
-     */
-    getConnectStatus() {
-        return !helper.isTokenExpired(this.loginService.getToken());
-    }
 
     /**
      * get only the id of user
@@ -30,7 +24,7 @@ export class UserService {
      */
     getIdUser(callback, userName?) {
         if (userName === undefined) {
-            const token = helper.decodeToken(this.loginService.getToken());
+            const token = this.authTokenService.decodeToken();
             return callback(token.id_user);
         } else {
             const content = {
@@ -53,22 +47,32 @@ export class UserService {
      * @param id_user
      */
     getDataUser(callback, id_user?) {
-        const token = helper.decodeToken(this.loginService.getToken());
-        // console.log(token);
+        this.expressService.checkTokenBack((isOk) => {
+            if(isOk) {
 
-        if (token === null) {return callback(false); }
+                const token = this.authTokenService.decodeToken();
+                // console.log(token);
 
-        if (id_user === undefined){id_user = token.id_user; }
+                if (token === null) {
+                    return callback(false);
+                } else {
 
-        const content = {
-            action: 'getDataUser',
-            id_user: id_user
-        };
-        this.expressService.postExpress('user', content).subscribe((res: Auth) => {
-            if (!res.success) {
-                swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
-            } else {
-                return callback(res.user);
+                    if (id_user === undefined) {
+                        id_user = token.id_user;
+                    }
+
+                    const content = {
+                        action: 'getDataUser',
+                        id_user: id_user
+                    };
+                    this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+                        if (!res.success) {
+                            swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                        } else {
+                            return callback(res.user);
+                        }
+                    });
+                }
             }
         });
     }

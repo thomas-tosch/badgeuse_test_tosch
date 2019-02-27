@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import {LoginService} from '../services/login.service';
+import {AuthTokenService} from "../services/auth-token.service";
 
 
 @Injectable({
@@ -9,7 +9,7 @@ import {LoginService} from '../services/login.service';
 export class NotAuthGuard implements CanActivate {
 
   constructor(
-      private loginService: LoginService,
+      private authTokenService: AuthTokenService,
       private router: Router
   ) { }
 
@@ -17,7 +17,7 @@ export class NotAuthGuard implements CanActivate {
    * when user is connected, redirect to Home page
    */
   canActivate() {
-    if (this.loginService.loggedIn()) {
+    if (this.authTokenService.isTokenExpired()) {
       this.router.navigate(['/userSpace']);
       return false;
     } else {

@@ -2,28 +2,55 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
-import {LoginService} from "./login.service";
+import {AuthTokenService} from "./auth-token.service";
+import {Router} from "@angular/router";
+import swal from "sweetalert2";
 
-/**
- * for developpement. Comment and uncomment the line of ip of you need
- */
-// const ip = 'localhost'; // for dev in local
-const ip = '10.3.1.56'; // for prod on server
-
-const URL = 'http://'+ip+':8080/upload';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpressService {
 
-  private domain = 'http://'+ip+':8080';
+  /**
+   * Define the backend port
+   */
+  private port = '8080';
+  private domain;
+  private URL;
   private maxFileSize = 10 * 1024 * 1024; // 10 MB
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
 
   constructor(private http: HttpClient,
-              private loginService: LoginService) { }
+              private authTokenService: AuthTokenService,
+              private router: Router) {
+    this.defineUrl();
+  }
+
+  /**
+   * get windows location url and define this for the request post to backend
+   */
+  defineUrl() {
+    let url = window.location.href;
+    const regex = /.*.\/\/.*?\//;
+    url = url.match(regex).toString();
+    url = url.slice(0, -1);
+    const regex2 = /(.{6}):/;
+    if(url.match(regex2)){
+      url = url.match(/.*:/).toString();
+      url = url.slice(0, -1);
+    };
+    this.domain = url + ':' + this.port;
+    this.URL = url + ':' + this.port + '/upload';
+  }
+
+  /**
+   * get url
+   */
+  getDomain() {
+      return this.domain;
+  }
 
   /**
    * post request to express and get the response
@@ -31,8 +58,30 @@ export class ExpressService {
    * @param contentPost
    */
   postExpress(target, contentPost) {
-    contentPost.token = this.loginService.getToken();
+    contentPost.token = this.authTokenService.getToken();
     return this.http.post<Auth>(this.domain + '/' + target, contentPost);
+  }
+
+  /**
+   * check if token is expired on server
+   * @param callback
+   */
+  checkTokenBack(callback) {
+    if(this.authTokenService.isTokenExpired()) {
+      const content = {
+        action: 'checkToken'
+      };
+      this.postExpress('user', content).subscribe((res: Auth) => {
+        if (res.errorToken) {
+          this.authTokenService.clearAuthToken();
+          swal('C\'est fini !', 'Votre session à expirée, vauillez vous reconnecter', 'error');
+          this.router.navigate(['/login']);
+          return callback(false);
+        } else {
+          return callback(true);
+        }
+      });
+    }
   }
 
   /**
@@ -68,7 +117,7 @@ export class ExpressService {
    */
   uploadFile() {
     this.uploader = new FileUploader({
-      url: URL,
+      url: this.URL,
       itemAlias: 'justificatif',
       allowedMimeType: this.allowedMimeType,
       maxFileSize: this.maxFileSize

@@ -1,8 +1,11 @@
 module.exports = function(app) {
 
     let http = require('http').Server(app);
-    let io = require('socket.io')(http);
+    let io = require('socket.io').listen(http);
 
+    app.listen = function(){
+        return http.listen.apply(http, arguments)
+    };
 
     io.on('connection', (socket) => {
 
@@ -19,10 +22,5 @@ module.exports = function(app) {
         socket.on('absenceList', (content) => {
             io.emit('absenceList', content);
         });
-    });
-
-    // Initialize our websocket server on port 5000
-    http.listen(5000, () => {
-        console.log('Socket.io is started on port 5000');
     });
 }
