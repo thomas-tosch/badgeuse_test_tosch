@@ -48,13 +48,13 @@ export class WebsocketService {
      */
     connect(action): Rx.Subject<MessageEvent> {
         // server path
-        this.socket = io('http://localhost:8080');
+        this.socket = io(this.domain);
 
         // listen
         const observable = new Observable(observer => {
             this.socket.on(action, (data) => {
                 observer.next(data);
-            })
+            });
             return () => {
                  this.socket.disconnect();
             };

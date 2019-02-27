@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ExpressService} from "./services/express.service";
 import {UserService} from "./services/user.service";
 import {faAngleDoubleDown, faAngleDoubleLeft, faAngleDoubleRight, faAngleDoubleUp} from "@fortawesome/free-solid-svg-icons";
 import * as $ from 'jquery';
 import {WebsocketService} from "./services/websocket.Service";
+import {AuthTokenService} from "./services/auth-token.service";
+import {ExpressService} from "./services/express.service";
 
 @Component({
   selector: 'app-root',
@@ -21,20 +22,26 @@ export class AppComponent implements OnInit{
   btnSideBar;
   adminActive = false;
 
-  constructor(private expressService: ExpressService,
-              private userService: UserService,
-              private wsService: WebsocketService
+  constructor(private userService: UserService,
+              private wsService: WebsocketService,
+              private authTokenService: AuthTokenService,
+              private expressService: ExpressService
   ) {
     // connect the socket.io and listen
     this.wsService.listenSocket();
+    this.ckeckToken();
   }
 
   ngOnInit() {
     this.defineIconList();
     this.closeListOnInit();
+    this.getConnectStatus();
     this.isUserAdmin();
   }
 
+  ckeckToken() {
+    this.expressService.checkTokenBack((isOk) => { });
+  }
 
   /**
    * check if user is a administrator
@@ -47,7 +54,7 @@ export class AppComponent implements OnInit{
    * If true, show the menu. if false, hide the menu
    */
   getConnectStatus() {
-    return this.userService.getConnectStatus();
+    return this.authTokenService.isTokenExpired();
   }
 
   closeListOnInit() {

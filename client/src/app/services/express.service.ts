@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
-import {LoginService} from "./login.service";
-
+import {AuthTokenService} from "./auth-token.service";
+import {Router} from "@angular/router";
+import swal from "sweetalert2";
 
 
 @Injectable({
@@ -22,7 +23,8 @@ export class ExpressService {
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
 
   constructor(private http: HttpClient,
-              private loginService: LoginService) {
+              private authTokenService: AuthTokenService,
+              private router: Router) {
     this.defineUrl();
   }
 
@@ -43,6 +45,9 @@ export class ExpressService {
     this.URL = url + ':' + this.port + '/upload';
   }
 
+  /**
+   * get url
+   */
   getDomain() {
       return this.domain;
   }
@@ -53,8 +58,30 @@ export class ExpressService {
    * @param contentPost
    */
   postExpress(target, contentPost) {
-    contentPost.token = this.loginService.getToken();
+    contentPost.token = this.authTokenService.getToken();
     return this.http.post<Auth>(this.domain + '/' + target, contentPost);
+  }
+
+  /**
+   * check if token is expired on server
+   * @param callback
+   */
+  checkTokenBack(callback) {
+    if(this.authTokenService.isTokenExpired()) {
+      const content = {
+        action: 'checkToken'
+      };
+      this.postExpress('user', content).subscribe((res: Auth) => {
+        if (res.errorToken) {
+          this.authTokenService.clearAuthToken();
+          swal('C\'est fini !', 'Votre session à expirée, vauillez vous reconnecter', 'error');
+          this.router.navigate(['/login']);
+          return callback(false);
+        } else {
+          return callback(true);
+        }
+      });
+    }
   }
 
   /**

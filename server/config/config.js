@@ -42,5 +42,5 @@ const AUTHDEV = {
  * for developpement. Comment and uncomment the line of ip of you need
  * DELETE 'exports.auth = AUTHDEV;' ON FINAL PROD
  */
-// exports.auth = AUTH;
-exports.auth = AUTHDEV;
+exports.auth = AUTH;
+// exports.auth = AUTHDEV;
