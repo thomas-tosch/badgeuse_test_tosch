@@ -38,7 +38,6 @@
   
      - port 80
      - port 8080
-     - port 5000
   
   Pour que pm2 se relance automatiquement après un down server, éxecutez les commandes suivantes:
   
