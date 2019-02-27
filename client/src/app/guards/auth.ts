@@ -8,4 +8,5 @@ export interface Auth {
   token: string;
   user: string;
   list: string;
+  errorToken: boolean;
 }

@@ -12,6 +12,13 @@ module.exports = function(router) {
 
             switch (action) {
 
+                // SEND ERRORTOKEN FALSE
+                case 'checkToken':
+                    res.json({
+                        errorToken: false
+                    });
+                break;
+
                 // GET ALL DATA OF USER CONNECTED
                 case 'getDataUser':
 
@@ -89,7 +96,11 @@ module.exports = function(router) {
                     break
             }
         } else {
-            res.send('Vous n\'avez rien à faire ici !');
+            // res.send('Vous n\'avez rien à faire ici !');
+            res.json({
+                errorToken: true,
+                message: 'Vous n\'avez rien à faire ici !'
+            });
         }
     });
 };

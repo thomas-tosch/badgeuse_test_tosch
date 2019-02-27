@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import {LoginService} from "../services/login.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import swal from "sweetalert2";
+import {AuthTokenService} from "../services/auth-token.service";
 
 const helper = new JwtHelperService();
 
@@ -14,7 +14,8 @@ export class AuthGuard implements CanActivate {
 
   redirectUrl;
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private authTokenService: AuthTokenService,
+              private router: Router) { }
 
   /**
    * When user is disconnected, redirect to Login page
@@ -23,9 +24,9 @@ export class AuthGuard implements CanActivate {
    * @param state
    */
   canActivate (router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.loginService.loggedIn()) {
+    if (this.authTokenService.isTokenExpired()) {
 
-      const token = helper.decodeToken(this.loginService.getToken());
+      const token = helper.decodeToken(this.authTokenService.getToken());
       const regexUrl = /^\/admin$|^\/hebdo$|^\/userDetail|^\/absence$/;
 
       if (regexUrl.test(state.url)) {
