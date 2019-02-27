@@ -1,20 +1,4 @@
 const ipLocal = require('ip');
-/**
- * for developpement. Comment and uncomment the line of ip of you need
- */
-// const ip = 'localhost';
-const ip = ipLocal.address();
-
-//fait le lien entre angular et expresse
-const AUTH = {
-    HOST_EXPRESS : ip, // use for view in console, systeme don'tn need this
-    PORT_EXPRESS : 8080, // use for listen this port on backend
-    HOST_ANGULAR : ip, // use for multi-cross origin request
-    PORT_ANGULAR : 4200, // port for dev on localhost, not use in prod
-    SECRET_KEY: makeId()
-};
-
-exports.auth = AUTH;
 
 /**
  * Generate random key id for the user connection, please don't touch
@@ -28,3 +12,35 @@ function makeId() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
+
+/**
+ * Define the listen port et multi cross origin request
+ * @type {{PORT_EXPRESS: number, HOST_ANGULAR: (*|*), SECRET_KEY: string}}
+ */
+const AUTH = {
+    PORT_EXPRESS : 8080, // use for listen this port on backend
+    HOST_ANGULAR : ipLocal.address(), // use for multi-cross origin request
+    SECRET_KEY: makeId() // secret key for token crypt
+};
+
+
+/**
+ * only use for dev
+ * DELETE ALL THIS ON FINAL PROD
+ * @type {{PORT_ANGULAR: number, HOST_EXPRESS: (*|*)}}
+ */
+const AUTHDEV = {
+    PORT_EXPRESS : 8080, // use for listen this port on backend
+    HOST_ANGULAR : 'localhost:4200', // use for multi-cross origin request
+    SECRET_KEY: makeId() // secret key for token crypt
+};
+
+
+/**
+ * export AUTH attribute
+ * -----------------------------------------------------------------
+ * for developpement. Comment and uncomment the line of ip of you need
+ * DELETE 'exports.auth = AUTHDEV;' ON FINAL PROD
+ */
+exports.auth = AUTH;
+// exports.auth = AUTHDEV;

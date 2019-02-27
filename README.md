@@ -7,26 +7,9 @@
 * Node.js (v10.15.0)
 * Npm (v6.4.1)
 
-## ÉTAPE 1 : REGLAGE ADRESSE ##
+
   
-  Il y a 3 fichier à vérifier avant d'installer le projet sur un serveur. Il faut s'assurer que l'adresse du serveur correspond.
-  
-  Dans le fichier: 
-  
-   - `./client/src/app/service/express.service.ts : ligne 10 `=> la variable `ip` doit être l'adresse de votre serveur.
-   - `./server/config/config.js : ligne 5 `=> la variable `ip` doit être l'adresse de votre serveur.
-   - `./index.js => ligne 10`=> assurez-vous que cette ligne n'est pas commenté (la ligne 9, elle, doit être commenté).
-  
-## ÉTAPE 2 : COMPILATION ANGULAR ##
-  
-  Depuis le dossier client, dans un terminal, éxecutez la commande suivante:
-  
-  `ng build --prod`
-  
-  Celle-ci sert à compiler la partie angular définitivement. Une fois terminer et qu'il n'y a aucune erreur, vous trouverez la compilation final dans le dossier `./client/dist/`
-  
-  
-## ÉTAPE 3 : BDD ##
+## ÉTAPE 1 : BDD ##
 
    Pour la base de donnée, il faut importer les deux fichier sql situés dans le dossier ./BDD dans l'ordre suivant:
    
@@ -36,16 +19,10 @@
    Un utilisateur est automatiquement crée (uhaSQL) avec un mot de passe (uha), ainsi que les données des étudiants actuellement inscrit en cette année 2018-2019.
 
 
-## ÉTAPE 4 : GO TO SERVER ##
+## ÉTAPE 2 : GO TO SERVER ##
   
-  Sur le serveur, mettez les éléments suivant:
-  
-    - le dossier client que vous venez de compiler,
-    - le dossier server,
-    - le fichier index.js,
-    - le fichier package.json
     
-  Enfin, éxecutez la commande suivante depuis la racine du projet:
+  A la racine du projet, éxecutez les commandes suivantes:
   
   `npm install` 
   
@@ -59,9 +36,16 @@
   
   3 ports doivent être disponible:
   
-     - port 80: pointant le dossier client,
-     - port 8080: pointant la racine du projet,
-     - port 5000: pointant la racine du projet.
+     - port 80
+     - port 8080
+     - port 5000
+  
+  Pour que pm2 se relance automatiquement après un down server, éxecutez les commandes suivantes:
+  
+  `pm2 startup`
+   
+  `pm2 save` 
+  
   
 ## BONUS : INFO ##
 
