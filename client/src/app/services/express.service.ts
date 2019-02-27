@@ -38,10 +38,13 @@ export class ExpressService {
     if(url.match(regex2)){
       url = url.match(/.*:/).toString();
       url = url.slice(0, -1);
-      console.log(url);
     };
     this.domain = url + ':' + this.port;
     this.URL = url + ':' + this.port + '/upload';
+  }
+
+  getDomain() {
+      return this.domain;
   }
 
   /**

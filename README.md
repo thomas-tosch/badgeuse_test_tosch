@@ -60,3 +60,8 @@
    `pm2 log` -> affiche les logs de pm2 (ctrl + C pour quitter)
    
    `pm2 flush` -> efface tous les logs de pm2
+
+
+## BONUS : EN CAS DE PROBLEME ##
+
+   Vérifier bien dans le fichier ./server/config/config.js que la 'con AUTHDEV' est bien supprimer et que l'exports.auth est bien sur la 'const AUTH'.

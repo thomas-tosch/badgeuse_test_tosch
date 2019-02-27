@@ -2,15 +2,18 @@ import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable, Subject} from 'rxjs';
 import * as Rx from 'rxjs/Rx';
+import {ExpressService} from "./express.service";
 
 @Injectable()
 export class WebsocketService {
 
     private socket;
+    private domain;
     onListenPresence: Subject<any>;
     onListenAbsenceList: Subject<any>;
 
-    constructor() {
+    constructor(private expressService: ExpressService) {
+        this.domain = this.expressService.getDomain();
     }
 
     /**
@@ -45,8 +48,7 @@ export class WebsocketService {
      */
     connect(action): Rx.Subject<MessageEvent> {
         // server path
-        this.socket = io('http://10.3.1.56:5000');
-
+        this.socket = io('http://localhost:8080');
 
         // listen
         const observable = new Observable(observer => {
