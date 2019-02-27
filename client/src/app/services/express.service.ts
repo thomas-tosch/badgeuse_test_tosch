@@ -4,26 +4,45 @@ import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
 import {LoginService} from "./login.service";
 
-/**
- * for developpement. Comment and uncomment the line of ip of you need
- */
-// const ip = 'localhost'; // for dev in local
-const ip = '10.3.1.56'; // for prod on server
 
-const URL = 'http://'+ip+':8080/upload';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpressService {
 
-  private domain = 'http://'+ip+':8080';
+  /**
+   * Define the backend port
+   */
+  private port = '8080';
+  private domain;
+  private URL;
   private maxFileSize = 10 * 1024 * 1024; // 10 MB
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
 
   constructor(private http: HttpClient,
-              private loginService: LoginService) { }
+              private loginService: LoginService) {
+    this.defineUrl();
+  }
+
+  /**
+   * get windows location url and define this for the request post to backend
+   */
+  defineUrl() {
+    let url = window.location.href;
+    const regex = /.*.\/\/.*?\//;
+    url = url.match(regex).toString();
+    url = url.slice(0, -1);
+    const regex2 = /(.{6}):/;
+    if(url.match(regex2)){
+      url = url.match(regex2).toString();
+      url = url.slice(0, -1);
+      console.log(url);
+    };
+    this.domain = url + ':' + this.port;
+    this.URL = url + ':' + this.port + '/upload';
+  }
 
   /**
    * post request to express and get the response
@@ -68,7 +87,7 @@ export class ExpressService {
    */
   uploadFile() {
     this.uploader = new FileUploader({
-      url: URL,
+      url: this.URL,
       itemAlias: 'justificatif',
       allowedMimeType: this.allowedMimeType,
       maxFileSize: this.maxFileSize
