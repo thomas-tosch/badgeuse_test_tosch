@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Auth} from '../guards/auth';
 import {FileUploader} from 'ng2-file-upload';
-import {AuthTokenService} from "./auth-token.service";
-import {Router} from "@angular/router";
-import swal from "sweetalert2";
+import {AuthTokenService} from './auth-token.service';
+import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 
 
 @Injectable({
@@ -17,7 +17,6 @@ export class ExpressService {
    */
   private port = '8080';
   private domain;
-  private URL;
   private maxFileSize = 10 * 1024 * 1024; // 10 MB
   public uploader: FileUploader;
   public allowedMimeType = ['image/png', 'image/jpg', 'application/pdf', 'image/jpeg'];
@@ -42,7 +41,6 @@ export class ExpressService {
       url = url.slice(0, -1);
     };
     this.domain = url + ':' + this.port;
-    this.URL = url + ':' + this.port + '/upload';
   }
 
   /**
@@ -117,7 +115,7 @@ export class ExpressService {
    */
   uploadFile() {
     this.uploader = new FileUploader({
-      url: this.URL,
+      url: this.domain + '/upload',
       itemAlias: 'justificatif',
       allowedMimeType: this.allowedMimeType,
       maxFileSize: this.maxFileSize
