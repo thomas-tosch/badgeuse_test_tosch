@@ -8,3 +8,7 @@ Supprimerait .idea/codeStyles/Projet.xml
 .idea
 node_modules
 /.idea/
+BDD/data/
+client/assets/justificatif/
+package-lock.json
+
