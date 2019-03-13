@@ -2,7 +2,7 @@ let mysql = require('mysql');
 
 db = mysql.createConnection(
     {
-            host     : '127.0.0.1',
+            host     : 'mariadb',
             port     : 3306,
             user     : 'uhaSQL',
             password : 'uha',

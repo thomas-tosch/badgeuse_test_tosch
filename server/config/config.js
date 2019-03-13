@@ -19,7 +19,9 @@ function makeId() {
  */
 const AUTH = {
     PORT_EXPRESS : 8080, // use for listen this port on backend
-    HOST_ANGULAR : ipLocal.address(), // use for multi-cross origin request with client
+//    HOST_ANGULAR : ipLocal.address(), // use for multi-cross origin request with client
+    HOST_ANGULAR : '145.239.32.254', // use for multi-cross origin request with client
+    PORT_ANGULAR : 81,
     SECRET_KEY: makeId() // secret key for token crypt
 };
 
