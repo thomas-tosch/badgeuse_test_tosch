@@ -81,6 +81,7 @@
       <div class="nav nav-tabs to-border-blue" id="nav-tab" role="tablist">
         <a class="nav-item nav-link bg-blue active" id="nav-graphic-tab" data-toggle="tab" href="#nav-graphic" role="tab" aria-controls="nav-graphic" aria-selected="true">Graphique</a>
         <a class="nav-item nav-link bg-blue" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="nav-table" aria-selected="false">Tableau</a>
+        <a class="nav-item nav-link bg-blue" id="nav-pie-tab" data-toggle="tab" href="#nav-pie" role="tab" aria-controls="nav-pie" aria-selected="false">Graphique camembert</a>
       </div>
     </nav>
 
@@ -109,6 +110,10 @@
 
         </table>
       </div>
+      <!-- Pie chart -->
+      <div class="tab-pane fade d-flex justify-content-center mb-5" id="nav-pie" role="tabpanel" aria-labelledby="nav-pie-tab">
+        <canvas id="pieChart"></canvas>
+      </div>
     </div>
 
     <!-- LEGEND GRAPHIC -->
@@ -127,6 +132,3 @@
 
   </div>
 </div>
-
-
-
