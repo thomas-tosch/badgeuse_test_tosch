@@ -32,7 +32,7 @@ export class HebdoComponent implements OnInit {
   constructor(private expressService: ExpressService,
               private pdfService: PdfService,
               private formBuilder: FormBuilder) {
-      this.createForm();
+    this.createForm();
   }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class HebdoComponent implements OnInit {
         labels: ["Présence", "Maladie", "Stage", "Autre"],
         datasets: [{
           label: '# of Votes',
-          data: [9,7 , 3, 5],
+          data: [9, 7, 3, 5],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -61,14 +61,14 @@ export class HebdoComponent implements OnInit {
         }]
       },
       options: {
-        title:{
-          text:"Répartitions des heures",
-          display:true
+        title: {
+          text: "Répartitions des heures",
+          display: true
         },
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero:true
+              beginAtZero: true
             }
           }]
         }
@@ -88,10 +88,10 @@ export class HebdoComponent implements OnInit {
    */
   createForm() {
     this.form = this.formBuilder.group({
-        orderBy: ['userName'],
-        checkbox1: [true],
-        checkbox2: [true],
-        checkbox3: [true]
+      orderBy: ['userName'],
+      checkbox1: [true],
+      checkbox2: [true],
+      checkbox3: [true]
     });
   }
 
@@ -154,9 +154,21 @@ export class HebdoComponent implements OnInit {
    * initializes the group selected
    */
   onInitGroup() {
-    if (this.form.get('checkbox1').value) {this.checkbox1 = '1,'; } else {this.checkbox1 = ''; }
-    if (this.form.get('checkbox2').value) {this.checkbox2 = '2,'; } else {this.checkbox2 = ''; }
-    if (this.form.get('checkbox3').value) {this.checkbox3 = '3,'; } else {this.checkbox3 = ''; }
+    if (this.form.get('checkbox1').value) {
+      this.checkbox1 = '1,';
+    } else {
+      this.checkbox1 = '';
+    }
+    if (this.form.get('checkbox2').value) {
+      this.checkbox2 = '2,';
+    } else {
+      this.checkbox2 = '';
+    }
+    if (this.form.get('checkbox3').value) {
+      this.checkbox3 = '3,';
+    } else {
+      this.checkbox3 = '';
+    }
 
     this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3;
     this.filterGroup = this.filterGroup.substring(null, this.filterGroup.length - 1);
@@ -180,8 +192,5 @@ export class HebdoComponent implements OnInit {
       }
     });
   }
-
-  /**
-   * Chart
-   */
 }
+
