@@ -14,6 +14,7 @@
     "express-fileupload": "^1.1.1-alpha.1",
     "express-list-endpoints": "^4.0.0",
     "html-entities": "^1.2.1",
+    "http-status-codes": "^1.3.2",
     "ip": "^1.1.5",
     "is-date-format": "^0.1.1",
     "jsonwebtoken": "^8.3.0",
