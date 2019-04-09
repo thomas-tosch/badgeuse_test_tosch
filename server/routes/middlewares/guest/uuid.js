@@ -21,14 +21,14 @@ const uuid = function (router) {
 
 /**
  * Checks if the DB contains user for a given uuid then returns it.
- * @param uuid
+ * @param uuid_value
  * @param res
  * @returns array containing user linked to the given uuid
  * @returns res.statusCode 404 if not found, 500 if db error
  */
-function getUser(uuid, res) {
+function getUser(uuid_value, res) {
     db.query('SELECT u.id_user FROM users AS u' +
-        ' INNER JOIN users_extend AS ue ON ue.id_user = u.id_user WHERE ue.card =?', [uuid],
+        ' INNER JOIN users_extend AS ue ON ue.id_user = u.id_user WHERE ue.card =?', [uuid_value],
         (err, result) => {
             try {
                 // returns the User as an array
