@@ -81,6 +81,12 @@ où
    `pm2 flush` -> efface tous les logs de pm2
 
 
-## BONUS : EN CAS DE PROBLEME ##
+## ENVIRONNEMENT DEV : EN CAS DE PROBLEME ##
 
-   Vérifier bien dans le fichier ./server/config/config.js que la 'con AUTHDEV' est bien supprimer et que l'exports.auth est bien sur la 'const AUTH'.
+  Régler dans phpMyAdmin pour l'utilisateur uhaSQL un nom d'hôte en localhost.
+
+  Ensuite, changer la fin du fichier -> server/config/config.js 
+  
+  ``// exports.auth = AUTH;``
+
+  ``exports.auth = AUTHDEV``
