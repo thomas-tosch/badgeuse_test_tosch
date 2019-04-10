@@ -17,22 +17,19 @@ où
 
 ## ÉTAPE 1 : Installer Docker ##
 
-  Installation pour les distributions Linux basé sur Debian : https://docs.docker.com/install/linux/docker-ce/debian/
+  Linux basé sur Debian : https://docs.docker.com/install/linux/docker-ce/debian/
 
-  Installation pour MacOS : https://docs.docker.com/docker-for-mac/install/
-
-  Où à l'aide de votre package manager favoris : ``sudo pacman -S docker``
+  MacOS : https://docs.docker.com/docker-for-mac/install/
 
 
-## ÉTAPE 2 : Démarrer l'ensemble du projet ##
+## ÉTAPE 2 : Démarrer l'ensemble ##
 
-  ``docker-compose build``
 
   ``docker-compose up``
 
 # SECONDE SOLUTION : #
   
-## ÉTAPE 1 : BDD ##
+## ÉTAPE 1 : Installer la base de donnée ##
 
    Pour la base de donnée, il faut importer les deux fichier sql situés dans le dossier ./BDD dans l'ordre suivant:
    
@@ -42,7 +39,7 @@ où
    Un utilisateur est automatiquement crée (uhaSQL) avec un mot de passe (uha), ainsi que les données des étudiants actuellement inscrit en cette année 2018-2019.
 
 
-## ÉTAPE 2 : GO TO SERVER ##
+## ÉTAPE 2 : Lancer le serveur ##
   
     
   A la racine du projet, éxecutez les commandes suivantes:

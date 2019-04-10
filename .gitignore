@@ -1,9 +1,9 @@
-# Created by .ignore support plugin (hsz.mobi)
-.idea/workspace.xml
-client/node_modules/
-node_modules/
-server/public/
+
+.idea/*
+
+client/node_modules/*
+node_modules/*
+server/public/*
 node_modules
-.idea/
 
 BDD/.DS_Store
