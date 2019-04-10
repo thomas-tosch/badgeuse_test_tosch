@@ -9,7 +9,8 @@ import {UserDetailComponent} from './admin/user-detail/user-detail.component';
 import {HebdoComponent} from './admin/hebdo/hebdo.component';
 import {Error404Component} from './guest/error404/error404.component';
 import {UserRequestComponent} from './user/user-request/user-request.component';
-import {AbsenceComponent} from "./admin/absence/absence.component";
+import {AbsenceComponent} from './admin/absence/absence.component';
+import {TableUsersComponent} from './admin/pages/table-users/table-users.component'
 
 // ROUTER
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
   { path: 'userDetail/:id_user/:dateSelected', component: UserDetailComponent, canActivate: [AuthGuard] },
   { path: 'absence', component: AbsenceComponent, canActivate: [AuthGuard] },
+  { path: 'addUser', component: TableUsersComponent, canActivate: [AuthGuard] },
   // user
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   { path: 'userRequest', component: UserRequestComponent, canActivate: [AuthGuard]},
