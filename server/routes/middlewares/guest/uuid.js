@@ -9,16 +9,24 @@ const HttpStatus = require('http-status-codes');
  *  No intermediate step like login.js.
  * @param router
  */
-const uuid = function (router) {
-    router.post('/', (req, res) => {
-        try {
-            const uuid_value = req.body.uuid;
-            getUser(uuid_value, res)
-        } catch (e) {
+function uuid(router) {
+    router.post('/', requestHandler)
+}
 
+function requestHandler(request, response, next) {
+    try {
+        const uuid_value = request.body.uuid;
+
+        let id = getUserId(uuid_value, response).then((rows) => {
+            return rows
+        });
+        if (!id instanceof Promise) {
+            console.log(id)
         }
-    })
-};
+    } catch (e) {
+
+    }
+}
 
 /**
  * Checks if the DB contains user for a given uuid then returns it.
@@ -27,18 +35,17 @@ const uuid = function (router) {
  * @returns array containing user linked to the given uuid
  * @returns res.statusCode 404 if not found, 500 if db error
  */
-function getUser(uuid_value, res) {
-    db.query('SELECT u.id_user FROM users AS u' +
-        ' INNER JOIN users_extend AS ue ON ue.id_user = u.id_user WHERE ue.card =?', [uuid_value],
-        (err, result) => {
-            try {
-                // returns the User as an array
-                return result[0];
-            } catch (err) {
-                return dbError(err)
+function getUserId(uuid_value, res) {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT u.id_user FROM `users` u INNER JOIN `users_extend` ue ON ue.id_user = u.id_user WHERE ue.card = ?', [uuid_value],
+            (err, results) => {
+                if (err) {
+                    reject(dbError(err, "getUserId", res));
+                }
+                resolve(results);
             }
-        }
-    )
+        );
+    })
 }
 
 function setPresence(id) {
@@ -99,13 +106,13 @@ function isPresenceOn(id) {
     })
 }
 
-function dbError(err) {
+function dbError(err, from, res) {
     if (err instanceof Errors.NotFound) {
         // Returns a 404 with err.message in payload
-        return res.status(HttpStatus.NOT_FOUND).send({message: err.message}); // 404
+        return res.status(HttpStatus.NOT_FOUND).send({status: 404, message: err.message, from: from}); // 404
     }
     // else it must be a 500, db error
-    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: err, message: err.message}); // 500
+    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message, from: from}); // 500
 }
 
-module.exports = uuid(router);
+module.exports = uuid;
