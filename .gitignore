@@ -8,3 +8,4 @@ server/public/*
 node_modules
 
 BDD/.DS_Store
+BDD/data/*

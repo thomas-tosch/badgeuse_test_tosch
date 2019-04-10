@@ -42,8 +42,8 @@ const AUTHDEV = {
 /**
  * export AUTH attribute
  * -----------------------------------------------------------------
- * for developpement. Comment and uncomment the line of ip of you need
+ * TODO for developpement : Comment and uncomment the line of ip of you need
  * DELETE 'exports.auth = AUTHDEV;' ON FINAL PROD
  */
-exports.auth = AUTH;
-// exports.auth = AUTHDEV;
+// exports.auth = AUTH;
+exports.auth = AUTHDEV;

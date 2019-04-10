@@ -2,20 +2,6 @@ version: '3.1'
 
 services:
 
-  server:
-    image: node:alpine
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - .:/home/node/app
-    ports:
-      - 8080:8080
-    depends_on:
-      - mariadb
-    command: >
-      sh -c "npm install && node index.js"
-
   client:
     image: client:latest
     container_name: badgeuseclient
@@ -27,6 +13,21 @@ services:
       - '/usr/src/app/node_modules'
     ports:
       - 4200:4200
+
+  server:
+    image: node:alpine
+    container_name: badgeuseserver
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    command: >
+      sh -c "npm install && node index.js"
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - mariadb
+    ports:
+      - 8080:8080
 
   mariadb:
     container_name: mariadb
@@ -40,7 +41,7 @@ services:
       MYSQL_PASSWORD: uha
       MYSQL_DATABASE: badgeuse
     ports:
-      - 3308:3306
+      - 3306:3306
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -48,4 +49,4 @@ services:
     depends_on:
       - mariadb
     ports:
-      - 88:80
+      - 80:80
