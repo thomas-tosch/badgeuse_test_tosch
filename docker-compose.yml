@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+
+#  web:
+#    build:
+#      context: web
+#    volumes:
+#      - ./www:/var/www/html
+#    ports:
+#      - 81:80
+#    depends_on:
+#      - node
+
+#  node:
+#    container_name: client
+#    build:
+#      context: client
+#    environment:
+#      - NODE_ENV=production
+##      - PORT_ANGULAR=81
+##      - HOST_ANGULAR=10.0.1.4
+#    command: >
+#      sh -c "npm install"
+#    ports:
+#      - '8082:8080'
+#    depends_on:
+#      - mariadb
+#
+
+##  NOTE : le client gère le package.json sur ce projet
+#  client:
+#    image: client:latest
+#    container_name: "badgeuse"
+#    build:
+#      context: ./client
+#      dockerfile: Dockerfile
+#    volumes:
+#      - './client:/usr/src/app'
+#      - '/usr/src/app/node_modules'
+#    ports:
+#      - 4202:4200
+
+  mariadb:
+    container_name: mariadb
+    image: library/mariadb:latest
+    volumes:
+      - ./BDD/data:/var/lib/mysql
+      - ./BDD:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_USER: uhaSQL
+      MYSQL_PASSWORD: uha
+      MYSQL_DATABASE: badgeuse
+    ports:
+      - 3308:3306
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: bitnami/phpmyadmin:latest
+    depends_on:
+      - mariadb
+    ports:
+      - 8089:80

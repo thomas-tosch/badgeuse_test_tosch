@@ -3,11 +3,34 @@
    
 ## PRÉ-REQUIS ##
 
+* DOCKER
+
+où
+
 * MariaDb (10.1)
 * Node.js (v10.15.0)
 * Npm (v6.4.1)
 
 
+# PREMIERE SOLUTION : #
+
+
+## ÉTAPE 1 : Installer Docker ##
+
+  Installation pour les distributions Linux basé sur Debian : https://docs.docker.com/install/linux/docker-ce/debian/
+
+  Installation pour MacOS : https://docs.docker.com/docker-for-mac/install/
+
+  Où à l'aide de votre package manager favoris : ``sudo pacman -S docker``
+
+
+## ÉTAPE 2 : Démarrer l'ensemble du projet ##
+
+  ``docker-compose build``
+
+  ``docker-compose up``
+
+# SECONDE SOLUTION : #
   
 ## ÉTAPE 1 : BDD ##
 
