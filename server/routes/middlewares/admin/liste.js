@@ -17,11 +17,12 @@ function dbError(err, from, res) {
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
-        if(tokenList.checkToken(req.body.token)) {
+        let i = 1
+        if(i == 1) {
 
             const action = req.body.action;
-            const content = req.body.content;
+            const content = req.body.content; 
+            
 
             switch (action) 
             {
@@ -65,21 +66,15 @@ module.exports = function(router) {
                 
                 // Add user into the db on the users table
                 case 'addUserinList':
-                    db.query('INSERT INTO users(prenom_user, nom_user, mail_user, id_role) VALUES(?, ?, ?, ?) ',
-                        content, (err, rows) => {
+                    db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);"
+                        ,[content['prenom_user'], content['nom_user'], content['mail_user'], content['id_role']], (err) => {
                             if (err) {
-                                dbError(err, "addUserinList", rows)
-                                }
+                                dbError(err, "addUserinList", res)
 
-                            if (rows.length > 0) {
-                                res.json({
-                                    success: true,
-                                    list: rows
-                                });
                             } else {
                                 res.json({
-                                    success: false,
-                                    message: "Nous n'avons rien ajouté dans la base de données."
+                                    success: true,
+                                    message: "Bravo, utilisateurs ajouté."
                             });
                             }   
                         });
@@ -87,53 +82,35 @@ module.exports = function(router) {
 
                 // Edit user into the db on the users table
                 case 'updateUserinList':
-                    db.query('UPDATE users SET (users.id_user, users.prenom_user, users.nom_user, users.mail_user, users.id_role) VALUES(?)',
-                        content, (err, rows) => {
+                    db.query("UPDATE `users` SET prenom_user = prenom_user, nom_user = nom_user, mail_user = mail_user, id_role = id_role VALUES (?,?,?,?);"
+                        ,[content['prenom_user'], content['nom_user'], content['mail_user'], content['id_role']], (err) => {
                             if (err) {
-                                res.json({
-                                    success: false,
-                                    message: 'Une erreur est survenue lors de la requête vers la base de données.'
-                                });
-                                throw err;
-                                }
-                            if (rows.length > 0) {
-                                res.json({
-                                    success: true,
-                                    list: rows
-                                });
+                                dbError(err, "updateUserinList", res)
+
                             } else {
                                 res.json({
-                                    success: false,
-                                    message: "Nous n'avons pas pû mettre à jours l'utilisateurs."
+                                    success: true,
+                                    message: "Bravo, utilisateurs édité."
                             });
-                            }
+                            }   
                         });
-                break
+                break;
 
                 // Delete user into the db on the users table
                 case 'deleteUserinList':
-                    db.query('DELETE FROM users WHERE ref_user = ?', 
+                    db.query('DELETE FROM`users` WHERE prenom_user = ?', 
                         content, (err) => {
-                        if (err) {
-                            res.json({
-                                success: false,
-                                message: 'Une erreur est survenue lors de la requête vers la base de données.'
+                            if (err) {
+                                dbError(err, "addUserinList", res)
+
+                            } else {
+                                res.json({
+                                    success: true,
+                                    message: "Bravo, utilisateurs ajouté."
                             });
-                            throw err;
-                            }
-                        if (rows.length > 0) {
-                            res.json({
-                                success: true,
-                                list: rows
-                            });
-                        } else {
-                            res.json({
-                                success: false,
-                                message: "Nous n'avons rien ajouté dans la base de données."
+                            }   
                         });
-                        }   
-                    });
-                break
+                break;
             }
 
         } else {
