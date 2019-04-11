@@ -82,8 +82,8 @@ module.exports = function(router) {
 
                 // Edit user into the db on the users table
                 case 'updateUserinList':
-                    db.query("UPDATE `users` SET prenom_user = prenom_user, nom_user = nom_user, mail_user = mail_user, id_role = id_role VALUES (?,?,?,?);"
-                        ,[content['prenom_user'], content['nom_user'], content['mail_user'], content['id_role']], (err) => {
+                    db.query("UPDATE `users` SET `prenom_user` = 'coccccc', `nom_user` = '', `mail_user` = '', `id_role` = ? WHERE `users`.`id_user` = 55;"
+                        ,content, (err) => {
                             if (err) {
                                 dbError(err, "updateUserinList", res)
 
@@ -98,15 +98,15 @@ module.exports = function(router) {
 
                 // Delete user into the db on the users table
                 case 'deleteUserinList':
-                    db.query('DELETE FROM`users` WHERE prenom_user = ?', 
-                        content, (err) => {
+                    db.query("DELETE FROM `users` WHERE `users`.`prenom_user` = ?;"
+                        ,content, (err) => {
                             if (err) {
-                                dbError(err, "addUserinList", res)
+                                dbError(err, "deleteUserinList", res)
 
                             } else {
                                 res.json({
                                     success: true,
-                                    message: "Bravo, utilisateurs ajouté."
+                                    message: "Bravo, utilisateurs supprimé."
                             });
                             }   
                         });
