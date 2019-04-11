@@ -9,6 +9,7 @@ import {EditDialogUsersComponent} from '../../items/dialogs-users/edit-users/edi
 import {DeleteDialogUsersComponent} from '../../items/dialogs-users/delete-users/delete-users.dialog.component';
 import {BehaviorSubject, fromEvent, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-table-users',
@@ -24,7 +25,8 @@ export class TableUsersComponent implements OnInit {
   id_user: string;
   prenom_user: string;
 
-  constructor(  public httpClient: HttpClient,
+  constructor(  
+                
                 public dialog: MatDialog,
                 public dataService: UserService) {}
               
@@ -97,29 +99,8 @@ export class TableUsersComponent implements OnInit {
 
   private refreshTable() {
     // Refreshing table using paginator
-    // Thanks yeager-j for tips
-    // https://github.com/marinantonio/angular-mat-table-crud/issues/12
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-
-
-  /*   // If you don't need a filter or a pagination this can be simplified, you just use code from else block
-    // OLD METHOD:
-    // if there's a paginator active we're using it for refresh
-    if (this.dataSource._paginator.hasNextPage()) {
-      this.dataSource._paginator.nextPage();
-      this.dataSource._paginator.previousPage();
-      // in case we're on last page this if will tick
-    } else if (this.dataSource._paginator.hasPreviousPage()) {
-      this.dataSource._paginator.previousPage();
-      this.dataSource._paginator.nextPage();
-      // in all other cases including active filter we do it like this
-    } else {
-      this.dataSource.filter = '';
-      this.dataSource.filter = this.filter.nativeElement.value;
-    }*/
-
-
 
   public loadData() {
     this.exampleDatabase = new UserService();

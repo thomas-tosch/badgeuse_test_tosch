@@ -6,8 +6,9 @@ import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {AuthTokenService} from "./auth-token.service";
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders,} from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 
 
@@ -16,6 +17,7 @@ const httpOptions = {
       'Content-Type': 'application/json'
     })
   };
+  
   
 
 
@@ -106,18 +108,40 @@ export class UserService {
         });
     }
     
-
+    /**
+     * get all data of user conected
+     * @param callback
+     * @param id_user
+     */
     // ADD, POST METHOD
-    addUser(user: User): void {
-        this.httpClient.post(endpoint+ 'customer/', user, httpOptions).subscribe(data => {
-          console.log(data);
-          this.dialogData = user;
-          this.toastr.success('Félicitation, utilisateur ajouté.', 'Success!');
-          },
-          (err: HttpErrorResponse) => {
-            this.toastr.error('Problème, aucun utilisateur ajouté.', 'Oops!');
-        });
-       }
+    addUserinList(callback, id_user) {
+        this.expressService.checkTokenBack((isOk) => {
+            if(isOk) {
+
+                const token = this.authTokenService.decodeToken();
+
+                if(token === null) {
+                    return callback(false);
+                } else {
+                    if (id_user === undefined) {
+                        id_user = token.id_user;
+                    }
+
+                    const content = {
+                        action: 'addUserinList',
+                        id_user: id_user
+                    };
+                    this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+                        if (!res.success) {
+                            swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error')
+                        } else {
+                            return callback(res.user);
+                        }
+                    })
+                }
+
+            }
+        }
 
      // UPDATE, PUT METHOD
     updateUser(user: User){

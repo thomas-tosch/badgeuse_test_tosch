@@ -33,7 +33,7 @@ export class AddDialogUsersComponent {
     this.dialogRef.close();
   }
 
-  public confirmAdd(): void {
-    this.dataService.addUser(this.data);
+  public confirmAdd(callback, id_user): void {
+    this.dataService.addUserinList(callback, id_user);
   }
 }
