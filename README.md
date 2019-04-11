@@ -12,7 +12,7 @@ où
 * Npm (v6.4.1)
 
 
-# PREMIERE SOLUTION : #
+# PREMIERE SOLUTION (DEV) #
 
 
 ## ÉTAPE 1 : Installer Docker ##
@@ -26,8 +26,13 @@ où
 
 
   ``docker-compose up``
+  
+  Après avoir démarrer l'ensemble il est nécessaire de régler la base de donnée pour accepter les requêtes local (les explications sont données en fin de fichier). 
+  
+  Les fichiers Docker ont été prévus pour un environnement de développement, pour l'utiliser en production il est nécessaire de changer les volumes en copy.
 
-# SECONDE SOLUTION : #
+
+# SECONDE SOLUTION (DEV/PROD) #
   
 ## ÉTAPE 1 : Installer la base de donnée ##
 
@@ -81,7 +86,7 @@ où
    `pm2 flush` -> efface tous les logs de pm2
 
 
-## ENVIRONNEMENT DEV : EN CAS DE PROBLEME ##
+## ENVIRONNEMENT DEV ##
 
   Régler dans phpMyAdmin pour l'utilisateur uhaSQL un nom d'hôte en localhost.
 
@@ -90,3 +95,4 @@ où
   ``// exports.auth = AUTH;``
 
   ``exports.auth = AUTHDEV``
+  
