@@ -8,6 +8,7 @@ let calendar = require('./controllers/user/calendar');
 let upload = require('./controllers/user/upload');
 let absence_admin = require('./controllers/admin/absence');
 let absence = require('./controllers/user/absence');
+let uuid = require('./controllers/guest/uuid');
 
 
 module.exports = function(app)
@@ -23,5 +24,6 @@ module.exports = function(app)
         app.use('/absence_admin', absence_admin);
         app.use('/upload', upload);
         app.use('/absence', absence);
+        app.use('/uuid', uuid);
 
 };
