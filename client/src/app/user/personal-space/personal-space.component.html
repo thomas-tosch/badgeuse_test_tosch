@@ -1,4 +1,12 @@
- <div class="d-flex">
+<!-- nav selection -->
+<nav data-html2canvas-ignore="true">
+  <div class="nav nav-tabs to-border-blue" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link bg-blue active" id="nav-calendrier-tab" data-toggle="tab" href="#nav-calendrier" role="tab" aria-controls="nav-calendrier" aria-selected="true">Calendrier</a>
+    <a class="nav-item nav-link bg-blue" id="nav-pie-tab" data-toggle="tab" href="#nav-pie" role="tab" aria-controls="nav-pie" aria-selected="false">Graphique camembert</a>
+  </div>
+</nav>
+
+<div class="d-flex">
 
   <!-- INFO -->
   <div class="infobar shadow">
@@ -22,19 +30,28 @@
       </p>
 
       <button class="mt-1 btn btn-outline-primary alert-primary w-100"
-              routerLink="/userRequest"
-      >
+              routerLink="/userRequest">
         Soumettre une absence
       </button>
     </div>
-
   </div>
 
 
+   <div class="tab-content pt-3" id="nav-tabContent">
+     <!-- CALENDAR -->
+     <div class="tab-pane fade show active" id="nav-calendrier" role="tabpanel" aria-labelledby="nav-calendrier-tab">
+       <app-monthly-calendar [monthActive]="monthActive"
+                             [id_user]="id_user"
+                             [selectedWeek]="currentDate">
+       </app-monthly-calendar>
+      </div>
 
- <!-- CALENDAR -->
-  <div class="">
-    <app-monthly-calendar [monthActive]="monthActive" [id_user]="id_user" [selectedWeek]="currentDate"></app-monthly-calendar>
-  </div>
+     <!-- Pie chart -->
+     <div class="tab-pane fade d-flex justify-content-center mb-5" id="nav-pie" role="tabpanel" aria-labelledby="nav-pie-tab">
+       <canvas id="pieChart"></canvas>
+     </div>
+   </div>
+
+
 
  </div>

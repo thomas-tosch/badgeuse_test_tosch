@@ -46,7 +46,8 @@ module.exports = function (router) {
                         'SUBSTR(b.end_point, 1, 10) AS endHeure, ' +
                         'SUBSTR(b.end_point, 12, 19) AS endMinute ' +
                         'FROM badger b ' +
-                        'WHERE id_user = ? AND b.end_point IS NOT NULL', [id_user], (err, resultat) => {
+                        'WHERE id_user = ?', [id_user], (err, resultat) => {
+                        // 'WHERE id_user = ? AND b.end_point IS NOT NULL', [id_user], (err, resultat) => {
 
                         if (err) {
                             res.json({

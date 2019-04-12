@@ -31,7 +31,7 @@ INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) V
 ('Aghiles', 'Nessah', 'aghiles.nessah@uha.fr', 1),
 ('Alvin', 'Frey', 'alvin.frey@uha.fr', 1),
 ('Valentin', 'Tahon', 'valentin.tahon@uha.fr', 1),
-('Victor', 'Damiano', 'victor.damiano@uha.fr', 1),
+('Victor', 'Damiano', 'victor.damiano@uha.fr', 3),
 ('Luc', 'ratelli', 'luc.ratelli@uha.fr', 1),
 ('Jimmy', 'Heitz', 'jimmy.heitz@uha.fr', 1),
 ('Etrit', 'Halili', 'etrit.halili@uha.fr', 1),
@@ -51,11 +51,10 @@ INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) V
 ('Valentin', 'Cartier', 'valentin.cartier@uha.fr', 1),
 ('Thomas', 'Fritsch', 'thomas.fritsch@uha.fr', 1),
 ('Quentin', 'Kollaros', 'quentin.kollaros@uha.fr', 1),
-('Alexandre', 'Royer', 'alexandre.royer@uha.fr', 1),
+('Alexandre', 'Royer', 'alexandre.royer@uha.fr', 3),
 ('Lucas', 'Suhner', 'lucas.suhner@uha.fr', 1),
 ('Corentin', 'Jacob', 'corentin.jacob@uha.fr', 1),
 ('Loïc', 'Deverre', 'loic.deverre@uha.fr', 1),
-
 ('Etienne', 'Burger', 'etienne_burger@yahoo.fr', 2),
 ('Jean Francois', 'Roth', 'jean-francois.roth@uha.fr', 2);
 

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ExpressService } from "../../services/express.service";
+import { Auth } from "../../guards/auth";
 import {UserService} from '../../services/user.service';
+import {Chart} from 'chart.js'
+import {log} from "util";
 
 @Component({
   selector: 'app-personal-space',
@@ -11,12 +15,17 @@ export class PersonalSpaceComponent implements OnInit {
   monthActive = 'month';
   id_user;
   currentDate = new Date().toISOString().slice(0, 10);
+  PieChart = [];
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private expressService: ExpressService) {
     this.getIdUser();
+    this.getPieChart()
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPieChart()
+  }
 
   /**
    * get the id of user connected
@@ -26,4 +35,48 @@ export class PersonalSpaceComponent implements OnInit {
       this.id_user = id;
     });
   }
+
+  getPieChart() {
+    this.userService.getPieChart((data) => {
+      this.PieChart = new Chart('pieChart', {
+        type: 'pie',
+        data: {
+          labels: ["Présence", "Maladie", "Stage", "Autre"],
+
+          datasets: [{
+            label: '# of Votes',
+            data: [9,7 , 3, 5],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          title:{
+            text:"Répartitions des heures",
+            display:true
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
+    });
+  }
+
+
 }
