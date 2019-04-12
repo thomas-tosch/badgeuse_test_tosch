@@ -20,6 +20,8 @@ services:
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
+      - HOST_ANGULAR = process.env.HOST_ANGULAR
+      - PORT_ANGULAR = process.env.PORT_ANGULAR
     command: >
       sh -c "npm install && node index.js"
     volumes:
