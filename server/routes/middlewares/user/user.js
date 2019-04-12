@@ -97,20 +97,20 @@ module.exports = function(router) {
 
                 case 'getPieChart':
 
-                    db.query('select sum(if(half_day=0,7,4)), a.id_user, u.nom_user, r.nom_reason as reason from absences a,reason r,users u where u.id_user=a.id_user and a.id_reason=r.id_reason and absence_date between "2019-03-25" and "2019-03-29" and a.id_user= ? group by a.id_reason, a.id_user union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, "" as reason from badger b, users u where u.id_user=b.id_user and start_point between "2019-03-25" and "2019-03-29" and b.id_user=? group by b.id_user',
-                    [id_user], (err, rows) => {
-                        if (err) {
-                            res.json({
-                                success:false
-                            });
-                            throw err;
-                        } else {
-                            res.json({
-                                success: true,
-                                pieData: rows[0]
-                            });
-                        }
-                });
+                //     db.query('select sum(if(half_day=0,7,4)), a.id_user, u.nom_user, r.nom_reason as reason from absences a,reason r,users u where u.id_user=a.id_user and a.id_reason=r.id_reason and absence_date between "2019-03-25" and "2019-03-29" and a.id_user= ? group by a.id_reason, a.id_user union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, "" as reason from badger b, users u where u.id_user=b.id_user and start_point between "2019-03-25" and "2019-03-29" and b.id_user=? group by b.id_user',
+                //     [id_user], (err, rows) => {
+                //         if (err) {
+                //             res.json({
+                //                 success:false
+                //             });
+                //             throw err;
+                //         } else {
+                //             res.json({
+                //                 success: true,
+                //                 pieData: rows[0]
+                //             });
+                //         }
+                // });
 
             }
         } else {
