@@ -3,6 +3,7 @@ const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
 
 
+
 /**
  *  Receives an UUID from our RaspberryPi (or other devices
  *  from a student card.
@@ -11,22 +12,23 @@ const HttpStatus = require('http-status-codes');
  * @param router
  */
 function uuid(router) {
-    router.post('/', (request, response, next) => {
+    router.post('/', (request, response) => {
 
         const uuid_value = request.body.uuid;
 
+        // Promise chain that will wait each step for the previous action before continuing
         getUserId(uuid_value)
             .then((id) => {
-                return isPresent(id);
+                return isPresent(id); // retuns present state and id
             })
             .then((result) => {
                 return setPresence(result[0], result[1])
             })
             .then((result) => {
-                response.status(HttpStatus.OK).send({message: result ? "Success" : "Failed"})
+                response.status(HttpStatus.OK).send({message: result[0] ? "Success" : "Failed"})
             })
             .catch((err) => {
-                dbError(err, "requestHandler", response)
+                Errors.dbError(err, response)
             });
     })
 }
@@ -61,6 +63,7 @@ function getUserId(uuid_value) {
  */
 function setPresence(presence, id) {
     return new Promise((resolve, reject) => {
+        // Case the user is already logged in
         if (presence) {
             db.query('UPDATE badger ' +
                 'SET ' +
@@ -75,16 +78,18 @@ function setPresence(presence, id) {
                 'AND end_point is NULL ', [id],
                 (err, results) => {
                     try {
-                        resolve(results);
+                        resolve([results, presence]);
                     } catch (err) {
                         return reject(err);
                     }
                 });
+            // Case the user is logged off
         } else {
+            // we add a new entry into our badger table
             db.query('INSERT INTO badger(id_user) VALUES (?)', [id],
                 (err, results) => {
                     try {
-                        resolve(results)
+                        resolve([results, presence])
                     } catch (err) {
                         return reject(err);
                     }
@@ -112,20 +117,6 @@ function isPresent(id) {
                 }
             })
     })
-}
-
-
-function dbError(err, from, res) {
-    switch (err.Name) {
-        case Errors.NotFound:
-            return res.status(HttpStatus.NOT_FOUND).send({status: 404, message: err.message, from: from}); // 404
-        case Errors.BadRequest:
-            return res.status(HttpStatus.BAD_REQUEST).send({status: 400, message: err.message, from: from}); // 400
-        case Errors.Forbidden:
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message, from: from}); // 500
-        default:
-            break;
-    }
 }
 
 module.exports = uuid;
