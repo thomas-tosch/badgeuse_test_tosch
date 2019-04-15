@@ -25,14 +25,13 @@ function uuid(router) {
                 return setPresence(result[0], result[1])
             })
             .then((result) => {
-                response.status(HttpStatus.OK).send({message: result[0] ? "Success" : "Failed"})
+                response.status(HttpStatus.OK).send({message: result[0] ?  result[1] ? "User is now Logged off" : "User is now Logged on" : "Failed"})
             })
             .catch((err) => {
                 Errors.dbError(err, response)
             });
     })
 }
-
 
 /**
  * Checks if the DB contains user for a given uuid then returns it.
