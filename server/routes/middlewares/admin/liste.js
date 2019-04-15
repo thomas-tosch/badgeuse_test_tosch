@@ -1,33 +1,22 @@
 require ('../../../config/database');
 let tokenList = require ('../../../config/tokenList');
-const Errors = require('../../../error/errors');
-const HttpStatus = require('http-status-codes');
-
-
-function dbError(err, from, res) {
-    if (err instanceof Errors.NotFound) {
-        // Returns a 404 with err.message in payload
-        return res.status(HttpStatus.NOT_FOUND).send({status: 404, message: err.message, from: from}); // 404
-    }
-    // else it must be a 500, db error
-    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message, from: from}); // 500
-}
 
 
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-        let i = 1
-        if(i == 1) {
+
+        if(tokenList.checkToken(req.body.token)) {
+
 
             const action = req.body.action;
-            const content = req.body.content; 
-            
 
-            switch (action) 
-            {
+            switch (action) {
+
                 // Get the user list for see the presence
                 case 'getUserList':
+
+                    let content = [];
                     db.query('SELECT ' +
                         'users.id_user AS userId, ' +
                         'CONCAT(users.nom_user, \' \', users.prenom_user) AS userName, ' +
@@ -62,61 +51,11 @@ module.exports = function(router) {
                                 });
                             }
                         });
-                break;
-                
-                // Add user into the db on the users table
-                case 'addUserinList':
-                    db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);"
-                        ,[content['prenom_user'], content['nom_user'], content['mail_user'], content['id_role']], (err) => {
-                            if (err) {
-                                dbError(err, "addUserinList", res)
-
-                            } else {
-                                res.json({
-                                    success: true,
-                                    message: "Bravo, utilisateurs ajouté."
-                            });
-                            }   
-                        });
-                break;
-
-                // Edit user into the db on the users table
-                case 'updateUserinList':
-                    db.query("UPDATE `users` SET `prenom_user` = ?, `nom_user` = ?, `mail_user` = ?, `id_role` = ? WHERE `users`.`id_user` = ?;"
-                        ,[content['prenom_user'], content['nom_user'], content['mail_user'], content['id_role'], content['id_user']], (err) => {
-                            if (err) {
-                                dbError(err, "updateUserinList", res)
-
-                            } else {
-                                res.json({
-                                    success: true,
-                                    message: "Bravo, utilisateurs édité."
-                            });
-                            }   
-                        });
-                break;
-
-                // Delete user into the db on the users table
-                case 'deleteUserinList':
-                    db.query("DELETE FROM `users` WHERE `users`.`id_user` = ?;"
-                        ,content['id_user'], (err) => {
-                            if (err) {
-                                dbError(err, "deleteUserinList", res)
-
-                            } else {
-                                res.json({
-                                    success: true,
-                                    message: "Bravo, utilisateurs supprimé."
-                            });
-                            }   
-                        });
-                break;
+                break
             }
-
         } else {
             res.send('Vous n\'avez rien à faire ici !');
         }
-
     });
 };
 
