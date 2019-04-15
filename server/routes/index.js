@@ -9,9 +9,6 @@ let upload = require('./controllers/user/upload');
 let absence_admin = require('./controllers/admin/absence');
 let absence = require('./controllers/user/absence');
 let uuid = require('./controllers/guest/uuid');
-let adduser = require('./controllers/admin/adduser');
-let edituser = require('./controllers/admin/edituser');
-let deleteuser = require('./controllers/admin/deleteuser');
 
 
 
@@ -29,8 +26,5 @@ module.exports = function(app)
         app.use('/upload', upload);
         app.use('/absence', absence);
         app.use('/uuid', uuid);
-        app.use('/adduser', adduser);
-        app.use('/edituser', edituser);
-        app.use('/deleteuser', deleteuser);
 
 };
