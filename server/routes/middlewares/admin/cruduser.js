@@ -15,70 +15,100 @@ function crudUser(router) {
     router.delete('/', deleteUser)
     router.get('/', getUser)
 }
-
+/**
+ * The add function allows administrators to add a user but also sets his / her uuid.
+ * @param {*} request 
+ * @param {*} response 
+ */
 function addUser(request, response) {
     const adduser_value = request.body.content;
-    return Promise((resolve, reject) => {
-        db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);"
+    return new Promise((resolve, reject) => { //* Add to the users table our different information about adding our new users
+        db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);"  
         ,[adduser_value['prenom_user'],adduser_value['nom_user'],adduser_value['mail_user'],
         adduser_value['id_role']] ,
         (err, results) => {
-            console.log(results)
-            if (err) {
-                reject(err)
-            resolve(results)
-        };
-    })
-    .then(() => {
-        db.query("SELECT LAST_INSERT_ID()",
-        (err, results) => {
-            console.log(results)
             if (err) {
                 reject(err)
             }
             resolve(results)
         });
     })
-    .then((results) => {
-        db.query("INSERT INTO user_exteing (id_user, card) VALUES (?, ?)", [results, adduser_value['card']],
-        (err, results) => {
-            console.log(results)
-            if (err) {
-                reject(err)
-            }
-            resolve(results)
-        });
+    .catch((err) => {
+        console.log(err)
     })
-})}
 
+    .then(() => {
+        new Promise((resolve, reject) => {      
+            db.query("SELECT LAST_INSERT_ID()", //* Retrieve the previously inserted id. 
+        (err, results) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    })
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+    .then((results) => {
+        new Promise((reject) => { //* Get the id to add the uuid to the users_extend table and its group_id.
+            db.query("INSERT INTO `users_extend` (`id_user`, `id_group`,`card`) VALUES (?, ?, ?);", [[results], [adduser_value['id_group']], [adduser_value['card']]],
+        (err, results) => {
+            if (err) {
+                reject(err);
+            }
+            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"})
+        });
+    })
+})
+    .catch((err) => {
+        console.log(err)
+    })
+}
+/**
+ * 
+ * @param {*} request 
+ * @param {*} response 
+ */
 function editUser(request, response) {
-    const edituser_value = request.body.content;
+    const edituser_value = request.body.content; //* Allows administrators to edit student information.
         db.query("UPDATE `users` SET `prenom_user` = ?, `nom_user` = ?, `mail_user` = ?, `id_role` = ? WHERE `users`.`id_user` = ? ;"
         ,[edituser_value['prenom_user'],edituser_value['nom_user'],edituser_value['mail_user'],edituser_value['id_role'],edituser_value['id_user']],
         (err, results) => {
             if (err) {
                 (dbError(err, "edituser", response));
             }
-            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"})
+            resolve(results)
         });
 }
 
 
-
+/**
+ * 
+ * @param {*} request 
+ * @param {*} response 
+ */
 function deleteUser(request, response) {
-    const deleteuser_value = request.body.content; 
-        db.query("DELETE FROM `users` WHERE `users`.`id_user` = ?;"
+    const deleteuser_value = request.body.content; //* Allows the deletion of a student in the database. Deletes in the user table as well as in the users_extend.
+        db.query("DELETE `users_extend`, `users`  FROM `users_extend` INNER JOIN `users` WHERE `users_extend`.`id_user` = `users`.`id_user` and `users`.`id_user` = ?;"
         ,[deleteuser_value['id_user']],
         (err, results) => {
             if (err) {
                 (dbError(err, "deleteUser", response));
             }
-            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"})
+            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"}) //* Retrieve the results of the delete request.
         });   
 }
 
+/**
+ * 
+ * @param {*} request 
+ * @param {*} response 
+ */
 function getUser(request, response) {
-    const getuser_value = request.body.content;
+    const getuser_value = request.body.content; //* Retrieve all user present on the table user/user_extend in the database.
         db.query("SELECT *, ue.card FROM users u INNER JOIN users_extend ue ON u.id_user = ue.id_user;" 
         ,[getuser_value],
         (err, results) => {
@@ -92,7 +122,12 @@ function getUser(request, response) {
 }
 
 
-
+/**
+ * 
+ * @param {*} err 
+ * @param {*} from 
+ * @param {*} res 
+ */
 function dbError(err, from, res) {
     if (err instanceof Errors.NotFound) {
         // Returns a 404 with err.message in payload
