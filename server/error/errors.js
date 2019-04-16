@@ -96,9 +96,8 @@ function dbError(err, res) {
         case BadRequest:
             return res.status(HttpStatus.BAD_REQUEST).send({status: 400, message: err.message}); // 400
         case Forbidden:
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message}); // 500
         default:
-            break;
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message}); // 500
     }
 }
 

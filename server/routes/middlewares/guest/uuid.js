@@ -1,8 +1,16 @@
 require('../../../config/database');
 const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
+const SimpleNodeLogger = require('simple-node-logger'),
+    opts = {
+        logDirectory: './server/log/info',
+        fileNamePattern: '<DATE>.log',
+        timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS',
+        dateFormat: 'MMDD'
+    },
+    info = SimpleNodeLogger.createRollingFileLogger(opts).info;
 
-
+const ip = require("ip");
 
 /**
  *  Receives an UUID from our RaspberryPi (or other devices
@@ -13,6 +21,11 @@ const HttpStatus = require('http-status-codes');
  */
 function uuid(router) {
     router.post('/', (request, response) => {
+        console.log('127.0.0.1'.localeCompare("127.0.0.1"));
+        if ((request.ip.split(':').pop()) !== (ip.address() || "127.0.0.1")) {
+            return response.status(HttpStatus.FORBIDDEN).send({message: "Access not authorized"});
+        }
+
 
         const uuid_value = request.body.uuid;
 
@@ -25,9 +38,10 @@ function uuid(router) {
                 return setPresence(result[0], result[1])
             })
             .then((result) => {
-                response.status(HttpStatus.OK).send({message: result[0] ?  result[1] ? "User is now Logged off" : "User is now Logged on" : "Failed"})
+                response.status(HttpStatus.OK).send({message: result[0] ? result[1] ? "User is now Logged off" : "User is now Logged on" : "Failed"})
             })
             .catch((err) => {
+                info("UUID : " + uuid_value + ". " + err);
                 Errors.dbError(err, response)
             });
     })
