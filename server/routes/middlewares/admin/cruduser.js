@@ -74,17 +74,19 @@ function addUser(request, response) {
  */
 function editUser(request, response) {
     const edituser_value = request.body.content; //* Allows administrators to edit student information.
-        db.query("UPDATE `users` SET `prenom_user` = ?, `nom_user` = ?, `mail_user` = ?, `id_role` = ? WHERE `users`.`id_user` = ? ;"
-        ,[edituser_value['prenom_user'],edituser_value['nom_user'],edituser_value['mail_user'],edituser_value['id_role'],edituser_value['id_user']],
+    return new Promise ((resolve, reject) => {
+        db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
+        " WHERE u.id_user = ue.id_user AND u.id_user = ? ;"
+        ,[edituser_value['prenom_user'],edituser_value['nom_user'],edituser_value['mail_user'],edituser_value['id_role'], edituser_value['card'],
+        edituser_value['id_user']],
         (err, results) => {
             if (err) {
-                (dbError(err, "edituser", response));
+                reject(err);
             }
-            resolve(results)
+            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"})
         });
+    })
 }
-
-
 /**
  * 
  * @param {*} request 
@@ -92,7 +94,8 @@ function editUser(request, response) {
  */
 function deleteUser(request, response) {
     const deleteuser_value = request.body.content; //* Allows the deletion of a student in the database. Deletes in the user table as well as in the users_extend.
-        db.query("DELETE `users_extend`, `users`  FROM `users_extend` INNER JOIN `users` WHERE `users_extend`.`id_user` = `users`.`id_user` and `users`.`id_user` = ?;"
+        db.query("DELETE `users_extend`, `users`  FROM `users_extend` INNER JOIN `users`"
+         + "WHERE `users_extend`.`id_user` = `users`.`id_user` and `users`.`id_user` = ?;"
         ,[deleteuser_value['id_user']],
         (err, results) => {
             if (err) {

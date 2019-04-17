@@ -1,23 +1,9 @@
 import { Injectable } from '@angular/core';
-import {ExpressService} from './express.service';
-import { BehaviorSubject } from 'rxjs';
-import {Auth} from '../guards/auth';
-import swal from 'sweetalert2';
-import {Router} from '@angular/router';
-import {AuthTokenService} from './auth-token.service';
-import {HttpClient, HttpErrorResponse, HttpHeaders, } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
-
-
-
-const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
-
+import {ExpressService} from "./express.service";
+import {Auth} from "../guards/auth";
+import swal from "sweetalert2";
+import {Router} from "@angular/router";
+import {AuthTokenService} from "./auth-token.service";
 
 
 @Injectable({
@@ -25,26 +11,10 @@ const httpOptions = {
 })
 export class UserService {
 
-    dataChange: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
-    // Temporarily stores data from dialogs
-    dialogData: any;
-
-
 
     constructor(private authTokenService: AuthTokenService,
                 private router: Router,
                 private expressService: ExpressService) { }
-
-
-    get data(): User[] {
-        return this.dataChange.value;
-    }
-
-    getDialogData() {
-        return this.dialogData;
-      }
-
-
 
 
     /**
@@ -61,7 +31,7 @@ export class UserService {
                 action: 'getIdUser',
                 userName: userName
             };
-            this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+            this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
                 if (!res.success) {
                     swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                 } else {
@@ -78,7 +48,7 @@ export class UserService {
      */
     getDataUser(callback, id_user?) {
         this.expressService.checkTokenBack((isOk) => {
-            if (isOk) {
+            if(isOk) {
 
                 const token = this.authTokenService.decodeToken();
                 // console.log(token);
@@ -106,6 +76,7 @@ export class UserService {
             }
         });
     }
+
     /**
      * check if the user connected is administrator
      * @param callback
@@ -113,7 +84,7 @@ export class UserService {
     isUserAdmin(callback) {
         this.getDataUser((user) => {
             // activate administrator access if role = 3
-            if (user.id_role === 3) {
+            if (user.id_role === 3){
                 return callback(true);
             } else {
                 return callback(false);
@@ -123,3 +94,4 @@ export class UserService {
 
 
 }
+
