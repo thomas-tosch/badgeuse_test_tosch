@@ -1,6 +1,7 @@
 require('../../../config/database');
 const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
+const config = require('../../../config/config');
 const SimpleNodeLogger = require('simple-node-logger'),
     opts = {
         logDirectory: './server/log/info',
@@ -21,11 +22,9 @@ const ip = require("ip");
  */
 function uuid(router) {
     router.post('/', (request, response) => {
-        console.log('127.0.0.1'.localeCompare("127.0.0.1"));
-        if ((request.ip.split(':').pop()) !== (ip.address() || "127.0.0.1")) {
+        if (request.ip.split(':').pop().localeCompare(config.raspi.HOST_RASPI || "127.0.0.1") === 0) {
             return response.status(HttpStatus.FORBIDDEN).send({message: "Access not authorized"});
         }
-
 
         const uuid_value = request.body.uuid;
 
