@@ -8,5 +8,6 @@ export interface Auth {
   token: string;
   user: string;
   list: string;
+  pieData: number;
   errorToken: boolean;
 }

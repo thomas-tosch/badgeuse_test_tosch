@@ -4,6 +4,7 @@ import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {AuthTokenService} from "./auth-token.service";
+import {dump} from "pm2";
 
 
 @Injectable({
@@ -105,7 +106,7 @@ export class UserService {
                         if (!res.success) {
                             swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                         } else {
-                            return callback(res.user);
+                            return callback(res.pieData);
                         }
                     });
                 }
