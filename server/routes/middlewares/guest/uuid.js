@@ -2,16 +2,25 @@ require('../../../config/database');
 const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
 const config = require('../../../config/config');
-const SimpleNodeLogger = require('simple-node-logger'),
-    opts = {
-        logDirectory: './server/log/info',
-        fileNamePattern: '<DATE>.log',
-        timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS',
-        dateFormat: 'MMDD'
-    },
-    info = SimpleNodeLogger.createRollingFileLogger(opts).info;
+const winston = require('winston');
+require('winston-daily-rotate-file');
 
-const ip = require("ip");
+const transport = new (winston.transports.DailyRotateFile)({
+    filename: './server/log/%DATE%.log',
+    datePattern: 'MMDD',
+    zippedArchive: true,
+    maxFiles: '7d',
+});
+const logger = winston.createLogger({
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.printf(i => `${i.timestamp} | ${i.message}`)
+    ),
+    transports: [
+        transport
+    ]
+});
+
 
 /**
  *  Receives an UUID from our RaspberryPi (or other devices
@@ -34,13 +43,13 @@ function uuid(router) {
                 return isPresent(id); // retuns present state and id
             })
             .then((result) => {
-                return setPresence(result[0], result[1])
+                return setPresence(result[0], result[1]) // returns true if success and message in second part
             })
             .then((result) => {
                 response.status(HttpStatus.OK).send({message: result[0] ? result[1] ? "User is now Logged off" : "User is now Logged on" : "Failed"})
             })
             .catch((err) => {
-                info("UUID : " + uuid_value + ". " + err);
+                logger.info("UUID : " + uuid_value + ". " + err); // log to our file
                 Errors.dbError(err, response)
             });
     })

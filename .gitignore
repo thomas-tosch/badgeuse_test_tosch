@@ -9,3 +9,4 @@ Supprimerait .idea/codeStyles/Projet.xml
 node_modules
 /.idea/
 *.log
+server/log/*.json
