@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExpressService } from "../../services/express.service";
-import { Auth } from "../../guards/auth";
 import {UserService} from '../../services/user.service';
 import {Chart} from 'chart.js'
-import {log} from "util";
 
 @Component({
   selector: 'app-personal-space',
@@ -17,8 +14,7 @@ export class PersonalSpaceComponent implements OnInit {
   currentDate = new Date().toISOString().slice(0, 10);
   PieChart = [];
 
-  constructor(private userService: UserService,
-              private expressService: ExpressService) {
+  constructor(private userService: UserService) {
     this.getIdUser();
     this.getPieChart()
   }
@@ -37,7 +33,7 @@ export class PersonalSpaceComponent implements OnInit {
   }
 
   getPieChart() {
-    this.userService.getPieChart((data) => {
+    this.userService.getPieChart((dataFromBack) => {
       this.PieChart = new Chart('pieChart', {
         type: 'pie',
         data: {
@@ -45,7 +41,7 @@ export class PersonalSpaceComponent implements OnInit {
 
           datasets: [{
             label: '# of Votes',
-            data: [9,7 , 3, 5],
+            data: dataFromBack,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
