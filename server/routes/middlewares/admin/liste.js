@@ -51,8 +51,10 @@ module.exports = function(router) {
                                 });
                             }
                         });
-                break
+                break;
             }
+
+
         } else {
             res.send('Vous n\'avez rien à faire ici !');
         }

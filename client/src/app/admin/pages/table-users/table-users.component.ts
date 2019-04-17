@@ -3,7 +3,7 @@ import {CrudUserService} from '../../../services/cruduser.service';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
-import {CrudUser} from '../../../services/models/cruduser.model'
+import {CrudUser} from '../../../services/models/cruduser.model';
 import {AddDialogUsersComponent} from '../../items/dialogs-users/add-users/add-users.dialog.component';
 import {EditDialogUsersComponent} from '../../items/dialogs-users/edit-users/edit-users.dialog.component';
 import {DeleteDialogUsersComponent} from '../../items/dialogs-users/delete-users/delete-users.dialog.component';
@@ -18,7 +18,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 
 export class TableUsersComponent implements OnInit {
-  displayedColumns = ['id_user', 'prenom_user', 'nom_user','mail_user','id_role', 'card', 'actions'];
+  displayedColumns = ['id_user', 'prenom_user', 'nom_user', 'mail_user', 'id_role', 'card', 'actions'];
   exampleDatabase: CrudUserService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -30,7 +30,6 @@ export class TableUsersComponent implements OnInit {
               public dialog: MatDialog,
               public dataService: CrudUserService) {}
 
-              
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -105,6 +104,7 @@ export class TableUsersComponent implements OnInit {
 
   public loadData() {
     this.exampleDatabase = new CrudUserService(this.toastr, this.httpClient);
+// tslint:disable-next-line: no-use-before-declare
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
       // .debounceTime(150)
@@ -156,7 +156,7 @@ export class ExampleDataSource extends DataSource<CrudUser> {
     return merge(...displayDataChanges).pipe(map( () => {
         // Filter data
         this.filteredData = this._exampleDatabase.data.slice().filter((user: CrudUser) => {
-          const searchStr = ( user.id_user + user.prenom_user + user.card ).toLowerCase();
+          const searchStr = ( user.id_user + user.prenom_user + user.nom_user + user.mail_user + user.id_role + user.card ).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
 

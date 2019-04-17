@@ -3,12 +3,12 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {CrudUser} from './models/cruduser.model';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import {Auth} from "../guards/auth";
-import {AuthTokenService} from "./auth-token.service";
-import {ExpressService} from "./express.service";
+import {Auth} from '../guards/auth';
+import {AuthTokenService} from './auth-token.service';
+import {ExpressService} from './express.service';
 
 
-const endpoint = document.location.protocol + "//" + document.location.hostname + ":8080/";
+const endpoint = document.location.protocol + '//' + document.location.hostname + ':8080/';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -36,12 +36,10 @@ export class CrudUserService {
     return this.dialogData;
   }
 
-  
 
   /** CRUD METHODS */
   getUser(): void {
-          
-    this.httpClient.get<CrudUser[]>(endpoint+ 'cruduser').subscribe(data => {
+    this.httpClient.get<CrudUser[]>(endpoint + 'cruduser').subscribe(data => {
         this.dataChange.next(data);
       },
       (err: HttpErrorResponse) => {
@@ -52,7 +50,7 @@ export class CrudUserService {
 
     // ADD, POST METHOD
     addUser(user: CrudUser): void {
-    this.httpClient.post(endpoint+ 'cruduser', user, httpOptions).subscribe(data => {
+    this.httpClient.post(endpoint + 'cruduser', user, httpOptions).subscribe(data => {
       console.log(data);
       this.dialogData = user;
       this.toastr.success('Félicitation, utilisateur ajouté.', 'Success!');
@@ -62,8 +60,8 @@ export class CrudUserService {
     });
    }
     // UPDATE, PUT METHOD
-     updateUser(user: CrudUser){
-    return this.httpClient.put(endpoint+ 'cruduser', user).subscribe(data => {
+     updateUser(user: CrudUser) {
+    return this.httpClient.put(endpoint + 'cruduser', user).subscribe(data => {
       console.log(data);
         this.dialogData = user;
         this.toastr.success('Félicitation utilisateur édité', 'Success!');
@@ -74,8 +72,8 @@ export class CrudUserService {
     );
   }
   // DELETE METHOD
-  deleteUser(id: string): void {
-    this.httpClient.delete<CrudUser[]>(endpoint+ 'cruduser' + id).subscribe(data => {
+  deleteUser(id_user: string): void {
+    this.httpClient.delete<CrudUser[]>(endpoint + 'cruduser' + id_user).subscribe(data => {
       console.log(data);
       this.toastr.success('Félicitation utilisateur supprimé', 'Success!');
       },

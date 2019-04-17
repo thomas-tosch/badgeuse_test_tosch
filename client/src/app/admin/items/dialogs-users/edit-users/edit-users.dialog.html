@@ -45,7 +45,7 @@
   
       <div class="form">
           <mat-form-field color="accent">
-            <input matInput placeholder="card" [(ngModel)]="data.card" name="card" maxlength="3" required>
+            <input matInput placeholder="card" [(ngModel)]="data.card" name="card" maxlength="8" required>
             <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
             <mat-hint align="end">{{inputstate.value?.length || 0}}/8</mat-hint>
           </mat-form-field>
