@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'hebdo', component: HebdoComponent, canActivate: [AuthGuard] },
   { path: 'userDetail/:id_user/:dateSelected', component: UserDetailComponent, canActivate: [AuthGuard] },
   { path: 'absence', component: AbsenceComponent, canActivate: [AuthGuard] },
-  { path: 'addUser', component: TableUsersComponent, canActivate: [AuthGuard] },
+  { path: 'crudUser', component: TableUsersComponent, canActivate: [AuthGuard] },
   // user
   { path: 'userSpace', component: PersonalSpaceComponent, canActivate: [AuthGuard]},
   { path: 'userRequest', component: UserRequestComponent, canActivate: [AuthGuard]},

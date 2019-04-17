@@ -1,18 +1,18 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
-import { UserService } from '../../../../services/user.service';
+import { CrudUserService } from '../../../../services/cruduser.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add.dialog',
-  templateUrl: '../../dialogs-customers/add-users/add-users.dialog.html',
-  styleUrls: ['../../dialogs-customers/add-users/add-users.dialog.scss']
+  templateUrl: '../../dialogs-users/add-users/add-users.dialog.html',
+  styleUrls: ['../../dialogs-users/add-users/add-users.dialog.css']
 })
 
 export class AddDialogUsersComponent {
   constructor(public dialogRef: MatDialogRef<AddDialogUsersComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public dataService: UserService) { }
+              public dataService: CrudUserService) { }
 
   formControl = new FormControl('', [
     Validators.required
@@ -33,7 +33,8 @@ export class AddDialogUsersComponent {
     this.dialogRef.close();
   }
 
-  public confirmAdd(callback, id_user): void {
-    this.dataService.addUserinList(callback, id_user);
+  public confirmAdd(): void {
+    this.dataService.addUser(this.data);
   }
+
 }

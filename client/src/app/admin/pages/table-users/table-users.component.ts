@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {UserService} from '../../../services/user.service';
+import {CrudUserService} from '../../../services/cruduser.service';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
-import {User} from '../../../services/models/user.model'
+import {CrudUser} from '../../../services/models/cruduser.model'
 import {AddDialogUsersComponent} from '../../items/dialogs-users/add-users/add-users.dialog.component';
 import {EditDialogUsersComponent} from '../../items/dialogs-users/edit-users/edit-users.dialog.component';
 import {DeleteDialogUsersComponent} from '../../items/dialogs-users/delete-users/delete-users.dialog.component';
@@ -14,21 +14,22 @@ import {ToastrService} from 'ngx-toastr';
 @Component({
   selector: 'app-table-users',
   templateUrl: './table-users.component.html',
-  styleUrls: ['./table-users.component.scss']
+  styleUrls: ['./table-users.component.css']
 })
 
 export class TableUsersComponent implements OnInit {
-  displayedColumns = ['id_user', 'prenom_user', 'nom_user', 'card', 'actions'];
-  exampleDatabase: UserService | null;
+  displayedColumns = ['id_user', 'prenom_user', 'nom_user','mail_user','id_role', 'card', 'actions'];
+  exampleDatabase: CrudUserService | null;
   dataSource: ExampleDataSource | null;
   index: number;
   id_user: string;
-  prenom_user: string;
 
-  constructor(  
-                
-                public dialog: MatDialog,
-                public dataService: UserService) {}
+  constructor(
+              public toastr: ToastrService,
+              public httpClient: HttpClient,
+              public dialog: MatDialog,
+              public dataService: CrudUserService) {}
+
               
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -43,7 +44,7 @@ export class TableUsersComponent implements OnInit {
     this.loadData();
   }
 
-  addNew(user: User) {
+  addNew(user: CrudUser) {
     const dialogRef = this.dialog.open(AddDialogUsersComponent, {
       data: {user: user }
     });
@@ -58,19 +59,19 @@ export class TableUsersComponent implements OnInit {
     });
   }
 
-  startEdit(i: number, id_user: string, prenom_user: string, nom_user: string, card: string) {
-    this.prenom_user = prenom_user;
+  startEdit(i: number, id_user: string, prenom_user: string, nom_user: string, mail_user: string, id_role: string, card: string) {
+    this.id_user = id_user;
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
     const dialogRef = this.dialog.open(EditDialogUsersComponent, {
-      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, card: card}
+      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, mail_user: mail_user, id_role: id_role, card: card}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.prenom_user === this.prenom_user);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id_user === this.id_user);
         // Then you update that record using data from dialogData (values you enetered)
         this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
@@ -79,16 +80,16 @@ export class TableUsersComponent implements OnInit {
     });
   }
 
-  deleteItem(i: number, id_user: string, prenom_user: string, nom_user: string, card: string) {
+  deleteItem(i: number, id_user: string, prenom_user: string, nom_user: string, mail_user: string, id_role: string, card: string) {
     this.index = i;
-    this.prenom_user = prenom_user;
+    this.id_user = id_user;
     const dialogRef = this.dialog.open(DeleteDialogUsersComponent, {
-      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, card: card}
+      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, mail_user: mail_user, id_role: id_role, card: card}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.prenom_user === this.prenom_user);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id_user === this.id_user);
         // for delete we use splice in order to remove single object from DataService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
@@ -103,7 +104,7 @@ export class TableUsersComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new UserService();
+    this.exampleDatabase = new CrudUserService(this.toastr, this.httpClient);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
       // .debounceTime(150)
@@ -117,7 +118,7 @@ export class TableUsersComponent implements OnInit {
   }
 }
 
-export class ExampleDataSource extends DataSource<User> {
+export class ExampleDataSource extends DataSource<CrudUser> {
   _filterChange = new BehaviorSubject('');
 
   get filter(): string {
@@ -128,10 +129,10 @@ export class ExampleDataSource extends DataSource<User> {
     this._filterChange.next(filter);
   }
 
-  filteredData: User[] = [];
-  renderedData: User[] = [];
+  filteredData: CrudUser[] = [];
+  renderedData: CrudUser[] = [];
 
-  constructor(public _exampleDatabase: UserService,
+  constructor(public _exampleDatabase: CrudUserService,
               public _paginator: MatPaginator,
               public _sort: MatSort) {
     super();
@@ -140,7 +141,7 @@ export class ExampleDataSource extends DataSource<User> {
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<User[]> {
+  connect(): Observable<CrudUser[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
@@ -149,12 +150,12 @@ export class ExampleDataSource extends DataSource<User> {
       this._paginator.page
     ];
 
-    this._exampleDatabase.getDataUser();
+    this._exampleDatabase.getUser();
 
 
     return merge(...displayDataChanges).pipe(map( () => {
         // Filter data
-        this.filteredData = this._exampleDatabase.data.slice().filter((user: User) => {
+        this.filteredData = this._exampleDatabase.data.slice().filter((user: CrudUser) => {
           const searchStr = ( user.id_user + user.prenom_user + user.card ).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
@@ -174,7 +175,7 @@ export class ExampleDataSource extends DataSource<User> {
 
 
   /** Returns a sorted copy of the database data. */
-  sortData(data: User[]): User[] {
+  sortData(data: CrudUser[]): CrudUser[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
     }
@@ -187,6 +188,8 @@ export class ExampleDataSource extends DataSource<User> {
         case 'id_user': [propertyA, propertyB] = [a.id_user, b.id_user]; break;
         case 'prenom_user': [propertyA, propertyB] = [a.prenom_user, b.prenom_user]; break;
         case 'nom_user': [propertyA, propertyB] = [a.nom_user, b.nom_user]; break;
+        case 'mail_user': [propertyA, propertyB] = [a.mail_user, b.mail_user]; break;
+        case 'id_role': [propertyA, propertyB] = [a.id_role, b.id_role]; break;
         case 'card': [propertyA, propertyB] = [a.card, b.card]; break;
       }
 

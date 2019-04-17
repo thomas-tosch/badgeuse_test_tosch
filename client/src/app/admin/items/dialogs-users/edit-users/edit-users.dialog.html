@@ -25,6 +25,30 @@
           <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
       </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #inputstate class="form-control" placeholder="mail_user" [(ngModel)]="data.mail_user" name="mail_user" maxlength="10" required >
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #inputstate class="form-control" placeholder="id_role" [(ngModel)]="data.id_role" name="id_role" maxlength="10" required >
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #inputstate class="form-control" placeholder="id_user" [(ngModel)]="data.id_user" name="id_user" maxlength="10" required >
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+      </div>
   
       <div class="form">
           <mat-form-field color="accent">

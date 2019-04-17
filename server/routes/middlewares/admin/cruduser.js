@@ -1,6 +1,7 @@
 require('../../../config/database');
 const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
+let tokenList = require ('../../../config/tokenList');
 
 /**
  *  CrudUser for add/edit/delete user in db for 
@@ -22,6 +23,8 @@ function crudUser(router) {
  */
 function addUser(request, response) {
     const adduser_value = request.body.content;
+    
+
     return new Promise((resolve, reject) => { //* Add to the users table our different information about adding our new users
         db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);"  
         ,[adduser_value['prenom_user'],adduser_value['nom_user'],adduser_value['mail_user'],
@@ -74,7 +77,8 @@ function addUser(request, response) {
  */
 function editUser(request, response) {
     const edituser_value = request.body.content; //* Allows administrators to edit student information.
-    return new Promise ((resolve, reject) => {
+   
+    return new Promise ((reject) => {
         db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
         " WHERE u.id_user = ue.id_user AND u.id_user = ? ;"
         ,[edituser_value['prenom_user'],edituser_value['nom_user'],edituser_value['mail_user'],edituser_value['id_role'], edituser_value['card'],
@@ -94,6 +98,7 @@ function editUser(request, response) {
  */
 function deleteUser(request, response) {
     const deleteuser_value = request.body.content; //* Allows the deletion of a student in the database. Deletes in the user table as well as in the users_extend.
+    
         db.query("DELETE `users_extend`, `users`  FROM `users_extend` INNER JOIN `users`"
          + "WHERE `users_extend`.`id_user` = `users`.`id_user` and `users`.`id_user` = ?;"
         ,[deleteuser_value['id_user']],
@@ -112,6 +117,7 @@ function deleteUser(request, response) {
  */
 function getUser(request, response) {
     const getuser_value = request.body.content; //* Retrieve all user present on the table user/user_extend in the database.
+    
         db.query("SELECT *, ue.card FROM users u INNER JOIN users_extend ue ON u.id_user = ue.id_user;" 
         ,[getuser_value],
         (err, results) => {

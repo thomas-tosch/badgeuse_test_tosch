@@ -37,6 +37,16 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>nom_user</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.nom_user}}</mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="mail_user">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>mail_user</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.mail_user}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="id_role">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>id_role</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id_role}}</mat-cell>
+      </ng-container>
   
       <ng-container matColumnDef="card">
         <mat-header-cell *matHeaderCellDef mat-sort-header>card</mat-header-cell>
@@ -53,11 +63,11 @@
         </mat-header-cell>
   
         <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent" (click)="startEdit(i, row.id_user, row.prenom_user, row.nom_user, row.card)">
+          <button mat-icon-button color="accent" (click)="startEdit(i, row.id_user, row.prenom_user, row.nom_user, row.mail_user, row.id_role, row.id_user, row.card)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
   
-          <button mat-icon-button color="accent" (click)="deleteItem(i, row.id_user, row.prenom_user, row.nom_user, row.card)">
+          <button mat-icon-button color="accent" (click)="deleteItem(i, row.id_user, row.prenom_user, row.nom_user, row.mail_user, row.id_role, row.id_user, row.card)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
