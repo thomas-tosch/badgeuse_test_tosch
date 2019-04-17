@@ -8,8 +8,9 @@
   
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput #inputstate class="form-control" placeholder="prenom_user" [(ngModel)]="data.prenom_user" name="prenom_user" required >
+          <input matInput #inputstate class="form-control" placeholder="prenom_user" [(ngModel)]="data.prenom_user" name="prenom_user" maxlength="15" required >
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/15</mat-hint>
         </mat-form-field>
       </div>
   
@@ -24,23 +25,24 @@
 
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput #inputstate class="form-control" placeholder="mail_user" [(ngModel)]="data.mail_user" name="mail_user" maxlength="10" required >
+          <input matInput #inputstate class="form-control" placeholder="mail_user" [(ngModel)]="data.mail_user" name="mail_user"  required >
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          <mat-hint align="end">{{inputstate.value?.length || 0}}/30</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput #inputstate class="form-control" placeholder="id_role" [(ngModel)]="data.id_role" name="id_role" maxlength="10" required >
+          <input matInput #inputstate class="form-control" placeholder="id_role" [(ngModel)]="data.id_role" name="id_role" maxlength="1" required >
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/1</mat-hint>
         </mat-form-field>
       </div>
   
       <div class="form">
         <mat-form-field color="accent">
-          <input matInput placeholder="card" [(ngModel)]="data.card" name="card">
+          <input matInput placeholder="card" [(ngModel)]="data.card" name="card" maxlength="8" required>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/8</mat-hint>
         </mat-form-field>
       </div>
   
