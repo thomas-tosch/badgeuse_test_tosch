@@ -1,6 +1,6 @@
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
-   
+Documentation située dans ./server/out/index.html (seulement UUID pour le moment) 
 ## PRÉ-REQUIS ##
 
 * MariaDb (10.1)
@@ -8,7 +8,7 @@
 * Npm (v6.4.1)
 
 
-  
+
 ## ÉTAPE 1 : BDD ##
 
    Pour la base de donnée, il faut importer les deux fichier sql situés dans le dossier ./BDD dans l'ordre suivant:
