@@ -38,7 +38,7 @@ export class AuthTokenService {
     localStorage.clear();
   }
 
-  /**
+  /**POST
    * check if token is expired
    */
   isTokenExpired() {

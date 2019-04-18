@@ -1,8 +1,7 @@
 require('../../../config/database');
 const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
-let tokenList = require ('../../../config/tokenList');
-
+let tokenList = require('../../../config/tokenList');
 /**
  *  CrudUser for add/edit/delete user in db for 
  *  the student card.
@@ -23,52 +22,58 @@ function crudUser(router) {
  */
 function addUser(request, response) {
     const adduser_value = request.body.content;
-    
+
 
     return new Promise((resolve, reject) => { //* Add to the users table our different information about adding our new users
-        db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);"  
-        ,[adduser_value['prenom_user'],adduser_value['nom_user'],adduser_value['mail_user'],
-        adduser_value['id_role']] ,
-        (err, results) => {
-            if (err) {
-                reject(err)
-            }
-            resolve(results)
-        });
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+            db.query("INSERT INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES (?, ?, ?, ?);", [adduser_value['prenom_user'], adduser_value['nom_user'], adduser_value['mail_user'],
+                    adduser_value['id_role']
+                ],
+                (err, results) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(results)
+                });
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
-    .then(() => {
-        new Promise((resolve, reject) => {      
-            db.query("SELECT LAST_INSERT_ID()", //* Retrieve the previously inserted id. 
-        (err, results) => {
-            if (err) {
-                reject(err);
-            }
-            resolve(results);
-        });
-    })
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(() => {
+            new Promise((resolve, reject) => {
+                db.query("SELECT LAST_INSERT_ID()", //* Retrieve the previously inserted id. 
+                    (err, results) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    });
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
-    .then((results) => {
-        new Promise((reject) => { //* Get the id to add the uuid to the users_extend table and its group_id.
-            db.query("INSERT INTO `users_extend` (`id_user`, `id_group`,`card`) VALUES (?, ?, ?);", [[results], [adduser_value['id_group']], [adduser_value['card']]],
-        (err, results) => {
-            if (err) {
-                reject(err);
-            }
-            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"})
-        });
-    })
-})
-    .catch((err) => {
-        console.log(err)
-    })
+        .then((results) => {
+            new Promise((reject) => { //* Get the id to add the uuid to the users_extend table and its group_id.
+                db.query("INSERT INTO `users_extend` (`id_user`, `id_group`,`card`) VALUES (?, ?, ?);", [
+                        [results],
+                        [adduser_value['id_group']],
+                        [adduser_value['card']]
+                    ],
+                    (err, results) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        response.status(HttpStatus.OK).send({
+                            message: results ? "Success" : "Failed"
+                        })
+                    });
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 /**
  * 
@@ -77,18 +82,20 @@ function addUser(request, response) {
  */
 function editUser(request, response) {
     const edituser_value = request.body.content; //* Allows administrators to edit student information.
-   
-    return new Promise ((reject) => {
+
+    return new Promise((reject) => {
         db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
-        " WHERE u.id_user = ue.id_user AND u.id_user = ? ;"
-        ,[edituser_value['prenom_user'],edituser_value['nom_user'],edituser_value['mail_user'],edituser_value['id_role'], edituser_value['card'],
-        edituser_value['id_user']],
-        (err, results) => {
-            if (err) {
-                reject(err);
-            }
-            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"})
-        });
+            " WHERE u.id_user = ue.id_user AND u.id_user = ? ;", [edituser_value['prenom_user'], edituser_value['nom_user'], edituser_value['mail_user'], edituser_value['id_role'], edituser_value['card'],
+                edituser_value['id_user']
+            ],
+            (err, results) => {
+                if (err) {
+                    reject(err);
+                }
+                response.status(HttpStatus.OK).send({
+                    message: results ? "Success" : "Failed"
+                })
+            });
     })
 }
 /**
@@ -97,17 +104,22 @@ function editUser(request, response) {
  * @param {*} response 
  */
 function deleteUser(request, response) {
-    const deleteuser_value = request.body.content; //* Allows the deletion of a student in the database. Deletes in the user table as well as in the users_extend.
-    
-        db.query("DELETE `users_extend`, `users`  FROM `users_extend` INNER JOIN `users`"
-         + "WHERE `users_extend`.`id_user` = `users`.`id_user` and `users`.`id_user` = ?;"
-        ,[deleteuser_value['id_user']],
+    if (!tokenList.checkToken(request.body.token)) {
+        response.status(HttpStatus.FORBIDDEN).send({
+            message: "TAMR EN CHO7"
+        })
+        return
+    }
+    const deleteuser_value = request.body.id_user; //* Allows the deletion of a student in the database. Deletes in the user table as well as in the users_extend.
+    db.query("DELETE b FROM badger b WHERE b.id_user = ?;DELETE ue FROM users_extend ue WHERE ue.id_user = ?;DELETE u FROM users u WHERE u.id_user = ?", [deleteuser_value, deleteuser_value, deleteuser_value],
         (err, results) => {
             if (err) {
                 (dbError(err, "deleteUser", response));
             }
-            response.status(HttpStatus.OK).send({message: results ? "Success" : "Failed"}) //* Retrieve the results of the delete request.
-        });   
+            response.status(HttpStatus.OK).send({
+                message: results ? "Success the user" + deleteuser_value : "Failed"
+            }) //* Retrieve the results of the delete request.
+        });
 }
 
 /**
@@ -117,16 +129,14 @@ function deleteUser(request, response) {
  */
 function getUser(request, response) {
     const getuser_value = request.body.content; //* Retrieve all user present on the table user/user_extend in the database.
-    
-        db.query("SELECT *, ue.card FROM users u INNER JOIN users_extend ue ON u.id_user = ue.id_user;" 
-        ,[getuser_value],
+
+    db.query("SELECT *, ue.card FROM users u INNER JOIN users_extend ue ON u.id_user = ue.id_user;", [getuser_value],
         (err, results) => {
-            console.log(results)
             if (err) {
                 (dbError(err, "deleteUser", response));
             }
             response.status(HttpStatus.OK).send(results)
-        });   
+        });
 
 }
 
@@ -140,10 +150,18 @@ function getUser(request, response) {
 function dbError(err, from, res) {
     if (err instanceof Errors.NotFound) {
         // Returns a 404 with err.message in payload
-        return res.status(HttpStatus.NOT_FOUND).send({status: 404, message: err.message, from: from}); // 404
+        return res.status(HttpStatus.NOT_FOUND).send({
+            status: 404,
+            message: err.message,
+            from: from
+        }); // 404
     }
     // else it must be a 500, db error
-    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message, from: from}); // 500
+    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+        status: 500,
+        message: err.message,
+        from: from
+    }); // 500
 }
 
 module.exports = crudUser;

@@ -17,7 +17,7 @@ export class DeleteDialogUsersComponent {
     this.dialogRef.close();
   }
 
-  confirmDelete(): void {
-    this.dataService.deleteUser(this.data.id_user);
+  confirmDelete(){
+    this.dataService.deleteUser(this.data);
   }
 }

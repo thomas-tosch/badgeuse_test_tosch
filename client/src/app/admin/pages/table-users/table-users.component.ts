@@ -10,6 +10,7 @@ import {DeleteDialogUsersComponent} from '../../items/dialogs-users/delete-users
 import {BehaviorSubject, fromEvent, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+import { AuthTokenService } from 'src/app/services/auth-token.service';
 
 @Component({
   selector: 'app-table-users',
@@ -25,6 +26,7 @@ export class TableUsersComponent implements OnInit {
   id_user: string;
 
   constructor(
+              private authTokenService: AuthTokenService,
               public toastr: ToastrService,
               public httpClient: HttpClient,
               public dialog: MatDialog,
@@ -103,7 +105,7 @@ export class TableUsersComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new CrudUserService(this.toastr, this.httpClient);
+    this.exampleDatabase = new CrudUserService(this.toastr, this.httpClient, this.authTokenService);
 // tslint:disable-next-line: no-use-before-declare
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')

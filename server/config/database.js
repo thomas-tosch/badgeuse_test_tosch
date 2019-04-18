@@ -7,4 +7,5 @@ db = mysql.createPool(
             user     : 'uhaSQL',
             password : 'uha',
             database : 'badgeuse',
+            multipleStatements: true // ATTENTION CETTE INFORMATIONS PEUT-ETRE A LORIGINE DE GROS PROBLEMES
     });

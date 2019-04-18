@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {CrudUser} from './models/cruduser.model';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import {Auth} from '../guards/auth';
 import {AuthTokenService} from './auth-token.service';
@@ -25,7 +25,7 @@ export class CrudUserService {
   // Temporarily stores data from dialogs
   dialogData: any;
 
-  constructor ( public toastr: ToastrService, private httpClient: HttpClient) {}
+  constructor ( public toastr: ToastrService, private httpClient: HttpClient, private authTokenService: AuthTokenService,) {}
 
 
   get data(): CrudUser[] {
@@ -73,7 +73,12 @@ export class CrudUserService {
   }
   // DELETE METHOD
   deleteUser(id_user: string): void {
-    this.httpClient.delete<CrudUser[]>(endpoint + 'cruduser' + id_user).subscribe(data => {
+    const token = this.authTokenService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {id_user: id_user['id_user'], token: token}
+  };
+    console.log(httpOptions)
+    this.httpClient.delete<CrudUser[]>(endpoint + 'cruduser', httpOptions).subscribe(data => {
       console.log(data);
       this.toastr.success('Félicitation utilisateur supprimé', 'Success!');
       },
