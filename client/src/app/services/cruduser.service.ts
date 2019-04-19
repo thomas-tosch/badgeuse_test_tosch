@@ -25,7 +25,7 @@ export class CrudUserService {
   // Temporarily stores data from dialogs
   dialogData: any;
 
-  constructor ( public toastr: ToastrService, private httpClient: HttpClient, private authTokenService: AuthTokenService,) {}
+  constructor ( public toastr: ToastrService, private httpClient: HttpClient, private authTokenService: AuthTokenService, ) {}
 
 
   get data(): CrudUser[] {
@@ -50,6 +50,12 @@ export class CrudUserService {
 
     // ADD, POST METHOD
     addUser(user: CrudUser): void {
+
+      const token = this.authTokenService.getToken();
+       const httpOptions = {
+         headers: new HttpHeaders({'Content-type': 'application/json'}), body: {user: user, token: token}
+       };
+       console.log(httpOptions);
     this.httpClient.post(endpoint + 'cruduser', user, httpOptions).subscribe(data => {
       console.log(data);
       this.dialogData = user;
@@ -61,7 +67,12 @@ export class CrudUserService {
    }
     // UPDATE, PUT METHOD
      updateUser(user: CrudUser) {
-    return this.httpClient.put(endpoint + 'cruduser', user).subscribe(data => {
+       const token = this.authTokenService.getToken();
+       const httpOptions = {
+         headers: new HttpHeaders({'Content-type': 'application/json'}), body: {user: user, token: token}
+       };
+       console.log(httpOptions);
+    return this.httpClient.put(endpoint + 'cruduser', user, httpOptions).subscribe(data => {
       console.log(data);
         this.dialogData = user;
         this.toastr.success('Félicitation utilisateur édité', 'Success!');
@@ -77,7 +88,7 @@ export class CrudUserService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {id_user: id_user['id_user'], token: token}
   };
-    console.log(httpOptions)
+    console.log(httpOptions);
     this.httpClient.delete<CrudUser[]>(endpoint + 'cruduser', httpOptions).subscribe(data => {
       console.log(data);
       this.toastr.success('Félicitation utilisateur supprimé', 'Success!');

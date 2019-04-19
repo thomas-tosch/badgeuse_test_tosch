@@ -21,6 +21,12 @@ function crudUser(router) {
  * @param {*} response 
  */
 function addUser(request, response) {
+    if (!tokenList.checkToken(request.body.token)) {
+        response.status(HttpStatus.FORBIDDEN).send({
+            message: "TAMR EN CHO7"
+        })
+        return
+    }
     const adduser_value = request.body.content;
 
 
@@ -81,19 +87,27 @@ function addUser(request, response) {
  * @param {*} response 
  */
 function editUser(request, response) {
+    if (!tokenList.checkToken(request.body.token)) {
+        response.status(HttpStatus.FORBIDDEN).send({
+            message: "TAMR EN CHO7"
+        })
+        return
+    }
     const edituser_value = request.body.content; //* Allows administrators to edit student information.
 
     return new Promise((reject) => {
+        
         db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
             " WHERE u.id_user = ue.id_user AND u.id_user = ? ;", [edituser_value['prenom_user'], edituser_value['nom_user'], edituser_value['mail_user'], edituser_value['id_role'], edituser_value['card'],
                 edituser_value['id_user']
             ],
+            console.log(edituser_value),
             (err, results) => {
                 if (err) {
                     reject(err);
                 }
                 response.status(HttpStatus.OK).send({
-                    message: results ? "Success" : "Failed"
+                    message: results ? "Success the user" + edituser_value : "Failed"
                 })
             });
     })

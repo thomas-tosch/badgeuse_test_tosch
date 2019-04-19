@@ -4,6 +4,5 @@ export class CrudUser {
     nom_user: string;
     mail_user: string;
     id_role: string;
-    id_group: string;
     card: string;
 }
