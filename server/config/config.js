@@ -19,7 +19,7 @@ function makeId() {
  */
 const AUTH = {
     PORT_EXPRESS : 8080, // use for listen this port on backend
-    HOST_ANGULAR : ipLocal.address(), // use for multi-cross origin request with client
+    HOST_ANGULAR : ipLocal.address(),
     SECRET_KEY: makeId() // secret key for token crypt
 };
 
@@ -39,10 +39,8 @@ const AUTHDEV = {
 /**
  * export AUTH attribute
  * -----------------------------------------------------------------
- * for developpement. Comment and uncomment the line of ip of you need
+ * TODO for developpement : Comment and uncomment the line of ip of you need
  * DELETE 'exports.auth = AUTHDEV;' ON FINAL PROD
  */
-
-//exports.auth = AUTH;
+// exports.auth = AUTH;
 exports.auth = AUTHDEV;
-

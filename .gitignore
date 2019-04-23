@@ -1,10 +1,11 @@
-# Created by .ignore support plugin (hsz.mobi)
-Supprimerait .idea/workspace.xml
-Supprimerait client/node_modules/
-Supprimerait node_modules/
-Supprimerait server/public/
-Supprimerait .idea/
-Supprimerait .idea/codeStyles/Projet.xml
-.idea
+
+.idea/*
+.idea/Project.xml
+
+client/node_modules/*
+node_modules/*
+server/public/*
 node_modules
-/.idea/
+
+BDD/.DS_Store
+BDD/data/*
