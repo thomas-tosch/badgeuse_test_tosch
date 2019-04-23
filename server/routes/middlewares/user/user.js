@@ -1,3 +1,4 @@
+
 require ('../../../config/database');
 let tokenList = require ('../../../config/tokenList');
 
@@ -105,7 +106,8 @@ module.exports = function(router) {
                         } else {
                             res.json({
                                 success: true,
-                                pieData: [parseInt(rows[0].day),parseInt(rows[1].day),parseInt(rows[2].day),parseInt(rows[3].day)]
+                                pieData: [parseInt(rows[0].day),parseInt(rows[1].day),parseInt(rows[2].day),parseInt(rows[3].day)],
+                                pieReason : [rows[0].reason, rows[1].reason, rows[2].reason, rows[3].reason]
                             });
                         }
                 });
