@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {CrudUser} from './models/cruduser.model';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { CrudUser } from './models/cruduser.model';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import {Auth} from '../guards/auth';
-import {AuthTokenService} from './auth-token.service';
-import {ExpressService} from './express.service';
+import { Auth } from '../guards/auth';
+import { AuthTokenService } from './auth-token.service';
+import { ExpressService } from './express.service';
 
 
 const endpoint = document.location.protocol + '//' + document.location.hostname + ':8080/';
@@ -25,7 +25,7 @@ export class CrudUserService {
   // Temporarily stores data from dialogs
   dialogData: any;
 
-  constructor ( public toastr: ToastrService, private httpClient: HttpClient, private authTokenService: AuthTokenService, ) {}
+  constructor(public toastr: ToastrService, private httpClient: HttpClient, private authTokenService: AuthTokenService, ) { }
 
 
   get data(): CrudUser[] {
@@ -40,43 +40,41 @@ export class CrudUserService {
   /** CRUD METHODS */
   getUser(): void {
     this.httpClient.get<CrudUser[]>(endpoint + 'cruduser').subscribe(data => {
-        this.dataChange.next(data);
-      },
+      this.dataChange.next(data);
+    },
       (err: HttpErrorResponse) => {
         this.toastr.error('Problème, aucune donnée chargée.', 'Oops!');
       });
   }
 
 
-    // ADD, POST METHOD
-    addUser(user: CrudUser): void {
+  // ADD, POST METHOD
+  addUser(user: CrudUser) {
 
-      const token = this.authTokenService.getToken();
-       const httpOptions = {
-         headers: new HttpHeaders({'Content-type': 'application/json'}), body: {user: user, token: token}
-       };
-       console.log(httpOptions);
+    const token = this.authTokenService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-type': 'application/json' }), body: { user, token: token }
+    };
+    console.log(httpOptions);
     this.httpClient.post(endpoint + 'cruduser', user, httpOptions).subscribe(data => {
       console.log(data);
       this.dialogData = user;
       this.toastr.success('Félicitation, utilisateur ajouté.', 'Success!');
-      },
+    },
       (err: HttpErrorResponse) => {
         this.toastr.error('Problème, aucun utilisateur ajouté.', 'Oops!');
-    });
-   }
-    // UPDATE, PUT METHOD
-     updateUser(user: CrudUser) {
-       const token = this.authTokenService.getToken();
-       const httpOptions = {
-         headers: new HttpHeaders({'Content-type': 'application/json'}), body: {user: user, token: token}
-       };
-       console.log(httpOptions);
+      });
+  }
+  // UPDATE, PUT METHOD
+  updateUser(user: CrudUser) {
+    const token = this.authTokenService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-type': 'application/json' }), body: { user, token: token }
+    };
     return this.httpClient.put(endpoint + 'cruduser', user, httpOptions).subscribe(data => {
-      console.log(data);
-        this.dialogData = user;
-        this.toastr.success('Félicitation utilisateur édité', 'Success!');
-      },
+      this.dialogData = user;
+      this.toastr.success('Félicitation utilisateur édité', 'Success!');
+    },
       (err: HttpErrorResponse) => {
         this.toastr.error('Problème, aucun utilisateur modifié: ' + err.name + ' ' + err.message, 'Oops');
       }
@@ -86,16 +84,16 @@ export class CrudUserService {
   deleteUser(id_user: string): void {
     const token = this.authTokenService.getToken();
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: {id_user: id_user['id_user'], token: token}
-  };
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id_user: id_user['id_user'], token: token }
+    };
     console.log(httpOptions);
     this.httpClient.delete<CrudUser[]>(endpoint + 'cruduser', httpOptions).subscribe(data => {
       console.log(data);
       this.toastr.success('Félicitation utilisateur supprimé', 'Success!');
-      },
+    },
       (err: HttpErrorResponse) => {
-        this.toastr.success('Successfully deleted', 'Success!', );
+        this.toastr.success('Successfully deleted', 'Success!');
       }
     );
-    }
   }
+}
