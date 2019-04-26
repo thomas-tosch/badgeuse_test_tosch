@@ -5,6 +5,7 @@ import {Options} from 'fullcalendar';
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import {ExpressService} from '../../services/express.service';
+import * as FC from 'ng-fullcalendar/node_modules/@types/fullcalendar';
 
 @Component({
     selector: 'app-monthly-calendar',
