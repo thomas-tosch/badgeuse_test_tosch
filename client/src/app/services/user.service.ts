@@ -4,7 +4,6 @@ import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {AuthTokenService} from "./auth-token.service";
-import {dump} from "pm2";
 
 
 @Injectable({
