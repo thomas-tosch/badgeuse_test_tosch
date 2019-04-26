@@ -34,8 +34,6 @@ export class PersonalSpaceComponent implements OnInit {
 
   getPieChart() {
     this.userService.getPieChart((dataFromBack, reasonFromBack) => {
-        console.log("dataFromBack : " + dataFromBack);
-        console.log("reasonFromBack : " + reasonFromBack);
         var nonJustifie = 35;
         dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
         dataFromBack.push(nonJustifie);
