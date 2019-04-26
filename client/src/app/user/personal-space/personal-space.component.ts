@@ -34,10 +34,11 @@ export class PersonalSpaceComponent implements OnInit {
 
   getPieChart() {
     this.userService.getPieChart((dataFromBack, reasonFromBack) => {
-        console.log(dataFromBack);
-      var nonJustifie = 35;
-      dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
-      dataFromBack.push(nonJustifie);
+        console.log("dataFromBack : " + dataFromBack);
+        console.log("reasonFromBack : " + reasonFromBack);
+        var nonJustifie = 35;
+        dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
+        dataFromBack.push(nonJustifie);
         reasonFromBack.push("Non Justifié");
         this.PieChart = new Chart('pieChart', {
         type: 'pie',

@@ -38,7 +38,7 @@ INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) V
 ('Hélène', 'David', 'helene.david@uha.fr', 1),
 ('Anthony', 'Spinali', 'anthony.spinali@uha.fr', 1),
 ('Alexandre', 'Dias-Omonte', 'alexandre.dias-omonte@uha.fr', 1),
-('Elodie', 'Balaia', 'elodie.balaia@uha.fr', 1),
+('Elodie', 'Balaia', 'elodie.balaia@uha.fr', 3),
 ('Thomas', 'Tosch', 'thomas.tosch@uha.fr', 1),
 ('Aurelien', 'Diss', 'aurelien.diss@uha.fr', 1),
 ('Natan', 'Fourie', 'natan.fourie@uha.fr', 1),
