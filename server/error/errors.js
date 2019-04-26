@@ -1,4 +1,5 @@
 'use strict';
+const HttpStatus = require('http-status-codes');
 
 class ExtendableError extends Error {
     constructor(message) {
@@ -82,6 +83,25 @@ class InternalServerError extends ExtendableError {
 }
 
 
+/**
+ *  Returns json response from a given error using NotFound, BadRequest or Forbidden
+ * @param err - the passed error from the db function
+ * @param res - the response object passed
+ * @returns {*}
+ */
+function dbError(err, res) {
+    switch (err.Name) {
+        case NotFound:
+            return res.status(HttpStatus.NOT_FOUND).send({status: 404, message: err.message}); // 404
+        case BadRequest:
+            return res.status(HttpStatus.BAD_REQUEST).send({status: 400, message: err.message}); // 400
+        case Forbidden:
+        default:
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({status: 500, message: err.message}); // 500
+    }
+}
+
+module.exports.dbError = dbError;
 module.exports.BadRequest = BadRequest;
 module.exports.Unauthorized = Unauthorized;
 module.exports.Forbidden = Forbidden;

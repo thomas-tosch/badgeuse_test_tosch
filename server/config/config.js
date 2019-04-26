@@ -18,8 +18,13 @@ function makeId() {
  * @type {{PORT_EXPRESS: number, HOST_ANGULAR: (*|*), SECRET_KEY: string}}
  */
 const AUTH = {
+<<<<<<< HEAD
     PORT_EXPRESS : 8080, // use for listen this port on backend
     HOST_ANGULAR : ipLocal.address(),
+=======
+    PORT_EXPRESS: 8080, // use for listen this port on backend
+    HOST_ANGULAR: ipLocal.address(), // use for multi-cross origin request with client
+>>>>>>> 3f693ae65647d8d869d48c73ad206083ea27241e
     SECRET_KEY: makeId() // secret key for token crypt
 };
 
@@ -30,11 +35,19 @@ const AUTH = {
  * @type {{PORT_ANGULAR: number, HOST_EXPRESS: (*|*)}}
  */
 const AUTHDEV = {
-    PORT_EXPRESS : 8080, // use for listen this port on backend
-    HOST_ANGULAR : 'localhost:4200', // use for multi-cross origin request with client
+    PORT_EXPRESS: 8080, // use for listen this port on backend
+    HOST_ANGULAR: 'localhost:4200', // use for multi-cross origin request with client
     SECRET_KEY: makeId() // secret key for token crypt
 };
 
+
+/**
+ * Define the Raspi address on the network
+ * @type {{HOST_RASPI: string}}
+ */
+const RASPI = {
+    HOST_RASPI: "10.3.1.184"
+};
 
 /**
  * export AUTH attribute
@@ -44,3 +57,8 @@ const AUTHDEV = {
  */
 // exports.auth = AUTH;
 exports.auth = AUTHDEV;
+<<<<<<< HEAD
+=======
+exports.raspi = RASPI;
+
+>>>>>>> 3f693ae65647d8d869d48c73ad206083ea27241e

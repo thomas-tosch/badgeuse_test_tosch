@@ -1,6 +1,6 @@
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
-   
+Documentation située dans ./server/out/index.html (seulement UUID pour le moment) 
 ## PRÉ-REQUIS ##
 
 * DOCKER
