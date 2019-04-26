@@ -1,3 +1,4 @@
+
 require ('../../../config/database');
 let tokenList = require ('../../../config/tokenList');
 
@@ -6,7 +7,6 @@ module.exports = function(router) {
     router.post('/', (req, res) => {
 
         if(tokenList.checkToken(req.body.token)) {
-
             const action = req.body.action;
             let id_user = req.body.id_user;
 
@@ -93,7 +93,26 @@ module.exports = function(router) {
                             });
                         }
                     });
-                    break
+                    break;
+
+                case 'getPieChart':
+                    db.query("select sum(if(half_day=0,7,4)) as day, a.id_user, u.nom_user, r.nom_reason as reason from absences a,reason r,users u where u.id_user = a.id_user and a.id_reason = r.id_reason and absence_date between '2019-04-15' and '2019-04-19' and a.id_user = ? group by a.id_reason, a.id_user union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, '' as reason from badger b, users u where u.id_user = b.id_user and start_point between '2019-04-15' and '2019-04-19' and b.id_user=? group by b.id_user",
+                    [id_user, id_user], (err, rows) => {
+                        if (err) {
+                            res.json({
+                                success:false
+                            });
+                            throw err;
+                        } else {
+                            res.json({
+                                success: true,
+                                pieData: [parseInt(rows[0].day),parseInt(rows[1].day),parseInt(rows[2].day),parseInt(rows[3].day)],
+                                pieReason : [rows[0].reason, rows[1].reason, rows[2].reason, rows[3].reason]
+                            });
+                        }
+                });
+                break;
+
             }
         } else {
             // res.send('Vous n\'avez rien à faire ici !');

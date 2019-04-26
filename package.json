@@ -29,7 +29,8 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "@types/jspdf": "^1.2.2"
+    "@types/jspdf": "^1.2.2",
+    "ng-faker": "^1.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

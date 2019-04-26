@@ -101,6 +101,7 @@ CREATE TABLE absences (
 	id_reason SMALLINT NOT NULL,
 	comment_absences VARCHAR(512) NULL,
 	certificate VARCHAR(255) NULL,
+	raison_refus VARCHAR(255) NULL,
 	PRIMARY KEY (id_absences),
 	CONSTRAINT fk_absences_id_user
 		FOREIGN KEY (id_user)

@@ -4,6 +4,7 @@ import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {AuthTokenService} from "./auth-token.service";
+import {dump} from "pm2";
 
 
 @Injectable({
@@ -70,6 +71,42 @@ export class UserService {
                             swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                         } else {
                             return callback(res.user);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     * get all data of user conected
+     * @param callback
+     * @param id_user
+     */
+    getPieChart(callback, id_user?) {
+        this.expressService.checkTokenBack((isOk) => {
+            if(isOk) {
+
+                const token = this.authTokenService.decodeToken();
+                // console.log(token);
+
+                if (token === null) {
+                    return callback(false);
+                } else {
+
+                    if (id_user === undefined) {
+                        id_user = token.id_user;
+                    }
+
+                    const content = {
+                        action: 'getPieChart',
+                        id_user: id_user
+                    };
+                    this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+                        if (!res.success) {
+                            swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                        } else {
+                            return callback(res.pieData, res.pieReason);
                         }
                     });
                 }
