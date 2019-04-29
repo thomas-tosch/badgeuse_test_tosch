@@ -9,3 +9,6 @@ node_modules
 
 BDD/.DS_Store
 BDD/data/*
+/.idea/
+*.log
+server/log/*.json

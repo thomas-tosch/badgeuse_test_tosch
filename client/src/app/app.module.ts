@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule} from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -10,6 +11,7 @@ import { MenuComponent } from './menu/menu.component';
 import { LoginService} from './services/login.service';
 import { ExpressService} from './services/express.service';
 import { UserService} from './services/user.service';
+import { CrudUserService } from './services/cruduser.service';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BadgerComponent } from './menu/badger/badger.component';
 import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -32,7 +34,23 @@ import localeFr from '@angular/common/locales/fr';
 import { FileUploadModule} from 'ng2-file-upload';
 import { ReplaceSpace } from './pipe/replaceSpace';
 import { TruncatePipe} from './pipe/truncate';
+import { TableUsersComponent } from './admin/pages/table-users/table-users.component';
+import { AddDialogUsersComponent } from './admin/items/dialogs-users/add-users/add-users.dialog.component';
+import { EditDialogUsersComponent } from './admin/items/dialogs-users/edit-users/edit-users.dialog.component';
+import { DeleteDialogUsersComponent } from './admin/items/dialogs-users/delete-users/delete-users.dialog.component';
 
+
+import { ToastrModule } from 'ngx-toastr';
+
+import {
+  MatFormFieldModule, MatButtonModule, MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
+  MatTableModule, MatToolbarModule, MatSidenavModule, MatMenuModule, MatListModule, MatDividerModule, MatCardModule
+
+ } from '@angular/material';
+
+
+ import { NgxChartsModule } from '@swimlane/ngx-charts';
+ 
 
 registerLocaleData(localeFr, 'fr');
 
@@ -53,11 +71,18 @@ registerLocaleData(localeFr, 'fr');
     UserRequestComponent,
     AbsenceComponent,
     ReplaceSpace,
-    TruncatePipe
+    TruncatePipe,
+    TableUsersComponent,
+    AddDialogUsersComponent,
+    EditDialogUsersComponent,
+    DeleteDialogUsersComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
@@ -66,8 +91,42 @@ registerLocaleData(localeFr, 'fr');
     FormsModule,
     BrowserModule,
     FullCalendarModule,
-    FileUploadModule
+    FileUploadModule,
+
+    /** Material Modules */
+
+    MatDividerModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatButtonModule, 
+    MatListModule, 
+    MatIconModule, 
+    MatMenuModule, 
+    MatInputModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatCardModule,
+
+    /** Additional **/
+    NgxChartsModule,
+
+
   ],
+  entryComponents: [
+    AddDialogUsersComponent,
+    EditDialogUsersComponent,
+    DeleteDialogUsersComponent
+  ],
+
   providers: [
       AuthGuard,
       LoginService,
@@ -75,8 +134,12 @@ registerLocaleData(localeFr, 'fr');
       UserService,
       BadgerService,
       WebsocketService,
+      CrudUserService,
       { provide: LOCALE_ID, useValue: 'fr' }
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
