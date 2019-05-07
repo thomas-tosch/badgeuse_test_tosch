@@ -5,7 +5,6 @@ import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Auth } from '../../guards/auth';
 import swal from 'sweetalert2';
-import {Chart} from 'chart.js'
 
 
 @Component({
@@ -20,20 +19,17 @@ export class UserDetailComponent implements OnInit {
   form: FormGroup;
   monthActive = 'agendaWeek';
   dateSelected;
-  PieChart = [];
 
   constructor(private expressService: ExpressService,
               private userService: UserService,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
     this.createForm();
-    this.getPieChart()
 
   }
 
   ngOnInit() {
     this.refreshUser();
-    this.getPieChart()
 
   }
 
@@ -84,53 +80,4 @@ export class UserDetailComponent implements OnInit {
       }
     });
   }
-
-  getPieChart() {
-    this.userService.getPieChart((dataFromBack, reasonFromBack) => {
-      console.log("dataFromBack : " + dataFromBack);
-      console.log("reasonFromBack : " + reasonFromBack);
-      var nonJustifie = 35;
-      dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
-      dataFromBack.push(nonJustifie);
-      reasonFromBack.push("Non Justifié");
-      this.PieChart = new Chart('pieChart', {
-        type: 'pie',
-        data: {
-          labels: reasonFromBack,
-
-          datasets: [{
-            label: '# of Votes',
-            data: dataFromBack,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          title:{
-            text:"Répartitions des heures",
-            display:true
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero:true
-              }
-            }]
-          }
-        }
-      });
-    }, this.id_user);
-  }
-
 }
