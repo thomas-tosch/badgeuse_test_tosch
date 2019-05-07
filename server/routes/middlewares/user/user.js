@@ -97,12 +97,14 @@ module.exports = function(router) {
                 case 'getPieChart':
                     db.query("select sum(if(half_day=0,7,4)) as day, a.id_user, u.nom_user, r.nom_reason as reason " +
                         "from absences a,reason r,users u where u.id_user = a.id_user and a.id_reason = r.id_reason " +
-                        "and absence_date between '2019-04-22' and '2019-04-26' and a.id_user = ? " +
+                        "and absence_date between ? and '2019-04-26' and a.id_user = ? " +
                         "group by a.id_reason, a.id_user " +
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, "+
                         "'presence' as reason from badger b, users u where u.id_user = b.id_user "+
-                        "and WEEKDAY(start_point) < 5 and b.id_user=? group by b.id_user",
-                    [id_user, id_user], (err, rows) => {
+                        "and WEEKDAY(start_point) < 5 " +
+                        "and start_point between '2019-04-22' and '2019-04-27'" +
+                        "and b.id_user=? group by b.id_user",
+                    ['2019-04-22', id_user, id_user], (err, rows) => {
                         if (err) {
                             res.json({
                                 success:false

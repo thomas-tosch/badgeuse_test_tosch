@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2';
 import {PdfService} from '../../services/pdf.service';
-import {Chart} from 'chart.js'
+//import {Chart} from 'chart.js'
 
 
 @Component({
@@ -27,7 +27,7 @@ export class HebdoComponent implements OnInit {
   filterGroup = '1,2,3';
   cssButton = '';
   disabledButton = false;
-  PieChart = [];
+  //PieChart = [];
 
   constructor(private expressService: ExpressService,
               private pdfService: PdfService,
@@ -38,7 +38,7 @@ export class HebdoComponent implements OnInit {
   ngOnInit() {
     this.initDate();
 
-    this.PieChart = new Chart('pieChart', {
+    /*this.PieChart = new Chart('pieChart', {
       type: 'pie',
       data: {
         labels: ["Présence", "Maladie", "Stage", "Autre"],
@@ -73,7 +73,7 @@ export class HebdoComponent implements OnInit {
           }]
         }
       }
-    });
+    });*/
   }
 
   /**

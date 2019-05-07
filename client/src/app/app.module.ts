@@ -50,6 +50,7 @@ import {
 
 
  import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
  
 
 registerLocaleData(localeFr, 'fr');
@@ -75,7 +76,8 @@ registerLocaleData(localeFr, 'fr');
     TableUsersComponent,
     AddDialogUsersComponent,
     EditDialogUsersComponent,
-    DeleteDialogUsersComponent
+    DeleteDialogUsersComponent,
+    PieChartComponent
     
   ],
   imports: [
