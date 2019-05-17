@@ -82,7 +82,7 @@ export class UserService {
      * @param callback
      * @param id_user
      */
-    getPieChart(callback, id_user?) {
+    getPieChart(callback, id_user?, startDate?, endDate?) {
         this.expressService.checkTokenBack((isOk) => {
             if(isOk) {
 
@@ -96,10 +96,18 @@ export class UserService {
                     if (id_user === undefined) {
                         id_user = token.id_user;
                     }
+                    if (startDate === undefined) {
+                        startDate = new Date();
+                    }
+                    if (endDate === undefined) {
+                        endDate = new Date();
+                    }
 
                     const content = {
                         action: 'getPieChart',
-                        id_user: id_user
+                        id_user: id_user,
+                        startDate: startDate,
+                        endDate:endDate
                     };
                     this.expressService.postExpress('user', content).subscribe((res: Auth) => {
                         if (!res.success) {

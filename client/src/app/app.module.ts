@@ -49,7 +49,7 @@ import {
  } from '@angular/material';
 
 
- import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
  
 

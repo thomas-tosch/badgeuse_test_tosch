@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2';
 import {PdfService} from '../../services/pdf.service';
-//import {Chart} from 'chart.js'
 
 
 @Component({
@@ -27,7 +26,6 @@ export class HebdoComponent implements OnInit {
   filterGroup = '1,2,3';
   cssButton = '';
   disabledButton = false;
-  //PieChart = [];
 
   constructor(private expressService: ExpressService,
               private pdfService: PdfService,
@@ -37,43 +35,6 @@ export class HebdoComponent implements OnInit {
 
   ngOnInit() {
     this.initDate();
-
-    /*this.PieChart = new Chart('pieChart', {
-      type: 'pie',
-      data: {
-        labels: ["Présence", "Maladie", "Stage", "Autre"],
-        datasets: [{
-          label: '# of Votes',
-          data: [9, 7, 3, 5],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        title: {
-          text: "Répartitions des heures",
-          display: true
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });*/
   }
 
   /**
