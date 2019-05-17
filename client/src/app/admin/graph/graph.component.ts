@@ -140,6 +140,7 @@ export class GraphComponent implements OnInit {
       this.barChartLabels = [];
       this.colorState.length = 0;
       this.absences.length = 0;
+      console.log(this.usersList);
 
       this.usersList.forEach((user) => {
 

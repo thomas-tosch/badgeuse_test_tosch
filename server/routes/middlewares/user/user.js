@@ -75,11 +75,11 @@ module.exports = function(router) {
                 // UPDATE THE USER GROUP
                 case 'updateGroup':
                     let id_group = req.body.id_group;
-                    let content = [
+                    /*let content = [
                         [id_group],
                         [id_user]
-                    ];
-                    db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', content, (err) => {
+                    ];*/
+                    db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', id_group, id_user ,(err) => {
                         if (err) {
                             res.json({
                                 success: false,
@@ -95,14 +95,28 @@ module.exports = function(router) {
                     break;
 
                 case 'getPieChart':
+                    let stardate = req.body.startDate;
+                    let endDate = req.body.endDate;
+
+                    let content = [
+                        [stardate],
+                        [endDate],
+                        [id_user],
+                        [stardate],
+                        [endDate],
+                        [id_user]
+                    ];
+
                     db.query("select sum(if(half_day=0,7,4)) as day, a.id_user, u.nom_user, r.nom_reason as reason " +
                         "from absences a,reason r,users u where u.id_user = a.id_user and a.id_reason = r.id_reason " +
-                        "and absence_date between '2019-04-22' and '2019-04-26' and a.id_user = ? " +
+                        "and absence_date between ? and ? and a.id_user = ? " +
                         "group by a.id_reason, a.id_user " +
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, "+
                         "'presence' as reason from badger b, users u where u.id_user = b.id_user "+
-                        "and WEEKDAY(start_point) < 5 and b.id_user=? group by b.id_user",
-                    [id_user, id_user], (err, rows) => {
+                        "and WEEKDAY(start_point) < 5 " +
+                        "and start_point between ? and ?" +
+                        "and b.id_user = ? group by b.id_user",
+                        content, (err, rows) => {
                         if (err) {
                             res.json({
                                 success:false
@@ -124,7 +138,7 @@ module.exports = function(router) {
 
                         }
                     });
-                break;
+                break
 
             }
         } else {

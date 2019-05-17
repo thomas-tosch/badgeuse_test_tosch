@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {BadgerService} from '../../services/badger.service';
 import swal from 'sweetalert2';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-badger',
@@ -17,7 +18,8 @@ export class BadgerComponent implements OnInit {
   @Input() id_user;
 
 
-  constructor(private badgerService: BadgerService) { }
+  constructor(private badgerService: BadgerService,
+              private router: Router) { }
 
   ngOnInit() {
     this.getTemoinStatus();
