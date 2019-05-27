@@ -9,6 +9,7 @@ module.exports = function(router) {
             const action = req.body.action;
             let id_user = req.body.id_user;
 
+
             switch (action) {
 
                 // SEND ERRORTOKEN FALSE
@@ -16,7 +17,7 @@ module.exports = function(router) {
                     res.json({
                         errorToken: false
                     });
-                break;
+                    break;
 
                 // GET ALL DATA OF USER CONNECTED
                 case 'getDataUser':
@@ -79,7 +80,7 @@ module.exports = function(router) {
                         [id_group],
                         [id_user]
                     ];*/
-                    db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', id_group, id_user ,(err) => {
+                    db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', id_group, id_user, (err) => {
                         if (err) {
                             res.json({
                                 success: false,
@@ -95,14 +96,14 @@ module.exports = function(router) {
                     break;
 
                 case 'getPieChart':
-                    let stardate = req.body.startDate;
+                    let startDate = req.body.startDate;
                     let endDate = req.body.endDate;
 
                     let content = [
-                        [stardate],
+                        [startDate],
                         [endDate],
                         [id_user],
-                        [stardate],
+                        [startDate],
                         [endDate],
                         [id_user]
                     ];
@@ -111,22 +112,22 @@ module.exports = function(router) {
                         "from absences a,reason r,users u where u.id_user = a.id_user and a.id_reason = r.id_reason " +
                         "and absence_date between ? and ? and a.id_user = ? " +
                         "group by a.id_reason, a.id_user " +
-                        "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, "+
-                        "'presence' as reason from badger b, users u where u.id_user = b.id_user "+
+                        "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, " +
+                        "'presence' as reason from badger b, users u where u.id_user = b.id_user " +
                         "and WEEKDAY(start_point) < 5 " +
                         "and start_point between ? and ?" +
                         "and b.id_user = ? group by b.id_user",
                         content, (err, rows) => {
-                        if (err) {
-                            res.json({
-                                success:false
-                            });
-                            throw err;
-                        } else {
+                            if (err) {
+                                res.json({
+                                    success: false
+                                });
+                                throw err;
+                            } else {
                                 pieDataD = [];
                                 pieReasonD = [];
 
-                                rows.forEach(function(element) {
+                                rows.forEach(function (element) {
                                     pieDataD.push(parseInt(element.day));
                                     pieReasonD.push(element.reason);
                                 });
@@ -136,11 +137,48 @@ module.exports = function(router) {
                                     pieReason: pieReasonD
                                 });
 
-                        }
-                    });
-                break
+                            }
+                        });
+                    break;
 
+
+                case 'getPieChartAdmin' :
+                    let startdate = req.body.startdate;
+                    let enddate = req.body.enddate
+
+                    db.query("select sum(if(half_day=0,7,4))," +
+                        " r.nom_reason as reason from absences a,reason r," +
+                        "users u where u.id_user=a.id_user and a.id_reason=r.id_reason " +
+                        "and absence_date between ? and ? " +
+                        "group by a.id_reason " +
+                        "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), " +
+                        "'presence' as reason from badger b, " +
+                        "users u where u.id_user=b.id_user and " +
+                        "start_point between ? and ?",
+                        startdate, enddate, startdate, enddate, (err, rows) => {
+                            if (err) {
+                                res.json({
+                                    success: false
+                                });
+                                throw err;
+                            } else {
+                                pieDataD = [];
+                                pieReasonD = [];
+
+                                rows.forEach(function (element) {
+                                    pieDataD.push(parseInt(element.day));
+                                    pieReasonD.push(element.reason);
+                                });
+                                res.json({
+                                    success: true,
+                                    pieData: pieDataD,
+                                    pieReason: pieReasonD
+                                });
+                            }
+                        });
+                    break;
             }
+
         } else {
             // res.send('Vous n\'avez rien à faire ici !');
             res.json({
@@ -149,4 +187,5 @@ module.exports = function(router) {
             });
         }
     });
-};
+}
+

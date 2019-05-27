@@ -4,11 +4,11 @@ import { Chart } from 'chart.js'
 import {FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-pie-chart',
-  templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.css']
+  selector: 'app-pie-chart-admin',
+  templateUrl: './pie-chart-admin.component.html',
+  styleUrls: ['./pie-chart-admin.component.css']
 })
-export class PieChartComponent implements OnInit, OnChanges  {
+export class PieChartAdminComponent implements OnInit, OnChanges  {
 
   @Input() id_user;
   PieChart = [];
@@ -16,18 +16,15 @@ export class PieChartComponent implements OnInit, OnChanges  {
   form: FormGroup;
   endDateTime ;
   selectWeek = 1;
-  dateSelected;
-
 
   constructor(private userService: UserService) {
-    this.getPieChart()
+    this.getPieChartAdmin()
 
   }
 
   ngOnInit() {
     this.initDate();
-    this.getPieChart()
-
+    this.getPieChartAdmin()
   }
 
   /**
@@ -35,25 +32,7 @@ export class PieChartComponent implements OnInit, OnChanges  {
    * @param changes
    */
   ngOnChanges(changes: SimpleChanges): void {
-    this.getPieChart()
-  }
-
-  /**
-   * Define the previous week
-   */
-  onPrevWeek() {
-    this.selectWeek += 1;
-    this.initDate();
-    this.getPieChart();
-  }
-
-  /**
-   * Define the next week
-   */
-  onNextWeek() {
-    this.selectWeek -= 1;
-    this.initDate();
-    this.getPieChart();
+    this.getPieChartAdmin()
   }
 
   /**
@@ -72,7 +51,7 @@ export class PieChartComponent implements OnInit, OnChanges  {
 
   }
 
-  getPieChart() {
+  getPieChartAdmin() {
     this.userService.getPieChart((dataFromBack, reasonFromBack) => {
       var nonJustifie = 35;
       dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
@@ -116,6 +95,6 @@ export class PieChartComponent implements OnInit, OnChanges  {
           }
         }
       });
-    }, this.id_user, this.startDateTime, this.endDateTime);
+    }, this.startDateTime, this.endDateTime);
   }
 }
