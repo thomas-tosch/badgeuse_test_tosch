@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Auth } from '../../guards/auth';
 import swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -24,10 +25,12 @@ export class UserDetailComponent implements OnInit {
               private route: ActivatedRoute,
               private formBuilder: FormBuilder) {
     this.createForm();
+
   }
 
   ngOnInit() {
     this.refreshUser();
+
   }
 
   /**
@@ -77,5 +80,4 @@ export class UserDetailComponent implements OnInit {
       }
     });
   }
-
 }

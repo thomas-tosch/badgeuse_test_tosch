@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {JwtHelperService} from "@auth0/angular-jwt";
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 const helper = new JwtHelperService();
 
@@ -38,7 +38,7 @@ export class AuthTokenService {
     localStorage.clear();
   }
 
-  /**
+  /**POST
    * check if token is expired
    */
   isTokenExpired() {

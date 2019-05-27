@@ -4,7 +4,6 @@ import {Auth} from "../guards/auth";
 import swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {AuthTokenService} from "./auth-token.service";
-import {dump} from "pm2";
 
 
 @Injectable({
@@ -83,7 +82,7 @@ export class UserService {
      * @param callback
      * @param id_user
      */
-    getPieChart(callback, id_user?) {
+    getPieChart(callback, id_user?, startDate?, endDate?) {
         this.expressService.checkTokenBack((isOk) => {
             if(isOk) {
 
@@ -97,16 +96,63 @@ export class UserService {
                     if (id_user === undefined) {
                         id_user = token.id_user;
                     }
+                    if (startDate === undefined) {
+                        startDate = new Date();
+                    }
+                    if (endDate === undefined) {
+                        endDate = new Date();
+                    }
 
                     const content = {
                         action: 'getPieChart',
-                        id_user: id_user
+                        id_user: id_user,
+                        startDate: startDate,
+                        endDate:endDate
                     };
                     this.expressService.postExpress('user', content).subscribe((res: Auth) => {
                         if (!res.success) {
                             swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                         } else {
-                            return callback(res.pieData);
+                            return callback(res.pieData, res.pieReason);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     * get all data of user conected
+     * @param callback
+     */
+    getPieChartAdmin(callback, startdate?, enddate?) {
+        this.expressService.checkTokenBack((isOk) => {
+            if(isOk) {
+
+                const token = this.authTokenService.decodeToken();
+                // console.log(token);
+
+                if (token === null) {
+                    return callback(false);
+                } else {
+
+                    if (startdate === undefined) {
+                        startdate = new Date();
+                    }
+                    if (enddate === undefined) {
+                        enddate = new Date();
+                    }
+
+                    const content = {
+                        action: 'getPieChartAdmin',
+                        startdate: startdate,
+                        enddate: enddate
+                    };
+                    this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+                        if (!res.success) {
+                            swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                        } else {
+                            return callback(res.pieData, res.pieReason);
                         }
                     });
                 }
@@ -131,3 +177,4 @@ export class UserService {
 
 
 }
+
