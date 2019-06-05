@@ -16,7 +16,6 @@ export class PieChartComponent implements OnInit, OnChanges  {
   form: FormGroup;
   endDateTime ;
   selectWeek = 1;
-  dateSelected;
 
 
   constructor(private userService: UserService) {

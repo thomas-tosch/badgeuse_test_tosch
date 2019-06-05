@@ -143,8 +143,8 @@ module.exports = function(router) {
 
 
                 case 'getPieChartAdmin' :
-                    let startdate = req.body.startdate;
-                    let enddate = req.body.enddate
+                    let StartDate = req.body.StartDate;
+                    let EndDate = req.body.EndDate
 
                     db.query("select sum(if(half_day=0,7,4))," +
                         " r.nom_reason as reason from absences a,reason r," +
@@ -155,24 +155,24 @@ module.exports = function(router) {
                         "'presence' as reason from badger b, " +
                         "users u where u.id_user=b.id_user and " +
                         "start_point between ? and ?",
-                        startdate, enddate, startdate, enddate, (err, rows) => {
+                        StartDate, EndDate, StartDate, EndDate, (err, rows) => {
                             if (err) {
                                 res.json({
                                     success: false
                                 });
                                 throw err;
                             } else {
-                                pieDataD = [];
-                                pieReasonD = [];
+                                PieDataD = [];
+                                PieReasonD = [];
 
                                 rows.forEach(function (element) {
-                                    pieDataD.push(parseInt(element.day));
-                                    pieReasonD.push(element.reason);
+                                    PieDataD.push(parseInt(element.day));
+                                    PieReasonD.push(element.reason);
                                 });
                                 res.json({
                                     success: true,
-                                    pieData: pieDataD,
-                                    pieReason: pieReasonD
+                                    PieData: PieDataD,
+                                    PieReason: PieReasonD
                                 });
                             }
                         });
