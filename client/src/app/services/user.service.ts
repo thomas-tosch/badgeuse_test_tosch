@@ -87,7 +87,7 @@ export class UserService {
             if(isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                // console.log(token);
+                //console.log(token);
 
                 if (token === null) {
                     return callback(false);
@@ -125,34 +125,34 @@ export class UserService {
      * get all data of user conected
      * @param callback
      */
-    getPieChartAdmin(callback, startdate?, enddate?) {
+    getPieChartAdmin(callback, StartDate?, EndDate?) {
         this.expressService.checkTokenBack((isOk) => {
             if(isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                // console.log(token);
+                //console.log(token);
 
                 if (token === null) {
                     return callback(false);
                 } else {
 
-                    if (startdate === undefined) {
-                        startdate = new Date();
+                    if (StartDate === undefined) {
+                        StartDate = new Date();
                     }
-                    if (enddate === undefined) {
-                        enddate = new Date();
+                    if (EndDate === undefined) {
+                        EndDate = new Date();
                     }
 
                     const content = {
                         action: 'getPieChartAdmin',
-                        startdate: startdate,
-                        enddate: enddate
+                        StartDate: StartDate,
+                        EndDate: EndDate
                     };
                     this.expressService.postExpress('user', content).subscribe((res: Auth) => {
                         if (!res.success) {
                             swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                         } else {
-                            return callback(res.pieData, res.pieReason);
+                            return callback(res.PieData, res.PieReason);
                         }
                     });
                 }
