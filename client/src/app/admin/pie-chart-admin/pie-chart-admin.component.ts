@@ -37,6 +37,22 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
   }
 
   /**
+   * Define the previous week
+   */
+  onPrevWeek() {
+    this.selectWeek += 1;
+    this.initDate();
+  }
+
+  /**
+   * Define the next week
+   */
+  onNextWeek() {
+    this.selectWeek -= 1;
+    this.initDate();
+  }
+
+  /**
    *  initializes the date of week
    */
   initDate() {
@@ -54,9 +70,9 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
 
   getPieChartAdmin() {
     this.userService.getPieChart((DataFromBack, ReasonFromBack) => {
-      var nonJustifie = 35;
-      console.log(DataFromBack);
-      console.log(ReasonFromBack);
+      let nonJustifie = 35*50;
+      //console.log(DataFromBack);
+      //console.log(ReasonFromBack);
       DataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
       DataFromBack.push(nonJustifie);
       ReasonFromBack.push("Non Justifié");

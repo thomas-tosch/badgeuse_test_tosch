@@ -87,7 +87,7 @@ export class UserService {
             if(isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                // console.log(token);
+                //console.log(token);
 
                 if (token === null) {
                     return callback(false);
@@ -130,7 +130,7 @@ export class UserService {
             if(isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                // console.log(token);
+                //console.log(token);
 
                 if (token === null) {
                     return callback(false);

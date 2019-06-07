@@ -108,12 +108,16 @@ module.exports = function(router) {
                         [id_user]
                     ];
 
-                    db.query("select sum(if(half_day=0,7,4)) as day, a.id_user, u.nom_user, r.nom_reason as reason " +
-                        "from absences a,reason r,users u where u.id_user = a.id_user and a.id_reason = r.id_reason " +
+                    db.query("select sum(if(half_day=0,7,4)) as day, a.id_user, " +
+                        "u.nom_user, r.nom_reason as reason " +
+                        "from absences a,reason r,users u where u.id_user = a.id_user " +
+                        "and a.id_reason = r.id_reason " +
                         "and absence_date between ? and ? and a.id_user = ? " +
                         "group by a.id_reason, a.id_user " +
-                        "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user, u.nom_user, " +
-                        "'presence' as reason from badger b, users u where u.id_user = b.id_user " +
+                        "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user," +
+                        " u.nom_user, " +
+                        "'presence' as reason from badger b, users u where " +
+                        "u.id_user = b.id_user " +
                         "and WEEKDAY(start_point) < 5 " +
                         "and start_point between ? and ?" +
                         "and b.id_user = ? group by b.id_user",
@@ -146,16 +150,17 @@ module.exports = function(router) {
                     let StartDate = req.body.StartDate;
                     let EndDate = req.body.EndDate
 
-                    db.query("select sum(if(half_day=0,7,4))," +
+                    db.query("select sum(if(half_day=0,7,4)) as day," +
                         " r.nom_reason as reason from absences a,reason r," +
                         "users u where u.id_user=a.id_user and a.id_reason=r.id_reason " +
-                        "and absence_date between ? and ? " +
+                        "and absence_date between '2019-05-20' and '2019-05-25' " +
                         "group by a.id_reason " +
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), " +
                         "'presence' as reason from badger b, " +
                         "users u where u.id_user=b.id_user and " +
-                        "start_point between ? and ?",
-                        StartDate, EndDate, StartDate, EndDate, (err, rows) => {
+                        "start_point between '2019-05-20' and '2019-05-25'",
+                        //StartDate, EndDate, StartDate, EndDate,
+                        (err, rows) => {
                             if (err) {
                                 res.json({
                                     success: false
@@ -168,6 +173,7 @@ module.exports = function(router) {
                                 rows.forEach(function (element) {
                                     PieDataD.push(parseInt(element.day));
                                     PieReasonD.push(element.reason);
+                                    console.log(element.day);
                                 });
                                 res.json({
                                     success: true,
