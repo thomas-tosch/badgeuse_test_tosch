@@ -3,6 +3,7 @@
  */
 export interface Auth {
   PieData: number;
+  pieData: number;
   PieReason: string;
   pieReason: string;
   title: string;
@@ -11,6 +12,5 @@ export interface Auth {
   token: string;
   user: string;
   list: string;
-  pieData: number;
   errorToken: boolean;
 }

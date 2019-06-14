@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { UserService} from "../../services/user.service";
-import { ExpressService} from "../../services/express.service";
 import { Chart } from 'chart.js'
 import {FormGroup} from "@angular/forms";
 
@@ -36,21 +35,6 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
     this.getPieChartAdmin()
   }
 
-  /**
-   * Define the previous week
-   */
-  onPrevWeek() {
-    this.selectWeek += 1;
-    this.initDate();
-  }
-
-  /**
-   * Define the next week
-   */
-  onNextWeek() {
-    this.selectWeek -= 1;
-    this.initDate();
-  }
 
   /**
    *  initializes the date of week
@@ -69,22 +53,23 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
   }
 
   getPieChartAdmin() {
-    this.userService.getPieChart((DataFromBack, ReasonFromBack) => {
+    this.userService.getPieChartAdmin((dataFromBack, reasonFromBack) => {
       let nonJustifie = 35*50;
-      //console.log(DataFromBack);
-      //console.log(ReasonFromBack);
-      DataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
-      DataFromBack.push(nonJustifie);
-      ReasonFromBack.push("Non Justifié");
+      //console.log('data pieChartAdmin')
+      //console.log(dataFromBack);
+      //console.log(reasonFromBack);
+      dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
+      dataFromBack.push(nonJustifie);
+      reasonFromBack.push("Non Justifié");
 
       this.PieChartAdmin = new Chart('pieChartAdmin', {
         type: 'pie',
         data: {
-          labels: ReasonFromBack,
+          labels: reasonFromBack,
 
           datasets: [{
             label: '# of Votes',
-            data: DataFromBack,
+            data: dataFromBack,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',

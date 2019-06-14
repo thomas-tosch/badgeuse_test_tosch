@@ -150,21 +150,25 @@ module.exports = function(router) {
                     let StartDate = req.body.StartDate;
                     let EndDate = req.body.EndDate
 
-                    db.query("select sum(if(half_day=0,7,4)) as day," +
-                        " r.nom_reason as reason from absences a,reason r," +
+                    const content1 = [
+                        [StartDate], [EndDate], [StartDate], [EndDate]
+                    ]
+                    db.query("select sum(if(half_day=0,7,4)) as day, " +
+                        "r.nom_reason as reason from absences a,reason r," +
                         "users u where u.id_user=a.id_user and a.id_reason=r.id_reason " +
-                        "and absence_date between '2019-05-20' and '2019-05-25' " +
+                        "and absence_date between ? and ? " +
                         "group by a.id_reason " +
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), " +
                         "'presence' as reason from badger b, " +
                         "users u where u.id_user=b.id_user and " +
-                        "start_point between '2019-05-20' and '2019-05-25'",
-                        //StartDate, EndDate, StartDate, EndDate,
+                        "start_point between ? and ?",
+                        content1,
                         (err, rows) => {
                             if (err) {
                                 res.json({
                                     success: false
                                 });
+
                                 throw err;
                             } else {
                                 PieDataD = [];
@@ -173,7 +177,8 @@ module.exports = function(router) {
                                 rows.forEach(function (element) {
                                     PieDataD.push(parseInt(element.day));
                                     PieReasonD.push(element.reason);
-                                    console.log(element.day);
+                                    //console.log(element.day);
+                                    //console.log(element.reason);
                                 });
                                 res.json({
                                     success: true,
