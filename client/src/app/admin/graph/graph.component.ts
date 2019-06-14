@@ -4,7 +4,6 @@ import {UserService} from '../../services/user.service';
 import {FormBuilder} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {HebdoComponent} from '../hebdo/hebdo.component';
-import {Chart} from 'chart.js';
 import * as $ from 'jquery';
 import 'chartjs-plugin-annotation';
 
@@ -140,7 +139,7 @@ export class GraphComponent implements OnInit {
       this.barChartLabels = [];
       this.colorState.length = 0;
       this.absences.length = 0;
-      console.log(this.usersList);
+      //console.log(this.usersList);
 
       this.usersList.forEach((user) => {
 
