@@ -19,6 +19,7 @@ module.exports = function(router) {
                         'CONCAT(users.nom_user, \' \', users.prenom_user) AS absName, ' +
                         '' +
                         'absences.ref_absence AS ref, ' +
+                        'raison_refus AS refus, ' +
                         'MIN(absences.absence_date) AS minDate, ' +
                         'MAX(absences.absence_date) AS maxDate, ' +
                         'absences.half_day AS halfDay, ' +
@@ -49,14 +50,15 @@ module.exports = function(router) {
                                 });
                             }
                         });
-                break;
+                    break;
 
                 case 'getUpdateAbsence':
                     const ref = req.body.ref;
                     const valide = req.body.valide;
+                    const refus = req.body.refus;
 
-                    const content = [[valide], [ref]];
-                    db.query('UPDATE absences SET id_status = ? WHERE ref_absence = ?', content, (err) => {
+                    const content = [[valide], [refus], [ref]];
+                    db.query('UPDATE absences SET id_status = ?, raison_refus = ? WHERE ref_absence = ? ', content, (err) => {
                         if (err) {
                             res.json({success: false});
                             throw err;
@@ -64,7 +66,8 @@ module.exports = function(router) {
                             res.json({success: true});
                         }
                     });
-                break
+                    break;
+
             }
         } else {
             res.send('Vous n\'avez rien à faire ici !');

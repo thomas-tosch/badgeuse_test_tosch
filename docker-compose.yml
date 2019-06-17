@@ -6,7 +6,7 @@ services:
       context: web
     volumes:
       - .:/var/www/html
-    ports: 
+    ports:
       - 81:80
     depends_on:
       - node
