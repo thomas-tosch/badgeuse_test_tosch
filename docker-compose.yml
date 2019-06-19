@@ -12,24 +12,15 @@ services:
       - node
 
   node:
-    image: node:alpine
-    working_dir: /home/node/app
+    build:
+      context: .
     environment:
-      - NODE_ENV=production
-    volumes:
-      - .:/home/node/app
+      - PORT_ANGULAR=81
+      - HOST_ANGULAR=10.0.1.4
     ports:
       - 8080:8080
     depends_on:
       - mariadb
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    command: >
-      sh -c "npm install && node index.js"
 
   mariadb:
     image: library/mariadb:latest
