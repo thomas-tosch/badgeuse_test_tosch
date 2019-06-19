@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import { UserService} from "../../services/user.service";
 import { Chart } from 'chart.js'
 import {FormGroup} from "@angular/forms";
+import {HebdoComponent} from '../hebdo/hebdo.component';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-pie-chart-admin',
@@ -12,19 +14,23 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
 
   @Input() startDate;
   PieChartAdmin = [];
-  startDateTime ;
+  startDateTime;
   form: FormGroup;
-  endDateTime ;
+  endDateTime;
   selectWeek = 1;
+  listSubscription: Subscription;
+  usersList;
 
-  constructor(private userService: UserService) {
-    this.getPieChartAdmin()
+  constructor(private userService: UserService,
+              private hebdoComponent: HebdoComponent) {
+    this.getPieChartAdmin();
 
   }
 
   ngOnInit() {
     this.initDate();
-    this.getPieChartAdmin()
+    this.getPieChartAdmin();
+    this.refreshGraphic();
   }
 
   /**
@@ -32,9 +38,38 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
    * @param changes
    */
   ngOnChanges(changes: SimpleChanges): void {
+    this.getPieChartAdmin();
+  }
+
+  /**
+   * Define the previous week
+   */
+  onPrevWeek() {
+    this.selectWeek += 1;
+    this.initDate();
+    this.getPieChartAdmin();
+  }
+
+  /**
+   * Define the next week
+   */
+  onNextWeek() {
+    this.selectWeek -= 1;
+    this.initDate();
     this.getPieChartAdmin()
   }
 
+  /**
+   * subscription, update the data of graphic
+   */
+  refreshGraphic() {
+    this.listSubscription = this.hebdoComponent.userListSubject.subscribe(
+        (userList: any[]) => {
+          this.usersList = userList;
+          this.getPieChartAdmin()
+        }
+    );
+  }
 
   /**
    *  initializes the date of week
@@ -50,6 +85,8 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
     this.endDateTime = new Date(currLast.setHours(23, 59, 59, 0)); // set time at end day 23:00
     this.endDateTime = new Date(currLast.setDate(last)).toISOString(); // set last day of the week
 
+    console.log(this.startDateTime);
+    console.log(this.endDateTime);
   }
 
   getPieChartAdmin() {

@@ -62,6 +62,7 @@ export class HebdoComponent implements OnInit {
   onPrevWeek() {
     this.selectWeek += 1;
     this.initDate();
+
   }
 
   /**
