@@ -1,4 +1,5 @@
 const ipLocal = require('ip');
+ 
 
 /**
  * Generate random key id for the user connection, please don't touch
@@ -20,8 +21,8 @@ function makeId() {
 const AUTH = {
     PORT_EXPRESS: 8080, // use for listen this port on backend
 //    HOST_ANGULAR : ipLocal.address(), // use for multi-cross origin request with client
-    HOST_ANGULAR : 'localhost', // use for multi-cross origin request with client
-    PORT_ANGULAR : 81,
+    HOST_ANGULAR : process.env.HOST_ANGULAR, // use for multi-cross origin request with client
+    PORT_ANGULAR : process.env.PORT_ANGULAR,
     SECRET_KEY: makeId() // secret key for token crypt
 };
 
