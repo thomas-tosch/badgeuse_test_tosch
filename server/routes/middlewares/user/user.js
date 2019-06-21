@@ -132,8 +132,9 @@ module.exports = function(router) {
                                 pieDataD = [];
                                 pieReasonD = [];
 
-                                console.log('si query ok: ' + pieDataD);
-                                console.log('si query ok: ' + pieReasonD);
+                                console.log('si query fonctionne : ' + pieDataD);
+                                console.log('si query fonctionne : ' + pieReasonD);
+
 
                                 rows.forEach(function (element) {
                                     pieDataD.push(parseInt(element.day));
@@ -176,9 +177,11 @@ module.exports = function(router) {
                                 });
 
                                 throw err;
+                                console.log(err)
                             } else {
                                 PieDataD = [];
                                 PieReasonD = [];
+
 
                                 rows.forEach(function (element) {
                                     PieDataD.push(parseInt(element.day));
