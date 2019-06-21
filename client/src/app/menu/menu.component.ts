@@ -8,6 +8,7 @@ import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
 import {AbsenceService} from '../services/absence.service';
 import {WebsocketService} from '../services/websocket.Service';
+// @ts-ignore
 import publicIp from 'public-ip';
 import {Subject, Subscription} from "rxjs";
 import {BadgerService} from "../services/badger.service";
