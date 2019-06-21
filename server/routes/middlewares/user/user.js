@@ -127,9 +127,13 @@ module.exports = function(router) {
                                     success: false
                                 });
                                 throw err;
+                                console.log('si query erreur ' + err);
                             } else {
                                 pieDataD = [];
                                 pieReasonD = [];
+
+                                console.log('si query ok: ' + pieDataD);
+                                console.log('si query ok: ' + pieReasonD);
 
                                 rows.forEach(function (element) {
                                     pieDataD.push(parseInt(element.day));
@@ -140,7 +144,6 @@ module.exports = function(router) {
                                     pieData: pieDataD,
                                     pieReason: pieReasonD
                                 });
-
                             }
                         });
                     break;
