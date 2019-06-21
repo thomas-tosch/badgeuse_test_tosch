@@ -127,9 +127,14 @@ module.exports = function(router) {
                                     success: false
                                 });
                                 throw err;
+                                console.log('si query erreur ' + err);
                             } else {
                                 pieDataD = [];
                                 pieReasonD = [];
+
+                                console.log('si query fonctionne : ' + pieDataD);
+                                console.log('si query fonctionne : ' + pieReasonD);
+
 
                                 rows.forEach(function (element) {
                                     pieDataD.push(parseInt(element.day));
@@ -140,7 +145,6 @@ module.exports = function(router) {
                                     pieData: pieDataD,
                                     pieReason: pieReasonD
                                 });
-
                             }
                         });
                     break;
@@ -151,7 +155,10 @@ module.exports = function(router) {
                     let EndDate = req.body.EndDate
 
                     const content1 = [
-                        [StartDate], [EndDate], [StartDate], [EndDate]
+                        [StartDate],
+                        [EndDate],
+                        [StartDate],
+                        [EndDate]
                     ]
                     db.query("select sum(if(half_day=0,7,4)) as day, " +
                         "r.nom_reason as reason from absences a,reason r," +
@@ -161,8 +168,8 @@ module.exports = function(router) {
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), " +
                         "'presence' as reason from badger b, " +
                         "users u where u.id_user=b.id_user and " +
-                        "start_point between ? and ?",
-                        content1,
+                        "start_point between ? and ? ",
+                       content1,
                         (err, rows) => {
                             if (err) {
                                 res.json({
@@ -170,9 +177,11 @@ module.exports = function(router) {
                                 });
 
                                 throw err;
+                                console.log(err)
                             } else {
                                 PieDataD = [];
                                 PieReasonD = [];
+
 
                                 rows.forEach(function (element) {
                                     PieDataD.push(parseInt(element.day));

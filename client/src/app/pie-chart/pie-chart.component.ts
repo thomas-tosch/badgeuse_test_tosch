@@ -69,6 +69,8 @@ export class PieChartComponent implements OnInit, OnChanges  {
     this.endDateTime = new Date(currLast.setHours(23, 59, 59, 0)); // set time at end day 23:00
     this.endDateTime = new Date(currLast.setDate(last)).toISOString(); // set last day of the week
 
+    console.log(this.startDateTime + ' s');
+    console.log(this.endDateTime + ' e');
   }
 
   getPieChart() {

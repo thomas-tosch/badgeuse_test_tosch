@@ -143,6 +143,8 @@ export class UserService {
                         EndDate = new Date();
                     }
 
+                    console.log('test' + StartDate);
+                    console.log(EndDate);
                     const content = {
                         action: 'getPieChartAdmin',
                         StartDate: StartDate,
