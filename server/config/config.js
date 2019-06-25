@@ -32,11 +32,11 @@ const AUTH = {
  * DELETE ALL THIS ON FINAL PROD
  * @type {{PORT_ANGULAR: number, HOST_EXPRESS: (*|*)}}
  */
-/*const AUTHDEV = {
+const AUTHDEV = {
     PORT_EXPRESS: 8080, // use for listen this port on backend
     HOST_ANGULAR: 'localhost:4200', // use for multi-cross origin request with client
     SECRET_KEY: makeId() // secret key for token crypt
-};*/
+};
 
 
 /**
