@@ -21,8 +21,15 @@ où
 
   MacOS : https://docs.docker.com/docker-for-mac/install/
 
+## ÉTAPE 2 : Configurer son Host ##
 
-## ÉTAPE 2 : Démarrer l'ensemble ##
+Dans le fichier docker-compole.yml, dans la partie node change le commentaire de HOST_ANGULAR et met ton adresse IP locale.
+Ensuite si tu veux pas compiler le web avec Angular pour que ça prenne moins de temps, met en commentaire le service web toujours dans docker-compose.yml ainsi que phpmyadmin, 
+et ensuite dans l'environnement de node, change le port angular en mettant `4200` et remplace ton adresse IP par `localhost` pour le host.
+
+Pour finir rien de plus simple, tu ouvres un terminal, tu te places dans le dossier client et tu fais un 'ng serve' et tout fonctionne (normalement !)
+
+## ÉTAPE 3 : Démarrer l'ensemble ##
 
 
   ``docker-compose up``
