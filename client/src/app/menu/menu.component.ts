@@ -1,21 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {faBell, faChessQueen, faTimesCircle, faUserAstronaut} from '@fortawesome/free-solid-svg-icons';
 import {UserService} from '../services/user.service';
-// @ts-ignore
 import {LoginService} from '../services/login.service';
 import {Router} from '@angular/router';
 import {ExpressService} from '../services/express.service';
 import {Auth} from '../guards/auth';
 import swal from 'sweetalert2';
-// @ts-ignore
 import {AbsenceService} from '../services/absence.service';
-// @ts-ignore
 import {WebsocketService} from '../services/websocket.Service';
 // @ts-ignore
 import publicIp from 'public-ip';
-import {Subject, Subscription} from "rxjs";
-// @ts-ignore
-import {BadgerService} from "../services/badger.service";
+import {Subject, Subscription} from 'rxjs';
+import {BadgerService} from '../services/badger.service';
+import {log} from "util";
 
 
 @Component({
@@ -56,7 +53,7 @@ export class MenuComponent implements OnInit {
         this.refreshPresence();
         this.getDataUser();
 
-        this.getTotalAbsence();
+        // this.getTotalAbsence();
         this.refreshNbAbsence();
         this.getPublicIp();
     }
@@ -76,8 +73,10 @@ export class MenuComponent implements OnInit {
    * get the public ip adresse
    */
   getPublicIp() {
+    console.log('getIpPublic')
       publicIp.v4().then((ip) => {
         this.publicIp = ip;
+        console.log(ip)
           this.getAccessBadger();
       });
     }
@@ -91,12 +90,15 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    /**
+   /**
      * get number of absence in wait
      */
-    getTotalAbsence() {
-      this.absenceService.getUserListAbsence((res) => {
-        this.nbAbsence = res.length;
+  getTotalAbsence() {
+      this.absenceService.getUserListAbsence((res: Auth) => {
+        if (res.success) {
+          this.nbAbsence = res.list.length;
+          console.log('aficher nbAbsence ' + res.list.length);
+        }
       });
     }
 
@@ -144,12 +146,14 @@ export class MenuComponent implements OnInit {
      * check if the client is in UHA 4.0 area
      */
     getAccessBadger() {
+
       const content = {
         action: 'getAccessBadger',
         ipPublic: this.publicIp
       };
         this.expressService.postExpress('badger', content).subscribe((res: Auth) => {
           this.badgerActive = res.success;
+          console.log(res)
         });
     }
 

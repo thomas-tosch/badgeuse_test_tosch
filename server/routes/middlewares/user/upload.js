@@ -33,7 +33,7 @@ module.exports = function(router) {
             // moove the file
             if (imgFile) {
                 imgFile.mv(filePath + fileName, (err) => {
-                    if (err) throw err;
+                    if (err) console.log(err);
                     res.send('success')
                 })
             }

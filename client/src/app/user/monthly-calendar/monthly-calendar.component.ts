@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Auth} from '../../guards/auth';
 import {CalendarComponent} from 'ng-fullcalendar';
-import {Options} from 'fullcalendar';
+import {OptionsInput} from '@fullcalendar/core';
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import {ExpressService} from '../../services/express.service';
@@ -14,7 +14,7 @@ import * as FC from 'ng-fullcalendar/node_modules/@types/fullcalendar';
 })
 export class MonthlyCalendarComponent implements OnInit, OnChanges {
 
-    calendarOptions: Options;
+    calendarOptions: OptionsInput;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @Input() monthActive = 'month';
     @Input() id_user;
@@ -52,67 +52,71 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
             id_user: this.id_user
         };
         let i = 0;
+        console.log('getMonth')
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
-            this.absencesDates = res.list;
+            console.log('getEventAbsence ' + res.errorToken)
+            if(res.errorToken === false) {
+                this.absencesDates = res.list;
 
-            if (this.absencesDates.length !== 0) {
-                this.absencesDates.forEach((absence) => {
+                if (this.absencesDates.length !== 0) {
+                    this.absencesDates.forEach((absence) => {
 
-                    // DEFINE COLOR
-                    if (absence.status === 0) { // Absence refusée
-                        this.backgroundColor = '#ff3c38';
-                    }
-                    if (absence.status === 1) { // Absence validée
-                        this.backgroundColor = '#0075ff';
-                    }
-                    if (absence.status === 2) { // En attente
-                        this.backgroundColor = '#ff912a';
-                    }
-
-                    // DEFINE JOURNEY / MORNING / AFTERNOON
-                    if (absence.half === 0) { // Journéé
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T17:00:00';
-                    }
-                    if (absence.half === 1) { // matin
-                        this.startWeek = absence.day + 'T09:00:00';
-                        this.endWeek = absence.day + 'T12:30:00';
-                    }
-                    if (absence.half === 2) { // aprés_midi
-                        this.startWeek = absence.day + 'T13:30:00';
-                        this.endWeek = absence.day + 'T17:00:00';
-                    }
-
-                    // MAKE ARRAY FOR CALENDAR EVENT
-                    this.eachDate.push(
-                        {
-                            start: absence.day,
-                            end: absence.day,
-                            backgroundColor: this.backgroundColor,
-                            rendering: 'background'
-                        },
-                        {
-                            start: this.startWeek,
-                            end: this.endWeek,
-                            textColor: '#111',
-                            title: absence.reason.toUpperCase(),
-                            backgroundColor: 'transparent',
-                            borderColor: 'transparent'
-                        },
-                        {
-                            start: this.startWeek,
-                            end: this.endWeek,
-                            backgroundColor: this.backgroundColor,
-                            rendering: 'background'
+                        // DEFINE COLOR
+                        if (absence.status === 0) { // Absence refusée
+                            this.backgroundColor = '#ff3c38';
                         }
-                    );
-                    i++;
-                    if (this.absencesDates.length === i) {
-                        this.calendar();
-                    }
-                });
-            } else {
-                this.calendar();
+                        if (absence.status === 1) { // Absence validée
+                            this.backgroundColor = '#0075ff';
+                        }
+                        if (absence.status === 2) { // En attente
+                            this.backgroundColor = '#ff912a';
+                        }
+
+                        // DEFINE JOURNEY / MORNING / AFTERNOON
+                        if (absence.half === 0) { // Journéé
+                            this.startWeek = absence.day + 'T09:00:00';
+                            this.endWeek = absence.day + 'T17:00:00';
+                        }
+                        if (absence.half === 1) { // matin
+                            this.startWeek = absence.day + 'T09:00:00';
+                            this.endWeek = absence.day + 'T12:30:00';
+                        }
+                        if (absence.half === 2) { // aprés_midi
+                            this.startWeek = absence.day + 'T13:30:00';
+                            this.endWeek = absence.day + 'T17:00:00';
+                        }
+
+                        // MAKE ARRAY FOR CALENDAR EVENT
+                        this.eachDate.push(
+                            {
+                                start: absence.day,
+                                end: absence.day,
+                                backgroundColor: this.backgroundColor,
+                                rendering: 'background'
+                            },
+                            {
+                                start: this.startWeek,
+                                end: this.endWeek,
+                                textColor: '#111',
+                                title: absence.reason.toUpperCase(),
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent'
+                            },
+                            {
+                                start: this.startWeek,
+                                end: this.endWeek,
+                                backgroundColor: this.backgroundColor,
+                                rendering: 'background'
+                            }
+                        );
+                        i++;
+                        if (this.absencesDates.length === i) {
+                            this.calendar();
+                        }
+                    });
+                } else {
+                    this.calendar();
+                }
             }
         });
     }
@@ -166,7 +170,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
      * set the calendar option and refresh
      */
     calendar() {
-        let calendar = $('#Calendar');
+        const calendar = $('#Calendar');
         // remove event calendar
         calendar.fullCalendar('removeEvents'); // remove all events
 
@@ -180,9 +184,8 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
             eventLimit: false,
             slotLabelFormat: 'HH:mm',
             allDaySlot: false,
-            timeFormat: 'HH:mm',
-            minTime: moment.duration('07:00:00'),
-            maxTime: moment.duration('20:00:00'),
+            minTime: '07:00:00',
+            maxTime: '20:00:00',
             height: 730,
             header: {
                 left: 'title',

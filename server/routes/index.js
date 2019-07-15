@@ -15,18 +15,17 @@ let cruduser = require('./controllers/admin/cruduser');
 
 module.exports = function(app)
 {
-
     app.use('/login', login);
-        app.use('/user', user);
-        app.use('/badger', badger);
-        app.use('/liste', liste);
-        app.use('/alerte', alerte);
-        app.use('/hebdo', hebdo);
-        app.use('/calendar', calendar);
-        app.use('/absence_admin', absence_admin);
-        app.use('/upload', upload);
-        app.use('/absence', absence);
-        app.use('/uuid', uuid);
-        app.use('/cruduser', cruduser);
+    app.use('/user', user);
+    app.use('/badger', badger);
+    app.use('/liste', liste);
+    app.use('/alerte', alerte);
+    app.use('/hebdo', hebdo);
+    app.use('/calendar', calendar);
+    app.use('/absence_admin', absence_admin);
+    app.use('/upload', upload);
+    app.use('/absence', absence);
+    app.use('/uuid', uuid);
+    app.use('/cruduser', cruduser);
 
 };

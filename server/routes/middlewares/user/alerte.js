@@ -4,7 +4,7 @@ let tokenList = require ('../../../config/tokenList');
     module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('ALERTE');
         if(tokenList.checkToken(req.body.token)) {
 
             const action = req.body.action;
@@ -13,6 +13,8 @@ let tokenList = require ('../../../config/tokenList');
 
                 // GET ALL DISCONNECT TIME OF USER CONNECTED
                 case 'getDataAlerte':
+                    console.log('ALERTE - getDataAlerte');
+
                     let id_user = req.body.id_user;
                     db.query('SELECT * ' +
                         'FROM badger ' +
@@ -28,7 +30,7 @@ let tokenList = require ('../../../config/tokenList');
                                     success: false,
                                     message: 'error'
                                 });
-                                throw err;
+                                console.log(err);
                             } else {
                                 if (rows.length > 0) {
                                     res.json({user: rows[0], success: true});
@@ -40,7 +42,10 @@ let tokenList = require ('../../../config/tokenList');
                 break
             }
         } else {
-            res.send('Vous n\'avez rien à faire ici !');
+            res.json({
+                errorToken: true,
+                message: 'Vous n\'avez rien à faire ici !'
+            });
         }
     });
  };

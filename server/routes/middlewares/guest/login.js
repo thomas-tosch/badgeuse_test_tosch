@@ -8,7 +8,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('LOGIN');
         const action = req.body.action;
 
         switch (action) {

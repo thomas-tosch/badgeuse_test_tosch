@@ -4,7 +4,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('BADGER');
         if(tokenList.checkToken(req.body.token)) {
 
             const action = req.body.action;
@@ -13,6 +13,8 @@ module.exports = function(router) {
 
                 // INSERT OR UPDATE THE POINT BADGE
                 case 'setPresence':
+                    console.log('BADGER - setPresence');
+
                     let id_user = req.body.id_user;
                     let presence = !req.body.presence;
                     let message;
@@ -43,7 +45,7 @@ module.exports = function(router) {
                                         res.json({
                                             success: false
                                         });
-                                        throw err;
+                                        console.log(err);
                                     } else {
                                         res.json({
                                             success: true,
@@ -56,7 +58,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
+                                console.log(err);
                             }
                         });
                     } else {
@@ -78,7 +80,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
+                                console.log(err);
                             } else {
                                 res.json({
                                     success: true,
@@ -92,6 +94,8 @@ module.exports = function(router) {
 
                 // Check if the user is in the UHA 4.0 area
                 case 'getAccessBadger':
+                    console.log('BADGER - getAccessBadger');
+
 
                     let ipPublic = req.body.ipPublic;
                     // let localIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress; // uncomment this line for prod on server
@@ -111,7 +115,10 @@ module.exports = function(router) {
 
             }
         } else {
-            res.send('Vous n\'avez rien à faire ici !');
+            res.json({
+                errorToken: true,
+                message: 'Vous n\'avez rien à faire ici !'
+            });
         }
     });
 };

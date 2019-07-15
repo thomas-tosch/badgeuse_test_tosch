@@ -5,7 +5,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('LIST');
         if(tokenList.checkToken(req.body.token)) {
 
 
@@ -15,6 +15,8 @@ module.exports = function(router) {
 
                 // Get the user list for see the presence
                 case 'getUserList':
+                    console.log('LIST - getUserList');
+
 
                     let content = [];
                     db.query('SELECT ' +
@@ -36,7 +38,7 @@ module.exports = function(router) {
                                     success: false,
                                     message: 'Une erreur est survenue lors de la requête vers la base de données.'
                                 });
-                                throw err;
+                                console.log(err);
                             }
 
                             if (rows.length > 0) {
@@ -56,7 +58,10 @@ module.exports = function(router) {
 
 
         } else {
-            res.send('Vous n\'avez rien à faire ici !');
+            res.json({
+                errorToken: true,
+                message: 'Vous n\'avez rien à faire ici !'
+            });
         }
     });
 };

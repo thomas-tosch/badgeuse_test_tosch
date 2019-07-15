@@ -31,3 +31,5 @@ require('./server/routes/index')(app);
 app.listen(config.auth.PORT_EXPRESS, () => {
     console.log(`Badgeuse app started on port ${config.auth.PORT_EXPRESS}`);
 });
+
+console.log('=============================')
