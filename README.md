@@ -21,8 +21,15 @@ où
 
   MacOS : https://docs.docker.com/docker-for-mac/install/
 
+## ÉTAPE 2 : Configurer son Host ##
 
-## ÉTAPE 2 : Démarrer l'ensemble ##
+Dans le fichier docker-compole.yml, dans la partie node change le commentaire de HOST_ANGULAR et met ton adresse IP locale.
+Ensuite si tu veux pas compiler le web avec Angular pour que ça prenne moins de temps, met en commentaire le service web toujours dans docker-compose.yml ainsi que phpmyadmin, 
+et ensuite dans l'environnement de node, change le port angular en mettant `4200` et remplace ton adresse IP par `localhost` pour le host.
+
+Pour finir rien de plus simple, tu ouvres un terminal, tu te places dans le dossier client et tu fais un 'ng serve' et tout fonctionne (normalement !)
+
+## ÉTAPE 3 : Démarrer l'ensemble ##
 
 
   ``docker-compose up``
@@ -43,8 +50,16 @@ où
    
    Un utilisateur est automatiquement crée (uhaSQL) avec un mot de passe (uha), ainsi que les données des étudiants actuellement inscrit en cette année 2018-2019.
 
+## ÉTAPE 2 : Configurer son Host ##
 
-## ÉTAPE 2 : Lancer le serveur ##
+Dans le fichier docker-compole.yml, dans la partie node change le commentaire de HOST_ANGULAR et met ton adresse IP locale.
+
+Ensuite si tu veux pas compiler le web avec Docker, tu peux le faire avec Angular pour que ça prenne moins de temps.
+ 
+Pour ça, met en commentaire le service web toujours dans docker-compose.yml ainsi que phpmyadmin,
+et ensuite dans l'environnement de node, change le port angular en mettant `4200` et remplace ton adresse IP par `localhost` pour le host.
+
+## ÉTAPE 3 : Lancer le serveur ##
   
     
   A la racine du projet, éxecutez les commandes suivantes:
@@ -95,4 +110,3 @@ où
   ``// exports.auth = AUTH;``
 
   ``exports.auth = AUTHDEV``
-  

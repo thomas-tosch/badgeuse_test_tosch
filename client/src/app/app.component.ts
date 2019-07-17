@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "./services/user.service";
-import {faAngleDoubleDown, faAngleDoubleLeft, faAngleDoubleRight, faAngleDoubleUp} from "@fortawesome/free-solid-svg-icons";
+import {UserService} from './services/user.service';
+import {faAngleDoubleDown, faAngleDoubleLeft, faAngleDoubleRight, faAngleDoubleUp} from '@fortawesome/free-solid-svg-icons';
 import * as $ from 'jquery';
-import {WebsocketService} from "./services/websocket.Service";
-import {AuthTokenService} from "./services/auth-token.service";
-import {ExpressService} from "./services/express.service";
+import {WebsocketService} from './services/websocket.Service';
+import {AuthTokenService} from './services/auth-token.service';
+import {ExpressService} from './services/express.service';
 
 
 @Component({
@@ -41,14 +41,14 @@ export class AppComponent implements OnInit{
   }
 
   ckeckToken() {
-    this.expressService.checkTokenBack((isOk) => { });
+    // this.expressService.checkTokenBack((isOk) => { });
   }
 
   /**
    * check if user is a administrator
    */
   isUserAdmin() {
-    this.userService.isUserAdmin((res)=>{this.adminActive = res});
+    this.userService.isUserAdmin((res) => {this.adminActive = res});
   }
 
   /**

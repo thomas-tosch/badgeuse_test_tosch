@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {ExpressService} from "./express.service";
-import {Auth} from "../guards/auth";
-import swal from "sweetalert2";
-import {Router} from "@angular/router";
-import {AuthTokenService} from "./auth-token.service";
+import {ExpressService} from './express.service';
+import {Auth} from '../guards/auth';
+import swal from 'sweetalert2';
+import {Router} from '@angular/router';
+import {AuthTokenService} from './auth-token.service';
 
 
 @Injectable({
@@ -11,6 +11,7 @@ import {AuthTokenService} from "./auth-token.service";
 })
 export class UserService {
 
+    user;
 
     constructor(private authTokenService: AuthTokenService,
                 private router: Router,
@@ -31,7 +32,7 @@ export class UserService {
                 action: 'getIdUser',
                 userName: userName
             };
-            this.expressService.postExpress('user', content).subscribe((res: Auth)=> {
+            this.expressService.postExpress('user', content).subscribe((res: Auth) => {
                 if (!res.success) {
                     swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                 } else {
@@ -47,50 +48,60 @@ export class UserService {
      * @param id_user
      */
     getDataUser(callback, id_user?) {
-        this.expressService.checkTokenBack((isOk) => {
-            if(isOk) {
+        console.log('user :', this.user)
+        if (this.user === undefined || this.user === null || id_user) {
+            // this.expressService.checkTokenBack((isOk) => {
+            //     if (isOk) {
 
-                const token = this.authTokenService.decodeToken();
-                // console.log(token);
+                    const token = this.authTokenService.decodeToken();
+                    console.log('getDataUser ' + token);
 
-                if (token === null) {
-                    return callback(false);
-                } else {
+                    if (token === null) {
+                        return callback(false);
+                    } else {
 
-                    if (id_user === undefined) {
-                        id_user = token.id_user;
-                    }
-
-                    const content = {
-                        action: 'getDataUser',
-                        id_user: id_user
-                    };
-                    this.expressService.postExpress('user', content).subscribe((res: Auth) => {
-                        if (!res.success) {
-                            swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
-                        } else {
-                            return callback(res.user);
+                        if (id_user === undefined) {
+                            id_user = token.id_user;
                         }
-                    });
-                }
-            }
-        });
+
+                        const content = {
+                            action: 'getDataUser',
+                            id_user: id_user
+                        };
+                        this.expressService.postExpress('user', content).subscribe((res: Auth) => {
+                            if (!res.success) {
+                                swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                            } else {
+                                this.user = res.user;
+                                return callback(this.user);
+                            }
+                        });
+                    }
+                // } else{
+                //     return callback(false);
+                // }
+            // });
+        } else {
+            return callback(this.user);
+        }
     }
 
     /**
      * get all data of user conected
      * @param callback
      * @param id_user
+     * @param startDate
+     * @param endDate
      */
     getPieChart(callback, id_user?, startDate?, endDate?) {
-        this.expressService.checkTokenBack((isOk) => {
-            if(isOk) {
+        // this.expressService.checkTokenBack((isOk) => {
+        //     if (isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                //console.log(token);
+                console.log(token);
 
                 if (token === null) {
-                    return callback(false);
+                    return callback('token is null');
                 } else {
 
                     if (id_user === undefined) {
@@ -107,18 +118,18 @@ export class UserService {
                         action: 'getPieChart',
                         id_user: id_user,
                         startDate: startDate,
-                        endDate:endDate
+                        endDate: endDate
                     };
                     this.expressService.postExpress('user', content).subscribe((res: Auth) => {
                         if (!res.success) {
                             swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
                         } else {
-                            return callback(res.pieData, res.pieReason);
+                            return callback(null, res.pieData, res.pieReason);
                         }
                     });
                 }
-            }
-        });
+            // }
+        // });
     }
 
     /**
@@ -130,7 +141,6 @@ export class UserService {
             if(isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                //console.log(token);
 
                 if (token === null) {
                     return callback(false);
@@ -169,7 +179,7 @@ export class UserService {
     isUserAdmin(callback) {
         this.getDataUser((user) => {
             // activate administrator access if role = 3
-            if (user.id_role === 3){
+            if (user.id_role === 3) {
                 return callback(true);
             } else {
                 return callback(false);

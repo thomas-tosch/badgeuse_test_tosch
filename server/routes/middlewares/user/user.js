@@ -4,7 +4,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('USER');
         if(tokenList.checkToken(req.body.token)) {
             const action = req.body.action;
             let id_user = req.body.id_user;
@@ -14,6 +14,7 @@ module.exports = function(router) {
 
                 // SEND ERRORTOKEN FALSE
                 case 'checkToken':
+                    console.log('USER - checkToken');
                     res.json({
                         errorToken: false
                     });
@@ -21,7 +22,7 @@ module.exports = function(router) {
 
                 // GET ALL DATA OF USER CONNECTED
                 case 'getDataUser':
-
+                    console.log('USER - getDataUser');
                     db.query('SELECT *, ' +
                         'users.id_user AS id_user, ' +
                         'user_groups.nom_group AS nom_group, ' +
@@ -42,7 +43,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
+                                console.log(err);
                             } else {
                                 res.json({
                                     success: true,
@@ -54,6 +55,7 @@ module.exports = function(router) {
 
                 // GET ID OF USER REQUESTED
                 case 'getIdUser':
+                    console.log('USER - getIdUser');
                     let userName = req.body.userName;
                     db.query('SELECT * ' +
                         'FROM users ' +
@@ -63,7 +65,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
+                                console.log(err);
                             } else {
                                 res.json({
                                     success: true,
@@ -75,6 +77,7 @@ module.exports = function(router) {
 
                 // UPDATE THE USER GROUP
                 case 'updateGroup':
+                    console.log('USER - updateGroup');
                     let id_group = req.body.id_group;
                     /*let content = [
                         [id_group],
@@ -96,6 +99,7 @@ module.exports = function(router) {
                     break;
 
                 case 'getPieChart':
+                    console.log('USER - getPieChart');
                     let startDate = req.body.startDate;
                     let endDate = req.body.endDate;
 
@@ -126,19 +130,21 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
-                                console.log('si query erreur ' + err);
+                                // throw err;
+                                console.log('si query erreur : ' + err);
                             } else {
                                 pieDataD = [];
                                 pieReasonD = [];
 
-                                console.log('si query fonctionne : ' + pieDataD);
-                                console.log('si query fonctionne : ' + pieReasonD);
+                                console.log('si query fonctionne (pieChart userSpace pieDataD) : ' + pieDataD);
+                                console.log('si query fonctionne (pieChart userSpace PieReasonD) : ' + pieReasonD);
 
 
-                                rows.forEach(function (element) {
+                                rows.forEach((element, index) => {
                                     pieDataD.push(parseInt(element.day));
                                     pieReasonD.push(element.reason);
+                                    console.log("push de element.day " + pieDataD + " ,et " + element.day);
+                                    console.log("push de element.reason " + pieReasonD + " , et " + element.reason);
                                 });
                                 res.json({
                                     success: true,
@@ -151,15 +157,16 @@ module.exports = function(router) {
 
 
                 case 'getPieChartAdmin' :
+                    console.log('USER - getPieChartAdmin');
                     let StartDate = req.body.StartDate;
-                    let EndDate = req.body.EndDate
+                    let EndDate = req.body.EndDate;
 
                     const content1 = [
                         [StartDate],
                         [EndDate],
                         [StartDate],
                         [EndDate]
-                    ]
+                    ];
                     db.query("select sum(if(half_day=0,7,4)) as day, " +
                         "r.nom_reason as reason from absences a,reason r," +
                         "users u where u.id_user=a.id_user and a.id_reason=r.id_reason " +
@@ -176,8 +183,8 @@ module.exports = function(router) {
                                     success: false
                                 });
 
-                                throw err;
-                                console.log(err)
+                                // throw err;
+                                console.log("error pieChartAdmin :" + err);
                             } else {
                                 PieDataD = [];
                                 PieReasonD = [];
@@ -203,8 +210,10 @@ module.exports = function(router) {
             // res.send('Vous n\'avez rien à faire ici !');
             res.json({
                 errorToken: true,
-                message: 'Vous n\'avez rien à faire ici !'
+                message: 'Vous n\'avez rien à faire ici ! USER'
             });
+            console.log("pas d'accès au back user.js : Vous n'avez rien à faire ici !")
+
         }
     });
 }

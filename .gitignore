@@ -8,7 +8,10 @@ server/public/*
 node_modules
 
 BDD/.DS_Store
-BDD/data/*
 /.idea/
+BDD/data/
+client/assets/justificatif/
+package-lock.json
+
 *.log
 server/log/*.json

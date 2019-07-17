@@ -57,6 +57,7 @@ export class ExpressService {
    */
   postExpress(target, contentPost) {
     contentPost.token = this.authTokenService.getToken();
+    console.log(this.authTokenService.getToken())
     return this.http.post<Auth>(this.domain + '/' + target, contentPost);
   }
 
@@ -65,14 +66,14 @@ export class ExpressService {
    * @param callback
    */
   checkTokenBack(callback) {
-    if(this.authTokenService.isTokenExpired()) {
+    if (this.authTokenService.isTokenExpired()) {
       const content = {
         action: 'checkToken'
       };
       this.postExpress('user', content).subscribe((res: Auth) => {
         if (res.errorToken) {
-          this.authTokenService.clearAuthToken();
-          swal('C\'est fini !', 'Votre session à expirée, vauillez vous reconnecter', 'error');
+          // this.authTokenService.clearAuthToken();
+          swal('C\'est fini !', 'Votre session à expirée, veuillez vous reconnecter', 'error');
           this.router.navigate(['/login']);
           return callback(false);
         } else {

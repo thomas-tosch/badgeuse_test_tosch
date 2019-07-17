@@ -10,8 +10,9 @@ import {AbsenceService} from '../services/absence.service';
 import {WebsocketService} from '../services/websocket.Service';
 // @ts-ignore
 import publicIp from 'public-ip';
-import {Subject, Subscription} from "rxjs";
-import {BadgerService} from "../services/badger.service";
+import {Subject, Subscription} from 'rxjs';
+import {BadgerService} from '../services/badger.service';
+import {log} from "util";
 
 
 @Component({
@@ -52,7 +53,7 @@ export class MenuComponent implements OnInit {
         this.refreshPresence();
         this.getDataUser();
 
-        this.getTotalAbsence();
+        // this.getTotalAbsence();
         this.refreshNbAbsence();
         this.getPublicIp();
     }
@@ -72,8 +73,10 @@ export class MenuComponent implements OnInit {
    * get the public ip adresse
    */
   getPublicIp() {
+    console.log('getIpPublic')
       publicIp.v4().then((ip) => {
         this.publicIp = ip;
+        console.log(ip)
           this.getAccessBadger();
       });
     }
@@ -87,12 +90,15 @@ export class MenuComponent implements OnInit {
       });
     }
 
-    /**
+   /**
      * get number of absence in wait
      */
-    getTotalAbsence() {
-      this.absenceService.getUserListAbsence((res) => {
-        this.nbAbsence = res.length;
+  getTotalAbsence() {
+      this.absenceService.getUserListAbsence((res: Auth) => {
+        if (res.success) {
+          this.nbAbsence = res.list.length;
+          console.log('aficher nbAbsence ' + res.list.length);
+        }
       });
     }
 
@@ -140,12 +146,14 @@ export class MenuComponent implements OnInit {
      * check if the client is in UHA 4.0 area
      */
     getAccessBadger() {
+
       const content = {
         action: 'getAccessBadger',
         ipPublic: this.publicIp
       };
         this.expressService.postExpress('badger', content).subscribe((res: Auth) => {
           this.badgerActive = res.success;
+          console.log(res)
         });
     }
 

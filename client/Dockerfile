@@ -1,17 +1,21 @@
-FROM node:latest
+FROM nginx:alpine
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+RUN apk add npm git bash
 
-COPY angular.json /usr/src/app/angular.json
-COPY package.json /usr/src/app/package.json
+RUN mkdir app
+WORKDIR /app
+
+COPY angular.json /app/angular.json
+COPY package.json /app/package.json
 
 RUN npm install
 RUN npm install -g @angular/cli
 RUN npm rebuild node-sass
 
-COPY . /usr/src/app
+COPY . /app
 
-CMD npm install && ng serve --host 0.0.0.0 --prod
+RUN ng build --prod
 
-RUN npm rebuild node-sass
+RUN cp -R ./dist/client/* /usr/share/nginx/html/
+
+CMD ["nginx", "-g", "daemon off;"]

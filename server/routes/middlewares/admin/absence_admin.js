@@ -4,7 +4,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('ABSENCE_ADMIN');
         if(tokenList.checkToken(req.body.token)) {
 
 
@@ -14,7 +14,7 @@ module.exports = function(router) {
 
                 // GET ABSENCE LIST FOR ADMIN
                 case 'getUserListAbsence':
-
+                    console.log('ABSENCE_ADMIN - getUserListAbsence');
                     db.query('SELECT ' +
                         'CONCAT(users.nom_user, \' \', users.prenom_user) AS absName, ' +
                         '' +
@@ -42,7 +42,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
+                                console.log(err);
                             } else {
                                 res.json({
                                     success: true,
@@ -53,6 +53,8 @@ module.exports = function(router) {
                     break;
 
                 case 'getUpdateAbsence':
+                    console.log('ABSENCE_ADMIN - getUpdateAbsence');
+
                     const ref = req.body.ref;
                     const valide = req.body.valide;
                     const refus = req.body.refus;
@@ -61,7 +63,7 @@ module.exports = function(router) {
                     db.query('UPDATE absences SET id_status = ?, raison_refus = ? WHERE ref_absence = ? ', content, (err) => {
                         if (err) {
                             res.json({success: false});
-                            throw err;
+                            console.log(err);
                         } else {
                             res.json({success: true});
                         }
@@ -70,7 +72,10 @@ module.exports = function(router) {
 
             }
         } else {
-            res.send('Vous n\'avez rien à faire ici !');
+            res.json({
+                errorToken: true,
+                message: 'Vous n\'avez rien à faire ici !'
+            });
         }
     });
 };

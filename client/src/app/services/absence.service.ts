@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {ExpressService} from "./express.service";
-import {Auth} from "../guards/auth";
-import {WebsocketService} from "./websocket.Service";
+import {ExpressService} from './express.service';
+import {Auth} from '../guards/auth';
+import {WebsocketService} from './websocket.Service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class AbsenceService {
       action: 'getUserListAbsence'
     };
     this.expressService.postExpress('absence_admin', content).subscribe((res: Auth) => {
-      return callback(res.list);
+      return callback(res);
     });
   }
 
@@ -31,7 +31,7 @@ export class AbsenceService {
     this.getUserListAbsence((res) => {
 
       const socketContent = {
-        action :'absenceList',
+        action : 'absenceList',
         nbAbsence : res.length
       };
       this.wsService.sendSocket(socketContent); // send a signal on socket.io

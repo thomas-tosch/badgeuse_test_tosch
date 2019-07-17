@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable, Subject} from 'rxjs';
 import * as Rx from 'rxjs/Rx';
-import {ExpressService} from "./express.service";
+import {ExpressService} from './express.service';
 
 @Injectable()
 export class WebsocketService {

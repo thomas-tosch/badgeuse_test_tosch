@@ -4,7 +4,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function (router) {
 
     router.post('/', (req, res) => {
-
+        console.log('CALENDAR');
         if(tokenList.checkToken(req.body.token)) {
 
 
@@ -14,7 +14,7 @@ module.exports = function (router) {
             switch (action) {
 
                 case 'getMonth' :
-
+                    console.log('CALENDAR - getMonth');
                     db.query('SELECT SUBSTR(a.absence_date, 1, 10) AS day, ' +
                         'a.id_status AS status, ' +
                         'r.nom_reason AS reason, ' +
@@ -28,19 +28,20 @@ module.exports = function (router) {
                             res.json({
                                 success: false
                             });
-                            throw err;
+                            console.log("Calendar calendrier renvoie error pour getMonth : " + err );
+                            // throw err;
                         } else {
 
                             res.json({
                                 list: resultat
                             });
-
+                            console.log("Calendar affichage resultat calendrier getMonth" + resultat);
                         }
                     });
                     break;
 
                 case 'getWeek' :
-
+                    console.log('CALENDAR - getWeek');
                     db.query('SELECT SUBSTR(b.start_point, 1, 10) AS startHeure, ' +
                         'SUBSTR(b.start_point, 12, 19) AS startMinute, ' +
                         'SUBSTR(b.end_point, 1, 10) AS endHeure, ' +
@@ -53,19 +54,25 @@ module.exports = function (router) {
                             res.json({
                                 success: false
                             });
-                            throw err;
+                            console.log("Calendar calendrier renvoie error pour getWeek : " + err);
+                            // throw err;
+
                         } else {
 
                             res.json({
                                 list: resultat
                             });
-
+                            console.log("Calendar affichage resultat calendrier getWeek" + resultat);
                         }
                     });
                     break;
             }
         } else {
-            res.send('Vous n\'avez rien à faire ici !');
-        }
+            res.json({
+                errorToken: true,
+                message: 'Vous n\'avez rien à faire ici !'
+            });
+            console.log("Calendar pas d'accès au calendrier : ")
+;        }
     });
 };

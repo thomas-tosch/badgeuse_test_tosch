@@ -57,6 +57,7 @@ export class UserDetailComponent implements OnInit {
    * get the data of user
    */
   getUser() {
+    console.log('getUser');
     this.userService.getDataUser((res) => {
       this.userData = res;
       this.form.get('nom_group').setValue(res.id_group);

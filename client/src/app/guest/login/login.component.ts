@@ -93,7 +93,9 @@ export class LoginComponent implements OnInit {
       password: this.formLogin.get('password').value
     };
     // express request
+    console.log('GET LOGIN')
     this.expressService.postExpress('login', content).subscribe((resp: Auth ) => {
+      console.log('RECIEVE LOGIN')
       if (!resp.success) {
         this.processing = false;
         swal('Connexion échouée', resp.message, 'error');

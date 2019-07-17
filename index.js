@@ -5,8 +5,15 @@ let express    = require('express'),
     config     = require('./server/config/config');
 
 // required only to send cross data from frontend to backend
+/*
 app.use(cors({
     origin : 'http://'+ config.auth.HOST_ANGULAR,
+    credentials: true
+}));
+*/
+app.use(cors({
+    origin : `http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`,
+    //origin : `http://${config.auth.HOST_ANGULAR}`,
     credentials: true
 }));
 
@@ -24,3 +31,5 @@ require('./server/routes/index')(app);
 app.listen(config.auth.PORT_EXPRESS, () => {
     console.log(`Badgeuse app started on port ${config.auth.PORT_EXPRESS}`);
 });
+
+console.log('=============================')

@@ -1,54 +1,42 @@
 version: '3.1'
 
 services:
-
-  client:
-    image: client:latest
-    container_name: badgeuseclient
+  web:
     build:
-      context: ./client
-      dockerfile: Dockerfile
-    volumes:
-      - './client:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      context: client
     ports:
-      - 4200:4200
-
-  server:
-    image: node:alpine
-    container_name: badgeuseserver
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
-      - HOST_ANGULAR = process.env.HOST_ANGULAR
-      - PORT_ANGULAR = process.env.PORT_ANGULAR
-    command: >
-      sh -c "npm install && node index.js"
-    volumes:
-      - .:/home/node/app
+      - 81:80
     depends_on:
-      - mariadb
+      - node
+
+
+  node:
+    build:
+      context: .
+    environment:
+      - PORT_ANGULAR=81
+      - HOST_ANGULAR=10.3.1.152 #ipLocal adress
     ports:
       - 8080:8080
+    depends_on:
+      - mariadb
 
   mariadb:
-    container_name: mariadb
     image: library/mariadb:latest
     volumes:
       - ./BDD/data:/var/lib/mysql
       - ./BDD:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: toor
-      MYSQL_USER: uhaSQL
-      MYSQL_PASSWORD: uha
-      MYSQL_DATABASE: badgeuse
-    ports:
-      - 3306:3306
+      MYSQL_ROOT_PASSWORD: "toor"
+      MYSQL_USER: "uhaSQL"
+      MYSQL_PASSWORD: "uha"
+      MYSQL_DATABASE: "badgeuse"
+    expose:
+      - 3306
 
   phpmyadmin:
-    container_name: phpmyadmin
     image: bitnami/phpmyadmin:latest
     depends_on:
       - mariadb
     ports:
-      - 80:80
+      - '80'

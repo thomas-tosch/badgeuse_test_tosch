@@ -5,7 +5,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('HEBDO');
         if(tokenList.checkToken(req.body.token)) {
 
 
@@ -15,6 +15,8 @@ module.exports = function(router) {
 
                 // Get the user list for graphic week with filter and order by
                 case 'getUserListHebdo':
+                    console.log('HEBDO - getUserListHebdo');
+
                     let startDate = req.body.startDate;
                     let endDate = req.body.endDate;
                     let filterGroup = req.body.filterGroup;
@@ -54,7 +56,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
-                                throw err;
+                                console.log(err);
                             } else {
                                 res.json({
                                     success: true,

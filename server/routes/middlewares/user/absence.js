@@ -6,7 +6,7 @@ let tokenList = require ('../../../config/tokenList');
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
-
+        console.log('ABSENCE');
         if(tokenList.checkToken(req.body.token)) {
 
             const action = req.body.action;
@@ -15,12 +15,14 @@ module.exports = function(router) {
 
                 // GET REASON DATA
                 case 'getReason':
+                    console.log('ABSENCE - getReason');
+
                     db.query('SELECT * FROM reason ORDER BY id_reason', (err, rows) => {
                         if (err) {
                             res.json({
                                 success: false
                             });
-                            throw err;
+                            console.log(err);
                         } else {
                             res.json({
                                 success: true,
@@ -33,12 +35,14 @@ module.exports = function(router) {
 
                 // GET THE NEXT REFERENCE OF ABSENCE
                 case 'getRefAbsence':
+                    console.log('ABSENCE - getRefAbsence');
+
                     db.query('SELECT MAX(ref_absence) AS max_ref FROM absences', (err, rows) => {
                         if (err) {
                             res.json({
                                 success: false
                             });
-                            throw err;
+                            console.log(err);
                         } else {
                             if (rows.length !== 0) {
                                 res.json({
@@ -57,6 +61,8 @@ module.exports = function(router) {
 
                 // REQUEST ABSENCE TO DB FOR CERTIFICATE
                 case 'absenceRequest':
+                    console.log('ABSENCE - absenceRequest');
+
                     let err = '';
                     let currDate = new Date; // current date
                     let id_user = Number(req.body.id_user);
@@ -194,7 +200,7 @@ module.exports = function(router) {
                                                         success: false,
                                                         message: 'Nous avons eu un souçis avec la base de données.'
                                                     });
-                                                    throw err;
+                                                    console.log(err);
                                                 } else {
                                                     entryCount++;
                                                     if (entryCount === entryNumber) {
@@ -224,6 +230,8 @@ module.exports = function(router) {
 
                 // IF UPLOAD FILE FAILED, DELETE THE ABSENCE ON DB
                 case 'uploadFailed':
+                    console.log('ABSENCE - uploadFailed');
+
                     let ref = req.body.ref;
                     const content = [ref];
                     db.query('DELETE FROM absences WHERE ref_absence = ?', content, (err) => {
@@ -231,7 +239,7 @@ module.exports = function(router) {
                             res.json({
                                 success: false
                             });
-                            throw err;
+                            console.log(err);
                         } else {
                             res.json({
                                 success: true
