@@ -32,7 +32,7 @@ export class AbsenceService {
 
       const socketContent = {
         action : 'absenceList',
-        nbAbsence : res.length
+        nbAbsence : res.list.length
       };
       this.wsService.sendSocket(socketContent); // send a signal on socket.io
     })
