@@ -119,7 +119,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                     this.calendar();
                 }
             } else {
-                console.log('Error requesting the calendar month data')
+                console.error('Error requesting the calendar month data');
             }
         });
     }
@@ -136,9 +136,12 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
         };
         let i = 0;
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
-            this.presencesDates = res.list;
 
-            if (this.presencesDates.length !== 0) {
+            if (res.success) {
+                console.log('Calendar week presences list : ');
+                console.log(this.presencesDates);
+
+                this.presencesDates = res.list;
                 this.presencesDates.forEach((presence) => {
 
                     // ADD TO ARRAY FOR CALENDAR EVENT
@@ -163,6 +166,7 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                     }
                 });
             } else {
+                console.error('Error requesting the calendar week data')
                 this.calendar();
             }
         });

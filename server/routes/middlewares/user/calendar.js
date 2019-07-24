@@ -28,14 +28,16 @@ module.exports = function (router) {
                             res.json({
                                 success: false
                             });
-                            console.log("Calendar calendrier renvoie error pour getMonth : " + err );
+                            console.log("Calendar calendrier renvoie error pour getMonth : ");
+                            console.log(err);
                             // throw err;
                         } else {
                             res.json({
                                 success:true,
                                 list: resultat
                             });
-                            console.log("Calendar affichage resultat calendrier getMonth" + resultat);
+                            console.log("Calendar affichage resultat calendrier getMonth : ");
+                            console.log(resultat);
                         }
                     });
                     break;
@@ -55,14 +57,17 @@ module.exports = function (router) {
                                 success: false
                             });
                             console.log("Calendar calendrier renvoie error pour getWeek : " + err);
+                            console.log(err);
                             // throw err;
 
                         } else {
 
                             res.json({
+                                success: true,
                                 list: resultat
                             });
-                            console.log("Calendar affichage resultat calendrier getWeek" + resultat);
+                            console.log("Calendar affichage resultat calendrier getWeek : ");
+                            console.log(resultat);
                         }
                     });
                     break;
