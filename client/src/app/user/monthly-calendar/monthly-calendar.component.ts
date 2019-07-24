@@ -52,10 +52,11 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
             id_user: this.id_user
         };
         let i = 0;
-        console.log('getMonth')
+        console.log('getMonth data');
         this.expressService.postExpress('calendar', content).subscribe((res: Auth) => {
-            console.log('getEventAbsence ' + res.errorToken)
-            if(res.errorToken === false) {
+            console.log('getAbsences  = ');
+            console.log(res);
+            if(res.success) {
                 this.absencesDates = res.list;
 
                 if (this.absencesDates.length !== 0) {
@@ -117,6 +118,8 @@ export class MonthlyCalendarComponent implements OnInit, OnChanges {
                 } else {
                     this.calendar();
                 }
+            } else {
+                console.log('Error requesting the calendar month data')
             }
         });
     }
