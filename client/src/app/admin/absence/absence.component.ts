@@ -38,7 +38,10 @@ export class AbsenceComponent implements OnInit {
   getUserListAbsence() {
     this.absences = [];
     this.absenceService.getUserListAbsence((res) => {
-      this.absences = res;
+      this.absences = res.list;
+      console.log('----liste des absences à afficher = ');
+      console.log(this.absences);
+      console.log('----');
     });
   }
 
