@@ -23,11 +23,29 @@ où
 
 ## ÉTAPE 2 : Configurer son Host ##
 
-Dans le fichier docker-compole.yml, dans la partie node change le commentaire de HOST_ANGULAR et met ton adresse IP locale.
-Ensuite si tu veux pas compiler le web avec Angular pour que ça prenne moins de temps, met en commentaire le service web toujours dans docker-compose.yml ainsi que phpmyadmin, 
-et ensuite dans l'environnement de node, change le port angular en mettant `4200` et remplace ton adresse IP par `localhost` pour le host.
+   Dans le fichier docker-compose.yml, modifier _Badgeuse-node.HOST_ANGULAR_ avec l'adresse **IP** de la machine de developpement,
+   
+   Pour avoir un environement de developpement dynamique au niveau du client front, sans avoir à le compiler : 
+   <ol>
+        <li>Dans le fichier docker-compose.yml, commenter le service _badgeuse-web_  ainsi que phpmyadmin,</li>
+        <li>Dans le fichier docker-compose.yml, modifier _Badgeuse-node.PORT_ANGULAR_ avec `4200` et remplace _Badgeuse-node.HOST_ANGULAR_ par `localhost`,</li>
+        <li>Ouvrir un terminal dans le dossier client, installer les dépendance avec **npm install** puis lancer le serveur avec **ng serve**.</li>
+   </ol> 
+   
+   TODO
+   - [ ] le fichier ./server/config/config.js présente des configurations pour passer aisément du mode dev au mode prod. Il faudra documenter modifier le readme de dev pour en prendre compte
+   
+## ENVIRONNEMENT DEV ##
 
-Pour finir rien de plus simple, tu ouvres un terminal, tu te places dans le dossier client et tu fais un 'ng serve' et tout fonctionne (normalement !)
+  Régler dans phpMyAdmin pour l'utilisateur uhaSQL un nom d'hôte en localhost.
+
+  Ensuite, changer la fin du fichier -> server/config/config.js 
+  
+  ``// exports.auth = AUTH;``
+
+  ``exports.auth = AUTHDEV``
+
+       
 
 ## ÉTAPE 3 : Démarrer l'ensemble ##
 
@@ -100,13 +118,3 @@ et ensuite dans l'environnement de node, change le port angular en mettant `4200
    
    `pm2 flush` -> efface tous les logs de pm2
 
-
-## ENVIRONNEMENT DEV ##
-
-  Régler dans phpMyAdmin pour l'utilisateur uhaSQL un nom d'hôte en localhost.
-
-  Ensuite, changer la fin du fichier -> server/config/config.js 
-  
-  ``// exports.auth = AUTH;``
-
-  ``exports.auth = AUTHDEV``
