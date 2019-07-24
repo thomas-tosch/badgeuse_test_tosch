@@ -44,7 +44,7 @@ const AUTHDEV = {
  * @type {{HOST_RASPI: string}}
  */
 const RASPI = {
-    HOST_RASPI: "10.3.1.184"
+    HOST_RASPI: "193.50.153.129"
 };
 
 /**

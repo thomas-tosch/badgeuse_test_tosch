@@ -80,7 +80,7 @@ export class HebdoComponent implements OnInit {
     const currFirst = new Date; // get current date for first
     const currLast = new Date; // get current date for last
     const first = currFirst.getDate() - currFirst.getDay() + 1 - (7 * this.selectWeek); // First day is the day of the month - the day of the week
-    const last = first + 6; // last day is the first day + 6
+    const last = first + 4; // last day is the first day + 6
 
     this.startDateTime = new Date(currFirst.setHours(1, 0, 0, 0)); // set time at start day 00:00
     this.startDateTime = new Date(currFirst.setDate(first)).toISOString(); // set first day of week
