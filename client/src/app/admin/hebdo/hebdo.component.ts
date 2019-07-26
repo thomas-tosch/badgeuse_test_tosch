@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2';
 import {PdfService} from '../../services/pdf.service';
+import {HebdoService} from "../../services/hebdo.service";
 
 
 @Component({
@@ -29,7 +30,8 @@ export class HebdoComponent implements OnInit {
 
   constructor(private expressService: ExpressService,
               private pdfService: PdfService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private hebdoService: HebdoService) {
     this.createForm();
   }
 
@@ -95,21 +97,14 @@ export class HebdoComponent implements OnInit {
    * get the user  list to db
    */
   getUserListHebdo() {
-    const content = {
-      action: 'getUserListHebdo',
-      startDate: this.startDateTime,
-      endDate: this.endDateTime,
-      filterGroup: this.filterGroup,
-      orderBy: this.form.get('orderBy').value
-    };
-    this.expressService.postExpress('hebdo', content).subscribe((res: Auth) => {
-      if (!res.success) {
-        swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+    this.hebdoService.getUserListHebdo((err: string, userList) => {
+      if (err) {
+        console.error(err);
       } else {
-        this.userList = res.list;
+        this.userList = userList;
         this.emitUserListSubject();
       }
-    });
+    }, this.startDateTime, this.endDateTime, this.filterGroup, this.form.get('orderBy').value);
   }
 
   /**

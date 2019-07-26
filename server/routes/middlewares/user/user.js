@@ -133,7 +133,7 @@ module.exports = function(router) {
                                 // throw err;
                                 console.error(err);
                             } else {
-                                console.log('    query fonctionne);
+                                console.log('    query fonctionne');
                                 pieDataD = [];
                                 pieReasonD = [];
 
