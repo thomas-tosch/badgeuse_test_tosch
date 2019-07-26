@@ -2,6 +2,11 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import { UserService} from '../services/user.service';
 import { Chart } from 'chart.js';
 import {FormGroup} from '@angular/forms';
+import {StatusColorHandlerService, StatusColors} from "../services/status-color-handler.service";
+import {forEach} from "@angular/router/src/utils/collection";
+
+
+export const WEEK_HOURS = 35;
 
 @Component({
   selector: 'app-pie-chart',
@@ -18,8 +23,8 @@ export class PieChartComponent implements OnInit, OnChanges  {
   selectWeek = 1;
 
 
-  constructor(private userService: UserService) {
-    this.getPieChart()
+  constructor(private userService: UserService, private statusColorHandlerService: StatusColorHandlerService) {
+    this.getPieChart();
 
   }
 
@@ -74,57 +79,67 @@ export class PieChartComponent implements OnInit, OnChanges  {
   }
 
   getPieChart() {
-    this.userService.getPieChart((err: string, dataFromBack, reasonFromBack) => {
+    console.log('service getPieChart request');
+    this.userService.getPieChart((err: string, dataFromBack: Array<number>, reasonFromBack: Array<string>) => {
       if (err) {
-        console.log(err);
+        // the chart will be empty
+        console.error(err);
       } else {
-        var nonJustifie = 35;
-        console.log('getPieChart ' + typeof dataFromBack);
-        Array.from(dataFromBack).forEach((iJustifie) => {
-          console.log(iJustifie);
-          // nonJustifie -= iJustifie;
-        });
-        Array.from(dataFromBack).push(nonJustifie);
-        Array.from(reasonFromBack).push("Non Justifié");
 
-        this.PieChart = new Chart('pieChart', {
-          type: 'pie',
-          data: {
-            labels: reasonFromBack,
-
-            datasets: [{
-              label: '# of Votes',
-              data: dataFromBack,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-              ],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            title: {
-              text: "Répartitions des heures",
-              display: true
-            },
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
-          }
+        // calculate the non justified hours and add them to the report
+        let nonJustifiedHours = WEEK_HOURS;
+        Array.from(dataFromBack).forEach((justifiedHours: number) => {
+          console.log(justifiedHours);
+          nonJustifiedHours -= justifiedHours;
         });
+
+
+        dataFromBack.push(nonJustifiedHours);
+        reasonFromBack.push('Non Justifiées');
+
+        console.log('request went fine received data ');
+        console.log(dataFromBack);
+        console.log(reasonFromBack);
+        console.log('non justifiées');
+        console.log(nonJustifiedHours);
       }
+
+      var dataColors = [];
+      var borderColor = [];
+      reasonFromBack.forEach( (reason: string) => {
+        dataColors.push(this.statusColorHandlerService.getStatusColorFromStatusName(reason));
+        borderColor.push('rgba(255,255,255,255)');
+      });
+      console.error(dataColors);
+
+
+      this.PieChart = new Chart('pieChart', {
+        type: 'pie',
+        data: {
+          labels: reasonFromBack,
+
+          datasets: [{
+            label: '# of Votes',
+            data: dataFromBack,
+            backgroundColor: dataColors,
+            borderColor: borderColor,
+            borderWidth: 4
+          }]
+        },
+        options: {
+          title: {
+            text: 'Répartitions des heures',
+            display: true
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
     }, this.id_user, this.startDateTime, this.endDateTime);
 
   }
