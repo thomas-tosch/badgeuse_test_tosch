@@ -4,6 +4,10 @@ import { Chart } from 'chart.js'
 import {FormGroup} from "@angular/forms";
 import {HebdoComponent} from '../hebdo/hebdo.component';
 import {Subscription} from "rxjs";
+import {WEEK_HOURS} from "../../pie-chart/pie-chart.component";
+import {HebdoService} from "../../services/hebdo.service";
+import {StatusColorHandlerService} from "../../services/status-color-handler.service";
+
 
 @Component({
   selector: 'app-pie-chart-admin',
@@ -22,7 +26,9 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
   usersList;
 
   constructor(private userService: UserService,
-              private hebdoComponent: HebdoComponent) {
+              private hebdoService: HebdoService,
+              private hebdoComponent: HebdoComponent,
+              private statusColorHandlerService: StatusColorHandlerService) {
     this.getPieChartAdmin();
 
   }
@@ -61,6 +67,7 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
 
   /**
    * subscription, update the data of graphic
+   * TODO check that method because it seems really strange
    */
   refreshGraphic() {
     this.listSubscription = this.hebdoComponent.userListSubject.subscribe(
@@ -90,52 +97,89 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
   }
 
   getPieChartAdmin() {
-    this.userService.getPieChartAdmin((dataFromBack, reasonFromBack) => {
-      let nonJustifie = 35*50;
+    this.userService.getPieChartAdmin((err: string, dataFromBack: Array<number>, reasonFromBack: Array<string>) => {
       //console.log('data pieChartAdmin')
       //console.log(dataFromBack);
       //console.log(reasonFromBack);
-      dataFromBack.forEach(function (iJustifie){nonJustifie -= iJustifie});
-      dataFromBack.push(nonJustifie);
-      reasonFromBack.push("Non Justifié");
+      if (err) {
+        // the chart will be empty
+        console.error(err);
+      } else {
 
-      this.PieChartAdmin = new Chart('pieChartAdmin', {
-        type: 'pie',
-        data: {
-          labels: reasonFromBack,
+        console.log('First request went fine received user presence data');
+        console.log(dataFromBack);
+        console.log(reasonFromBack);
 
-          datasets: [{
-            label: '# of Votes',
-            data: dataFromBack,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          title:{
-            text:"Répartitions des heures",
-            display:true
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero:true
-              }
-            }]
+
+        //get the user count to calculate nonJustifiedHours  else there are no non justified hours
+        this.hebdoService.getUserCountHebdo((err: string, userCount: number) => {
+          if (err) {
+            // the chart will be empty
+            console.error(err);
+          } else {
+            // calculate the non justified hours and add them to the report
+            let nonJustifiedHours = WEEK_HOURS * userCount;
+            Array.from(dataFromBack).forEach((justifiedHours: number) => {
+              console.log(justifiedHours);
+              nonJustifiedHours -= justifiedHours;
+            });
+
+            dataFromBack.push(nonJustifiedHours);
+            reasonFromBack.push('Non Justifiées');
+
+            console.log('Both request went fine received user presence and user count data');
+            console.log(dataFromBack);
+            console.log(reasonFromBack);
+            console.log('non justifiées');
+            console.log(nonJustifiedHours);
           }
-        }
-      });
+
+
+          let dataColors = [];
+          let borderColor = [];
+          reasonFromBack.forEach( (reason: string) => {
+            dataColors.push(this.statusColorHandlerService.getStatusColorFromStatusName(reason));
+            borderColor.push('rgba(255,255,255,255)');
+          });
+
+          console.log('derniere validation');
+          console.log(dataFromBack);
+          console.log(reasonFromBack);
+
+          this.PieChartAdmin = new Chart('pieChartAdmin', {
+            type: 'pie',
+            data: {
+              labels: reasonFromBack,
+
+              datasets: [{
+                label: '# of Votes',
+                data: dataFromBack,
+                backgroundColor: dataColors,
+                borderColor: borderColor,
+                borderWidth: 1
+              }]
+            },
+            options: {
+              title:{
+                text:'Répartitions des heures',
+                display:true
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero:true
+                  }
+                }]
+              }
+            }
+          });
+
+        }, this.hebdoComponent.filterGroup);
+
+      }
+
+
+
     }, this.startDateTime, this.endDateTime);
   }
 }

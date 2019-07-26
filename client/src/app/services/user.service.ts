@@ -98,7 +98,6 @@ export class UserService {
         //     if (isOk) {
 
                 const token = this.authTokenService.decodeToken();
-                console.log(token);
 
                 if (token === null) {
                     return callback('token is null');
@@ -154,8 +153,7 @@ export class UserService {
                         EndDate = new Date();
                     }
 
-                    console.log('test' + StartDate);
-                    console.log(EndDate);
+
                     const content = {
                         action: 'getPieChartAdmin',
                         StartDate: StartDate,
@@ -164,8 +162,9 @@ export class UserService {
                     this.expressService.postExpress('user', content).subscribe((res: Auth) => {
                         if (!res.success) {
                             swal('Oups !', 'Une erreur est survenue lors de la requête vers la base de données.', 'error');
+                            return callback('error in the reading of userService.getPieChartAdmin data', [], []);
                         } else {
-                            return callback(res.PieData, res.PieReason);
+                            return callback(null, res.PieData, res.PieReason);
                         }
                     });
                 }

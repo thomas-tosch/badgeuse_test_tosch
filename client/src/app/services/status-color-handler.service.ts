@@ -28,7 +28,8 @@ export class StatusColorHandlerService {
     this.statusNameToColorMapping.set('non justifiee', StatusColors.NON_JUSTIFIED);
     this.statusNameToColorMapping.set('non justifiees', StatusColors.NON_JUSTIFIED);
     this.statusNameToColorMapping.set('present', StatusColors.PRESENT);
-    this.statusNameToColorMapping.set('présent', StatusColors.PRESENT);
+    this.statusNameToColorMapping.set('presence', StatusColors.PRESENT);
+
   }
 
 

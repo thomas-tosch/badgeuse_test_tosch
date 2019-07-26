@@ -97,20 +97,23 @@ export class PieChartComponent implements OnInit, OnChanges  {
         dataFromBack.push(nonJustifiedHours);
         reasonFromBack.push('Non Justifiées');
 
+        /*
         console.log('request went fine received data ');
         console.log(dataFromBack);
         console.log(reasonFromBack);
         console.log('non justifiées');
         console.log(nonJustifiedHours);
+
+         //*/
       }
 
-      var dataColors = [];
-      var borderColor = [];
+      let dataColors = [];
+      let borderColor = [];
       reasonFromBack.forEach( (reason: string) => {
         dataColors.push(this.statusColorHandlerService.getStatusColorFromStatusName(reason));
         borderColor.push('rgba(255,255,255,255)');
       });
-      console.error(dataColors);
+      //console.log(dataColors);
 
 
       this.PieChart = new Chart('pieChart', {
