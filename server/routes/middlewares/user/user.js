@@ -28,7 +28,7 @@ module.exports = function(router) {
                         'user_groups.nom_group AS nom_group, ' +
                         'users_extend.id_group AS id_group, ' +
                         'roles.nom_role AS nom_role, ' +
-                        'IF(badger.id_point IS NULL,0,1) AS presence ' +
+                        'IF(badger.id_point IS NULL,0,1) AS present ' +
                         '' +
                         'FROM users ' +
                         '' +
@@ -120,7 +120,7 @@ module.exports = function(router) {
                         "group by a.id_reason, a.id_user " +
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), b.id_user," +
                         " u.nom_user, " +
-                        "'presence' as reason from badger b, users u where " +
+                        "'present' as reason from badger b, users u where " +
                         "u.id_user = b.id_user " +
                         "and WEEKDAY(start_point) < 5 " +
                         "and start_point between ? and ?" +
@@ -172,7 +172,7 @@ module.exports = function(router) {
                         "and absence_date between ? and ? " +
                         "group by a.id_reason " +
                         "union Select SEC_TO_TIME(SUM(TIME_TO_SEC(`duration`))), " +
-                        "'presence' as reason from badger b, " +
+                        "'present' as reason from badger b, " +
                         "users u where u.id_user=b.id_user and " +
                         "start_point between ? and ? ",
                        content1,
