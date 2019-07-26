@@ -131,20 +131,17 @@ module.exports = function(router) {
                                     success: false
                                 });
                                 // throw err;
-                                console.log('si query erreur : ' + err);
+                                console.error(err);
                             } else {
+                                console.log('    query fonctionne);
                                 pieDataD = [];
                                 pieReasonD = [];
-
-                                console.log('si query fonctionne (pieChart userSpace pieDataD) : ' + pieDataD);
-                                console.log('si query fonctionne (pieChart userSpace PieReasonD) : ' + pieReasonD);
-
 
                                 rows.forEach((element, index) => {
                                     pieDataD.push(parseInt(element.day));
                                     pieReasonD.push(element.reason);
-                                    console.log("push de element.day " + pieDataD + " ,et " + element.day);
-                                    console.log("push de element.reason " + pieReasonD + " , et " + element.reason);
+                                    //console.log(element.day);
+                                    //console.log(element.reason);
                                 });
                                 res.json({
                                     success: true,
@@ -152,6 +149,8 @@ module.exports = function(router) {
                                     pieReason: pieReasonD
                                 });
                             }
+                            console.log("résultat de la requete getPieChart : ")
+                            console.log(res);
                         });
                     break;
 
@@ -202,6 +201,8 @@ module.exports = function(router) {
                                     PieReason: PieReasonD
                                 });
                             }
+                            console.log("résultat de la requete getPieChartAdmin : ")
+                            console.log(res);
                         });
                     break;
             }
