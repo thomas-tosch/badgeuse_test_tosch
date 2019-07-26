@@ -11,18 +11,19 @@ module.exports = function(router) {
 
             const action = req.body.action;
 
+            let startDate, endDate, filterGroup, orderby, content;
             switch (action) {
 
                 // Get the user list for graphic week with filter and order by
                 case 'getUserListHebdo':
                     console.log('HEBDO - getUserListHebdo ddf');
 
-                    let startDate = req.body.startDate;
-                    let endDate = req.body.endDate;
-                    let filterGroup = req.body.filterGroup;
-                    let orderBy = req.body.orderBy;
+                    startDate = req.body.startDate;
+                    endDate = req.body.endDate;
+                    filterGroup = req.body.filterGroup;
+                    orderBy = req.body.orderBy;
 
-                    let content = [
+                    content = [
                         [startDate],
                         [endDate],
                         [startDate],
@@ -66,6 +67,41 @@ module.exports = function(router) {
                             }
                         });
                 break;
+
+                // Get the user count for graphic week with filter and order by
+                case 'getUserCountHebdo':
+                    console.log('HEBDO - getUserListHebdo ddf');
+
+                    filterGroup = req.body.filterGroup;
+
+                    content = [
+                        [filterGroup],
+                    ];
+                    db.query('SELECT ' +
+                        'COUNT(*) as count ' +
+                        'FROM users ' +
+                        '' +
+                        'LEFT JOIN users_extend ON users.id_user = users_extend.id_user ' + // join users table with users_extend table
+                        '' +
+                        'WHERE FIND_IN_SET(id_group, ?) ' // filter group
+                        , content, (err, rows) => {
+                            if (err) {
+                                res.json({
+                                    success: false
+                                });
+                                console.log('Request for user count hebdo failed');
+                                console.log(err);
+                            } else {
+                                console.log('Request for user count hebdo succeed');
+                                console.log(rows);
+                                console.log(rows[0].count);
+                                res.json({
+                                    success: true,
+                                    usersCount: rows[0].count
+                                });
+                            }
+                        });
+                    break;
             }
         } else {
             res.send('Vous n\'avez rien à faire ici !');
