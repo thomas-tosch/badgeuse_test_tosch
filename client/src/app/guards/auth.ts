@@ -13,4 +13,5 @@ export interface Auth {
   user: string;
   list: string;
   errorToken: boolean;
+  usersCount: number;
 }
