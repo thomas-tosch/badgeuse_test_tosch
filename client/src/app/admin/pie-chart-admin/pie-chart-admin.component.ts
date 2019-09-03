@@ -17,7 +17,7 @@ import {StatusColorHandlerService} from "../../services/status-color-handler.ser
 export class PieChartAdminComponent implements OnInit, OnChanges  {
 
   @Input() startDate;
-  PieChartAdmin = [];
+  PieChartAdmin;
   startDateTime;
   form: FormGroup;
   endDateTime;
@@ -35,6 +35,7 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
 
   ngOnInit() {
     this.initDate();
+    this.initPieChart();
     this.getPieChartAdmin();
     this.refreshGraphic();
   }
@@ -146,33 +147,13 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
           console.log(dataFromBack);
           console.log(reasonFromBack);
 
-          this.PieChartAdmin = new Chart('pieChartAdmin', {
-            type: 'pie',
-            data: {
-              labels: reasonFromBack,
-
-              datasets: [{
-                label: '# of Votes',
-                data: dataFromBack,
-                backgroundColor: dataColors,
-                borderColor: borderColor,
-                borderWidth: 1
-              }]
-            },
-            options: {
-              title:{
-                text:'Répartitions des heures',
-                display:true
-              },
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    beginAtZero:true
-                  }
-                }]
-              }
-            }
+          this.PieChartAdmin.data.labels = reasonFromBack;
+          this.PieChartAdmin.data.datasets.forEach((dataset) => {
+            dataset.data = dataFromBack;
+            dataset.backgroundColor = dataColors;
+            dataset.borderColor = borderColor;
           });
+          this.PieChartAdmin.update();
 
         }, this.hebdoComponent.filterGroup);
 
@@ -181,5 +162,35 @@ export class PieChartAdminComponent implements OnInit, OnChanges  {
 
 
     }, this.startDateTime, this.endDateTime);
+  }
+
+  initPieChart() {
+    this.PieChartAdmin = new Chart('pieChartAdmin', {
+      type: 'pie',
+      data: {
+        labels: ['loading'],
+
+        datasets: [{
+          label: '# of Votes',
+          data: [100],
+          backgroundColor: [],
+          borderColor: [],
+          borderWidth: 4
+        }]
+      },
+      options: {
+        title: {
+          text: 'Répartitions des heures',
+          display: true
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
   }
 }

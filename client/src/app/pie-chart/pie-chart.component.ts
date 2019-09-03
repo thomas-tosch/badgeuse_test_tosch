@@ -16,7 +16,7 @@ export const WEEK_HOURS = 35;
 export class PieChartComponent implements OnInit, OnChanges  {
 
   @Input() id_user;
-  PieChart = [];
+  PieChart;
   startDateTime ;
   form: FormGroup;
   endDateTime ;
@@ -30,6 +30,7 @@ export class PieChartComponent implements OnInit, OnChanges  {
 
   ngOnInit() {
     this.initDate();
+    this.initPieChart();
     this.getPieChart();
 
   }
@@ -116,34 +117,47 @@ export class PieChartComponent implements OnInit, OnChanges  {
       //console.log(dataColors);
 
 
-      this.PieChart = new Chart('pieChart', {
-        type: 'pie',
-        data: {
-          labels: reasonFromBack,
-
-          datasets: [{
-            label: '# of Votes',
-            data: dataFromBack,
-            backgroundColor: dataColors,
-            borderColor: borderColor,
-            borderWidth: 4
-          }]
-        },
-        options: {
-          title: {
-            text: 'Répartitions des heures',
-            display: true
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          }
-        }
+      this.PieChart.data.labels = reasonFromBack;
+      this.PieChart.data.datasets.forEach((dataset) => {
+        dataset.data = dataFromBack;
+        dataset.backgroundColor = dataColors;
+        dataset.borderColor = borderColor;
       });
+      this.PieChart.update();
+
     }, this.id_user, this.startDateTime, this.endDateTime);
+
+  }
+
+  initPieChart() {
+    this.PieChart = new Chart('pieChart', {
+      type: 'pie',
+      data: {
+        labels: ['loading'],
+
+        datasets: [{
+          label: '# of Votes',
+          data: [100],
+          backgroundColor: [],
+          borderColor: [],
+          borderWidth: 4
+        }]
+      },
+      options: {
+        title: {
+          text: 'Répartitions des heures',
+          display: true
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
 
   }
 }
