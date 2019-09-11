@@ -31,6 +31,7 @@ services:
       MYSQL_USER: "uhaSQL"
       MYSQL_PASSWORD: "uha"
       MYSQL_DATABASE: "badgeuse"
+      TZ: "Europe/Paris"
     expose:
       - 3306
   adminer:
