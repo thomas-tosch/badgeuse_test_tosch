@@ -24,9 +24,11 @@ module.exports = function(router) {
                     if (presence) {
                         title = 'Bonjour !';
                         message = 'Vous avez pointé PRESENT.';
+                        console.log('BADGER - devrait pointer');
                     } else {
                         title = 'Au revoir !';
                         message = 'Vous avez pointé ABSENT.';
+                        console.log('BADGER - devrait dé-pointer');
                     }
 
                     // add a point on db badger for START
@@ -45,6 +47,7 @@ module.exports = function(router) {
                                         res.json({
                                             success: false
                                         });
+                                        console.log("erreur dans la requète de mise à jour -> dépointage du user")
                                         console.log(err);
                                     } else {
                                         res.json({
@@ -52,13 +55,18 @@ module.exports = function(router) {
                                             title: title,
                                             message: message
                                         });
+                                        console.log("pointage effectué")
                                     }
                                 });
                             } else {
                                 res.json({
                                     success: false
                                 });
+                                console.log("pointage non effectué");
+                                console.log("err : ");
                                 console.log(err);
+                                console.log("rows : ");
+                                console.log(rows);
                             }
                         });
                     } else {
@@ -80,6 +88,7 @@ module.exports = function(router) {
                                 res.json({
                                     success: false
                                 });
+                                console.log("erreur dans la requète de mise à jour -> dépointage du user")
                                 console.log(err);
                             } else {
                                 res.json({
@@ -87,6 +96,7 @@ module.exports = function(router) {
                                     title: title,
                                     message: message
                                 });
+                                console.log("dépointage effectué")
                             }
                         })
                     }
