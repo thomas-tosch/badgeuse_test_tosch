@@ -24,7 +24,9 @@ export class HebdoComponent implements OnInit {
   checkbox1 = '';
   checkbox2 = '';
   checkbox3 = '';
-  filterGroup = '1,2,3';
+  checkbox4 = '';
+  checkbox5 = '';
+  filterGroup = '1,2,3,4,5';
   cssButton = '';
   disabledButton = false;
 
@@ -54,7 +56,10 @@ export class HebdoComponent implements OnInit {
       orderBy: ['userName'],
       checkbox1: [true],
       checkbox2: [true],
-      checkbox3: [true]
+      checkbox3: [true],
+      checkbox4: [true],
+      checkbox5: [true]
+
     });
   }
 
@@ -126,8 +131,18 @@ export class HebdoComponent implements OnInit {
     } else {
       this.checkbox3 = '';
     }
+    if (this.form.get('checkbox4').value) {
+      this.checkbox4 = '4,';
+    } else {
+      this.checkbox4 = '';
+    }
+    if (this.form.get('checkbox5').value) {
+      this.checkbox5 = '5,';
+    } else {
+      this.checkbox5 = '';
+    }
 
-    this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3;
+    this.filterGroup = this.checkbox1 + this.checkbox2 + this.checkbox3 + this.checkbox4 + this.checkbox5;
     this.filterGroup = this.filterGroup.substring(null, this.filterGroup.length - 1);
 
     this.getUserListHebdo();
