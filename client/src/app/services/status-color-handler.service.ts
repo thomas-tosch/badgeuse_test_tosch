@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 
 
 export const enum StatusColors {
-  NON_JUSTIFIED = 'rgba(255, 99, 132, 0.5)',
-  PRESENT =       'rgba(50, 205, 50, 0.5)',
+  NON_JUSTIFIED = 'rgba(255,0,12,0.73)',
+  PRESENT =       'rgba(18,255,23,0.69)',
+  JUSTIFIED_TELEWORKING = 'rgba(0,150,27,0.5)',
   JUSTIFIED_STAGE = 'rgba(30, 144, 255, 0.5)',
   JUSTIFIED_HILLNESS = 'rgba(135, 206, 250, 0.5)',
   JUSTIFIED_OTHER = 'rgba(0, 191, 255, 0.5)'
+
 }
 
 
@@ -29,7 +31,9 @@ export class StatusColorHandlerService {
     this.statusNameToColorMapping.set('non justifiees', StatusColors.NON_JUSTIFIED);
     this.statusNameToColorMapping.set('present', StatusColors.PRESENT);
     this.statusNameToColorMapping.set('presence', StatusColors.PRESENT);
-
+    this.statusNameToColorMapping.set('formation à distance', StatusColors.JUSTIFIED_TELEWORKING);
+    this.statusNameToColorMapping.set('formation a distance', StatusColors.JUSTIFIED_TELEWORKING);
+    this.statusNameToColorMapping.set('FOAD', StatusColors.JUSTIFIED_TELEWORKING);
   }
 
 
@@ -42,6 +46,7 @@ export class StatusColorHandlerService {
     //sanitize the string
     var cleanName = statusName.toLowerCase();
     cleanName = cleanName.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    console.log(cleanName);
     return this.statusNameToColorMapping.get(cleanName);
   }
 
