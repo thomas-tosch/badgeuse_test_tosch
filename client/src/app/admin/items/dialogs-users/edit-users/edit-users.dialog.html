@@ -37,6 +37,14 @@
 
       <div class="form">
         <mat-form-field color="accent">
+          <input matInput #inputstate class="form-control" placeholder="année (en chiffre)" [(ngModel)]="data.id_group" name="id_group" maxlength="1" required >
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value?.length || 0}}/1</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
           <input matInput #inputstate class="form-control" placeholder="id_role" [(ngModel)]="data.id_role" name="id_role" maxlength="1" required >
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
           <mat-hint align="end">{{inputstate.value?.length || 0}}/1</mat-hint>

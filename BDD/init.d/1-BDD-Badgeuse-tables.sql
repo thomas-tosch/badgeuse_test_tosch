@@ -66,8 +66,8 @@ CREATE TABLE users_extend (
 	PRIMARY KEY (id_user),
 	CONSTRAINT fk_users_id_users
 		FOREIGN KEY (id_user)
-		REFERENCES users(id_user),
-		ON DELETE CASCADE
+		REFERENCES users(id_user)
+		ON DELETE CASCADE,
 	CONSTRAINT fk_users_id_groups
 		FOREIGN KEY (id_group)
 		REFERENCES user_groups(id_group)

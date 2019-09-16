@@ -19,7 +19,7 @@ import { AuthTokenService } from 'src/app/services/auth-token.service';
 })
 
 export class TableUsersComponent implements OnInit {
-  displayedColumns = ['id_user', 'prenom_user', 'nom_user', 'mail_user', 'id_role', 'card', 'actions'];
+  displayedColumns = ['id_user', 'prenom_user', 'nom_user', 'mail_user', 'id_group', 'id_role', 'card', 'actions'];
   exampleDatabase: CrudUserService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -60,13 +60,13 @@ export class TableUsersComponent implements OnInit {
     });
   }
 
-  startEdit(i: number, id_user: string, prenom_user: string, nom_user: string, mail_user: string, id_role: string, card: string) {
+  startEdit(i: number, id_user: string, prenom_user: string, nom_user: string, mail_user: string, id_group: string, id_role: string, card: string) {
     this.id_user = id_user;
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
     const dialogRef = this.dialog.open(EditDialogUsersComponent, {
-      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, mail_user: mail_user, id_role: id_role, card: card}
+      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, mail_user: mail_user, id_group: id_group, id_role: id_role, card: card}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -81,11 +81,11 @@ export class TableUsersComponent implements OnInit {
     });
   }
 
-  deleteItem(i: number, id_user: string, prenom_user: string, nom_user: string, mail_user: string, id_role: string, card: string) {
+  deleteItem(i: number, id_user: string, prenom_user: string, nom_user: string, mail_user: string, id_group: string, id_role: string, card: string) {
     this.index = i;
     this.id_user = id_user;
     const dialogRef = this.dialog.open(DeleteDialogUsersComponent, {
-      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, mail_user: mail_user, id_role: id_role, card: card}
+      data: {id_user: id_user, prenom_user: prenom_user, nom_user: nom_user, mail_user: mail_user, id_group: id_group, id_role: id_role, card: card}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -153,12 +153,12 @@ export class ExampleDataSource extends DataSource<CrudUser> {
     ];
 
     this._exampleDatabase.getUser();
-
+    console.log(this._exampleDatabase.getUser());
 
     return merge(...displayDataChanges).pipe(map( () => {
         // Filter data
         this.filteredData = this._exampleDatabase.data.slice().filter((user: CrudUser) => {
-          const searchStr = ( user.id_user + user.prenom_user + user.nom_user + user.mail_user + user.id_role + user.card ).toLowerCase();
+          const searchStr = ( user.id_user + user.prenom_user + user.nom_user + user.mail_user + user.id_group + user.id_role + user.card ).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
 
@@ -191,6 +191,7 @@ export class ExampleDataSource extends DataSource<CrudUser> {
         case 'prenom_user': [propertyA, propertyB] = [a.prenom_user, b.prenom_user]; break;
         case 'nom_user': [propertyA, propertyB] = [a.nom_user, b.nom_user]; break;
         case 'mail_user': [propertyA, propertyB] = [a.mail_user, b.mail_user]; break;
+        case 'id_group': [propertyA, propertyB] = [a.id_group, b.id_group]; break;
         case 'id_role': [propertyA, propertyB] = [a.id_role, b.id_role]; break;
         case 'card': [propertyA, propertyB] = [a.card, b.card]; break;
       }

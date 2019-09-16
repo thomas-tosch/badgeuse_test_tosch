@@ -43,6 +43,11 @@
         <mat-cell *matCellDef="let row"> {{row.mail_user}}</mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="id_group">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>année</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id_group}}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="id_role">
         <mat-header-cell *matHeaderCellDef mat-sort-header>id_role</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.id_role}}</mat-cell>
@@ -63,11 +68,11 @@
         </mat-header-cell>
   
         <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="accent" (click)="startEdit(i, row.id_user, row.prenom_user, row.nom_user, row.mail_user, row.id_role, row.card)">
+          <button mat-icon-button color="accent" (click)="startEdit(i, row.id_user, row.prenom_user, row.nom_user, row.mail_user, row.id_group, row.id_role, row.card)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
   
-          <button mat-icon-button color="accent" (click)="deleteItem(i, row.id_user, row.prenom_user, row.nom_user, row.mail_user, row.id_role, row.card)">
+          <button mat-icon-button color="accent" (click)="deleteItem(i, row.id_user, row.prenom_user, row.nom_user, row.mail_user, row.id_group, row.id_role, row.card)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
@@ -89,4 +94,3 @@
                    [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
   </div>
-  
