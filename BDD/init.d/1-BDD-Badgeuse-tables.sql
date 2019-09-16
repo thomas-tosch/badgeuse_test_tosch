@@ -52,6 +52,7 @@ CREATE TABLE users (
 	CONSTRAINT fk_users_id_user
 		FOREIGN KEY (id_role)
 		REFERENCES roles(id_role)
+		ON DELETE CASCADE
 )
 Engine = INNODB;
 
@@ -66,6 +67,7 @@ CREATE TABLE users_extend (
 	CONSTRAINT fk_users_id_users
 		FOREIGN KEY (id_user)
 		REFERENCES users(id_user),
+		ON DELETE CASCADE
 	CONSTRAINT fk_users_id_groups
 		FOREIGN KEY (id_group)
 		REFERENCES user_groups(id_group)
@@ -85,6 +87,7 @@ CREATE TABLE badger (
 	CONSTRAINT fk_badger_id_user
 		FOREIGN KEY (id_user)
 		REFERENCES users(id_user)
+		ON DELETE CASCADE
 )
 Engine = INNODB;
 
@@ -106,6 +109,7 @@ CREATE TABLE absences (
 	CONSTRAINT fk_absences_id_user
 		FOREIGN KEY (id_user)
 		REFERENCES users(id_user),
+		ON DELETE CASCADE
 	CONSTRAINT fk_absences_id_reason
 		FOREIGN KEY (id_reason)
 		REFERENCES reason(id_reason)
