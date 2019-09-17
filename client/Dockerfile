@@ -2,22 +2,19 @@ FROM nginx:alpine
 
 RUN apk add npm git bash
 
-RUN mkdir app
 WORKDIR /app
 
-COPY angular.json /app/angular.json
-COPY package.json /app/package.json
-
+COPY package*.json /app/
 RUN npm install
-RUN npm install -g @angular/cli
-RUN npm rebuild node-sass
 
-COPY . /app
+COPY ./ /app/
 
-RUN ng build --prod
+ARG configuration=production
+RUN npm run build -- --output-path=/app/dist/out --configuration $configuration
 
-RUN cp -R ./dist/client/* /usr/share/nginx/html/
+RUN cp -R /app/dist/out/* /usr/share/nginx/html/
 
+COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
 CMD ["nginx", "-g", "daemon off;"]
 
 
