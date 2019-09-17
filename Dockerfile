@@ -1,17 +1,19 @@
 FROM keymetrics/pm2:latest-alpine
 
 # Bundle APP files
-COPY ./index.js src/
-COPY ./package.json .
-COPY ./server src/server/
-COPY pm2.json .
 
-# Install app dependencies
+WORKDIR /app
+
+#handle package installation
+COPY package*.json /app/
 ENV NPM_CONFIG_LOGLEVEL warn
-RUN npm install --production
+RUN npm ci --only=production
 
-# Show current folder structure in logs
-#RUN ls -al -R
+#copy project files
+COPY . .
+
+EXPOSE 8080
+
 
 CMD [ "pm2-runtime", "start", "pm2.json" ]
 
