@@ -28,14 +28,17 @@
     "sha1": "^1.1.1",
     "socket.io": "^2.2.0",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^3.8.0"
+    "winston-daily-rotate-file": "^3.8.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "@types/jspdf": "^1.2.2",
     "ng-faker": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/*.js"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
   "license": "UHA 4.0"

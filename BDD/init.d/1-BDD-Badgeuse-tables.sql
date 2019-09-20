@@ -108,8 +108,8 @@ CREATE TABLE absences (
 	PRIMARY KEY (id_absences),
 	CONSTRAINT fk_absences_id_user
 		FOREIGN KEY (id_user)
-		REFERENCES users(id_user),
-		ON DELETE CASCADE
+		REFERENCES users(id_user)
+		ON DELETE CASCADE,
 	CONSTRAINT fk_absences_id_reason
 		FOREIGN KEY (id_reason)
 		REFERENCES reason(id_reason)

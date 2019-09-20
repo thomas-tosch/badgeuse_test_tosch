@@ -15,7 +15,7 @@ services:
       context: .
     environment:
       - PORT_ANGULAR=85
-      - HOST_ANGULAR=145.239.32.254 #ipLocal adress
+      - HOST_ANGULAR=127.0.0.1 #ipLocal adress
     ports:
       - 8080:8080
     depends_on:
@@ -35,7 +35,7 @@ services:
     expose:
       - 3306
   adminer:
-    image: adminer
+    image: adminer:latest
     restart: always
     ports:
       - 86:8080
