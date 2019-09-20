@@ -1,9 +1,4 @@
-DROP DATABASE IF EXISTS badgeuse;
-CREATE DATABASE IF NOT EXISTS badgeuse;
-USE badgeuse;
 
-CREATE USER IF NOT EXISTS 'uhaSQL'@'%' IDENTIFIED BY 'uha';
-GRANT ALL PRIVILEGES ON badgeuse . * TO 'uhaSQL'@'%';
 
 -- -----------------------------------------------------
 -- Table roles
@@ -108,8 +103,8 @@ CREATE TABLE absences (
 	PRIMARY KEY (id_absences),
 	CONSTRAINT fk_absences_id_user
 		FOREIGN KEY (id_user)
-		REFERENCES users(id_user),
-		ON DELETE CASCADE
+		REFERENCES users(id_user)
+		ON DELETE CASCADE,
 	CONSTRAINT fk_absences_id_reason
 		FOREIGN KEY (id_reason)
 		REFERENCES reason(id_reason)
