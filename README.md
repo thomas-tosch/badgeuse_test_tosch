@@ -1,6 +1,7 @@
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
-Documentation située dans ./server/out/index.html (seulement UUID pour le moment) 
+La documentation pour les routes du back se trouve sur ./server/out/index.html (seul UUID est actuellement documentée)
+ 
 ## PRÉ-REQUIS ##
 
 * DOCKER
@@ -12,8 +13,7 @@ où
 * Npm (v6.4.1)
 
 
-# PREMIERE SOLUTION (DEV) #
-
+# Déploiement en production (Docker) #
 
 ## ÉTAPE 1 : Installer Docker ##
 
@@ -23,41 +23,58 @@ où
 
 ## ÉTAPE 2 : Configurer son Host ##
 
-   Dans le fichier docker-compose.yml, modifier _Badgeuse-node.HOST_ANGULAR_ avec l'adresse **IP** de la machine de developpement,
+   Dans le fichier .env à la racine du projet ;   
    
-   Pour avoir un environement de developpement dynamique au niveau du client front, sans avoir à le compiler : 
    <ol>
-        <li>Dans le fichier docker-compose.yml, commenter le service _badgeuse-web_  ainsi que phpmyadmin,</li>
-        <li>Dans le fichier docker-compose.yml, modifier _Badgeuse-node.PORT_ANGULAR_ avec `4200` et remplace _Badgeuse-node.HOST_ANGULAR_ par `localhost`,</li>
-        <li>Ouvrir un terminal dans le dossier client, installer les dépendance avec **npm install** puis lancer le serveur avec **ng serve**.</li>
+        <li>assurez vous que la section *for prod* n'est pas commentée,</li>
+        <li>assurez vous que la section *for development* est commentée,</li>
+        <li>modifiez le _PORT_ANGULAR_ par celui que vous souhaitez utiliser et le _HOST_ANGULAR_ par l'IP de votre machine,</li>
    </ol> 
    
    TODO
-   - [ ] le fichier ./server/config/config.js présente des configurations pour passer aisément du mode dev au mode prod. Il faudra documenter modifier le readme de dev pour en prendre compte
-   
-## ENVIRONNEMENT DEV ##
-
-  Régler dans phpMyAdmin pour l'utilisateur uhaSQL un nom d'hôte en localhost.
-
-  Ensuite, changer la fin du fichier -> server/config/config.js 
-  
-  ``// exports.auth = AUTH;``
-
-  ``exports.auth = AUTHDEV``
-
-       
+   ~~- [ ] le fichier ./server/config/config.js présente des configurations pour passer aisément du mode dev au mode prod. Il faudra documenter modifier le readme de dev pour en prendre compte~~ 
+          
 
 ## ÉTAPE 3 : Démarrer l'ensemble ##
 
-
-  ``docker-compose up``
-  
-  Après avoir démarrer l'ensemble il est nécessaire de régler la base de donnée pour accepter les requêtes local (les explications sont données en fin de fichier). 
-  
-  Les fichiers Docker ont été prévus pour un environnement de développement, pour l'utiliser en production il est nécessaire de changer les volumes en copy.
+   <ol>
+        <li>lancez les containers docker avec la commande **docker-compose up --build**,</li>
+   </ol>
 
 
-# SECONDE SOLUTION (DEV/PROD) #
+
+# Déploiement pour le développement (Docker) #
+
+## ÉTAPE 1 : Installer Docker ##
+
+  Linux basé sur Debian : https://docs.docker.com/install/linux/docker-ce/debian/
+
+  MacOS : https://docs.docker.com/docker-for-mac/install/
+
+## ÉTAPE 2 : Configurer son Host ##
+
+   Dans le fichier .env à la racine du projet ; commentez la section *for prod* et décommentez celle *for development*  
+   
+   <ol>
+        <li>Dans le fichier docker-compose.yml, commenter le service _badgeuse-web_,</li>
+        <li>Ouvrir un terminal dans le dossier client, installer les dépendance avec **npm install**.</li>
+   </ol> 
+   
+   TODO
+   ~~- [ ] le fichier ./server/config/config.js présente des configurations pour passer aisément du mode dev au mode prod. Il faudra documenter modifier le readme de dev pour en prendre compte~~ 
+   
+
+## ÉTAPE 3 : Démarrer l'ensemble ##
+
+   <ol>
+        <li>lancez les containers docker avec la commande **docker-compose up --build**,</li>
+        <li>depuis un terminal dans le dossier client, lancer le serveur avec **ng serve**</li>
+   </ol>
+   
+
+
+
+# Déploiement manuel (deprecated) #
   
 ## ÉTAPE 1 : Installer la base de donnée ##
 
