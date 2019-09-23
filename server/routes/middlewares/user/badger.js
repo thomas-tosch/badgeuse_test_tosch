@@ -45,7 +45,8 @@ module.exports = function(router) {
                                 db.query('INSERT INTO badger(id_user) VALUES (?)', content_badger_start, (err) => {
                                     if (err) {
                                         res.json({
-                                            success: false
+                                            success: false,
+                                            error: err
                                         });
                                         console.log("erreur dans la requète de mise à jour -> dépointage du user")
                                         console.log(err);
@@ -60,7 +61,9 @@ module.exports = function(router) {
                                 });
                             } else {
                                 res.json({
-                                    success: false
+                                    success: false,
+                                    error: err,
+                                    rows: rows
                                 });
                                 console.log("pointage non effectué");
                                 console.log("err : ");
@@ -86,7 +89,7 @@ module.exports = function(router) {
                             'AND end_point is NULL ', content_badger_end, (err) => {
                             if (err) {
                                 res.json({
-                                    success: false
+                                    success: false,
                                 });
                                 console.log("erreur dans la requète de mise à jour -> dépointage du user")
                                 console.log(err);

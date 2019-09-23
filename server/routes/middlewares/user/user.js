@@ -77,6 +77,7 @@ module.exports = function(router) {
 
                 // UPDATE THE USER GROUP
                 case 'updateGroup':
+
                     console.log('USER - updateGroup of user ' + id_user + ' to group ' + req.body.id_group);
                     let id_group = req.body.id_group;
                     db.query('UPDATE users_extend SET id_group = ? WHERE id_user = ?', [id_group, id_user], (err, rows) => {

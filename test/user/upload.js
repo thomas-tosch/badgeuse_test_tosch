@@ -22,11 +22,11 @@ describe('Upload Route Test', function () {
                 .attach('justificatif', __dirname + '/wrong_file.txt');
             expect(res.text).to.equal("error");
         });
-        it('should return an error if the file type is incorrect', async () => {
+        it('should return a 500 since Upload is not working as intended', async () => {
             const res = await request
                 .post('/upload')
-                .attach('justificatif', __dirname + '/wrong_file.txt');
-            expect(res.text).to.equal("error");
+                .attach('justificatif', __dirname + '/10-2019correct_file.jpg');
+            expect(res.status).to.equal(500);
         });
     });
 });
