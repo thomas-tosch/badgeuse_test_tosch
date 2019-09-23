@@ -93,6 +93,9 @@ export class PieChartComponent implements OnInit, OnChanges  {
           console.log(justifiedHours);
           nonJustifiedHours -= justifiedHours;
         });
+        if (nonJustifiedHours < 0 ) {
+          nonJustifiedHours = 0;
+        }
 
 
         dataFromBack.push(nonJustifiedHours);
