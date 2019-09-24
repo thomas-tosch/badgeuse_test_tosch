@@ -13,6 +13,7 @@ services:
 
 
   badgeuse-node:
+    container_name: badgeuse-node
     build:
       context: .
     ports:
