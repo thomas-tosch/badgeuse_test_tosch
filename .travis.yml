@@ -9,4 +9,4 @@ before_install:
 
 script:
   - docker-compose up -d
-  -
+  - docker exec -ti badgeuse-node npm test
