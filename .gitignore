@@ -11,7 +11,6 @@ BDD/.DS_Store
 /.idea/
 BDD/data/
 client/assets/justificatif/
-package-lock.json
 
 *.log
 server/log/*.json
