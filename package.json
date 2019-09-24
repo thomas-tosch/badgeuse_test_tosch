@@ -41,7 +41,7 @@
     "ng-faker": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha --recursive test/**/*.js"
+    "test": "mocha --exit --recursive test/**/*.js"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
   "license": "UHA 4.0"
