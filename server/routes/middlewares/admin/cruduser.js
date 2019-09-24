@@ -30,13 +30,13 @@ function addUser(request, response) {
     //console.log(request.body.body.user);
     //console.log(request.body.body.token);
 
-    if (!tokenList.checkToken(request.body.body.token) || !TokenDecoder.isAdmin(request.body.body.token)) {
+    if (!tokenList.checkToken(request.body.token) || !TokenDecoder.isAdmin(request.body.token)) {
         response.status(HttpStatus.FORBIDDEN).send({
             message: "Utilisateur non autorisé"
         })
         return
     }
-    const adduser_value = request.body.body.user;
+    const adduser_value = request.body.user;
 
 
 
@@ -102,13 +102,13 @@ function editUser(request, response) {
     //console.log(request.body.body.user);
     //console.log(request.body.body.token);
 
-    if (!tokenList.checkToken(request.body.body.token) || !TokenDecoder.isAdmin(request.body.body.token)) {
+    if (!tokenList.checkToken(request.body.token) || !TokenDecoder.isAdmin(request.body.token)) {
         response.status(HttpStatus.FORBIDDEN).send({
             message: "Utilisateur non autorisé"
         })
         return
     }
-    const edituser_value = request.body.body.user; //* Allows administrators to edit student information.
+    const edituser_value = request.body.user; //* Allows administrators to edit student information.
     console.log(edituser_value)
     return new Promise((reject) => {
         db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
