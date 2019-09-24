@@ -8,7 +8,7 @@ import {UserService} from '../../services/user.service';
 })
 export class PersonalSpaceComponent implements OnInit {
 
-  monthActive = 'month';
+  monthActive = 'agendaWeek';
   id_user;
   currentDate = new Date().toISOString().slice(0, 10);
 

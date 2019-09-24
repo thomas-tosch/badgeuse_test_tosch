@@ -2,6 +2,8 @@ require('../../../config/database');
 const Errors = require('../../../error/errors');
 const HttpStatus = require('http-status-codes');
 let tokenList = require('../../../config/tokenList');
+var TokenDecoder = require('../../../helpers/TokenDecoder')
+
 /**
  *  CrudUser for add/edit/delete user in db for 
  *  the student card.
@@ -15,13 +17,27 @@ function crudUser(router) {
     router.delete('/', deleteUser)
     router.get('/', getUser)
 }
+
+
 /**
  * The add function allows administrators to add a user but also sets his / her uuid.
  * @param {*} request 
  * @param {*} response 
  */
 function addUser(request, response) {
-    const adduser_value = request.body;
+    //TODO : remove the body.body that comes from front side (cruduser.service.ts)
+    //console.log(request.body);
+    //console.log(request.body.body.user);
+    //console.log(request.body.body.token);
+
+    if (!tokenList.checkToken(request.body.body.token) || !TokenDecoder.isAdmin(request.body.body.token)) {
+        response.status(HttpStatus.FORBIDDEN).send({
+            message: "Utilisateur non autorisé"
+        })
+        return
+    }
+    const adduser_value = request.body.body.user;
+
 
 
     return new Promise((resolve, reject) => { //* Add to the users table our different information about adding our new users
@@ -81,7 +97,18 @@ function addUser(request, response) {
  * @param {*} response 
  */
 function editUser(request, response) {
-    const edituser_value = request.body; //* Allows administrators to edit student information.
+    //TODO : remove the body.body that comes from front side (cruduser.service.ts)
+    //console.log(request.body);
+    //console.log(request.body.body.user);
+    //console.log(request.body.body.token);
+
+    if (!tokenList.checkToken(request.body.body.token) || !TokenDecoder.isAdmin(request.body.body.token)) {
+        response.status(HttpStatus.FORBIDDEN).send({
+            message: "Utilisateur non autorisé"
+        })
+        return
+    }
+    const edituser_value = request.body.body.user; //* Allows administrators to edit student information.
     console.log(edituser_value)
     return new Promise((reject) => {
         db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
@@ -104,9 +131,9 @@ function editUser(request, response) {
  * @param {*} response 
  */
 function deleteUser(request, response) {
-    if (!tokenList.checkToken(request.body.token)) {
+    if (!tokenList.checkToken(request.body.token) || !TokenDecoder.isAdmin(request.body.token)) {
         response.status(HttpStatus.FORBIDDEN).send({
-            message: "TAMR EN CHO7"
+            message: "Utilisateur non autorisé"
         })
         return
     }
@@ -123,14 +150,25 @@ function deleteUser(request, response) {
 }
 
 /**
- * 
+ * Retrieve all user present on the table user/user_extend in the database.
  * @param {*} request 
  * @param {*} response 
  */
 function getUser(request, response) {
-    const getuser_value = request.body.content; //* Retrieve all user present on the table user/user_extend in the database.
+    //TODO : add the ability to send a body with the token to secure
+    /*
+    console.log(request);
+    console.log(request.body.body.user);
+    console.log(request.body.body.token);
 
-    db.query("SELECT *, ue.card FROM users u INNER JOIN users_extend ue ON u.id_user = ue.id_user;", [getuser_value],
+    if (!tokenList.checkToken(request.body.body.token) || !TokenDecoder.isAdmin(request.body.body.token)) {
+        response.status(HttpStatus.FORBIDDEN).send({
+            message: "Utilisateur non autorisé"
+        })
+        return
+    }
+     */
+    db.query("SELECT *, ue.card FROM users u INNER JOIN users_extend ue ON u.id_user = ue.id_user;",
         (err, results) => {
             if (err) {
                 (dbError(err, "deleteUser", response));
