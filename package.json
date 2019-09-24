@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/socket.io": "^2.1.2",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
     "chart.js": "^2.8.0",
     "cors": "^2.8.5",
     "date-diff": "^0.2.1",
@@ -19,6 +20,7 @@
     "is-date-format": "^0.1.1",
     "jsonwebtoken": "^8.3.0",
     "jwt-decode": "^2.2.0",
+    "mocha": "^6.2.0",
     "mysql": "^2.16.0",
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
@@ -26,13 +28,13 @@
     "public-ip": "^3.0.0",
     "randomstring": "^1.1.5",
     "read-file": "^0.2.0",
+    "rewire": "^4.0.1",
     "sha1": "^1.1.1",
+    "sinon": "^7.5.0",
     "socket.io": "^2.2.0",
+    "supertest": "^4.0.2",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^3.8.0",
-    "chai": "^4.2.0",
-    "mocha": "^6.2.0",
-    "supertest": "^4.0.2"
+    "winston-daily-rotate-file": "^3.8.0"
   },
   "devDependencies": {
     "@types/jspdf": "^1.2.2",
