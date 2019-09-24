@@ -1,12 +1,13 @@
 require ('../../../config/database');
 let tokenList = require ('../../../config/tokenList');
+var TokenDecoder = require('../../../helpers/TokenDecoder')
+
 
 module.exports = function(router) {
 
     router.post('/', (req, res) => {
         console.log('ABSENCE_ADMIN');
-        if(tokenList.checkToken(req.body.token)) {
-
+        if(tokenList.checkToken(req.body.token) && TokenDecoder.isAdmin(req.body.token)) {
 
             const action = req.body.action;
 

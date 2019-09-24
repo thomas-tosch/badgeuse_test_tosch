@@ -36,8 +36,10 @@ module.exports = function (router) {
                                 success:true,
                                 list: resultat
                             });
+                            /*
                             console.log("Calendar affichage resultat calendrier getMonth : ");
                             console.log(resultat);
+                            */
                         }
                     });
                     break;
@@ -66,8 +68,10 @@ module.exports = function (router) {
                                 success: true,
                                 list: resultat
                             });
+                            /*
                             console.log("Calendar affichage resultat calendrier getWeek : ");
                             console.log(resultat);
+                             */
                         }
                     });
                     break;
