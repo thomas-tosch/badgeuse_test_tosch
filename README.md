@@ -1,3 +1,7 @@
+# Build status
+
+[![Build Status](https://travis-ci.org/Sterioss/badgeuse_test_tosch.svg?branch=master)](https://travis-ci.org/Sterioss/badgeuse_test_tosch)
+
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
 La documentation pour les routes du back se trouve sur ./server/out/index.html (seul UUID est actuellement documentée)
