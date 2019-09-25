@@ -56,13 +56,13 @@ export class CrudUserService {
 
   // ADD, POST METHOD
   addUser(user: CrudUser) {
-
     const token = this.authTokenService.getToken();
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' }), body: {user: user, token: token }
+      headers: new HttpHeaders({ 'Content-type': 'application/json' })
     };
+    const body = {user: user, token: token };
     console.log(httpOptions);
-    this.httpClient.post(endpoint + 'cruduser', httpOptions).subscribe(data => {
+    this.httpClient.post(endpoint + 'cruduser', body, httpOptions).subscribe(data => {
       console.log(data);
       this.dialogData = user;
       this.toastr.success('Félicitation, utilisateur ajouté.', 'Success!');
@@ -75,11 +75,12 @@ export class CrudUserService {
   updateUser(user: CrudUser) {
     const token = this.authTokenService.getToken();
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' }), body: {user: user, token: token }
+      headers: new HttpHeaders({ 'Content-type': 'application/json' })
     };
+    const body = {user: user, token: token };
     // version from the past : avoid to have body.body
     // return this.httpClient.put(endpoint + 'cruduser', user, httpOptions).subscribe(data => {
-    return this.httpClient.put(endpoint + 'cruduser', httpOptions).subscribe(data => {
+    return this.httpClient.put(endpoint + 'cruduser', body, httpOptions).subscribe(data => {
       this.dialogData = user;
       this.toastr.success('Félicitation utilisateur édité', 'Success!');
     },
@@ -94,6 +95,7 @@ export class CrudUserService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id_user: id_user['id_user'], token: token }
     };
+    const body = {user: user, token: token };
     console.log(httpOptions);
     this.httpClient.delete<CrudUser[]>(endpoint + 'cruduser', httpOptions).subscribe(data => {
       console.log(data);
