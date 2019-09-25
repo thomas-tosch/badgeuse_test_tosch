@@ -32,8 +32,8 @@ const logger = winston.createLogger({
  */
 function uuid(router) {
     router.post('/', (request, response) => {
-        if (request.ip.split(':').pop().localeCompare(config.raspi.HOST_RASPI || "127.0.0.1") !== 0) {
-            console.log(request.ip.split(':').pop().localeCompare(config.raspi.HOST_RASPI));
+        const ip = request.ip.split(':').pop();
+        if (ip.localeCompare(config.raspi.HOST_RASPI) !== 0  && ip.localeCompare("127.0.0.1") !== 0 ) {
             return response.status(HttpStatus.FORBIDDEN).send({message: "Access not authorized"});
         }
 

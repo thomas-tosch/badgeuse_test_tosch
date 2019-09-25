@@ -111,7 +111,7 @@ function editUser(request, response) {
     const edituser_value = request.body.user; //* Allows administrators to edit student information.
     console.log(edituser_value)
     return new Promise((reject) => {
-        db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?" +
+        db.query("UPDATE users u, users_extend ue SET u.prenom_user = ?, u.nom_user = ?, u.mail_user = ?, u.id_role = ?, ue.card = ?, ue.id_group = ? " +
             " WHERE u.id_user = ue.id_user AND u.id_user = ? ;", [edituser_value['prenom_user'], edituser_value['nom_user'], edituser_value['mail_user'], edituser_value['id_role'], edituser_value['card'], edituser_value['id_group'],
                 edituser_value['id_user']
             ],
