@@ -1,3 +1,5 @@
+dist: trusty
+
 env:
   - DOCKER_COMPOSE_VERSION=1.24.1
 
@@ -8,6 +10,13 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose up -d
 
+addons:
+  sonarcloud:
+    organization: "sterioss" # the key of the org you chose at step #3
+    token:
+      secure: "0034c736b1faea7a32350defc0f89bf482fcfd84" # encrypted value of your token
+
 script:
   - "sleep 30"
   - docker exec -ti badgeuse-node npm test
+  - sonar-scanner
