@@ -17,6 +17,5 @@ addons:
       secure: $SONAR_TOKEN # encrypted value of your token
 
 script:
-  - sonar-scanner -X
-  - "sleep 20"
+  - sonar-scanner
   - docker exec -ti badgeuse-node npm test
