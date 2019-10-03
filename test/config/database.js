@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-require('../../server/config/database');
+require('../../src/server/config/database');
 
 describe('Database Pool Testing', function () {
     it('should connect correctly to MariaDB', function () {

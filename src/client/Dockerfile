@@ -14,7 +14,7 @@ RUN npm run build -- --output-path=/app/dist/out --configuration $configuration
 
 RUN cp -R /app/dist/out/* /usr/share/nginx/html/
 
-COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
+COPY nginx-custom.conf /etc/nginx/conf.d/default.conf
 CMD ["nginx", "-g", "daemon off;"]
 
 

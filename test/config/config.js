@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 const rewire = require('rewire');
-require('../../server/config/config');
+require('../../src/server/config/config');
 const configRewire = rewire('../../server/config/config');
 const makeId = configRewire.__get__('makeId');
 

@@ -5,8 +5,8 @@ import { CrudUserService } from '../../../../services/cruduser.service';
 
 @Component({
   selector: 'app-delete.dialog',
-  templateUrl: '../../dialogs-users/delete-users/delete-users.dialog.html',
-  styleUrls: ['../../dialogs-users/delete-users/delete-users.dialog.css']
+  templateUrl: './delete-users.dialog.html',
+  styleUrls: ['./delete-users.dialog.css']
 })
 export class DeleteDialogUsersComponent {
 

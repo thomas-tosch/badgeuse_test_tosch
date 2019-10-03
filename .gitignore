@@ -2,15 +2,15 @@
 .idea/*
 .idea/Project.xml
 
-client/node_modules/*
+src/client/node_modules/*
 node_modules/*
-server/public/*
+src/server/public/*
 node_modules
 
 BDD/.DS_Store
 /.idea/
 BDD/data/
-client/assets/justificatif/
+src/client/assets/justificatif/
 
 *.log
 server/log/*.json

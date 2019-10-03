@@ -1,6 +1,6 @@
 const request = require('supertest')('http://127.0.0.1:8080');
 const expect = require("chai").expect;
-require('../../server/config/database');
+require('../../src/server/config/database');
 
 
 describe('UUID Route Test', function () {

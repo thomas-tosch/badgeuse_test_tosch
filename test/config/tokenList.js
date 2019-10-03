@@ -2,7 +2,7 @@ const expect = require("chai").expect;
 const rewire = require('rewire');
 const sinon = require('sinon');
 const rewireTokenList = rewire('../../server/config/tokenList');
-const tokenList = require('../../server/config/tokenList');
+const tokenList = require('../../src/server/config/tokenList');
 
 describe('Token list Testing', function () {
     describe('#addToken()', function () {

@@ -4,15 +4,14 @@ import { CrudUserService } from '../../../../services/cruduser.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-add.dialog',
-  templateUrl: '../../dialogs-users/add-users/add-users.dialog.html',
-  styleUrls: ['../../dialogs-users/add-users/add-users.dialog.css']
+  selector: 'app-baza.dialog',
+  templateUrl: './edit-users.dialog.html',
+  styleUrls: ['./edit-users.dialog.css']
 })
+export class EditDialogUsersComponent {
 
-export class AddDialogUsersComponent {
-  constructor(public dialogRef: MatDialogRef<AddDialogUsersComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              public dataService: CrudUserService) { }
+  constructor(public dialogRef: MatDialogRef<EditDialogUsersComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: CrudUserService) { }
 
   formControl = new FormControl('', [
     Validators.required
@@ -26,15 +25,14 @@ export class AddDialogUsersComponent {
   }
 
   submit() {
-  // emppty stuff
+    // emppty stuff
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  public confirmAdd(): void {
-    this.dataService.addUser(this.data);
+  stopEdit(): void {
+    this.dataService.updateUser(this.data);
   }
-
 }
