@@ -44,7 +44,7 @@
   },
   "scripts": {
     "test": "nyc mocha --exit --recursive test/**/*.js",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "report-coverage": "nyc report --reporter=lcov --reporter=text --report-dir=.nyc_coverage"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
   "license": "UHA 4.0"
