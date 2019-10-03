@@ -14,3 +14,7 @@ client/assets/justificatif/
 
 *.log
 server/log/*.json
+
+.nyc_output
+coverage
+*.lcov

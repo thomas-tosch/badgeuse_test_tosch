@@ -23,6 +23,7 @@
     "mocha": "^6.2.0",
     "mysql": "^2.16.0",
     "nodemon": "^1.19.1",
+    "nyc": "^14.1.1",
     "path": "^0.12.7",
     "pm2": "^3.2.4",
     "public-ip": "^3.0.0",
@@ -41,7 +42,8 @@
     "ng-faker": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha --exit --recursive test/**/*.js"
+    "test": "nyc mocha --exit --recursive test/**/*.js",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
   "license": "UHA 4.0"
