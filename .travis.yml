@@ -19,5 +19,5 @@ addons:
 script:
   - sleep "30"
   - docker exec -ti badgeuse-node npm test
-  - docker exec -ti badgeuse-node npm report-coverage
+  - docker exec -ti badgeuse-node npm run report-coverage
   - sonar-scanner
