@@ -15,7 +15,6 @@ services:
   mariadb:
     image: library/mariadb:latest
     volumes:
-      - ./BDD/data:/var/lib/mysql:z
       - ./BDD/init.d:/docker-entrypoint-initdb.d:z
     env_file:
       - ./.env
