@@ -14,7 +14,7 @@ addons:
   sonarcloud:
     organization: "sterioss" # the key of the org you chose at step #3
     token:
-      secure: "0034c736b1faea7a32350defc0f89bf482fcfd84" # encrypted value of your token
+      secure: $SONAR_TOKEN # encrypted value of your token
 
 script:
   - "sleep 30"
