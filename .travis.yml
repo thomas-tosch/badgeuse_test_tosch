@@ -34,3 +34,6 @@ deploy:
   api_key:
     secure: $HEROKU_TOKEN
   app: badgeuse-intelligente
+
+after_deploy:
+  - k6 run k6/main.js
