@@ -44,6 +44,7 @@
     "ng-faker": "^1.1.0"
   },
   "scripts": {
+    "start": "node index.js",
     "test": "nyc mocha --exit --recursive test/**/*.js",
     "report-coverage": "nyc report --reporter=lcov --reporter=text --report-dir=.nyc_coverage"
   },
