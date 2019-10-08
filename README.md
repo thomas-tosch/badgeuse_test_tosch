@@ -1,6 +1,7 @@
 # Build status
 
 [![Build Status](https://travis-ci.org/Sterioss/badgeuse_test_tosch.svg?branch=master)](https://travis-ci.org/Sterioss/badgeuse_test_tosch)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=alert_status)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
 
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
