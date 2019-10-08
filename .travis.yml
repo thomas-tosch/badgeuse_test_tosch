@@ -4,6 +4,7 @@ env:
   - DOCKER_COMPOSE_VERSION=1.24.1
 
 before_install:
+  - git fetch --unshallow
   - sudo apt-get clean
   - sudo apt-get update
   - sudo apt-get install dpkg
@@ -16,18 +17,12 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install k6
 
-addons:
-  sonarcloud:
-    organization: "sterioss" # the key of the org you chose at step #3
-    token:
-      secure: $SONAR_TOKEN # encrypted value of your token
-
 script:
   - docker-compose -f docker-compose.test.yml up -d
   - sleep "30"
   - docker exec -ti badgeuse-node npm test
   - docker exec -ti badgeuse-node npm run report-coverage
-  - sonar-scanner
+  - docker exec -ti badgeuse-node npm run sonar-scanner $SONAR_TOKEN
 
 deploy:
   provider: heroku

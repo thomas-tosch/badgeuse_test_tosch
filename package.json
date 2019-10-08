@@ -35,6 +35,7 @@
     "sha1": "^1.1.1",
     "sinon": "^7.5.0",
     "socket.io": "^2.2.0",
+    "sonarqube-scanner": "^2.5.0",
     "supertest": "^4.0.2",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.8.0"
@@ -46,6 +47,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "nyc mocha --exit --recursive test/**/*.js",
+    "sonar-scanner": "sonarqube-scanner -Dsonar.login=$",
     "report-coverage": "nyc report --reporter=lcov --reporter=text --report-dir=.nyc_coverage"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
