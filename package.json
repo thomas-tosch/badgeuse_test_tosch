@@ -47,7 +47,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "nyc mocha --exit --recursive test/**/*.js",
-    "sonar-scanner": "sonarqube-scanner -Dsonar.login=$",
+    "sonar-scanner": "sonarqube-scanner -Dsonar.login=$SONAR_TOKEN",
     "report-coverage": "nyc report --reporter=lcov --reporter=text --report-dir=.nyc_coverage"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",

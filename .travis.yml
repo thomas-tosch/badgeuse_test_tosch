@@ -22,7 +22,7 @@ script:
   - sleep "30"
   - docker exec -ti badgeuse-node npm test
   - docker exec -ti badgeuse-node npm run report-coverage
-  - docker exec -ti badgeuse-node npm run sonar-scanner $SONAR_TOKEN
+  - docker exec -ti badgeuse-node npm run SONAR_TOKEN=$SONAR_TOKEN sonar-scanner
 
 deploy:
   provider: heroku
