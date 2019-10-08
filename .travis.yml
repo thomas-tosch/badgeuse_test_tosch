@@ -28,4 +28,9 @@ script:
   - docker exec -ti badgeuse-node npm test
   - docker exec -ti badgeuse-node npm run report-coverage
   - sonar-scanner
-  - curl 127.0.0.1:8080
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_TOKEN
+  app: badgeuse_intelligente
