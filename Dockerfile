@@ -7,9 +7,7 @@ WORKDIR /app
 #handle package installation
 COPY package*.json /app/
 ENV NPM_CONFIG_LOGLEVEL warn
-RUN apk add --no-cache openjdk8
 RUN npm ci --only=production
-
 #copy project files
 COPY . .
 
