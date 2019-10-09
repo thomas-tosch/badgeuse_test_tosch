@@ -1,8 +1,8 @@
-dist: trusty
+dist: bionic
 
 language: node_js
 node_js:
-  - "7"
+  - "11"
 
 addons:
   mariadb: "10"
@@ -12,6 +12,7 @@ addons:
       secure: $SONAR_TOKEN # encrypted value of your token
 
 before_install:
+  - npm i -g npm@6.4.1
   - sudo chown -R travis .
   - npm install
   - npm install -g pm2
