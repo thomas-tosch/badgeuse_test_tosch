@@ -4,9 +4,6 @@ language: node_js
 node_js:
   - "7"
 
-services:
-  - mysql
-
 addons:
   sonarcloud:
     organization: "sterioss" # the key of the org you chose at step #3
@@ -16,13 +13,9 @@ addons:
 before_install:
   - npm install
   - npm install -g pm2
-  - sudo apt-get clean
-  - sudo apt-get update
-  - sudo apt-get install dpkg
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
-  - echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
-  - sudo apt-get update
-  - sudo apt-get install k6
+  - curl -OL https://github.com/loadimpact/k6/releases/download/v0.20.0/k6-v0.20.0-linux64.tar.gz
+  - tar -xzf k6-v0.20.0-linux64.tar.gz
+  - cp k6-v0.20.0-linux64/k6 /usr/local/bin
 
 script:
   - mysql -e 'CREATE DATABASE badgeuse; CREATE USER "uhaSQL"@"localhost" IDENTIFIED BY "uha"; USE badgeuse; source ./BDD/init.d/1-BDD-Badgeuse-tables.sql;'
