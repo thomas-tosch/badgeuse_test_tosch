@@ -1,4 +1,10 @@
-use badgeuse;
+DROP DATABASE IF EXISTS badgeuse;
+CREATE DATABASE IF NOT EXISTS badgeuse;
+USE badgeuse;
+
+CREATE USER IF NOT EXISTS 'uhaSQL'@'%' IDENTIFIED BY 'uha';
+GRANT ALL PRIVILEGES ON badgeuse . * TO 'uhaSQL'@'%';
+
 
 -- -----------------------------------------------------
 -- Table roles
