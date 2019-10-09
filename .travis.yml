@@ -5,10 +5,14 @@ node_js:
   - "7"
 
 addons:
+  mariadb: "10"
   sonarcloud:
     organization: "sterioss" # the key of the org you chose at step #3
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
+
+services:
+  - mariadb
 
 before_install:
   - sudo chown -R travis .
@@ -25,6 +29,7 @@ script:
   - pm2 start index.js --name badgeuse
   - sleep "5"
   - pm2 show 0
+  - pm2 logs badgeuse [--lines 1000]
   - curl 127.0.0.1:8080
   - npm test
   - npm run report-coverage
