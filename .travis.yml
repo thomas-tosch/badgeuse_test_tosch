@@ -4,43 +4,40 @@ language: node_js
 node_js:
   - "11"
 
-addons:
-  mariadb: "10.1"
-  sonarcloud:
-    organization: "sterioss" # the key of the org you chose at step #3
-    token:
-      secure: $SONAR_TOKEN # encrypted value of your token
-
-services:
-  - mysql
-
-before_install:
-  - npm i -g npm@6.4.1
-  - sudo chown -R travis .
-  - npm ci --only=production
-  - npm install -g pm2
-  - curl -OL https://github.com/loadimpact/k6/releases/download/v0.20.0/k6-v0.20.0-linux64.tar.gz
-  - tar -xzf k6-v0.20.0-linux64.tar.gz
-  - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
-  - sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
-  - sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
-  - pm2 start index.js --name badgeuse
-
 jobs:
   include:
-    - stage: unit test
+    - stage: test
+      addons:
+        mariadb: "10.1"
+        sonarcloud:
+          organization: "sterioss" # the key of the org you chose at step #3
+          token:
+            secure: $SONAR_TOKEN # encrypted value of your token
+      services:
+        - mysql
+      install:
+        - npm i -g npm@6.4.1
+        - sudo chown -R travis .
+        - npm ci --only=production
+        - npm install -g pm2
+        - sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
+        - sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
+        - pm2 start index.js --name badgeuse
       script:
         - npm test
         - npm run report-coverage
-    - stage: quality test
-      script:
         - sonar-scanner
     - stage: deploy
+      install: skip
       deploy:
         provider: heroku
         api_key:
           secure: $HEROKU_TOKEN
         app: badgeuse-intelligente
-    - stage: performance test
+    - stage: test
+      install:
+        - curl -OL https://github.com/loadimpact/k6/releases/download/v0.20.0/k6-v0.20.0-linux64.tar.gz
+        - tar -xzf k6-v0.20.0-linux64.tar.gz
+        - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
       script:
         - k6 run k6/main.js
