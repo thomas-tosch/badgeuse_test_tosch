@@ -3,6 +3,7 @@ version: '3.1'
 services:
   badgeuse-node:
     container_name: badgeuse-node
+    image: thomastosch/badgeuse-node:latest
     build:
       context: .
     volumes:
