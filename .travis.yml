@@ -28,6 +28,7 @@ jobs:
         - npm run report-coverage
         - sonar-scanner
     - stage: deploy
+      script: skip
       install: skip
       deploy:
         provider: heroku
