@@ -24,7 +24,6 @@ script:
   - sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
   - sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
   - pm2 start index.js --name badgeuse
-  - pm2 logs badgeuse --lines 1000
   - curl 127.0.0.1:8080
   - npm test
   - npm run report-coverage
