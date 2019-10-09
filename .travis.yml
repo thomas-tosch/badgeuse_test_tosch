@@ -21,8 +21,8 @@ script:
   - mysql -e 'CREATE DATABASE badgeuse; CREATE USER "uhaSQL"@"localhost" IDENTIFIED BY "uha"; USE badgeuse; source ./BDD/init.d/1-BDD-Badgeuse-tables.sql;'
   - mysql -e 'source ./BDD/init.d/2-BDD-Badgeuse-Data.sql'
   - pm2 start index.js --name badgeuse
+  - sleep "5"
   - curl 127.0.0.1:8080
-  - sleep "30"
   - npm test
   - npm run report-coverage
   - sonar-scanner
