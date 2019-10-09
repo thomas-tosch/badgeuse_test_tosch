@@ -25,11 +25,7 @@ before_install:
   - sudo apt-get install k6
 
 script:
-  - mysql -e 'CREATE DATABASE badgeuse;'
-  - mysql -e 'CREATE USER 'uhaSQL'@'localhost' IDENTIFIED BY 'uha';'
-  - mysql -e 'USE badgeuse;'
-  - mysql -e 'source ./BDD/init.d/1-BDD-Badgeuse-tables.sql'
-  - mysql -e 'source ./BDD/init.d/2-BDD-Badgeuse-Data.sql'
+  - mysql -e 'CREATE DATABASE badgeuse; CREATE USER 'uhaSQL'@'localhost' IDENTIFIED BY 'uha'; USE badgeuse; source ./BDD/init.d/1-BDD-Badgeuse-tables.sql; source ./BDD/init.d/2-BDD-Badgeuse-Data.sql;'
   - pm2 start index.js --name badgeuse
   - sleep "30"
   - npm test
