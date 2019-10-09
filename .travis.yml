@@ -22,20 +22,25 @@ before_install:
   - curl -OL https://github.com/loadimpact/k6/releases/download/v0.20.0/k6-v0.20.0-linux64.tar.gz
   - tar -xzf k6-v0.20.0-linux64.tar.gz
   - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
-
-script:
   - sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
   - sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
   - pm2 start index.js --name badgeuse
-  - npm test
-  - npm run report-coverage
-  - sonar-scanner
 
-deploy:
-  provider: heroku
-  api_key:
-    secure: $HEROKU_TOKEN
-  app: badgeuse-intelligente
-
-after_deploy:
-  - k6 run k6/main.js
+jobs:
+  include:
+    - stage: unit test
+      script:
+        - npm test
+        - npm run report-coverage
+    - stage: quality test
+      script:
+        - sonar-scanner
+    - stage: deploy
+      deploy:
+        provider: heroku
+        api_key:
+          secure: $HEROKU_TOKEN
+        app: badgeuse-intelligente
+    - stage: performance test
+      script:
+        - k6 run k6/main.js
