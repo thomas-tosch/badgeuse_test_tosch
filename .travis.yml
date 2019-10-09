@@ -23,13 +23,10 @@ before_install:
   - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
 
 script:
-  - mysql -e 'CREATE DATABASE badgeuse; CREATE USER "uhaSQL"@"localhost" IDENTIFIED BY "uha";'
+  - mysql -e 'CREATE DATABASE badgeuse; CREATE USER IF NOT EXISTS 'uhaSQL'@'%' IDENTIFIED BY 'uha'; GRANT ALL PRIVILEGES ON badgeuse . * TO 'uhaSQL'@'%';'
   - mysql -u root --password="" < ./BDD/init.d/1-BDD-Badgeuse-tables.sql
   - mysql -u root --password="" < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
   - pm2 start index.js --name badgeuse
-  - sleep "5"
-  - pm2 show 0
-  - pm2 logs badgeuse --lines 1000
   - curl 127.0.0.1:8080
   - npm test
   - npm run report-coverage
