@@ -1,32 +1,44 @@
 dist: trusty
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.24.1
+language: node_js
+node_js:
+  - "7"
 
-before_install:
-  - sudo apt-get clean
-  - sudo apt-get update
-  - sudo apt-get install dpkg
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
-  - echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
-  - sudo apt-get update
-  - sudo apt-get install k6
+services:
+  - mysql
 
 addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
   sonarcloud:
     organization: "sterioss" # the key of the org you chose at step #3
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
 
+before_install:
+  - npm install
+  - npm install -g pm2
+  - sudo apt-get clean
+  - sudo apt-get update
+  - sudo apt-get install dpkg
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
+  - echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get update
+  - sudo apt-get install k6
+
 script:
-  - docker-compose -f docker-compose.test.yml up -d
+  - mysql -e 'CREATE DATABASE badgeuse;'
+  - mysql -e 'CREATE USER 'uhaSQL'@'localhost' IDENTIFIED BY 'uha';'
+  - mysql -e 'USE badgeuse;'
+  - mysql -e 'source ./BDD/init.d/1-BDD-Badgeuse-tables.sql'
+  - mysql -e 'source ./BDD/init.d/2-BDD-Badgeuse-Data.sql'
+  - pm2 start index.js --name badgeuse
   - sleep "30"
-  - docker exec -ti badgeuse-node npm test
-  - docker exec -ti badgeuse-node npm run report-coverage
+  - npm test
+  - npm run report-coverage
   - sonar-scanner
 
 deploy:
