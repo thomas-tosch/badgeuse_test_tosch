@@ -51,15 +51,15 @@ jobs:
         - docker-compose -f docker-compose.test.yml build
         - docker-compose -f docker-compose.test.yml push
         - docker logout
-#    - stage: deploy
-#      install: skip
-#      script: skip
-#      provider: releases
-#        api_key: "GITHUB OAUTH TOKEN"
-#        file: "FILE TO UPLOAD"
-#        skip_cleanup: true
-#        on:
-#          tags: true
+    - stage: deploy
+      install: skip
+      script: skip
+      provider: releases
+        api_key: $GITHUB_TOKEN
+        file: .
+        skip_cleanup: true
+        on:
+          tags: true
     - stage: performance
       install:
         - curl -OL https://github.com/loadimpact/k6/releases/download/v0.20.0/k6-v0.20.0-linux64.tar.gz
