@@ -9,10 +9,6 @@ jobs:
     - stage: test
       addons:
         mariadb: "10.1"
-        sonarcloud:
-          organization: "sterioss" # the key of the org you chose at step #3
-          token:
-            secure: $SONAR_TOKEN # encrypted value of your token
       services:
         - mysql
       install:
@@ -25,6 +21,16 @@ jobs:
         - pm2 start index.js --name badgeuse
       script:
         - npm test
+    - stage: test
+      addons:
+        sonarcloud:
+          organization: "sterioss" # the key of the org you chose at step #3
+          token:
+            secure: $SONAR_TOKEN # encrypted value of your token
+      install:
+        - npm ci
+      script:
+        - npm run test-nyc
         - npm run report-coverage
         - sonar-scanner
     - stage: deploy

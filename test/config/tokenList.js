@@ -27,7 +27,6 @@ describe('Token list Testing', function () {
     describe('#delToken()', function () {
         it('should remove a token from the list', function () {
             tokenList.delToken('1234567890');
-            console.log(tokenList.checkToken('1234567890'))
             expect(tokenList.checkToken('1234567890')).to.equal(false);
         });
     });
