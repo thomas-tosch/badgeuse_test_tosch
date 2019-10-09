@@ -5,11 +5,14 @@ node_js:
   - "11"
 
 addons:
-  mariadb: "10"
+  mariadb: "10.1"
   sonarcloud:
     organization: "sterioss" # the key of the org you chose at step #3
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
+
+services:
+  - mysql
 
 before_install:
   - npm i -g npm@6.4.1
