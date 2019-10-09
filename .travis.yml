@@ -23,8 +23,8 @@ before_install:
   - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
 
 script:
-  - mysql -u root --password="" < ./BDD/init.d/1-BDD-Badgeuse-tables.sql
-  - mysql -u root --password="" < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
+  - sudo mysql -u root --password="" < ./BDD/init.d/1-BDD-Badgeuse-tables.sql
+  - sudo mysql -u root --password="" < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
   - pm2 start index.js --name badgeuse
   - curl 127.0.0.1:8080
   - npm test
