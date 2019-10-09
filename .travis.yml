@@ -54,7 +54,8 @@ jobs:
     - stage: deploy
       install: skip
       script: skip
-      provider: releases
+      deploy:
+        provider: releases
         api_key: $GITHUB_TOKEN
         file: .
         skip_cleanup: true
