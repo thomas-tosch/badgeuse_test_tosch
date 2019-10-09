@@ -19,8 +19,8 @@ before_install:
   - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
 
 script:
-  - mysql -e 'CREATE DATABASE badgeuse; CREATE USER "uhaSQL"@"localhost" IDENTIFIED BY "uha"; USE badgeuse; source ./BDD/init.d/1-BDD-Badgeuse-tables.sql;'
-  - mysql -e 'source ./BDD/init.d/2-BDD-Badgeuse-Data.sql'
+  - mysql -e 'CREATE DATABASE badgeuse; CREATE USER "uhaSQL"@"localhost" IDENTIFIED BY "uha";'
+  - mysql -u uhaSQL -p uha < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
   - pm2 start index.js --name badgeuse
   - sleep "5"
   - pm2 show 0
