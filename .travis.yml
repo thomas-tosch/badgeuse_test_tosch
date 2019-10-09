@@ -20,7 +20,8 @@ before_install:
 
 script:
   - mysql -e 'CREATE DATABASE badgeuse; CREATE USER "uhaSQL"@"localhost" IDENTIFIED BY "uha";'
-  - mysql -u uhaSQL -p uha < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
+  - mysql -u root --password="" < ./BDD/init.d/1-BDD-Badgeuse-tables.sql
+  - mysql -u root --password="" < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
   - pm2 start index.js --name badgeuse
   - sleep "5"
   - pm2 show 0
