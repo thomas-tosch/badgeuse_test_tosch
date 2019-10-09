@@ -29,7 +29,7 @@ script:
   - pm2 start index.js --name badgeuse
   - sleep "5"
   - pm2 show 0
-  - pm2 logs badgeuse [--lines 1000]
+  - pm2 logs badgeuse --lines 1000
   - curl 127.0.0.1:8080
   - npm test
   - npm run report-coverage
