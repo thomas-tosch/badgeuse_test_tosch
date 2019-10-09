@@ -11,9 +11,6 @@ addons:
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
 
-services:
-  - mariadb
-
 before_install:
   - sudo chown -R travis .
   - npm install
@@ -23,9 +20,10 @@ before_install:
   - sudo cp k6-v0.20.0-linux64/k6 /usr/local/bin
 
 script:
-  - sudo mysql -u root --password="" < ./BDD/init.d/1-BDD-Badgeuse-tables.sql
-  - sudo mysql -u root --password="" < ./BDD/init.d/2-BDD-Badgeuse-Data.sql
+  - sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
+  - sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
   - pm2 start index.js --name badgeuse
+  - pm2 logs badgeuse --lines 1000
   - curl 127.0.0.1:8080
   - npm test
   - npm run report-coverage
