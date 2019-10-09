@@ -34,7 +34,7 @@ jobs:
         api_key:
           secure: $HEROKU_TOKEN
         app: badgeuse-intelligente
-    - stage: test
+    - stage: performance
       install:
         - curl -OL https://github.com/loadimpact/k6/releases/download/v0.20.0/k6-v0.20.0-linux64.tar.gz
         - tar -xzf k6-v0.20.0-linux64.tar.gz
