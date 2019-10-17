@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node ./server.js bite",
+    "build": "ng build --aot --prod",
     "test": "ng test",
+    "test-headless": "ng test --watch false --browsers ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --prod --aot"
   },
   "private": true,
   "dependencies": {
@@ -36,9 +38,11 @@
     "chart.js": "^2.7.3",
     "chartjs-plugin-annotation": "^0.5.7",
     "core-js": "^2.6.5",
+    "express": "^4.17.1",
     "foreach-end": "^1.1.0",
     "fullcalendar": "^3.10.0",
     "fullcalendar-scheduler": "^1.9.4",
+    "hammerjs": "^2.0.8",
     "html-escape-unescape": "^1.0.3",
     "html2canvas": "^1.0.0-alpha.12",
     "http": "0.0.0",
@@ -51,6 +55,7 @@
     "ngx-charts": "^3.0.2",
     "ngx-order-pipe": "^2.0.2",
     "ngx-toastr": "^10.0.2",
+    "path": "^0.12.7",
     "popper.js": "^1.14.7",
     "public-ip": "^3.0.0",
     "react-chartjs-2": "^2.7.4",
