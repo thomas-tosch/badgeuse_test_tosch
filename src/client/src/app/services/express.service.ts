@@ -41,15 +41,15 @@ export class ExpressService {
       url = url.slice(0, -1);
     };
     this.domain = url + ':' + this.port;
+    if (this.domain.includes('heroku')) {
+      this.domain = 'https://badgeuse-intelligente.herokuapp.com';
+    }
   }
 
   /**
    * get url
    */
   getDomain() {
-    if (this.domain.includes('heroku')) {
-        return 'https://badgeuse-intelligente.herokuapp.com';
-    }
       return this.domain;
   }
 

@@ -94,6 +94,7 @@ export class LoginComponent implements OnInit {
     };
     // express request
     console.log('GET LOGIN')
+    console.log(this.expressService.getDomain());
     this.expressService.postExpress('login', content).subscribe((resp: Auth ) => {
       console.log('RECIEVE LOGIN')
       if (!resp.success) {
