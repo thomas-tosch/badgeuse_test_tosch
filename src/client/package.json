@@ -9,7 +9,7 @@
     "test-headless": "ng test --watch false --browsers ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod --aot"
+    "postinstall": "cd src/client && npm install && ng build --prod --aot"
   },
   "engines": {
     "node": "10.15.2",
