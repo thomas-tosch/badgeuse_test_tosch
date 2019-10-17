@@ -50,7 +50,6 @@
     "test-nyc": "nyc mocha src/server/**",
     "sonar-scanner": "sonar-scanner -Dsonar.login=c2f17122e59e8945a2472337b8f8f87671222733",
     "report-coverage": "nyc report --reporter=lcov --reporter=text --report-dir=.nyc_coverage",
-    "client": "npm --prefix ./src/client start"
   },
   "author": "franck hubschwerle, Vincent Meneur, Chloe.s.prudham, Anthony Schwartz, Gauthier Staehler, Maxime Rayot",
   "license": "UHA 4.0"
