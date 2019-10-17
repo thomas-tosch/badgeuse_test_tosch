@@ -12,7 +12,7 @@ app.use(cors({
 }));
 */
 app.use(cors({
-    origin : `http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`,
+    origin : [`http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`, process.env.HEROKU_FRONT],
     //origin : `http://${config.auth.HOST_ANGULAR}`,
     credentials: true
 }));
