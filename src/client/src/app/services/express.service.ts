@@ -40,9 +40,7 @@ export class ExpressService {
       url = url.match(/.*:/).toString();
       url = url.slice(0, -1);
     };
-    this.domain = url + ':' + this.port;
-    if (this.domain.includes('heroku')) {
-      this.domain = 'https://badgeuse-intelligente.herokuapp.com';
+    this.domain = 'https://badgeuse-intelligente.herokuapp.com';
     }
   }
 
