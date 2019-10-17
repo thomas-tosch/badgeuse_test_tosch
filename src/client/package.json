@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm i && node server.js",
+    "start": "node server.js",
     "build": "ng build --aot --prod",
     "test": "ng test",
     "test-headless": "ng test --watch false --browsers ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod --aot"
+    "postinstall": "npm install --prefix src/client && ng build --prod --aot"
   },
   "engines": {
     "node": "10.15.2",
