@@ -53,6 +53,8 @@ describe('Badger Route Test', function () {
             expect(res.body).to.have.property("message")
                 .to.equal("Vous n\'avez rien à faire ici !");
         });
-
+    // TODO : test avant 7h23 et débadgé à 19h33
+    // TODO : petites amplitudes
+    // TODO : 12h -> 13h
     });
 });
