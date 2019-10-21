@@ -19,6 +19,7 @@ pipeline {
         stage('test') {
             steps {
                 sh """
+                    export PORT=8090
                     npm test
                     npm run test-nyc
                     npm run report-coverage
