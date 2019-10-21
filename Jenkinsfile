@@ -39,6 +39,8 @@ pipeline {
             steps {
             sh """
             git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
+            git add .
+            git commit -m "Initial commit"
             git push heroku master
             git remote remove heroku
             """
