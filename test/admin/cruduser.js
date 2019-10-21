@@ -1,4 +1,5 @@
-const request = require('supertest')('http://127.0.0.1:8080');
+const config = require('../../src/server/config/config');
+const request = require('supertest')('http://127.0.0.1:' + config.auth.PORT_EXPRESS);
 const expect = require("chai").expect;
 
 describe('cruduser Route Test', function () {
