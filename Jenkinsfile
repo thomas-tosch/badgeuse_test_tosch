@@ -25,9 +25,10 @@ pipeline {
                     """
             }
         }
-        stage('quality')
+        stage('quality') {
             steps {
                 sh 'sonar-scanner'
             }
+        }
     }
 }
