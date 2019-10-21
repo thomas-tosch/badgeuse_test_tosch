@@ -1,11 +1,3 @@
-# Build status
-
-[![Build Status](https://travis-ci.org/Sterioss/badgeuse_test_tosch.svg?branch=master)](https://travis-ci.org/Sterioss/badgeuse_test_tosch)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=alert_status)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=code_smells)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
 La documentation pour les routes du back se trouve sur ./server/out/index.html (seul UUID est actuellement documentée)
