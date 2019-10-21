@@ -1,10 +1,3 @@
-# Build status
-
-[![Quality Gate Status](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=alert_status)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
-[![Maintainability Rating](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=sqale_rating)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
-[![Code Smells](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=code_smells)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
-[![Vulnerabilities](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=vulnerabilities)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
-
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
 La documentation pour les routes du back se trouve sur ./server/out/index.html (seul UUID est actuellement documentée)
