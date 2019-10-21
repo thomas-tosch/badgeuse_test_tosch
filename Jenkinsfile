@@ -39,6 +39,7 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
+            git remote remove heroku
             git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
             git add .
             git commit -m "Initial commit"
