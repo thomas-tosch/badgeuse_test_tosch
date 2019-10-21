@@ -2,6 +2,7 @@ const config = require('../../src/server/config/config');
 const request = require('supertest')('http://127.0.0.1:' + config.auth.PORT_EXPRESS);
 const expect = require("chai").expect;
 
+
 describe('Alerte Route Test', function () {
     describe('GET', function () {
         it('should be Badgeuse intelligente : Alerte', async () => {
