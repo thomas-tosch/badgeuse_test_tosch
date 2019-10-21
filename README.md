@@ -1,10 +1,9 @@
 # Build status
 
-[![Build Status](https://travis-ci.org/Sterioss/badgeuse_test_tosch.svg?branch=master)](https://travis-ci.org/Sterioss/badgeuse_test_tosch)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=alert_status)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=code_smells)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Sterioss_badgeuse_test_tosch&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Sterioss_badgeuse_test_tosch)
+[![Quality Gate Status](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=alert_status)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
+[![Maintainability Rating](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=sqale_rating)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
+[![Code Smells](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=code_smells)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
+[![Vulnerabilities](http://104.214.229.217:9000/api/project_badges/measure?project=badgeuse-intelligente&metric=vulnerabilities)](http://104.214.229.217:9000/dashboard?id=badgeuse-intelligente)
 
 # :sparkles: Installation de la badgeuse sur le serveur  :sparkles: #
  
