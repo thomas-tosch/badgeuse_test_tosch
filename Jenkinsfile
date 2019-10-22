@@ -11,7 +11,6 @@ pipeline {
             steps {
                 sh """
                     npm i -g npm@6.4.1
-                    rm -rf node_modules
                     npm ci --only=production
                     sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
                     sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
