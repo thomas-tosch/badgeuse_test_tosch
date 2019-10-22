@@ -12,7 +12,7 @@ app.use(cors({
 }));
 */
 app.use(cors({
-    origin : `http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`,
+    origin : `badgeuse-web:${config.auth.PORT_ANGULAR}`,
     //origin : `http://${config.auth.HOST_ANGULAR}`,
     credentials: true
 }));
@@ -29,7 +29,7 @@ require('./server/routes/index')(app);
 
 // Listening port of the server
 app.listen(config.auth.PORT_EXPRESS, () => {
-    console.log(`Badgeuse app started on port ${config.auth.PORT_EXPRESS}`);
+    console.log(`Badgeuse app started on port ${process.env.PORT_BACK}`);
 });
 
 console.log('=============================')

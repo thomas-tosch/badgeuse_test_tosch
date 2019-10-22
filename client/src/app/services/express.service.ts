@@ -31,6 +31,8 @@ export class ExpressService {
    * get windows location url and define this for the request post to backend
    */
   defineUrl() {
+    /* useless since we use proxy now
+
     let url = window.location.href;
     const regex = /.*.\/\/.*?\//;
     url = url.match(regex).toString();
@@ -41,6 +43,10 @@ export class ExpressService {
       url = url.slice(0, -1);
     };
     this.domain = url + ':' + this.port;
+    // test for internal api
+
+     */
+    this.domain = '/api/';
   }
 
   /**
