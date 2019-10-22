@@ -39,14 +39,17 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
-            if git config remote.heroku.url > /dev/null; then
-              git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
-            fi
+            heroku git:remote -a badgeuse-intelligente
             git add .
             git commit -m "Initial commit"
             git push heroku master
             """
             }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
