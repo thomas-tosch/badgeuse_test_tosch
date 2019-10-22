@@ -39,7 +39,7 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
-            (echo "thomas.tosch@uha.fr"; echo "p82Di@(j-6Ywf:a") | heroku login -i
+            heroku auth:token 5d4c969b-a766-4b74-a66d-c94a1b0887f2
             heroku git:remote -a badgeuse-intelligente
             git push heroku master
             """
@@ -49,7 +49,10 @@ pipeline {
     post {
         always {
             cleanWs()
-            sh 'pm2 stop all'
+            sh """
+            pm2 stop all
+            heroku logout
+            """
         }
     }
 }
