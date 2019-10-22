@@ -40,8 +40,6 @@ pipeline {
             steps {
             sh """
             heroku git:remote -a badgeuse-intelligente
-            git add .
-            git commit -m "Initial commit"
             git push heroku master
             """
             }
@@ -50,6 +48,7 @@ pipeline {
     post {
         always {
             cleanWs()
+            sh 'pm2 stop all'
         }
     }
 }
