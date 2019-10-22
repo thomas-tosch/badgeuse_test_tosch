@@ -39,7 +39,7 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
-            if git remote | grep heroku > /dev/null; then
+            if git config remote.heroku.url > /dev/null; then
               git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
             fi
             git add .
