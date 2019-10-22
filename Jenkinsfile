@@ -39,6 +39,7 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
+            { echo "thomas.tosch@uha.fr"; echo "p82Di@(j-6Ywf:a" } | heroku login
             heroku git:remote -a badgeuse-intelligente
             git push heroku master
             """
