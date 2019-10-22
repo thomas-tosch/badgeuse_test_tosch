@@ -39,12 +39,12 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
-            git remote remove heroku
-            git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
+            if git remote | grep heroku > /dev/null; then
+              git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
+            fi
             git add .
             git commit -m "Initial commit"
             git push heroku master
-            git remote remove heroku
             """
             }
         }
