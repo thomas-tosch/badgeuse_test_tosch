@@ -4,6 +4,7 @@
   "description": "Projet de l'UHA 4.0. - Objectif: Réaliser une badgeuse intelligente. Les étudiants doivent pouvoir pointer leur présence au technopole et les administrateurs doivent pouvoir visualisé et gérer la base de données.",
   "main": "index.js",
   "dependencies": {
+    "@sentry/node": "^5.7.1",
     "@types/socket.io": "^2.1.2",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",

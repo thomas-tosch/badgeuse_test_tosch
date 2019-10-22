@@ -11,6 +11,9 @@ app.use(cors({
     credentials: true
 }));
 */
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: 'https://7811b8f322f64154b421b050b410aad7@sentry.io/1792315' });
+
 app.use(cors({
     origin : [`http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`, process.env.HEROKU_FRONT],
     //origin : `http://${config.auth.HOST_ANGULAR}`,
