@@ -39,8 +39,9 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
-            heroku auth:token 5d4c969b-a766-4b74-a66d-c94a1b0887f2
-            heroku git:remote -a badgeuse-intelligente
+            heroku create --ssh-git
+            git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
+            git config --global url.ssh://git@heroku.com/.insteadOf https://git.heroku.com/
             git push heroku master
             """
             }
