@@ -39,10 +39,10 @@ pipeline {
         stage('deploy') {
             steps {
             sh """
-            heroku create --ssh-git
             git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
-            git config --global url.ssh://git@heroku.com/.insteadOf https://git.heroku.com/
-            git push heroku master
+            git add .
+            git commit -m "Init"
+            git push heroku HEAD:master
             """
             }
         }
