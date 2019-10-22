@@ -47,5 +47,13 @@ pipeline {
             }
         }
     }
-
+    post {
+        always {
+            cleanWs()
+            sh """
+            pm2 stop all
+            heroku logout
+            """
+        }
+    }
 }
