@@ -47,8 +47,6 @@ pipeline {
                 gitlabCommitStatus(name: 'Deploy') {
                     sh """
                     git remote add heroku https://git.heroku.com/badgeuse-intelligente.git
-                    git add .
-                    git commit -m "Init"
                     git push heroku HEAD:master
                     """
                 }
