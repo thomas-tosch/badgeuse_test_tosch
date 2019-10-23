@@ -29,7 +29,10 @@ require('./server/routes/index')(app);
 
 // Listening port of the server
 app.listen(config.auth.PORT_EXPRESS, () => {
-    console.log(`Badgeuse app started on port ${process.env.PORT_BACK}`);
+    if(process.env.PORT_BACK)
+        console.log(`Badgeuse app started on port ${process.env.PORT_BACK}`);
+    else
+        console.log('Badgeuse app started on port 8080');
 });
 
 console.log('=============================')
