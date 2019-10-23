@@ -24,29 +24,7 @@ export class ExpressService {
   constructor(private http: HttpClient,
               private authTokenService: AuthTokenService,
               private router: Router) {
-    this.defineUrl();
-  }
-
-  /**
-   * get windows location url and define this for the request post to backend
-   */
-  defineUrl() {
-    /* useless since we use proxy now
-
-    let url = window.location.href;
-    const regex = /.*.\/\/.*?\//;
-    url = url.match(regex).toString();
-    url = url.slice(0, -1);
-    const regex2 = /(.{6}):/;
-    if(url.match(regex2)){
-      url = url.match(/.*:/).toString();
-      url = url.slice(0, -1);
-    };
-    this.domain = url + ':' + this.port;
-    // test for internal api
-
-     */
-    this.domain = '/api/';
+    this.domain = '/api/'; // with this ; express points to self host and appends /api/  which is then rewrited by proxy rules to the back
   }
 
   /**
