@@ -11,11 +11,15 @@ app.use(cors({
     credentials: true
 }));
 */
-const Sentry = require('@sentry/node');
-Sentry.init({ dsn: 'https://7811b8f322f64154b421b050b410aad7@sentry.io/1792315' });
+// Sentry Error tracking
+// Change SENTRY_URL to enable
+if (process.env.SENTRY_URL) {
+    const Sentry = require('@sentry/node');
+    Sentry.init({dsn: process.env.SENTRY_URL});
+}
 
 app.use(cors({
-    origin : [`http://${config.auth.HOST_ANGULAR}:${config.auth.PORT_ANGULAR}`, process.env.HEROKU_FRONT],
+    origin : [`badgeuse-web:${config.auth.PORT_ANGULAR}`, 'localhost:4200'],
     //origin : `http://${config.auth.HOST_ANGULAR}`,
     credentials: true
 }));
@@ -32,7 +36,10 @@ require('./server/routes/index')(app);
 
 // Listening port of the server
 app.listen(config.auth.PORT_EXPRESS, () => {
-    console.log(`Badgeuse app started on port ${config.auth.PORT_EXPRESS}`);
+    if(process.env.PORT_BACK)
+        console.log(`Badgeuse app started on port ${process.env.PORT_BACK}`);
+    else
+        console.log('Badgeuse app started on port 8080');
 });
 
 console.log('=============================')

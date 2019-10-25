@@ -1,23 +1,33 @@
 version: '3.1'
 
 services:
-  badgeuse-web:
+
+
+  badgeuse-web-dev:
     build:
-      context: client
+      context: ./client
+      dockerfile: Dockerfile-dev
+    command: npm run start-docker
+    volumes:
+      - ./client:/app
+      - /app/node_modules
     ports:
-      - ${PORT_ANGULAR}:80
+      - 4200:4200
     depends_on:
-      - badgeuse-node
+      - badgeuse-node-dev
     env_file:
       - ./.env
 
 
-  badgeuse-node:
-    container_name: badgeuse-node
+  badgeuse-node-dev:
     build:
       context: .
+      dockerfile: Dockerfile-dev
+    command: ["nodemon", "index.js"]
     ports:
-      - ${PORT_BACK}:8080
+      - 8080:8080
+    volumes:
+      - .:/app
     depends_on:
       - mariadb
     env_file:
@@ -38,3 +48,5 @@ services:
     restart: always
     ports:
       - ${PORT_ADMINER}:8080
+
+
