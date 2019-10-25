@@ -8,12 +8,10 @@ import {ExpressService} from './express.service';
 export class WebsocketService {
 
     private socket;
-    private domain;
     onListenPresence: Subject<any>;
     onListenAbsenceList: Subject<any>;
 
     constructor(private expressService: ExpressService) {
-        this.domain = this.expressService.getDomain();
     }
 
     /**
@@ -48,7 +46,7 @@ export class WebsocketService {
      */
     connect(action): Rx.Subject<MessageEvent> {
         // server path
-        this.socket = io(this.domain);
+        this.socket = io(window.location.href + this.expressService.getDomain()); // io does not pass through express ; then the host must be appened manualy to get the local url
 
         // listen
         const observable = new Observable(observer => {
