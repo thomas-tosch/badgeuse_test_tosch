@@ -3,7 +3,7 @@ version: '3.1'
 services:
   badgeuse-web:
     build:
-      context: src/client
+      context: client
     ports:
       - 85:80
     depends_on:

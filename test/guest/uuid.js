@@ -1,7 +1,7 @@
-const config = require('../../src/server/config/config');
+const config = require('../../server/config/config');
 const request = require('supertest')('http://127.0.0.1:' + config.auth.PORT_EXPRESS);
 const expect = require("chai").expect;
-require('../../src/server/config/database');
+require('../../server/config/database');
 
 
 describe('UUID Route Test', function () {
