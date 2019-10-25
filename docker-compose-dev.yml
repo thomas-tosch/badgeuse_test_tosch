@@ -7,7 +7,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile-dev
-    command: npm start
+    command: npm run start-docker
     volumes:
       - ./client:/app
       - /app/node_modules
