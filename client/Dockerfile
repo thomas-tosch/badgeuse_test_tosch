@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-RUN apk add npm git bash
+RUN apk --no-cache add npm git bash curl
 
 WORKDIR /app
 
@@ -8,6 +8,7 @@ COPY package*.json /app/
 RUN npm install
 
 COPY ./ /app/
+
 
 ARG configuration=production
 RUN npm run build -- --output-path=/app/dist/out --configuration $configuration
