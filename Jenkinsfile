@@ -11,6 +11,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Build') {
                     sh """
+                        sudo chown -R jenkins .
                         npm i -g npm@6.4.1
                         npm ci --only=production
                         sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
