@@ -58,7 +58,8 @@ pipeline {
         always {
             cleanWs()
             sh """
-            pm2 stop all
+            pm2 stop badgeuse
+            pm2 delete badgeuse
             """
         }
     }
