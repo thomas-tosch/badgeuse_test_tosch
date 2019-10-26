@@ -16,8 +16,6 @@ pipeline {
                         npm ci --only=production
                         sudo mysql -e "source ./BDD/init.d/1-BDD-Badgeuse-tables.sql"
                         sudo mysql -e "source ./BDD/init.d/2-BDD-Badgeuse-Data.sql"
-                        pm2 stop all
-                        pm2 stop all
                         export PORT=$PORT
                         pm2 start index.js --name badgeuse
                         """
