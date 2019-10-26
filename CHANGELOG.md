@@ -6,6 +6,7 @@ Ce format est sur [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 et ce projet adhère à [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## A venir...
+- Mise à diposition des changements à l'équipe.
 
 ## [1.0.0] - 2019-10-25
 ### Ajouté
