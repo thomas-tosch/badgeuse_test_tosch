@@ -24,7 +24,7 @@ export class ExpressService {
   constructor(private http: HttpClient,
               private authTokenService: AuthTokenService,
               private router: Router) {
-    this.domain = '/api/'; // with this ; express points to self host and appends /api/  which is then rewrited by proxy rules to the back
+    this.domain = '/api'; // with this ; express points to self host and appends /api/  which is then rewrited by proxy rules to the back
   }
     //    /** Souvenir du heroku qui n'a pas marché
     /** author: thomas.tosch@uha.fr
