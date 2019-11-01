@@ -7,8 +7,9 @@ import { Auth } from '../guards/auth';
 import { AuthTokenService } from './auth-token.service';
 import { ExpressService } from './express.service';
 
-
-const endpoint = document.location.protocol + '//' + document.location.hostname + ':8080/';
+// TODO : remove the /api that is hard coded (should use express.service
+const endpoint = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api/';
+//const endpoint = document.location.protocol + '//' + document.location.hostname + ':8080/';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
