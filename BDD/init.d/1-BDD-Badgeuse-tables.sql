@@ -111,37 +111,3 @@ CREATE TABLE absences (
 )
 Engine = INNODB;
 
--- -----------------------------------------------------
--- -----------------------------------------------------
--- -----------------------------------------------------
--- DATA user_groups
--- -----------------------------------------------------
-INSERT IGNORE INTO `user_groups` (`id_group`, `nom_group`) VALUES
-(1, '1ere année'),
-(2, '2e année'),
-(3, '3e année'),
-(4, 'administrateur');
-
--- -----------------------------------------------------
--- DATA roles
--- -----------------------------------------------------
-INSERT IGNORE INTO `roles` (`id_role`, `nom_role`, `permission_role`) VALUES
-(1, 'Etudiant', 10384),
-(2, 'Intervenant', 10384),
-(3, 'Administrateur', 16369);
-
--- -----------------------------------------------------
--- DATA users
--- -----------------------------------------------------
-INSERT IGNORE INTO `users` (`prenom_user`, `nom_user`, `mail_user`, `id_role`) VALUES
-('Florent', 'Bourgeois', 'florent.bourgeois@uha.fr', 3),
-('Daniel', 'Da Fonseca', 'daniel.da-fonseca@uha.fr', 3);
-
--- -----------------------------------------------------
--- DATA reason
--- -----------------------------------------------------
-INSERT IGNORE INTO `reason` (`id_reason`, `nom_reason`) VALUES
-(1, 'malade'),
-(2, 'stage'),
-(3, 'alternance'),
-(4, 'autre raison');
