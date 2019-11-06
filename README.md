@@ -4,7 +4,7 @@ La documentation pour les routes du back se trouve sur ./server/out/index.html (
  
 ## PRÉ-REQUIS ##
 
-* DOCKER
+* Docker et docker-compose
 
 où
 
@@ -15,66 +15,53 @@ où
 
 # Déploiement en production (Docker) #
 
-## ÉTAPE 1 : Installer Docker ##
+<ol>
+   <li>Dans le fichier .env à la racine du projet sélectionnez les ports et mots de passes que vous souhaitez utiliser pour la mise en production.  </Li>
+   <li>lancez les containers docker avec la commande **docker-compose up --build**</li>      
+</ol>
 
-  Linux basé sur Debian : https://docs.docker.com/install/linux/docker-ce/debian/
-
-  MacOS : https://docs.docker.com/docker-for-mac/install/
-
-## ÉTAPE 2 : Configurer son Host ##
-
-   Dans le fichier .env à la racine du projet ;   
-   
-   <ol>
-        <li>assurez vous que la section *for prod* n'est pas commentée,</li>
-        <li>assurez vous que la section *for development* est commentée,</li>
-        <li>modifiez le _PORT_ANGULAR_ par celui que vous souhaitez utiliser et le _HOST_ANGULAR_ par l'IP de votre machine,</li>
-   </ol> 
-   
    TODO
    ~~- [ ] le fichier ./server/config/config.js présente des configurations pour passer aisément du mode dev au mode prod. Il faudra documenter modifier le readme de dev pour en prendre compte~~ 
-          
+   
+   TODO
+   [ ] il faudrait utiliser un fichier d'initialisation de la bdd avec uniquement un administrateur dans le système. 
+     
 
-## ÉTAPE 3 : Démarrer l'ensemble ##
 
-   <ol>
-        <li>lancez les containers docker avec la commande **docker-compose up --build**,</li>
-   </ol>
 
 
 
 # Déploiement pour le développement (Docker) #
 
-## ÉTAPE 1 : Installer Docker ##
+<ol>
+   <li>Dans le fichier .env à la racine du projet sélectionnez les ports et mots de passes que vous souhaitez utiliser pour la mise en production.  </Li>
+   <li>lancez les containers docker avec la commande **docker-compose -f docker-compose-dev.yml up --build** </li>      
+</ol>
 
-  Linux basé sur Debian : https://docs.docker.com/install/linux/docker-ce/debian/
+Ce déploiment lance le serveur back avec **nodemon** et le serveur front avec **ng serve** avec un motage des dossiers . et ./client ; ce qui permet de répercuter toute modification du code dans les serveurs par recompilation automatique.
 
-  MacOS : https://docs.docker.com/docker-for-mac/install/
+Notez que la compilation dans un docker est relativement lente. L'utilisation du déploiment manuel peut permettre d'accélérer le développement.
 
-## ÉTAPE 2 : Configurer son Host ##
-
-   Dans le fichier .env à la racine du projet ; commentez la section *for prod* et décommentez celle *for development*  
-   
-   <ol>
-        <li>Dans le fichier docker-compose.yml, commenter le service _badgeuse-web_,</li>
-        <li>Ouvrir un terminal dans le dossier client, installer les dépendance avec **npm install**.</li>
-   </ol> 
-   
    TODO
    ~~- [ ] le fichier ./server/config/config.js présente des configurations pour passer aisément du mode dev au mode prod. Il faudra documenter modifier le readme de dev pour en prendre compte~~ 
-   
+          
 
-## ÉTAPE 3 : Démarrer l'ensemble ##
+### Etat de la base de donnée au lancement
 
-   <ol>
-        <li>lancez les containers docker avec la commande **docker-compose up --build**,</li>
-        <li>depuis un terminal dans le dossier client, lancer le serveur avec **ng serve**</li>
-   </ol>
-   
+Au lancement de la version de développement la base de donnée contient plusieurs utilisateurs ainsi que des données de présence / absence sur les mois de septembre et octobre 2019.
+
+Les utilisateurs présent (dont le mot de passe est toujours "uha") : 
+- admin@uha.fr : utilisateur administrateur sur la plateforme
+- present@uha.fr : un étudiant qui est plutot assidu à la formation
+- master@uha.fr : un étudiant inscrit en master 4.0
+- alternance@uha.fr : un étudiant qui est en alternance (un mois présent un mois absent)
+- commun@uha.fr : un étudiant commun de la formation
+- absent@uha.fr : un étudiant qui n'est que très rarement présent à UHA 4.0
+- justification@uha.fr : un étudiant qui a souvent des soucis avec la badgeuse et qui a beaucoup d'absences justifiées
+- stage@uha.fr : un étudiant qui est en stage 
 
 
-
-# Déploiement manuel (deprecated) #
+# Déploiement manuel (deprecated) - SECTION A REVOIR #
   
 ## ÉTAPE 1 : Installer la base de donnée ##
 
@@ -87,7 +74,7 @@ où
 
 ## ÉTAPE 2 : Configurer son Host ##
 
-Dans le fichier docker-compole.yml, dans la partie node change le commentaire de HOST_ANGULAR et met ton adresse IP locale.
+Dans le fichier docker-compose.yml, dans la partie node change le commentaire de HOST_ANGULAR et met ton adresse IP locale.
 
 Ensuite si tu veux pas compiler le web avec Docker, tu peux le faire avec Angular pour que ça prenne moins de temps.
  
@@ -134,4 +121,6 @@ et ensuite dans l'environnement de node, change le port angular en mettant `4200
    `pm2 log` -> affiche les logs de pm2 (ctrl + C pour quitter)
    
    `pm2 flush` -> efface tous les logs de pm2
+
+
 
