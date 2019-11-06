@@ -32,7 +32,8 @@ INSERT INTO `roles` (`id_role`, `nom_role`, `permission_role`) VALUES
 -- -----------------------------------------------------
 
 INSERT INTO `users` (`id_user`, `prenom_user`, `nom_user`, `pseudo_user`, `mail_user`, `mdp_user`, `mdp_temp_user`, `id_role`) VALUES
-(1,	'user',	'admin',	'pseudo de l\'utilisateur',	'admin@uha.fr',	NULL,	'914ad87dce80aa7c9858f26619746013da575f97',	3),
+(1,	'florent',	'bourgeois',	'pseudo de l\'utilisateur',	'florent.bourgeois@uha.fr',	NULL,	'914ad87dce80aa7c9858f26619746013da575f97',	3),
+(2,	'user',	'admin',	'pseudo de l\'utilisateur',	'admin@uha.fr',	NULL,	'914ad87dce80aa7c9858f26619746013da575f97',	3),
 (3,	'user',	'master',	'pseudo de l\'utilisateur',	'master@uha.fr',	NULL,	'914ad87dce80aa7c9858f26619746013da575f97',	1),
 (4,	'user',	'alternance',	'pseudo de l\'utilisateur',	'alternant@uha.fr',	NULL,	'914ad87dce80aa7c9858f26619746013da575f97',	1),
 (7,	'user',	'present',	'pseudo de l\'utilisateur',	'present@uha.fr',	NULL,	'914ad87dce80aa7c9858f26619746013da575f97',	1),
@@ -62,6 +63,7 @@ INSERT INTO `user_groups` (`id_group`, `nom_group`) VALUES
 
 INSERT INTO `users_extend` (`id_user`, `id_group`, `card`) VALUES
 (1,	6,	'4E911A9D'),
+(2,	6,	NULL),
 (3,	4,	'9E877397'),
 (4,	3,	'CDC8112A'),
 (7,	3,	'DDCE8D4C'),
