@@ -35,7 +35,7 @@
     "rewire": "^4.0.1",
     "sha1": "^1.1.1",
     "sinon": "^7.5.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "sonarqube-scanner": "^2.5.0",
     "supertest": "^4.0.2",
     "typescript": "^3.2.4",
