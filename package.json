@@ -13,7 +13,7 @@
     "cors": "^2.8.5",
     "date-diff": "^0.2.1",
     "email-validator": "^2.0.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-fileupload": "^1.1.5",
     "express-list-endpoints": "^4.0.1",
     "html-entities": "^1.2.1",
